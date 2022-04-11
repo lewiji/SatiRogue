@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" load_steps=10 format=2]
+
+[ext_resource path="res://assets/Enemies Pack FIles/spritesheets/slimer-idle.png" type="Texture" id=1]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 41, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 82, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 123, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 164, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 205, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 246, 0, 41, 38 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 9
+atlas = ExtResource( 1 )
+region = Rect2( 287, 0, 41, 38 )
+
+[resource]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]

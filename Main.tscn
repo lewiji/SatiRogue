@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main.cs" type="Script" id=1]
 [ext_resource path="res://scenes/TwoDee.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Grid/GridGenerator.cs" type="Script" id=3]
 [ext_resource path="res://src/Grid/TileMapGridRepresentation.cs" type="Script" id=4]
 [ext_resource path="res://assets/AlchemyPack/bottles and vials/block_001.png" type="Texture" id=5]
+[ext_resource path="res://src/Camera/TilemapCamera.cs" type="Script" id=6]
+[ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://src/Player/PlayerNode2D.cs" type="Script" id=8]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 1 )
@@ -21,9 +24,19 @@ _gridGeneratorNodePath = NodePath("../../GridGenerator")
 
 [node name="Camera2D" type="Camera2D" parent="TwoDee"]
 anchor_mode = 0
+current = true
+script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="TwoDee"]
 position = Vector2( 14, 17 )
 texture = ExtResource( 5 )
+
+[node name="Player" type="Node2D" parent="TwoDee"]
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="TwoDee/Player"]
+frames = ExtResource( 7 )
+frame = 3
+playing = true
 
 [editable path="TwoDee"]

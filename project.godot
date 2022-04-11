@@ -14,6 +14,11 @@ config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/gdscript/max_call_stack=4096
+settings/visual_script/max_call_stack=4096
+
 [importer_defaults]
 
 texture={

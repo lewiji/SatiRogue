@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -15,9 +16,9 @@ public class GridGenerator : Spatial
     public static MapData _mapData = new MapData();
     private int _width = 1024;
     private int _height = 1024;
-    private int _rooms = 128;
+    private int _rooms = 512;
     private int _roomMinWidth = 3;
-    private int _roomMaxWidth = 10;
+    private int _roomMaxWidth = 64;
     
     public override void _Ready()
     {
@@ -91,25 +92,34 @@ public class GridGenerator : Spatial
     /** Flood fill from centre of voids, convert voids to floor, and set edges (nulls) as walls **/
     private void FloodFillWalls(int posX, int posY)
     {
-        var cell = _mapData.GetCellAt(new Vector3i(posX, 0, posY));
-        // null is an uncarved space, make it a wall
-        if (cell.CellType == null)
+        Stack<Vector3i> tiles = new Stack<Vector3i>();
+        tiles.Push(new Vector3i(posX, 0, posY));
+
+        while (tiles.Count > 0)
         {
-            cell.SetCellType(CellType.Wall);
-            return;
+            Vector3i position = tiles.Pop();
+            var cell = _mapData.GetCellAt(new Vector3i(position.x, 0, position.y));
+            // null is an uncarved space, make it a wall
+            if (cell.CellType == null)
+            {
+                cell.SetCellType(CellType.Wall);
+                return;
+            }
+
+            // only flood fill from Void spaces (fresh carved!)
+            if (cell.CellType != CellType.Void) return;
+
+            // set Void, non-null spaces we've traversed to Floors
+            cell.CellType = CellType.Floor;
+
+            // Flood fill recursively
+            tiles.Push(new Vector3i(position.x + 1, 0, position.y));
+            tiles.Push(new Vector3i(position.x - 1, 0, position.y));
+            tiles.Push(new Vector3i(position.x, 0, position.y + 1));
+            tiles.Push(new Vector3i(position.x, 0, position.y - 1));
         }
-
-        // only flood fill from Void spaces (fresh carved!)
-        if (cell.CellType != CellType.Void) return;
-
-        // set Void, non-null spaces we've traversed to Floors
-        cell.CellType = CellType.Floor;
-
-        // Flood fill recursively
-        FloodFillWalls(posX + 1, posY);
-        FloodFillWalls(posX - 1, posY);
-        FloodFillWalls(posX, posY + 1);
-        FloodFillWalls(posX, posY - 1);
+        
+        
     }
     
     private HashSet<Rect2> AddFloorSpace()
@@ -144,8 +154,6 @@ public class GridGenerator : Spatial
                 var cell = _mapData.SetCellType(position, CellType.Void);
             }
         }
-        
-        GD.Print($"Carved floorspace at {rect}");
     }
 
     private CellType GetCellTypeForRoom(Rect2 rect, int x, int y)
