@@ -39,6 +39,10 @@ public class GridGenerator : Node
         
         
         GD.Print("Finished generating grid.");
+        CallDeferred(nameof(EmitMapChangedSignal));
+    }
+
+    private void EmitMapChangedSignal() {
         EmitSignal(nameof(MapChanged));
     }
 
@@ -110,22 +114,27 @@ public class GridGenerator : Node
 
         while (tiles.Count > 0)
         {
-            Vector3i position = tiles.Pop();
+            var position = tiles.Pop();
             var cell = _mapData.GetCellAt(position);
-            // null is an uncarved space, make it a wall
-            if (cell.CellType == null)
-            {
-                cell.SetCellType(CellType.Wall);
-            } else if (cell.CellType == CellType.Void)
-            {
-                // set Void, non-null spaces we've traversed to Floors
-                cell.CellType = CellType.Floor;
+            switch (cell.CellType) {
+                // null is an uncarved space, make it a wall
+                case null:
+                    cell.SetCellType(CellType.Wall);
+                    break;
+                case CellType.Void:
+                    // set Void, non-null spaces we've traversed to Floors
+                    cell.CellType = CellType.Floor;
 
-                // Flood fill recursively
-                tiles.Push(new Vector3i(position.x - 1, 0, position.z));
-                tiles.Push(new Vector3i(position.x + 1, 0, position.z));
-                tiles.Push(new Vector3i(position.x, 0, position.z - 1));
-                tiles.Push(new Vector3i(position.x, 0, position.z + 1));
+                    // Flood fill recursively
+                    tiles.Push(new Vector3i(position.x - 1, 0, position.z));
+                    tiles.Push(new Vector3i(position.x + 1, 0, position.z));
+                    tiles.Push(new Vector3i(position.x, 0, position.z - 1));
+                    tiles.Push(new Vector3i(position.x, 0, position.z + 1));
+                    tiles.Push(new Vector3i(position.x + 1, 0, position.z + 1));
+                    tiles.Push(new Vector3i(position.x - 1, 0, position.z + 1));
+                    tiles.Push(new Vector3i(position.x + 1, 0, position.z - 1));
+                    tiles.Push(new Vector3i(position.x - 1, 0, position.z - 1));
+                    break;
             }
         }
         

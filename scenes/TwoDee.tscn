@@ -1,11 +1,66 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/res/TilesetMrmo.tres" type="TileSet" id=1]
+[ext_resource path="res://src/Grid/TileMapGridRepresentation.cs" type="Script" id=2]
+[ext_resource path="res://src/Player/PlayerNode2D.cs" type="Script" id=3]
+[ext_resource path="res://src/Camera/TilemapCamera.cs" type="Script" id=4]
+[ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=5]
+[ext_resource path="res://assets/AlchemyPack/bottles and vials/block_001.png" type="Texture" id=6]
+[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__77.png" type="Texture" id=7]
+[ext_resource path="res://scenes/TwoDee.cs" type="Script" id=8]
 
-[node name="TwoDee" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="TwoDee" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 512, 512 )
+
+[node name="BackgroundSprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color( 0.12446, 0.1008, 0.21, 1 )
+texture = ExtResource( 7 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 512 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
+cell_size = Vector2( 8, 8 )
 format = 1
+tile_data = PoolIntArray( 0, 7, 0 )
+script = ExtResource( 2 )
+_cameraNodePath = NodePath("Player/Camera2D")
+
+[node name="Label" type="Label" parent="TileMap"]
+anchor_right = 1.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 128, 0 )
+text = "x, y"
+align = 1
+
+[node name="Sprite" type="Sprite" parent="TileMap"]
+position = Vector2( 14, 17 )
+texture = ExtResource( 6 )
+
+[node name="Player" type="Node2D" parent="TileMap"]
+script = ExtResource( 3 )
+_cameraPath = NodePath("Camera2D")
+
+[node name="Visual" type="Node2D" parent="TileMap/Player"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="TileMap/Player/Visual"]
+position = Vector2( 4, 2 )
+scale = Vector2( 0.3, 0.3 )
+frames = ExtResource( 5 )
+frame = 6
+playing = true
+
+[node name="Camera2D" type="Camera2D" parent="TileMap/Player"]
+position = Vector2( 4, 4 )
+current = true
+zoom = Vector2( 0.25, 0.25 )
+process_mode = 0
+smoothing_enabled = true
+script = ExtResource( 4 )

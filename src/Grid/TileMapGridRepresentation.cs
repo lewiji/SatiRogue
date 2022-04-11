@@ -1,11 +1,11 @@
 using Godot;
+using RoguelikeMono.scenes;
 
 namespace RoguelikeMono.Grid;
 
 public class TileMapGridRepresentation : TileMap
 {
-    [Export] private NodePath? _gridGeneratorNodePath { get; set; }
-    private GridGenerator? _gridGenerator;
+   
     private Label? _debugLabel;
     [Export] private NodePath? _cameraNodePath { get; set; }
     private Camera2D? _camera2D;
@@ -18,12 +18,16 @@ public class TileMapGridRepresentation : TileMap
         Clear();
         
         TileSize = (int)CellSize.x;
-        
-        if (_gridGeneratorNodePath != null) _gridGenerator = GetNode<GridGenerator>(_gridGeneratorNodePath);
-        _gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
 
         _debugLabel = GetNode<Label>("Label");
         _camera2D = GetNode<Camera2D>(_cameraNodePath);
+        
+        CallDeferred(nameof(ConnectToGridGenerator));
+    }
+
+    private void ConnectToGridGenerator() {
+        var gridGenerator = (GetParent() as TwoDee)?.GridGenerator;
+        gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
     }
 
     private void OnMapDataChanged()

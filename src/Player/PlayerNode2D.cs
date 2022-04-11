@@ -7,6 +7,7 @@ namespace RoguelikeMono.Player;
 
 public class PlayerNode2D : Node2D {
     private Vector2? _targetPosition;
+    private Node2D? _visualRepresentation;
 
     private bool _teleporting;
     public bool Teleporting {
@@ -21,7 +22,7 @@ public class PlayerNode2D : Node2D {
             }
             else {
                 if (_camera != null) {
-                    CallDeferred(nameof(EnableCameraSmoothingAfterTeleport));
+                    EnableCameraSmoothingAfterTeleport();
                 }
             }
         }
@@ -35,9 +36,11 @@ public class PlayerNode2D : Node2D {
         if (EntityRegistry.Player == null)
             throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
         EntityRegistry.Player.Connect(nameof(PlayerData.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
-        
+
         _camera = GetNode<Camera2D>(_cameraPath);
         _camera.SmoothingEnabled = false;
+        _visualRepresentation = GetNode<Node2D>("Visual");
+        _visualRepresentation.SetAsToplevel(true);
         Teleporting = true;
     }
 
@@ -51,18 +54,23 @@ public class PlayerNode2D : Node2D {
 
     private async void EnableCameraSmoothingAfterTeleport() {
         GD.Print("Enable cam smoothing");
-        await ToSignal(GetTree().CreateTimer(0.08f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
         if (_camera != null) _camera.SmoothingEnabled = true;
     }
 
-    public override void _Process(float delta) {
-        if (_targetPosition != null && !Position.IsEqualApprox(_targetPosition.Value)) {
+    public override void _PhysicsProcess(float delta) {
+        if (_targetPosition != null && _visualRepresentation != null) {
             if (Teleporting) {
                 Position = _targetPosition.Value;
+                _visualRepresentation.Position = Position;
                 Teleporting = false;
-            }
-            else {
-                Position = Position.LinearInterpolate(_targetPosition.Value, delta / 0.0625f);
+            } else {
+                if (!Position.IsEqualApprox(_targetPosition.Value)) {
+                    Position = _targetPosition.Value;
+                }
+                if (!_visualRepresentation.Position.IsEqualApprox(_targetPosition.Value)) {
+                    _visualRepresentation.Position = _visualRepresentation.Position.LinearInterpolate(_targetPosition.Value, delta / 0.0625f);
+                }
             }
         }
     }

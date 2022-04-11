@@ -19,7 +19,7 @@ public class Cell
     public bool Blocked => 
         Conditions.Contains(CellCondition.Destroyed) || 
         CellType is Grid.CellType.Wall or Grid.CellType.DoorClosed || 
-        Occupants.Count(x => GD.InstanceFromId(x).Get("Blocks").Equals(true)) > 0;
+        Occupants.Count(x => GD.InstanceFromId(x).Get("BlocksCell").Equals(true)) > 0;
     
     public Cell(long id, CellType? cellType = null, IEnumerable<ulong>? occupants = null, IEnumerable<CellCondition>? conditions = null)
     {
