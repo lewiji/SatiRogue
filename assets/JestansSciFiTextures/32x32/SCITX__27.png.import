@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/SCITX__27.png-e29eab1ab5b4cf5ee7705bae1489d53c.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/JestansSciFiTextures/32x32/SCITX__27.png"
+dest_files=[ "res://.import/SCITX__27.png-e29eab1ab5b4cf5ee7705bae1489d53c.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=true
+flags/anisotropic=true
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

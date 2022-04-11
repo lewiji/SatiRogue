@@ -1,0 +1,32 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EcsRx" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Infrastructure" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.Batching" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.Computeds" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.GroupBinding" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.Persistence" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.ReactiveSystems" Version="5.1.116" />
+    <PackageReference Include="EcsRx.Plugins.Views" Version="5.1.116" />
+    <PackageReference Include="GodotOnReady" Version="1.1.6" />
+    <PackageReference Include="MersenneTwister" Version="1.0.6" />
+    <PackageReference Include="Ninject" Version="4.0.0-beta-0134" />
+    <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
+    <PackageReference Include="SystemsRx.Infrastructure.Ninject" Version="5.1.21" />
+    <PackageReference Include="SystemsRx.ReactiveData" Version="5.1.21" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\activelogic\Debug\net472\main.dll" />
+    <Content Include="lib\activelogic\Debug\net472\main.pdb" />
+    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.deps.json" />
+    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.dll" />
+    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.pdb" />
+    <Content Include="lib\activelogic\Release\net472\main.dll" />
+    <Content Include="lib\activelogic\Release\net472\main.pdb" />
+  </ItemGroup>
+</Project>

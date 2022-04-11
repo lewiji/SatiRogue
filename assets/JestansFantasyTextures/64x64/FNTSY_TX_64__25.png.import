@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/FNTSY_TX_64__25.png-10b92086d27a9866ef3558f76d0f6713.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__25.png"
+dest_files=[ "res://.import/FNTSY_TX_64__25.png-10b92086d27a9866ef3558f76d0f6713.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=true
+flags/anisotropic=true
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
