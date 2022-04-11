@@ -15,11 +15,10 @@ public class TilemapCamera : Camera2D
         switch (inputEventMouseButton.ButtonIndex)
         {
             case (int) ButtonList.WheelUp:
-                GD.Print(@event);
                 Zoom -= new Vector2(0.1f, 0.1f);
+                Zoom = Zoom.Abs();
                 break;
             case (int) ButtonList.WheelDown:
-                GD.Print(@event);
                 Zoom += new Vector2(0.1f, 0.1f);
                 break;
         }
