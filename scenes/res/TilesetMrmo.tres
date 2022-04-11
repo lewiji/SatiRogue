@@ -174,7 +174,7 @@
 12/name = "MRMOTEXT EX.png 12"
 12/texture = ExtResource( 1 )
 12/tex_offset = Vector2( 0, 0 )
-12/modulate = Color( 1, 1, 1, 1 )
+12/modulate = Color( 0.490196, 0.490196, 0.490196, 1 )
 12/region = Rect2( 184, 104, 8, 8 )
 12/tile_mode = 0
 12/occluder_offset = Vector2( 0, 0 )
@@ -244,7 +244,7 @@
 17/name = "MRMOTEXT EX.png 17"
 17/texture = ExtResource( 1 )
 17/tex_offset = Vector2( 0, 0 )
-17/modulate = Color( 1, 1, 1, 1 )
+17/modulate = Color( 0.345098, 0.113725, 0.0117647, 1 )
 17/region = Rect2( 16, 168, 8, 8 )
 17/tile_mode = 0
 17/occluder_offset = Vector2( 0, 0 )

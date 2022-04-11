@@ -28,10 +28,13 @@ region_rect = Rect2( 0, 0, 512, 512 )
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 8, 8 )
+cell_tile_origin = 1
+cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 0, 7, 0 )
 script = ExtResource( 2 )
 _cameraNodePath = NodePath("Player/Camera2D")
+_twoDeeNodePath = NodePath("..")
 
 [node name="Label" type="Label" parent="TileMap"]
 anchor_right = 1.0
@@ -45,6 +48,7 @@ position = Vector2( 14, 17 )
 texture = ExtResource( 6 )
 
 [node name="Player" type="Node2D" parent="TileMap"]
+z_index = -1
 script = ExtResource( 3 )
 _cameraPath = NodePath("Camera2D")
 
@@ -54,7 +58,7 @@ _cameraPath = NodePath("Camera2D")
 position = Vector2( 4, 2 )
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 5 )
-frame = 6
+frame = 7
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="TileMap/Player"]

@@ -10,6 +10,8 @@ public class TileMapGridRepresentation : TileMap
     [Export] private NodePath? _cameraNodePath { get; set; }
     private Camera2D? _camera2D;
     
+    [Export] private NodePath? _twoDeeNodePath { get; set; }
+    
 
     public static int? TileSize;
 
@@ -26,7 +28,7 @@ public class TileMapGridRepresentation : TileMap
     }
 
     private void ConnectToGridGenerator() {
-        var gridGenerator = (GetParent() as TwoDee)?.GridGenerator;
+        var gridGenerator = GetNode<TwoDee>(_twoDeeNodePath).GridGenerator;
         gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
     }
 
