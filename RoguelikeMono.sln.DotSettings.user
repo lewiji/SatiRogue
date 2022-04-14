@@ -22,4 +22,6 @@
   &lt;Assembly Path="/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/obj/Debug/RoguelikeMono.dll" /&gt;
   &lt;Assembly Path="/home/lewiji/godot/projects/RoguelikeMono/.mono/assemblies/Debug/GodotSharp.dll" /&gt;
   &lt;Assembly Path="/usr/lib/mono/4.5/mscorlib.dll" /&gt;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Program Files\dotnet\sdk\6.0.201\MSBuild.dll</s:String>
+	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64></wpf:ResourceDictionary>

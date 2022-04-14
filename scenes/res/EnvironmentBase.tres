@@ -1,19 +1,20 @@
-[gd_resource type="Environment" load_steps=2 format=2]
+[gd_resource type="Environment" load_steps=3 format=2]
 
-[sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 0.0392157, 0, 0.14902, 1 )
-sky_horizon_color = Color( 0.247059, 0, 0.376471, 1 )
-sky_curve = 0.0731027
-sky_energy = 0.5
-ground_bottom_color = Color( 0.686275, 0.513726, 0, 1 )
-ground_horizon_color = Color( 0.929412, 0.411765, 0.211765, 1 )
-ground_curve = 0.0443829
-ground_energy = 0.5
-sun_color = Color( 0.529412, 1, 0.768627, 1 )
-sun_angle_min = 3.17
-sun_curve = 0.01
-sun_energy = 0.5
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__35.png" type="Texture" id=1]
+
+[sub_resource type="PanoramaSky" id=3]
+radiance_size = 1
+panorama = ExtResource( 1 )
 
 [resource]
-background_mode = 2
-background_sky = SubResource( 1 )
+background_mode = 3
+background_sky = SubResource( 3 )
+background_color = Color( 0.0745098, 0, 0.133333, 1 )
+ambient_light_color = Color( 0.372549, 0.270588, 0.109804, 1 )
+ambient_light_sky_contribution = 0.5
+tonemap_mode = 4
+ss_reflections_enabled = true
+ss_reflections_depth_tolerance = 1.0
+ssao_enabled = true
+glow_enabled = true
+glow_bloom = 0.1

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.cs" type="Script" id=1]
 [ext_resource path="res://scenes/TwoDee.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/GridGenerator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/PlayerInputHandler.cs" type="Script" id=9]
 
 [node name="Main" type="Spatial"]
@@ -14,3 +15,5 @@ script = ExtResource( 1 )
 script = ExtResource( 9 )
 
 [node name="TwoDee" parent="." instance=ExtResource( 2 )]
+
+[node name="ThreeDee" parent="." instance=ExtResource( 4 )]

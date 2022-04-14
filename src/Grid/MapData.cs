@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Ninject.Infrastructure.Language;
 using RoguelikeMono.Math;
 
 namespace RoguelikeMono.Grid;
