@@ -27,6 +27,10 @@ window/size/height=1080
 window/dpi/allow_hidpi=true
 window/vsync/vsync_via_compositor=true
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/wfc_tools/plugin.cfg" )
+
 [importer_defaults]
 
 texture={
