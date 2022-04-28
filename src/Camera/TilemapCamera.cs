@@ -1,6 +1,6 @@
 using Godot;
 
-namespace RoguelikeMono.Camera;
+namespace RoguelikeMono.TwoDee.Camera;
 
 public class TilemapCamera : Camera2D
 {

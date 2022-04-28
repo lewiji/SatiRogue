@@ -1,11 +1,12 @@
 using Godot;
+using GodotOnReady.Attributes;
+using RoguelikeMono.Grid;
 
 namespace RoguelikeMono.scenes.ThreeDee;
 
-public class ThreeDee : Spatial
+public partial class ThreeDee : Spatial
 {
-    public override void _Ready()
-    {
-        
-    }
+    
+    [OnReadyGet("../../../../GridGenerator", Export = true)] public GridGenerator? GridGenerator;
+    
 }

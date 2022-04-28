@@ -2,20 +2,22 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.stex"
+path.s3tc="res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.s3tc.stex"
+path.etc2="res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/overworld/Overworld256x256Roughness.png"
-dest_files=[ "res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.stex" ]
+dest_files=[ "res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.s3tc.stex", "res://.import/Overworld256x256Roughness.png-8bbe073ba44f39ff8762b5b1766664a9.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
+compress/mode=2
+compress/lossy_quality=0.3
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0

@@ -29,6 +29,11 @@ public struct Vector3i : IEquatable<Vector3i>
     private static readonly Vector3i _forward = new Vector3i(0, 0, -1);
     private static readonly Vector3i _back = new Vector3i(0, 0, 1);
 
+    public Vector3 ToVector3()
+    {
+      return new Vector3(x, y, z);
+    }
+
     /// <summary>Access vector components using their index.</summary>
     /// <exception cref="T:System.IndexOutOfRangeException">
     /// Thrown when the given the <paramref name="index" /> is not 0, 1 or 2.

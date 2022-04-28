@@ -65,5 +65,6 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 environment/default_environment="res://default_env.tres"

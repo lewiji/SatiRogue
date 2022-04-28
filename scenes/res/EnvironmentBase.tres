@@ -3,7 +3,6 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__35.png" type="Texture" id=1]
 
 [sub_resource type="PanoramaSky" id=3]
-radiance_size = 1
 panorama = ExtResource( 1 )
 
 [resource]
@@ -14,7 +13,20 @@ ambient_light_color = Color( 0.372549, 0.270588, 0.109804, 1 )
 ambient_light_sky_contribution = 0.5
 tonemap_mode = 4
 ss_reflections_enabled = true
+ss_reflections_fade_out = 1.6245
 ss_reflections_depth_tolerance = 1.0
 ssao_enabled = true
+ssao_light_affect = 1.0
+ssao_ao_channel_affect = 1.0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 13.26
+dof_blur_far_transition = 1.0
+dof_blur_far_amount = 0.05
+dof_blur_far_quality = 0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 8.6
+dof_blur_near_transition = 5.0
+dof_blur_near_amount = 0.15
+dof_blur_near_quality = 0
 glow_enabled = true
-glow_bloom = 0.1
+glow_bloom = 0.16

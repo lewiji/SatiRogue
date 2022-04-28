@@ -5,7 +5,6 @@ namespace RoguelikeMono.Grid;
 
 public class TileMapGridRepresentation : TileMap
 {
-   
     private Label? _debugLabel;
     [Export] private NodePath? _cameraNodePath { get; set; }
     private Camera2D? _camera2D;
@@ -28,13 +27,13 @@ public class TileMapGridRepresentation : TileMap
     }
 
     private void ConnectToGridGenerator() {
-        var gridGenerator = GetNode<TwoDee>(_twoDeeNodePath).GridGenerator;
+        var gridGenerator = GetNode<scenes.TwoDee>(_twoDeeNodePath).GridGenerator;
         gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
     }
 
     private void OnMapDataChanged()
     {
-        GD.Print("Mapdata changed");
+        GD.Print("2d: Mapdata changed");
         var cells = GridGenerator._mapData.Cells;
         foreach (var cell in cells)
         {
