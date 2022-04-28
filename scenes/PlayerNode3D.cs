@@ -12,7 +12,9 @@ public class PlayerNode3D : Spatial
     private Vector3 _spriteOffset = new Vector3(0, 1f, 0);
     private Vector3 _cameraOffset = new Vector3(0, 9, 7);
 
-    [Export] private NodePath? _cameraPath { get; set; }
+    [Export] private float SpriteSmoothing { get; set; }
+    [Export] private float CameraSmoothing { get; set; }
+    [Export] private NodePath? CameraPath { get; set; }
     private Camera? _camera;
 
     public bool Teleporting { get; set; }
@@ -23,7 +25,7 @@ public class PlayerNode3D : Spatial
             throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
         EntityRegistry.Player.Connect(nameof(PlayerData.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
 
-        _camera = GetNode<Camera>(_cameraPath);
+        _camera = GetNode<Camera>(CameraPath);
         _camera.SetAsToplevel(true);
         _visualRepresentation = GetNode<Spatial>("Visual");
         _visualRepresentation.SetAsToplevel(true);
@@ -36,6 +38,10 @@ public class PlayerNode3D : Spatial
         _targetPosition = new Vector3(tileWorldPosition.x, 0f, tileWorldPosition.z);
     }
 
+    public override void _Process(float delta)
+    {
+        _camera.Translation = _camera.Translation.LinearInterpolate(_targetPosition.Value + _cameraOffset, CameraSmoothing);
+    }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -53,18 +59,9 @@ public class PlayerNode3D : Spatial
             }
             if (!_visualRepresentation.Translation.IsEqualApprox(_targetPosition.Value  + _spriteOffset))
             {
-                var targetWithOffset = _targetPosition.Value + _spriteOffset;
-
-                var inputVector = EntityRegistry.Player._inputDirection.ToVector3();
-                    
-                _visualRepresentation.Translation = _visualRepresentation.Translation.CubicInterpolate(
-                    targetWithOffset, 
-                    EntityRegistry.Player._lastPosition.ToVector3() + _spriteOffset, 
-                    targetWithOffset + inputVector, 
-                    0.333f);
+                _visualRepresentation.Translation = _visualRepresentation.Translation.LinearInterpolate(
+                    _targetPosition.Value + _spriteOffset, SpriteSmoothing);
             }
-            
-            _camera.Translation = _camera.Translation.LinearInterpolate(_targetPosition.Value + _cameraOffset, 0.12f);
         }
     }
 }

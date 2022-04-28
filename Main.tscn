@@ -26,8 +26,8 @@ columns = 2
 
 [node name="ViewportContainer2D" type="ViewportContainer" parent="GridContainer"]
 self_modulate = Color( 1, 1, 1, 0.631373 )
-margin_right = 958.0
-margin_bottom = 357.0
+margin_right = 576.0
+margin_bottom = 303.0
 
 [node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainer2D"]
 size = Vector2( 576, 303 )
