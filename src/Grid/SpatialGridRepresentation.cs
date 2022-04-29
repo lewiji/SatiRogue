@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.scenes;
@@ -7,57 +8,82 @@ using SatiRogue.scenes;
 namespace SatiRogue.Grid;
 
 public partial class SpatialGridRepresentation : Spatial {
-    private readonly Dictionary<CellType, int> _cellTypeCounts = new();
+    private const int ChunkWidth = 24;
+    private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
+    [OnReadyGet("../", Export = true)] private ThreeDee? _threeDee;
+    [OnReadyGet("../RoomManager", Export = true)] private RoomManager? _roomManager;
 
-    private readonly Dictionary<CellType, MultiMeshInstance> _multiMeshInstances = new();
-    [OnReadyGet("../", Export = true)] private ThreeDee? ThreeDee;
-
-    [OnReady]
-    private void CreateMultiMeshInstances() {
-        GD.Print("Creating multimeshes");
-        var cellTypes = Enum.GetValues(typeof(CellType));
-        foreach (CellType cellType in cellTypes) {
-            GD.Print($"Creating multimesh for {cellType}");
-
-            var meshForCellType = GetMeshResourceForCellType(cellType);
-            if (meshForCellType == null) continue;
-
-            var mmInst = new MultiMeshInstance();
-            mmInst.Multimesh = new MultiMesh();
-            mmInst.Multimesh.Mesh = meshForCellType;
-            mmInst.Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
-            mmInst.CastShadow = GeometryInstance.ShadowCastingSetting.On;
-            AddChild(mmInst);
-            _multiMeshInstances.Add(cellType, mmInst);
-            _cellTypeCounts.Add(cellType, 0);
-            mmInst.Multimesh.InstanceCount = 65536;
-        }
-    }
-
-    [OnReady]
-    private void DeferredCallToGridGeneratorSignal() {
+    [OnReady] private void DeferredCallToGridGeneratorSignal() {
         GD.Print("Connecting to map changed signal on next frame...");
         CallDeferred(nameof(ConnectToGridGenerator));
     }
 
     private void ConnectToGridGenerator() {
         GD.Print("Connecting to map changed signal.");
-        var gridGenerator = ThreeDee!.GridGenerator;
+        var gridGenerator = _threeDee!.GridGenerator;
         gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
     }
 
     private void OnMapDataChanged() {
-        GD.Print("3d: Mapdata changed");
-        var cells = GridGenerator._mapData.Cells;
-        foreach (var cell in cells) AddMesh(new Vector3(cell.Position.x, 0, cell.Position.z), cell.CellType);
-    }
+        GD.Print("3d: Map data changed");
+        
+        const int chunkSize = ChunkWidth * ChunkWidth;
+        
+        var cells = GridGenerator._mapData.Cells.ToList();
+        var chunkCells = cells.Take(chunkSize).ToList();
+        var chunkId = 0;
+        
+        GD.Print($"Chunk width: {ChunkWidth}");
+        GD.Print($"{cells.Count} map cells total.");
+        GD.Print($"Chunking: Taking {chunkCells.Count} cells");
+        
+        while (chunkCells is {Count: > 0}) {
+            // Remove these cells from the enumeration
+            cells?.RemoveRange(0, Mathf.Min(cells.Count, chunkSize));
 
-    private void AddMesh(Vector3 position, CellType? cellType) {
-        if (cellType != null && !_multiMeshInstances.ContainsKey(cellType.Value)) return;
+            GD.Print($"{cells?.Count} cells remaining in map data");
+            GD.Print($"Building chunk {chunkId}.");
+            
+            var chunkRoom = new Room();
+            
+            // TODO workout portal dimensions
+            chunkRoom.AddChild(new Portal{  Points = new [] {
+                new Vector2(6f, 0.5f),
+                new Vector2(6f, 2.1f),
+                new Vector2(-6f, 2.1f),
+                new Vector2(-6f, 0.5f),
+            }});
 
-        _multiMeshInstances[cellType!.Value].Multimesh
-            .SetInstanceTransform(_cellTypeCounts[cellType.Value], new Transform(Basis.Identity, position));
-        _cellTypeCounts[cellType.Value] += 1;
+            // Create MultiMesh for each cell type in this chunk data
+            foreach (CellType cellType in _cellTypes) {
+                var cellsOfThisTypeInChunk = chunkCells.Where(cell => cell.CellType == cellType).ToArray();
+                var meshForCellType = GetMeshResourceForCellType(cellType);
+                if (meshForCellType == null) continue;
+
+                var mmInst = new MultiMeshInstance {
+                    Multimesh = new MultiMesh {
+                        Mesh = meshForCellType,
+                        TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
+                        InstanceCount = cellsOfThisTypeInChunk.Length
+                    },
+                    CastShadow = GeometryInstance.ShadowCastingSetting.On
+                };
+                chunkRoom.AddChild(mmInst);
+
+                for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
+                    mmInst.Multimesh.SetInstanceTransform(i,
+                        new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position.ToVector3()));
+                }
+            }
+            
+            AddChild(chunkRoom);
+            
+            chunkCells = cells?.Take(chunkSize).ToList();
+            if (!(chunkCells?.Count > 0)) continue;
+            GD.Print($"Took {chunkCells?.Count} cells.");
+            chunkId += 1;
+        }
+        GD.Print("Chunking finished.");
     }
 
     private Mesh? GetMeshResourceForCell(Cell cell) {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using SatiRogue.Grid.Entities;
 using SatiRogue.Math;
 using SatiRogue.Tools;
@@ -13,11 +14,14 @@ public class GridGenerator : Node {
     public delegate void MapChanged();
 
     public static MapData _mapData = new();
-    private readonly int _height = 100;
-    private readonly int _roomMaxWidth = 32;
-    private readonly int _roomMinWidth = 3;
-    private readonly int _rooms = 30;
-    private readonly int _width = 150;
+    private static readonly int _height = 512;
+    private static readonly int _roomMaxWidth = 108;
+    private static readonly int _roomMinWidth = 3;
+    private static readonly int _rooms = 102;
+    private static readonly int _width = 512;
+
+    public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", _height}, {"MaxWidth", _roomMaxWidth}, 
+        {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", _width}}; 
 
     public override void _Ready() {
         GD.Randomize();
