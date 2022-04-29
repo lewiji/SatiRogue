@@ -1,19 +1,18 @@
 using Godot;
-using RoguelikeMono.Grid.Entities;
+using SatiRogue.Grid.Entities;
 
-namespace RoguelikeMono;
+namespace SatiRogue;
 
 public class PlayerInputHandler : Node {
-    public bool CanMove = false;
-    
     private Timer? _moveTimer;
-    
+    public bool CanMove;
+
     public override void _Ready() {
         _moveTimer = new Timer();
         AddChild(_moveTimer);
         _moveTimer.OneShot = true;
         _moveTimer.Connect("timeout", this, nameof(OnMoveTimerExpired));
-        
+
         CanMove = true;
     }
 
@@ -26,23 +25,24 @@ public class PlayerInputHandler : Node {
             if (Input.IsActionPressed("move_left")) {
                 EntityRegistry.Player.Move(MovementDirection.Left);
                 CanMove = false;
-            } 
+            }
+
             if (Input.IsActionPressed("move_right")) {
                 EntityRegistry.Player.Move(MovementDirection.Right);
                 CanMove = false;
             }
+
             if (Input.IsActionPressed("move_down")) {
                 EntityRegistry.Player.Move(MovementDirection.Down);
                 CanMove = false;
             }
+
             if (Input.IsActionPressed("move_up")) {
                 EntityRegistry.Player.Move(MovementDirection.Up);
                 CanMove = false;
             }
 
-            if (!CanMove) {
-                _moveTimer?.Start(0.1f);
-            }
+            if (!CanMove) _moveTimer?.Start(0.1f);
         }
     }
 }

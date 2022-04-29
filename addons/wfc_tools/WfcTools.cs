@@ -1,22 +1,46 @@
 using Godot;
 
-namespace RoguelikeMono.addons.wfc_tools;
+namespace SatiRogue.addons;
 
 [Tool]
-public class WfcTools : EditorPlugin
-{
+public class WfcTools : EditorPlugin {
     private Control? _dock;
-    
-    public override void _EnterTree()
-    {
-        _dock = GD.Load<PackedScene>("res://addons/wfc_tools/scenes/wfc_dock.tscn").Instance<Control>();
-        AddControlToBottomPanel(_dock, "WfcTools");
+    private Control? _mainScreen;
+
+    public override bool HasMainScreen() {
+        return true;
     }
 
-    public override void _ExitTree()
-    {
-        if (_dock == null) return;
-        RemoveControlFromBottomPanel(_dock);
-        _dock.Free();
+    public override string GetPluginName() {
+        return "WFC Tools";
+    }
+
+    public override Texture GetPluginIcon() {
+        return GetEditorInterface().GetBaseControl().GetIcon("minimap", "GraphEdit");
+    }
+
+    public override void _EnterTree() {
+        _dock = GD.Load<PackedScene>("res://addons/wfc_tools/scenes/wfc_dock.tscn").Instance<Control>();
+        AddControlToBottomPanel(_dock, "WfcTools");
+
+        _mainScreen = GD.Load<PackedScene>("res://addons/wfc_tools/scenes/wfc_main_screen.tscn").Instance<Control>();
+        GetEditorInterface().GetEditorViewport().AddChild(_mainScreen);
+        
+        AddAutoloadSingleton("SatiWfcSignals", "res://addons/wfc_tools/src/WfcSignals.cs");
+
+        MakeVisible(false);
+    }
+
+    public override void _ExitTree() {
+        if (_dock != null) {
+            RemoveControlFromBottomPanel(_dock);
+            _dock.Free();
+        }
+        _mainScreen?.QueueFree();
+        RemoveAutoloadSingleton("SatiWfcSignals");
+    }
+
+    public override void MakeVisible(bool visible) {
+        if (_mainScreen != null) _mainScreen.Visible = visible;
     }
 }

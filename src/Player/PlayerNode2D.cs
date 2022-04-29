@@ -1,15 +1,17 @@
 using System;
 using Godot;
-using RoguelikeMono.Grid;
-using RoguelikeMono.Grid.Entities;
+using SatiRogue.Grid;
+using SatiRogue.Grid.Entities;
 
-namespace RoguelikeMono.Player;
+namespace SatiRogue.Player;
 
 public class PlayerNode2D : Node2D {
+    private Camera2D? _camera;
     private Vector2? _targetPosition;
-    private Node2D? _visualRepresentation;
 
     private bool _teleporting;
+    private Node2D? _visualRepresentation;
+
     public bool Teleporting {
         get => _teleporting;
         set {
@@ -21,18 +23,14 @@ public class PlayerNode2D : Node2D {
                 }
             }
             else {
-                if (_camera != null) {
-                    EnableCameraSmoothingAfterTeleport();
-                }
+                if (_camera != null) EnableCameraSmoothingAfterTeleport();
             }
         }
     }
 
     [Export] private NodePath? _cameraPath { get; set; }
-    private Camera2D? _camera;
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         if (EntityRegistry.Player == null)
             throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
         EntityRegistry.Player.Connect(nameof(PlayerData.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
@@ -44,12 +42,9 @@ public class PlayerNode2D : Node2D {
         Teleporting = true;
     }
 
-    private void OnGridPositionChanged()
-    {
-        var tileWorldPosition = (EntityRegistry.Player!.GridPosition * TileMapGridRepresentation.TileSize);
-        if (tileWorldPosition != null) {
-            _targetPosition = new Vector2(tileWorldPosition.Value.x, tileWorldPosition.Value.z);
-        }
+    private void OnGridPositionChanged() {
+        var tileWorldPosition = EntityRegistry.Player!.GridPosition * TileMapGridRepresentation.TileSize;
+        if (tileWorldPosition != null) _targetPosition = new Vector2(tileWorldPosition.Value.x, tileWorldPosition.Value.z);
     }
 
     private async void EnableCameraSmoothingAfterTeleport() {
@@ -64,13 +59,11 @@ public class PlayerNode2D : Node2D {
                 Position = _targetPosition.Value;
                 _visualRepresentation.Position = Position;
                 Teleporting = false;
-            } else {
-                if (!Position.IsEqualApprox(_targetPosition.Value)) {
-                    Position = _targetPosition.Value;
-                }
-                if (!_visualRepresentation.Position.IsEqualApprox(_targetPosition.Value)) {
+            }
+            else {
+                if (!Position.IsEqualApprox(_targetPosition.Value)) Position = _targetPosition.Value;
+                if (!_visualRepresentation.Position.IsEqualApprox(_targetPosition.Value))
                     _visualRepresentation.Position = _visualRepresentation.Position.LinearInterpolate(_targetPosition.Value, delta / 0.0625f);
-                }
             }
         }
     }

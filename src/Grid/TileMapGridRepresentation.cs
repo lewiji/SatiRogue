@@ -1,50 +1,40 @@
 using Godot;
-using RoguelikeMono.scenes;
+using SatiRogue.scenes;
 
-namespace RoguelikeMono.Grid;
+namespace SatiRogue.Grid;
 
-public class TileMapGridRepresentation : TileMap
-{
+public class TileMapGridRepresentation : TileMap {
+    public static int? TileSize;
+    private Camera2D? _camera2D;
     private Label? _debugLabel;
     [Export] private NodePath? _cameraNodePath { get; set; }
-    private Camera2D? _camera2D;
-    
+
     [Export] private NodePath? _twoDeeNodePath { get; set; }
-    
 
-    public static int? TileSize;
-
-    public override void _Ready()
-    {
+    public override void _Ready() {
         Clear();
-        
-        TileSize = (int)CellSize.x;
+
+        TileSize = (int) CellSize.x;
 
         _debugLabel = GetNode<Label>("Label");
         _camera2D = GetNode<Camera2D>(_cameraNodePath);
-        
+
         CallDeferred(nameof(ConnectToGridGenerator));
     }
 
     private void ConnectToGridGenerator() {
-        var gridGenerator = GetNode<scenes.TwoDee>(_twoDeeNodePath).GridGenerator;
+        var gridGenerator = GetNode<TwoDee>(_twoDeeNodePath).GridGenerator;
         gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
     }
 
-    private void OnMapDataChanged()
-    {
+    private void OnMapDataChanged() {
         GD.Print("2d: Mapdata changed");
         var cells = GridGenerator._mapData.Cells;
-        foreach (var cell in cells)
-        {
-            SetCell(cell.Position.x, cell.Position.z, GetTileId(cell));
-        }
+        foreach (var cell in cells) SetCell(cell.Position.x, cell.Position.z, GetTileId(cell));
     }
 
-    private int GetTileId(Cell cell)
-    {
-        return cell.CellType switch
-        {
+    private int GetTileId(Cell cell) {
+        return cell.CellType switch {
             CellType.Floor => 12,
             CellType.Stairs => 2,
             CellType.Wall => 17,
@@ -54,12 +44,9 @@ public class TileMapGridRepresentation : TileMap
         };
     }
 
-    public override void _Input(InputEvent @event)
-    {
+    public override void _Input(InputEvent @event) {
         if (_debugLabel == null || _camera2D == null) return;
         if (@event is InputEventMouse inputEventMouse)
-        {
-            _debugLabel.Text = ((inputEventMouse.Position / CellSize) * _camera2D.Zoom).Round().ToString();
-        }
+            _debugLabel.Text = (inputEventMouse.Position / CellSize * _camera2D.Zoom).Round().ToString();
     }
 }

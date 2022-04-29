@@ -1,20 +1,27 @@
 <Project Sdk="Godot.NET.Sdk/3.3.0">
-  <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-    <LangVersion>10</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="GodotOnReady" Version="1.1.6" />
-    <PackageReference Include="MersenneTwister" Version="1.0.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="lib\activelogic\Debug\net472\main.dll" />
-    <Content Include="lib\activelogic\Debug\net472\main.pdb" />
-    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.deps.json" />
-    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.dll" />
-    <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.pdb" />
-    <Content Include="lib\activelogic\Release\net472\main.dll" />
-    <Content Include="lib\activelogic\Release\net472\main.pdb" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <RootNamespace>SatiRogue</RootNamespace>
+        <PackageId>SatiRogue</PackageId>
+        <PackageVersion>0.0.1</PackageVersion>
+        <Title>SatiRogue</Title>
+        <Authors>sati.stream</Authors>
+        <Company>sati.stream</Company>
+        <Product>SatiRogue</Product>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="GodotOnReady" Version="1.1.6" />
+        <PackageReference Include="MersenneTwister" Version="1.0.6" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="lib\activelogic\Debug\net472\main.dll" />
+        <Content Include="lib\activelogic\Debug\net472\main.pdb" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.deps.json" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.dll" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.pdb" />
+        <Content Include="lib\activelogic\Release\net472\main.dll" />
+        <Content Include="lib\activelogic\Release\net472\main.pdb" />
+    </ItemGroup>
 </Project>

@@ -1,12 +1,11 @@
 using Godot;
-using RoguelikeMono.Math;
 
-namespace RoguelikeMono.Grid.Entities;
+namespace SatiRogue.Grid.Entities;
 
-public class PlayerData : EntityData
-{
-    [Signal] public delegate void PlayerPositionChanged();
-    
+public class PlayerData : EntityData {
+    [Signal]
+    public delegate void PlayerPositionChanged();
+
     public override void _Ready() {
         BlocksCell = true;
         Connect(nameof(PositionChanged), this, nameof(OnPositionChanged));

@@ -1,10 +1,8 @@
 using Godot;
-using RoguelikeMono.Tools;
+using SatiRogue.Tools;
 
-namespace RoguelikeMono
-{
-    public partial class Main : Node
-    {
-        private Rng _rng = new Rng();
-    }
+namespace SatiRogue; 
+
+public class Main : Node {
+    private Rng _rng = new();
 }
