@@ -14,11 +14,11 @@ public class GridGenerator : Node {
     public delegate void MapChanged();
 
     public static MapData _mapData = new();
-    private static readonly int _height = 512;
-    private static readonly int _roomMaxWidth = 108;
+    private static readonly int _height = 256;
+    private static readonly int _roomMaxWidth = 32;
     private static readonly int _roomMinWidth = 3;
-    private static readonly int _rooms = 102;
-    private static readonly int _width = 512;
+    private static readonly int _rooms = 30;
+    private static readonly int _width = 256;
 
     public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", _height}, {"MaxWidth", _roomMaxWidth}, 
         {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", _width}}; 

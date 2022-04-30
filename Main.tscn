@@ -20,14 +20,14 @@ script = ExtResource( 9 )
 GridGeneratorPath = NodePath("../GridGenerator")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_right = 2560.0
+margin_bottom = 1440.0
 columns = 2
 
 [node name="ViewportContainer2D" type="ViewportContainer" parent="GridContainer"]
 self_modulate = Color( 1, 1, 1, 0.631373 )
-margin_right = 958.0
-margin_bottom = 357.0
+margin_right = 1278.0
+margin_bottom = 477.0
 
 [node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainer2D"]
 size = Vector2( 576, 303 )
@@ -38,32 +38,32 @@ render_target_update_mode = 3
 GridGeneratorPath = NodePath("../../../../GridGenerator")
 
 [node name="Control" type="Control" parent="GridContainer"]
-margin_left = 962.0
-margin_right = 1920.0
-margin_bottom = 357.0
+margin_left = 1282.0
+margin_right = 2560.0
+margin_bottom = 477.0
 rect_min_size = Vector2( 64, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control2" type="Control" parent="GridContainer"]
-margin_top = 361.0
-margin_right = 958.0
-margin_bottom = 718.0
+margin_top = 481.0
+margin_right = 1278.0
+margin_bottom = 958.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control3" type="Control" parent="GridContainer"]
-margin_left = 962.0
-margin_top = 361.0
-margin_right = 1920.0
-margin_bottom = 718.0
+margin_left = 1282.0
+margin_top = 481.0
+margin_right = 2560.0
+margin_bottom = 958.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control4" type="Control" parent="GridContainer"]
-margin_top = 722.0
-margin_right = 958.0
-margin_bottom = 1079.0
+margin_top = 962.0
+margin_right = 1278.0
+margin_bottom = 1439.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0

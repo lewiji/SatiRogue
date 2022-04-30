@@ -14,6 +14,7 @@
     <ItemGroup>
         <PackageReference Include="GodotOnReady" Version="1.1.6" />
         <PackageReference Include="MersenneTwister" Version="1.0.6" />
+        <PackageReference Include="System.Text.Json" Version="6.0.3" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="lib\activelogic\Debug\net472\main.dll" />

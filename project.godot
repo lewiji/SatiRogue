@@ -13,19 +13,19 @@ config_version=4
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
 run/delta_sync_after_draw=true
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
-
-[debug]
-
-settings/fps/force_fps=144
-settings/gdscript/max_call_stack=4096
-settings/visual_script/max_call_stack=4096
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=2560
+window/size/height=1440
+window/size/always_on_top=true
+window/size/test_width=900
+window/size/test_height=900
 window/dpi/allow_hidpi=true
+window/stretch/mode="2d"
 
 [editor_plugins]
 
@@ -64,14 +64,16 @@ move_down={
 
 [physics]
 
-common/physics_fps=140
+common/physics_fps=120
 common/physics_jitter_fix=0.0
 common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/shadows/filter_mode=2
+2d/snapping/use_gpu_pixel_snap=true
+quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 quality/filters/use_nearest_mipmap_filter=true
-quality/spatial_partitioning/render_tree_balance=0.4
+quality/spatial_partitioning/render_tree_balance=0.5
+batching/precision/uv_contract=true
 environment/default_environment="res://default_env.tres"

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SCITX_BIG__08.png-7c0561357a31c0fddc296e464d0a55b7.stex"
+path="res://.import/lines01.png-ad1d25c7741d380fd78f555d60a84183.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__08.png"
-dest_files=[ "res://.import/SCITX_BIG__08.png-7c0561357a31c0fddc296e464d0a55b7.stex" ]
+source_file="res://assets/splash/lines01.png"
+dest_files=[ "res://.import/lines01.png-ad1d25c7741d380fd78f555d60a84183.stex" ]
 
 [params]
 
@@ -19,11 +19,11 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0
