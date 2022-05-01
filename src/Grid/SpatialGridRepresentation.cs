@@ -76,6 +76,8 @@ public partial class SpatialGridRepresentation : Spatial {
             var chunkRoom = new Room {
                 Name = $"Chunk{chunkId}"
             };
+            AddChild(chunkRoom);
+            chunkRoom.Owner = this;
             chunkRoom.Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
 
 
@@ -93,6 +95,7 @@ public partial class SpatialGridRepresentation : Spatial {
                     },
                     CastShadow = GeometryInstance.ShadowCastingSetting.On
                 };
+                mmInst.Owner = this;
                 chunkRoom.AddChild(mmInst);
 
 
@@ -126,30 +129,49 @@ public partial class SpatialGridRepresentation : Spatial {
                 }
             }*/
 
-            var area = new Area();
+            /*var area = new Area();
             chunkRoom.AddChild(area);
-            var halfChunk = new Vector3(ChunkWidth / 2f, ChunkWidth / 2f, ChunkWidth / 2f);
             area.AddChild(new CollisionShape {
                 Shape = new BoxShape {
                     Extents = halfChunk
                 }
             });
             area.Translation = halfChunk;
-            area.Connect("body_entered", this, nameof(OnBodyEntered), new Godot.Collections.Array{chunkRoom.Name});
+            area.Connect("body_entered", this, nameof(OnBodyEntered), new Godot.Collections.Array{chunkRoom.Name});*/
+
+            var boundSize = new Vector3(ChunkWidth, ChunkWidth, ChunkWidth);
+            var boundMesh = new MeshInstance {Name = $"Bound_Chunk{chunkId}"};
+            boundMesh.Mesh = new CubeMesh {
+                Size = boundSize
+            };
+            boundMesh.MaterialOverride = _debugPortalMaterial;
+            //boundMesh.Translation = new Vector3(-ChunkWidth / 2f, -ChunkWidth / 2f, -ChunkWidth / 2f);
+            boundMesh.Owner = this;
+            chunkRoom.AddChild(boundMesh);
 
             var portals = CreatePortals();
             foreach (var portal in portals) {
                 chunkRoom.AddChild(portal);
+                portal.Owner = this;
                 var debugPortalMesh = CreateDebugPortalMesh(portal);
                 chunkRoom.AddChild(debugPortalMesh);
+                debugPortalMesh.Owner = this;
             }
 
-            AddChild(chunkRoom);
+            chunkRoom.Connect("gameplay_entered", this, nameof(OnGameplayEntered), new Godot.Collections.Array {chunkRoom});
         }
 
         Logger.Print("Chunking finished.");
 
         _roomManager.RoomsConvert();
+
+        var packed = new PackedScene();
+        packed.Pack(this);
+        ResourceSaver.Save("res://testgeometry.scn", packed);
+    }
+
+    private void OnGameplayEntered(Node room) {
+        GD.Print($"Entered {room.Name}");
     }
 
     private void OnBodyEntered(Node body, string name) {

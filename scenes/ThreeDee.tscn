@@ -96,8 +96,8 @@ script = ExtResource( 3 )
 
 [node name="RoomManager" type="RoomManager" parent="."]
 roomlist = NodePath("../Geometry")
-pvs_mode = 2
-merge_meshes = true
+gameplay_monitor = true
+room_simplify = 0.0
 
 [node name="Player" type="Spatial" parent="."]
 script = ExtResource( 9 )

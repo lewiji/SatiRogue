@@ -6,7 +6,7 @@ namespace SatiRogue.Debug;
 public enum LogLevel {None, Error, Warn, Info, Debug, All}
 
 public static class Logger {
-    private static LogLevel _level = OS.HasFeature("debug") ? LogLevel.Debug : LogLevel.Error;
+    private static LogLevel _level = OS.HasFeature("debug") ? LogLevel.Info : LogLevel.Error;
     public static LogLevel Level {
         get => _level;
         set => _level = value;

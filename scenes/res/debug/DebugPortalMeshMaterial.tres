@@ -4,10 +4,10 @@
 
 [resource]
 flags_transparent = true
-flags_vertex_lighting = true
+flags_unshaded = true
 params_diffuse_mode = 4
 params_specular_mode = 4
 params_blend_mode = 1
 params_cull_mode = 2
-albedo_color = Color( 1, 1, 1, 0.541176 )
+albedo_color = Color( 0.301961, 0.301961, 0.301961, 0.12549 )
 albedo_texture = ExtResource( 1 )
