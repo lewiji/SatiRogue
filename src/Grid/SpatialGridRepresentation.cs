@@ -10,7 +10,7 @@ using SatiRogue.scenes;
 namespace SatiRogue.Grid;
 
 public partial class SpatialGridRepresentation : Spatial {
-    private int ChunkWidth = 16;
+    private int ChunkWidth = 15;
     private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
 
     private readonly SpatialMaterial _debugPortalMaterial =
@@ -35,9 +35,9 @@ public partial class SpatialGridRepresentation : Spatial {
 
     private Vector3i[] GetChunkMinMaxCoords(int chunkId, int maxWidth) {
         var start = new Vector3i(
-            (chunkId * ChunkWidth) % (maxWidth), 
-            0, 
-            (chunkId / (maxWidth / ChunkWidth)) * ChunkWidth);
+            (chunkId * ChunkWidth) % (maxWidth),
+            0,
+            Mathf.FloorToInt((chunkId * (float)ChunkWidth) / maxWidth) * ChunkWidth);
 
         var end = start + new Vector3i(ChunkWidth, 0, ChunkWidth);
         var coords = new[] { start, end };
@@ -56,14 +56,15 @@ public partial class SpatialGridRepresentation : Spatial {
         var mapParams = GridGenerator.GetParams();
         var maxWidth = mapParams["Width"];
         int chunkSize = ChunkWidth * ChunkWidth;
-        var totalChunks = Mathf.CeilToInt((mapParams["Width"] * mapParams["Height"]) / (float)chunkSize);
+        var totalChunks = Mathf.CeilToInt(((mapParams["Width"] + ChunkWidth) * (mapParams["Height"] + ChunkWidth)) / (float)chunkSize);
 
         Logger.Print($"Chunk width: {ChunkWidth}");
+        Logger.Print($"Max width: {maxWidth}");
         Logger.Print($"{cells.Count} map cells total.");
         Logger.Print($"Total chunks: {totalChunks}");
 
         for (var chunkId = 0; chunkId < totalChunks; chunkId++) {
-            var chunkCoords = GetChunkMinMaxCoords(chunkId, maxWidth);
+            var chunkCoords = GetChunkMinMaxCoords(chunkId, maxWidth + ChunkWidth);
             var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToList();
             Logger.Print($"Chunking: Taking {chunkCells.Count} cells");
             Logger.Print("---");
@@ -95,59 +96,29 @@ public partial class SpatialGridRepresentation : Spatial {
                     },
                     CastShadow = GeometryInstance.ShadowCastingSetting.On
                 };
-                mmInst.Owner = this;
                 chunkRoom.AddChild(mmInst);
+                mmInst.Owner = this;
 
 
                 for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
                     mmInst.Multimesh.SetInstanceTransform(i,
                         new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position.ToVector3() - chunkRoom.Translation));
                 }
-
-                /*var mmAabb = mmInst.GetTransformedAabb();
-                if (!mmAabb.HasNoArea()) {
-                    if (roomAabb == null) {
-                        roomAabb = mmAabb;
-                    }
-                    else {
-                        roomAabb = roomAabb.Value.Merge(mmAabb);
-                    }
-                }*/
             }
 
-            /*if (roomAabb.HasValue && !roomAabb.Value.HasNoArea()) {
-                var pos = roomAabb.Value.Position + new Vector3(1f, 0, 1f);
-                var end = roomAabb.Value.End - new Vector3(1f, 0, 1f);
-                Logger.Print(roomAabb.Value.Position);
-                Logger.Print(roomAabb.Value.End);
-
-                var portals = CreatePortals(pos, end);
-                foreach (var portal in portals) {
-                    chunkRoom.AddChild(portal);
-                    var debugPortalMesh = CreateDebugPortalMesh(portal);
-                    chunkRoom.AddChild(debugPortalMesh);
-                }
-            }*/
-
-            /*var area = new Area();
-            chunkRoom.AddChild(area);
-            area.AddChild(new CollisionShape {
-                Shape = new BoxShape {
-                    Extents = halfChunk
-                }
-            });
-            area.Translation = halfChunk;
-            area.Connect("body_entered", this, nameof(OnBodyEntered), new Godot.Collections.Array{chunkRoom.Name});*/
 
             var boundSize = new Vector3(ChunkWidth, ChunkWidth, ChunkWidth);
             var boundMesh = new MeshInstance {Name = $"Bound_Chunk{chunkId}"};
+            boundMesh.Translation = new Vector3(ChunkWidth / 2f, ChunkWidth / 2f, ChunkWidth / 2f);
             boundMesh.Mesh = new CubeMesh {
                 Size = boundSize
             };
             boundMesh.MaterialOverride = _debugPortalMaterial;
+            boundMesh.PortalMode = CullInstance.PortalModeEnum.Ignore;
+            boundMesh.IncludeInBound = false;
             //boundMesh.Translation = new Vector3(-ChunkWidth / 2f, -ChunkWidth / 2f, -ChunkWidth / 2f);
-            boundMesh.Owner = this;
             chunkRoom.AddChild(boundMesh);
+            boundMesh.Owner = this;
 
             var portals = CreatePortals();
             foreach (var portal in portals) {
@@ -155,6 +126,7 @@ public partial class SpatialGridRepresentation : Spatial {
                 portal.Owner = this;
                 var debugPortalMesh = CreateDebugPortalMesh(portal);
                 chunkRoom.AddChild(debugPortalMesh);
+                debugPortalMesh.Visible = false;
                 debugPortalMesh.Owner = this;
             }
 
@@ -163,7 +135,7 @@ public partial class SpatialGridRepresentation : Spatial {
 
         Logger.Print("Chunking finished.");
 
-        _roomManager.RoomsConvert();
+        _roomManager?.RoomsConvert();
 
         var packed = new PackedScene();
         packed.Pack(this);
@@ -190,7 +162,7 @@ public partial class SpatialGridRepresentation : Spatial {
             }
         };
         portalSouth.RotationDegrees = new Vector3(0, 180f, 0);
-        portalSouth.Translation = new Vector3(portalSize + 0.5f, 0, ChunkWidth + 0.5f);
+        portalSouth.Translation = new Vector3(portalSize + 1f, 0, ChunkWidth + 1f);
 
         var portalEast = new Portal {
             Name = "PortalEast",
@@ -202,7 +174,7 @@ public partial class SpatialGridRepresentation : Spatial {
             }
         };
         portalEast.RotationDegrees = new Vector3(0, -90f, 0);
-        portalEast.Translation = new Vector3(ChunkWidth + 0.5f, 0, portalSize + 0.5f);
+        portalEast.Translation = new Vector3(ChunkWidth + 1f, 0, portalSize + 1f);
 
         return new[] {portalSouth, portalEast};
     }

@@ -1,24 +1,31 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using Godot;
 
 namespace SatiRogue.Debug; 
 
 public enum LogLevel {None, Error, Warn, Info, Debug, All}
 
-public static class Logger {
-    private static LogLevel _level = OS.HasFeature("debug") ? LogLevel.Info : LogLevel.Error;
-    public static LogLevel Level {
-        get => _level;
-        set => _level = value;
-    }
+public class Logger : Node {
+    public static LogLevel Level { get; set; } = OS.HasFeature("debug") ? LogLevel.Debug : LogLevel.Error;
+    private static readonly Queue<string> QueuedLogs = new Queue<string>();
+    public static readonly int MaxLogsPerFrame = 10;
     
-    private static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
         IncludeFields = true
     };
 
     public static void Print(object what, LogLevel logLevel = LogLevel.Debug) {
-        if (logLevel == LogLevel.All || _level >= logLevel) {
-            GD.PrintS("  =>", logLevel, ":", JsonSerializer.Serialize(what, _jsonSerializerOptions));
+        if (logLevel == LogLevel.All || Level >= logLevel) {
+            QueuedLogs.Enqueue($"  => {logLevel} : {JsonSerializer.Serialize(what, JsonSerializerOptions)}");
+        }
+    }
+
+    public override void _Process(float delta) {
+        if (QueuedLogs.Count <= 0) return;
+        var numToLog = Mathf.Min(MaxLogsPerFrame, QueuedLogs.Count);
+        for (var i = 0; i < numToLog; i++) {
+            GD.Print(QueuedLogs.Dequeue());
         }
     }
 }

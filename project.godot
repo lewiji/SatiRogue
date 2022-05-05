@@ -17,6 +17,10 @@ boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
+[autoload]
+
+Logger="*res://src/Debug/Logger.cs"
+
 [display]
 
 window/size/width=2560
@@ -62,6 +66,14 @@ move_down={
  ]
 }
 
+[memory]
+
+limits/message_queue/max_size_kb=8192
+
+[network]
+
+limits/debugger_stdout/max_messages_per_frame=100
+
 [physics]
 
 common/physics_fps=120
@@ -74,6 +86,5 @@ common/enable_pause_aware_picking=true
 quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 quality/filters/use_nearest_mipmap_filter=true
-quality/spatial_partitioning/render_tree_balance=0.5
 batching/precision/uv_contract=true
 environment/default_environment="res://default_env.tres"

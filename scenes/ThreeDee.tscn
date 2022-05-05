@@ -87,6 +87,8 @@ directional_shadow_normal_bias = 0.05
 
 [node name="FloorPlane" type="MeshInstance" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 512, -0.15, 512 )
+portal_mode = 3
+include_in_bound = false
 mesh = SubResource( 2 )
 skeleton = NodePath("../..")
 material/0 = null
@@ -95,9 +97,11 @@ material/0 = null
 script = ExtResource( 3 )
 
 [node name="RoomManager" type="RoomManager" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.66458, -0.482946, 5.43474 )
 roomlist = NodePath("../Geometry")
 gameplay_monitor = true
-room_simplify = 0.0
+show_margins = false
+roaming_expansion_margin = 2.0
 
 [node name="Player" type="Spatial" parent="."]
 script = ExtResource( 9 )
