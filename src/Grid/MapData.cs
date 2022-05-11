@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Godot;
 using SatiRogue.Math;
 
 namespace SatiRogue.Grid;
@@ -6,6 +7,7 @@ namespace SatiRogue.Grid;
 public class MapData {
     private readonly Dictionary<long, Cell> _cells = new();
     public IEnumerable<Cell> Cells => _cells.Values;
+    public List<Vector3> CellsVisibilityChanged = new();
 
     /**
      * Adds new cell if nonexistant at position, and returns the new cell.
@@ -83,5 +85,17 @@ public class MapData {
      */
     public void ClearCells() {
         _cells.Clear();
+    }
+
+    public void SetLight(Vector3i gridVec, float f) {
+        var cell = GetCellAt(gridVec);
+        if (cell.Luminosity == null) {
+            CellsVisibilityChanged.Add(cell.Position.ToVector3());
+        }
+        cell.Luminosity = f;
+    }
+
+    public bool IsWall(Vector3i gridVec) {
+        return GetCellAt(gridVec).Blocked;
     }
 }

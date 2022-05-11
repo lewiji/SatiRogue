@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using SatiRogue.Debug;
 using SatiRogue.Math;
 
 namespace SatiRogue.Grid.Entities;
@@ -23,7 +24,7 @@ public class PlayerData : EntityData {
     }
 
     private void CalculateVisibility() {
-        Vector3i[] positions = new[] {
+        /*Vector3i[] positions = {
             GridPosition,
             GridPosition + Vector3i.Forward,
             GridPosition + Vector3i.Back,
@@ -34,12 +35,14 @@ public class PlayerData : EntityData {
             GridPosition + Vector3i.Back + Vector3i.Left,
             GridPosition + Vector3i.Back + Vector3i.Right,
         };
-        Array<Vector3> changedPositions = new Array<Vector3>();
+        var changedPositions = new Array<Vector3>();
         foreach (var position in positions) {
             GridGenerator._mapData.SetCellVisibility(position, CellVisibility.CurrentlyVisible);
             changedPositions.Add(position.ToVector3());
         }
         
-        GetNode<GridGenerator>(GridGenerator.Path).EmitSignal(nameof(GridGenerator.VisibilityChanged), changedPositions);
+        GetNode<GridGenerator>(GridGenerator.Path).EmitSignal(nameof(GridGenerator.VisibilityChanged), changedPositions);*/
+        Logger.Info("Computing Visibility");
+        ShadowCast.ComputeVisibility(GridGenerator._mapData, GridPosition, 11.0f);
     }
 }

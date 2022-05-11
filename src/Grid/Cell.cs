@@ -33,6 +33,17 @@ public class Cell {
    public long Id;
    public HashSet<ulong> Occupants = new();
    public CellVisibility Visibility = CellVisibility.Unseen;
+   private float? _luminosity = null;
+
+   public float? Luminosity {
+      get => _luminosity;
+      set {
+         _luminosity = value;
+         if (_luminosity != null) {
+            SetCellVisibility(CellVisibility.CurrentlyVisible);
+         }
+      }
+   }
 
    public Cell(long id, CellType? type = null, IEnumerable<ulong>? occupants = null, IEnumerable<CellCondition>? conditions = null,
       CellVisibility? visibility = null) {

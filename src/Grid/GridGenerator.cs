@@ -16,14 +16,14 @@ public class GridGenerator : Node {
 
     public static MapData _mapData = new();
     public static NodePath? Path;
-    private static readonly int _height = 150;
+    public static readonly int Height = 150;
     private static readonly int _roomMaxWidth = 32;
     private static readonly int _roomMinWidth = 3;
     private static readonly int _rooms = 35;
-    private static readonly int _width = 150;
+    public static readonly int Width = 150;
 
-    public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", _height}, {"MaxWidth", _roomMaxWidth}, 
-        {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", _width}};
+    public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", Height}, {"MaxWidth", _roomMaxWidth}, 
+        {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", Width}};
 
     public override void _EnterTree() {
         Path = GetPath();
@@ -45,6 +45,14 @@ public class GridGenerator : Node {
 
         Logger.Info("Finished generating grid.");
         CallDeferred(nameof(EmitMapChangedSignal));
+    }
+
+    public override void _Process(float delta) {
+        if (_mapData.CellsVisibilityChanged.Count > 0) {
+            Logger.Info($"{_mapData.CellsVisibilityChanged.Count} cells visibility changed");
+            EmitSignal(nameof(VisibilityChanged), _mapData.CellsVisibilityChanged.ToArray());
+            _mapData.CellsVisibilityChanged.Clear();
+        }
     }
 
     private void EmitMapChangedSignal() {
@@ -128,8 +136,8 @@ public class GridGenerator : Node {
         for (var roomIndex = 0; roomIndex < _rooms; roomIndex++) {
             var roomWidth = Rng.IntRange(_roomMinWidth, _roomMaxWidth);
             var roomHeight = Rng.IntRange(_roomMinWidth, _roomMaxWidth);
-            var roomMaxX = _width - roomWidth;
-            var roomMaxY = _height - roomHeight;
+            var roomMaxX = Width - roomWidth;
+            var roomMaxY = Height - roomHeight;
             var roomX = Rng.IntRange(1, roomMaxX);
             var roomY = Rng.IntRange(1, roomMaxY);
             var floorspace = new Rect2(roomX, roomY, roomWidth, roomHeight);

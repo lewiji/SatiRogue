@@ -41,6 +41,7 @@ public class TileMapGridRepresentation : TileMap {
     }
 
     private void OnVisibilityChanged(Vector3[] positions) {
+        Logger.Info("Tilemap visibility updating");
         var cells = GridGenerator._mapData.Cells;
         foreach (var cell in cells) {
             if (GetTileId(cell) is { } cellValue) {
