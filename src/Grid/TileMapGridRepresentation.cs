@@ -1,4 +1,6 @@
 using Godot;
+using SatiRogue.Debug;
+using SatiRogue.Math;
 using SatiRogue.scenes;
 
 namespace SatiRogue.Grid;
@@ -25,16 +27,31 @@ public class TileMapGridRepresentation : TileMap {
     private void ConnectToGridGenerator() {
         var gridGenerator = GetNode<TwoDee>(_twoDeeNodePath).GridGenerator;
         gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
+        gridGenerator?.Connect(nameof(GridGenerator.VisibilityChanged), this, nameof(OnVisibilityChanged));
     }
 
     private void OnMapDataChanged() {
-        GD.Print("2d: Mapdata changed");
+        Logger.Info("2d: Mapdata changed");
         var cells = GridGenerator._mapData.Cells;
-        foreach (var cell in cells) SetCell(cell.Position.x, cell.Position.z, GetTileId(cell));
+        foreach (var cell in cells) {
+            if (GetTileId(cell) is { } cellValue) {
+                SetCell(cell.Position.x, cell.Position.z, cellValue);
+            }
+        }
     }
 
-    private int GetTileId(Cell cell) {
-        return cell.CellType switch {
+    private void OnVisibilityChanged(Vector3[] positions) {
+        var cells = GridGenerator._mapData.Cells;
+        foreach (var cell in cells) {
+            if (GetTileId(cell) is { } cellValue) {
+                SetCell(cell.Position.x, cell.Position.z, cellValue);
+            }
+        }
+    }
+
+    private static int? GetTileId(Cell cell) {
+        if (cell.Visibility == CellVisibility.Unseen) return null;
+        return cell.Type switch {
             CellType.Floor => 12,
             CellType.Stairs => 2,
             CellType.Wall => 17,

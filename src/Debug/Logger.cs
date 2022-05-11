@@ -8,17 +8,33 @@ public enum LogLevel {None, Error, Warn, Info, Debug, All}
 
 public class Logger : Node {
     public static LogLevel Level { get; set; } = OS.HasFeature("debug") ? LogLevel.Debug : LogLevel.Error;
-    private static readonly Queue<string> QueuedLogs = new Queue<string>();
-    public static readonly int MaxLogsPerFrame = 10;
-    
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {
+    private static readonly Queue<string> QueuedLogs = new();
+    private const int MaxLogsPerFrame = 10;
+
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new() {
         IncludeFields = true
     };
 
-    public static void Print(object what, LogLevel logLevel = LogLevel.Debug) {
+    public static void Print(object what, LogLevel logLevel = LogLevel.Info) {
         if (logLevel == LogLevel.All || Level >= logLevel) {
             QueuedLogs.Enqueue($"  => {logLevel} : {JsonSerializer.Serialize(what, JsonSerializerOptions)}");
         }
+    }
+
+    public static void Debug(object what) {
+        Print(what, LogLevel.Debug);
+    }
+    
+    public static void Error(object what) {
+        Print(what, LogLevel.Error);
+    }
+    
+    public static void Warn(object what) {
+        Print(what, LogLevel.Warn);
+    }
+    
+    public static void Info(object what) {
+        Print(what, LogLevel.Info);
     }
 
     public override void _Process(float delta) {

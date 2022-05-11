@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using SatiRogue.Debug;
 using SatiRogue.Grid.Entities;
 using SatiRogue.Math;
 using SatiRogue.Tools;
@@ -10,10 +11,11 @@ using SatiRogue.Tools;
 namespace SatiRogue.Grid;
 
 public class GridGenerator : Node {
-    [Signal]
-    public delegate void MapChanged();
+    [Signal] public delegate void MapChanged();
+    [Signal] public delegate void VisibilityChanged(Vector3[] changedCells);
 
     public static MapData _mapData = new();
+    public static NodePath? Path;
     private static readonly int _height = 150;
     private static readonly int _roomMaxWidth = 32;
     private static readonly int _roomMinWidth = 3;
@@ -21,11 +23,14 @@ public class GridGenerator : Node {
     private static readonly int _width = 150;
 
     public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", _height}, {"MaxWidth", _roomMaxWidth}, 
-        {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", _width}}; 
+        {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", _width}};
+
+    public override void _EnterTree() {
+        Path = GetPath();
+    }
 
     public override void _Ready() {
         GD.Randomize();
-
         CallDeferred(nameof(StartGeneration));
     }
 
@@ -38,8 +43,7 @@ public class GridGenerator : Node {
         FloodFillVoidSpaces(voidSpaces);
         PlacePlayer(voidSpaces);
 
-
-        GD.Print("Finished generating grid.");
+        Logger.Info("Finished generating grid.");
         CallDeferred(nameof(EmitMapChangedSignal));
     }
 
@@ -54,7 +58,7 @@ public class GridGenerator : Node {
         var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
         EntityRegistry.Player.GridPosition = new Vector3i(startX, 0, startY);
 
-        GD.Print($"Moved player to {EntityRegistry.Player.GridPosition}");
+        Logger.Info($"Moved player to {EntityRegistry.Player.GridPosition}");
     }
 
     private void AddCorridors(HashSet<Rect2> voidSpaces) {
@@ -95,14 +99,14 @@ public class GridGenerator : Node {
         while (tiles.Count > 0) {
             var position = tiles.Pop();
             var cell = _mapData.GetCellAt(position);
-            switch (cell.CellType) {
+            switch (cell.Type) {
                 // null is an uncarved space, make it a wall
                 case null:
                     cell.SetCellType(CellType.Wall);
                     break;
                 case CellType.Void:
                     // set Void, non-null spaces we've traversed to Floors
-                    cell.CellType = CellType.Floor;
+                    cell.Type = CellType.Floor;
 
                     // Flood fill recursively
                     tiles.Push(new Vector3i(position.x - 1, 0, position.z));

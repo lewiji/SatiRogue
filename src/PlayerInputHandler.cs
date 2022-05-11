@@ -42,7 +42,9 @@ public class PlayerInputHandler : Node {
                 CanMove = false;
             }
 
-            if (!CanMove) _moveTimer?.Start(0.1f);
+            if (!CanMove) {
+                _moveTimer?.Start(0.1f);
+            }
         }
     }
 }

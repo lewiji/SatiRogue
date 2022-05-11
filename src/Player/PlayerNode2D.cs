@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Grid;
 using SatiRogue.Grid.Entities;
 
@@ -16,15 +17,8 @@ public class PlayerNode2D : Node2D {
         get => _teleporting;
         set {
             _teleporting = value;
-            if (value) {
-                if (_camera != null) {
-                    GD.Print("Disable cam smoothing");
-                    _camera.SmoothingEnabled = false;
-                }
-            }
-            else {
-                if (_camera != null) EnableCameraSmoothingAfterTeleport();
-            }
+            if (_camera == null) return;
+            SetCameraSmoothing(_teleporting);
         }
     }
 
@@ -47,24 +41,21 @@ public class PlayerNode2D : Node2D {
         if (tileWorldPosition != null) _targetPosition = new Vector2(tileWorldPosition.Value.x, tileWorldPosition.Value.z);
     }
 
-    private async void EnableCameraSmoothingAfterTeleport() {
-        GD.Print("Enable cam smoothing");
-        await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-        if (_camera != null) _camera.SmoothingEnabled = true;
+    private async void SetCameraSmoothing(bool enabled) {
+        if (!enabled) await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+        if (_camera != null) _camera.SmoothingEnabled = enabled;
     }
 
     public override void _PhysicsProcess(float delta) {
-        if (_targetPosition != null && _visualRepresentation != null) {
-            if (Teleporting) {
-                Position = _targetPosition.Value;
-                _visualRepresentation.Position = Position;
-                Teleporting = false;
-            }
-            else {
-                if (!Position.IsEqualApprox(_targetPosition.Value)) Position = _targetPosition.Value;
-                if (!_visualRepresentation.Position.IsEqualApprox(_targetPosition.Value))
-                    _visualRepresentation.Position = _visualRepresentation.Position.LinearInterpolate(_targetPosition.Value, delta / 0.0625f);
-            }
+        if (_targetPosition == null || _visualRepresentation == null) return;
+        if (Teleporting) {
+            Position = _targetPosition.Value;
+            _visualRepresentation.Position = Position;
+            Teleporting = false;
+        } else {
+            if (!Position.IsEqualApprox(_targetPosition.Value)) Position = _targetPosition.Value;
+            if (!_visualRepresentation.Position.IsEqualApprox(_targetPosition.Value))
+                _visualRepresentation.Position = _visualRepresentation.Position.LinearInterpolate(_targetPosition.Value, delta / 0.0625f);
         }
     }
 }

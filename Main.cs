@@ -5,8 +5,15 @@ using SatiRogue.Tools;
 namespace SatiRogue; 
 
 public class Main : Node {
-    private Rng _rng = new();
-    public override void _EnterTree() {
-        Logger.Print("Test");
+    [Export]
+    public LogLevel LogLevel {
+        get => _logLevel;
+        set {
+            _logLevel = value;
+            Logger.Level = _logLevel;
+        }
     }
+
+    private Rng _rng = new();
+    private LogLevel _logLevel;
 }

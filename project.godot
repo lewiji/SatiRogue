@@ -12,14 +12,15 @@ config_version=4
 
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
-run/delta_sync_after_draw=true
-boot_splash/use_filter=false
-boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
 
 Logger="*res://src/Debug/Logger.cs"
+
+[debug]
+
+settings/fps/force_fps=144
 
 [display]
 
@@ -76,15 +77,16 @@ limits/debugger_stdout/max_messages_per_frame=100
 
 [physics]
 
-common/physics_fps=120
+common/physics_fps=100
 common/physics_jitter_fix=0.0
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/filters/sharpen_intensity=0.2
 2d/snapping/use_gpu_pixel_snap=true
-quality/shadows/filter_mode=0
-quality/filters/anisotropic_filter_level=16
 quality/filters/use_nearest_mipmap_filter=true
 batching/precision/uv_contract=true
+portals/pvs/use_simple_pvs=true
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

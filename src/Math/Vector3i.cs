@@ -439,6 +439,12 @@ public struct Vector3i : IEquatable<Vector3i> {
         y = v.y;
         z = v.z;
     }
+    
+    public Vector3i(Vector3 v) {
+        x = (int)v.x;
+        y = (int)v.y;
+        z = (int)v.z;
+    }
 
     public static Vector3i operator +(Vector3i left, Vector3i right) {
         left.x += right.x;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/res/EnvironmentBase.tres" type="Environment" id=1]
 [ext_resource path="res://scenes/ThreeDee.cs" type="Script" id=2]
@@ -7,13 +7,7 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_n.png" type="Texture" id=5]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_o.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_s.png" type="Texture" id=7]
-[ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=8]
-[ext_resource path="res://scenes/PlayerNode3D.cs" type="Script" id=9]
-[ext_resource path="res://assets/Enemies Pack FIles/spritesheets/slimer-idle.png" type="Texture" id=10]
-[ext_resource path="res://assets/Enemies Pack FIles/spritesheets/slimer-idle_n.png" type="Texture" id=11]
-[ext_resource path="res://assets/Enemies Pack FIles/spritesheets/slimer-idle_o.png" type="Texture" id=12]
-[ext_resource path="res://assets/Enemies Pack FIles/spritesheets/slimer-idle_s.png" type="Texture" id=13]
-[ext_resource path="res://src/Camera/SpatialCamera.cs" type="Script" id=14]
+[ext_resource path="res://src/Player/Player3d.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_vertex_lighting = true
@@ -43,33 +37,6 @@ distance_fade_max_distance = 17.0
 material = SubResource( 1 )
 size = Vector2( 1024, 1024 )
 
-[sub_resource type="SpatialMaterial" id=3]
-flags_albedo_tex_force_srgb = true
-params_diffuse_mode = 2
-params_use_alpha_scissor = true
-params_alpha_scissor_threshold = 0.1
-albedo_texture = ExtResource( 10 )
-metallic = 0.64
-roughness = 0.5
-roughness_texture = ExtResource( 13 )
-emission_enabled = true
-emission = Color( 0, 0, 0, 1 )
-emission_energy = 0.2
-emission_operator = 0
-emission_on_uv2 = false
-emission_texture = ExtResource( 10 )
-normal_enabled = true
-normal_scale = 0.78
-normal_texture = ExtResource( 11 )
-ao_enabled = true
-ao_light_affect = 1.0
-ao_texture = ExtResource( 12 )
-ao_on_uv2 = false
-ao_texture_channel = 0
-
-[sub_resource type="SphereShape" id=4]
-radius = 0.6
-
 [node name="ThreeDee" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -77,13 +44,6 @@ script = ExtResource( 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = ExtResource( 1 )
-
-[node name="DirectionalLight" type="DirectionalLight" parent="Environment"]
-transform = Transform( 0.866025, 1.85586e-07, 0.5, -0.433013, 0.5, 0.75, -0.25, -0.866025, 0.433013, 0, 15, 0 )
-visible = false
-light_indirect_energy = 2.0
-shadow_enabled = true
-directional_shadow_normal_bias = 0.05
 
 [node name="FloorPlane" type="MeshInstance" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 512, -0.15, 512 )
@@ -95,46 +55,6 @@ material/0 = null
 
 [node name="Geometry" type="Spatial" parent="."]
 script = ExtResource( 3 )
+SaveDebugScene = true
 
-[node name="RoomManager" type="RoomManager" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.66458, -0.482946, 5.43474 )
-roomlist = NodePath("../Geometry")
-gameplay_monitor = true
-show_margins = false
-roaming_expansion_margin = 2.0
-
-[node name="Player" type="Spatial" parent="."]
-script = ExtResource( 9 )
-SpriteSmoothing = 0.28
-CameraSmoothing = 0.07
-CameraPath = NodePath("Visual/Camera")
-
-[node name="Visual" type="AnimatedSprite3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 0.838671, 0.544639, 0, -0.544639, 0.838671, 0, 0, 0 )
-portal_mode = 2
-material_override = SubResource( 3 )
-pixel_size = 0.05
-shaded = true
-double_sided = false
-alpha_cut = 2
-frames = ExtResource( 8 )
-
-[node name="OmniLight" type="OmniLight" parent="Player/Visual"]
-transform = Transform( 1, 0, 0, 0, 1, 2.68221e-07, 0, -2.68221e-07, 1, 0, 2.62715, 1.70609 )
-portal_mode = 2
-shadow_enabled = true
-omni_range = 32.0
-
-[node name="Camera" type="Camera" parent="Player/Visual"]
-transform = Transform( 1, 0, 0, 0, 0.891006, 0.45399, 0, -0.45399, 0.891006, 0, 4.23206, 11.0949 )
-current = true
-fov = 75.0
-size = 15.52
-far = 50.0
-script = ExtResource( 14 )
-
-[node name="KinematicBody" type="KinematicBody" parent="Player"]
-
-[node name="CollisionShape" type="CollisionShape" parent="Player/KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 4 )
+[node name="Player" parent="." instance=ExtResource( 8 )]

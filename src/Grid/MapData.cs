@@ -46,6 +46,10 @@ public class MapData {
         return InitialiseOrGetCell(position).SetCellType(type);
     }
 
+    public Cell SetCellVisibility(Vector3i position, CellVisibility? visibility) {
+        return InitialiseOrGetCell(position).SetCellVisibility(visibility);
+    }
+
     /**
      * Add occupant to cell at specified position, and return that cell
      */
