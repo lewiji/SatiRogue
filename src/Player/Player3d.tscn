@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=1]
 [ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://scenes/PlayerNode3D.cs" type="Script" id=4]
 [ext_resource path="res://src/Camera/SpatialCamera.cs" type="Script" id=5]
-
-[sub_resource type="SphereShape" id=4]
-radius = 0.6
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 4 )
@@ -41,9 +38,3 @@ shadow_bias = 0.1
 spot_range = 24.0
 spot_attenuation = 0.5
 spot_angle_attenuation = 1.618
-
-[node name="KinematicBody" type="KinematicBody" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 4 )

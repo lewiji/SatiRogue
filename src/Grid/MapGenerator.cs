@@ -2,25 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
 using SatiRogue.Debug;
-using SatiRogue.Grid.Entities;
+using SatiRogue.Entities;
 using SatiRogue.Math;
 using SatiRogue.Tools;
+using EnemyData = SatiRogue.Entities.EnemyData;
 
 namespace SatiRogue.Grid;
 
-public class GridGenerator : Node {
+public class MapGenerator : Node {
     [Signal] public delegate void MapChanged();
     [Signal] public delegate void VisibilityChanged(Vector3[] changedCells);
 
-    public static MapData _mapData = new();
+    public AStar AStar = new ();
     public static NodePath? Path;
     public static readonly int Height = 150;
     private static readonly int _roomMaxWidth = 32;
     private static readonly int _roomMinWidth = 3;
     private static readonly int _rooms = 35;
     public static readonly int Width = 150;
+    public static MapData _mapData = new(Width, Height);
 
     public static Godot.Collections.Dictionary<string, int> GetParams() => new() {{"Height", Height}, {"MaxWidth", _roomMaxWidth}, 
         {"MinWidth", _roomMinWidth}, {"Rooms", _rooms}, {"Width", Width}};
@@ -41,6 +42,7 @@ public class GridGenerator : Node {
         AddCorridors(voidSpaces);
         // Flood fill spaces -> floor + walls
         FloodFillVoidSpaces(voidSpaces);
+        _mapData.ConnectPathfindingPoints();
         PlacePlayer(voidSpaces);
         PlaceEnemies(voidSpaces);
 
@@ -60,22 +62,25 @@ public class GridGenerator : Node {
     }
 
     private void PlacePlayer(HashSet<Rect2> voidSpaces) {
-        if (EntityRegistry.Player == null) throw new Exception("Trying to place player, but player is not initialised.");
         var startingRoom = voidSpaces.ElementAt(Rng.IntRange(0, voidSpaces.Count));
         var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
         var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
-        EntityRegistry.Player.GridPosition = new Vector3i(startX, 0, startY);
+        EntityRegistry.RegisterEntity( new PlayerData(new Vector3i(startX, 0, startY)));
 
-        Logger.Info($"Moved player to {EntityRegistry.Player.GridPosition}");
+        Logger.Info($"Created player at {EntityRegistry.Player?.GridPosition}");
     }
     
     private void PlaceEnemies(HashSet<Rect2> voidSpaces) {
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 100; i++) {
+            
             var startingRoom = voidSpaces.ElementAt(Rng.IntRange(0, voidSpaces.Count));
             var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
             var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
-            EntityRegistry.RegisterEnemy(new EnemyData(new Vector3i(startX, 0, startY), EnemyTypes.Maw));
-        } 
+            var startVec = new Vector3i(startX, 0, startY);
+            if (!EntityRegistry.IsPositionBlocked(startVec)) {
+                EntityRegistry.RegisterEntity(new EnemyData(startVec, EnemyTypes.Maw));
+            }
+        }
     } 
 
     private void AddCorridors(HashSet<Rect2> voidSpaces) {

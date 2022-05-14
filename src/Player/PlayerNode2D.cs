@@ -1,8 +1,7 @@
 using System;
 using Godot;
-using SatiRogue.Debug;
+using SatiRogue.Entities;
 using SatiRogue.Grid;
-using SatiRogue.Grid.Entities;
 
 namespace SatiRogue.Player;
 
@@ -25,6 +24,10 @@ public class PlayerNode2D : Node2D {
     [Export] private NodePath? _cameraPath { get; set; }
 
     public override void _Ready() {
+        CallDeferred(nameof(HandleInitialPlayerTurn));
+    }
+
+    private void HandleInitialPlayerTurn() {
         if (EntityRegistry.Player == null)
             throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
         EntityRegistry.Player.Connect(nameof(PlayerData.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
@@ -34,6 +37,8 @@ public class PlayerNode2D : Node2D {
         _visualRepresentation = GetNode<Node2D>("Visual");
         _visualRepresentation.SetAsToplevel(true);
         Teleporting = true;
+        
+        CallDeferred(nameof(OnGridPositionChanged));
     }
 
     private void OnGridPositionChanged() {

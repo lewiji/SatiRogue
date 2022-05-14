@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using SatiRogue.Grid.Entities;
+using SatiRogue.Entities;
 
 namespace SatiRogue.scenes;
 
@@ -18,6 +18,10 @@ public class PlayerNode3D : Spatial {
     public bool Teleporting { get; set; }
 
     public override void _Ready() {
+        CallDeferred(nameof(HandleInitialPlayerTurn));
+    }
+
+    private void HandleInitialPlayerTurn() {
         if (EntityRegistry.Player == null)
             throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
         EntityRegistry.Player.Connect(nameof(PlayerData.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
@@ -27,8 +31,11 @@ public class PlayerNode3D : Spatial {
         _visualRepresentation = GetNode<Spatial>("Visual");
         _visualRepresentation.SetAsToplevel(true);
         Teleporting = true;
+        
+        CallDeferred(nameof(OnGridPositionChanged));
     }
 
+    
     private void OnGridPositionChanged() {
         var tileWorldPosition = EntityRegistry.Player!.GridPosition;
         _targetPosition = new Vector3(tileWorldPosition.x, 0f, tileWorldPosition.z);

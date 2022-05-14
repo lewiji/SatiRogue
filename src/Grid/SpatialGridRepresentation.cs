@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-using SatiRogue.Grid.Entities;
+using SatiRogue.Entities;
 using SatiRogue.Math;
 using SatiRogue.scenes;
 using SatiRogue.scenes.Debug;
@@ -35,8 +35,8 @@ public partial class SpatialGridRepresentation : Spatial {
     private void ConnectToGridGenerator() {
         Logger.Debug("Connecting to map changed signal.");
         var gridGenerator = _threeDee!.GridGenerator;
-        gridGenerator?.Connect(nameof(GridGenerator.MapChanged), this, nameof(OnMapDataChanged));
-        gridGenerator?.Connect(nameof(GridGenerator.VisibilityChanged), this, nameof(OnVisibilityChanged));
+        gridGenerator?.Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapDataChanged));
+        gridGenerator?.Connect(nameof(MapGenerator.VisibilityChanged), this, nameof(OnVisibilityChanged));
     }
 
     private Vector3i[] GetChunkMinMaxCoords(int chunkId, int maxWidth) {
@@ -60,6 +60,7 @@ public partial class SpatialGridRepresentation : Spatial {
     }
 
     private void OnVisibilityChanged(Vector3[] positions) {
+        Logger.Info("Spatial visibility updating");
         foreach (Vector3 position in positions) {
             var chunkId = GetChunkIdForPosition(new Vector3i(position));
             var localPos = position - GetChunkMinMaxCoords(chunkId, _maxWidth + ChunkWidth)[0].ToVector3();
@@ -71,8 +72,8 @@ public partial class SpatialGridRepresentation : Spatial {
     private void OnMapDataChanged() {
         Logger.Debug("3d: Map data changed");
 
-        var cells = GridGenerator._mapData.Cells.ToList();
-        var mapParams = GridGenerator.GetParams();
+        var cells = MapGenerator._mapData.Cells.ToList();
+        var mapParams = MapGenerator.GetParams();
         _maxWidth = mapParams["Width"];
         _chunkSize = ChunkWidth * ChunkWidth;
         _totalChunks = Mathf.CeilToInt((mapParams["Width"] + ChunkWidth) * (mapParams["Height"] + ChunkWidth) / (float)_chunkSize);
@@ -97,30 +98,24 @@ public partial class SpatialGridRepresentation : Spatial {
             BuildChunk(chunkId, chunkCoords, chunkCells);
         }
         
-        foreach (var enemyData in EntityRegistry.EnemyList) {
-            switch (enemyData.EnemyType) {
-                case EnemyTypes.Maw:
-                    var tilePosition = enemyData.GridPosition;
-                    var enemyNode = new Spatial() {
-                        Translation = tilePosition.ToVector3()
-                    };
-                    var sprite = new AnimatedSprite3D {
-                        Frames = GD.Load<SpriteFrames>("res://scenes/ThreeDee/res/enemy/maw/maw_purple_sprite_Frames.tres"),
-                        MaterialOverride = GD.Load<SpatialMaterial>("res://scenes/ThreeDee/res/enemy/maw/maw_purple_spatial_mat.tres"),
-                        Playing = true,
-                        Animation = "idle",
-                        Centered = true,
-                        PixelSize = 0.05f,
-                        Translation = new Vector3(0, 0.673f, 0),
-                        RotationDegrees = new Vector3(-33f, 0, 0)
-                    };
-                    enemyNode.AddChild(sprite);
-                    _threeDee?.EnemiesSpatial?.AddChild(enemyNode);
-                    break;
-                case EnemyTypes.Ratfolk:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+        foreach (var entityData in EntityRegistry.EntityList) {
+            if (entityData.Value is EnemyData enemyData) {
+                var tilePosition = enemyData.GridPosition;
+                var enemyNode = new Entity3D(enemyData) {
+                    Translation = tilePosition.ToVector3()
+                };
+                var sprite = new AnimatedSprite3D {
+                    Frames = EnemyResourceLocator.ResourceBundles[enemyData.EnemyType].Frames,
+                    MaterialOverride = EnemyResourceLocator.ResourceBundles[enemyData.EnemyType].MaterialInstance,
+                    Playing = true,
+                    Animation = "idle",
+                    Centered = true,
+                    PixelSize = 0.05f,
+                    Translation = new Vector3(0, 0.673f, 0),
+                    RotationDegrees = new Vector3(-33f, 0, 0)
+                };
+                enemyNode.AddChild(sprite);
+                _threeDee?.EnemiesSpatial?.AddChild(enemyNode);
             }
         }
 

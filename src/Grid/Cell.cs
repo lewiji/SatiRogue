@@ -28,12 +28,22 @@ public enum CellVisibility {
 }
 
 public class Cell {
-   public CellType? Type;
+   public CellType? Type {
+      get => _type;
+      set {
+         _type = value;
+         if (_type == CellType.Wall) {
+            MapGenerator._mapData.BlockCell(Id);
+         }
+      }
+   }
+
    public HashSet<CellCondition> Conditions = new();
    public long Id;
    public HashSet<ulong> Occupants = new();
    public CellVisibility Visibility = CellVisibility.Unseen;
    private float? _luminosity = null;
+   private CellType? _type;
 
    public float? Luminosity {
       get => _luminosity;

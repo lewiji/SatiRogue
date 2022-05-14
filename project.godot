@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Logger="*res://src/Debug/Logger.cs"
+Systems="*res://src/Systems.cs"
 
 [debug]
 

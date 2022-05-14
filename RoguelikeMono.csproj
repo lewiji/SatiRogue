@@ -25,4 +25,7 @@
         <Content Include="lib\activelogic\Release\net472\main.dll" />
         <Content Include="lib\activelogic\Release\net472\main.pdb" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="src\Commands\Use" />
+    </ItemGroup>
 </Project>

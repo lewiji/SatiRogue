@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/TwoDee.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/GridGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/PlayerInputHandler.cs" type="Script" id=9]
+[ext_resource path="res://src/Player/PlayerInputHandler.cs" type="Script" id=9]
 
 [node name="Main" type="MarginContainer"]
 anchor_right = 1.0

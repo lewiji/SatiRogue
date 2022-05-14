@@ -1,13 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Godot.Collections;
+using SatiRogue.Debug;
 using SatiRogue.Math;
 
 namespace SatiRogue.Grid;
 
 public class MapData {
-    private readonly Dictionary<long, Cell> _cells = new();
+    private readonly System.Collections.Generic.Dictionary<long, Cell> _cells = new();
+    public AStar AStar = new ();
     public IEnumerable<Cell> Cells => _cells.Values;
     public List<Vector3> CellsVisibilityChanged = new();
+    public System.Collections.Generic.Dictionary<long, int> CellIdToAStarId = new();
+
+    public MapData(int width, int height) {
+        AStar.ReserveSpace(width * height);
+    }
 
     /**
      * Adds new cell if nonexistant at position, and returns the new cell.
@@ -15,10 +24,10 @@ public class MapData {
      * Returns null if something weird happened.
      */
     private Cell InitialiseOrGetCell(Vector3i position) {
-        return InitialiseOrGetCell(IdCalculator.IdFromVec3(position));
+        return InitialiseOrGetCell(IdCalculator.IdFromVec3(position), position);
     }
 
-    private Cell InitialiseOrGetCell(long id) {
+    private Cell InitialiseOrGetCell(long id, Vector3i position) {
         // Try to add id to collection, if already exists, return matching cell struct
         if (_cells.ContainsKey(id))
             return _cells[id];
@@ -26,9 +35,41 @@ public class MapData {
         // create and add new cell otherwise
         var cell = new Cell(id);
         _cells[id] = cell;
+        var aStarId = AStar.GetAvailablePointId();
+        AStar.AddPoint(aStarId, position.ToVector3());
+        CellIdToAStarId.Add(id, aStarId);
         return cell;
     }
 
+    public void ConnectPathfindingPoints() {
+        var offsets = new Vector3i[]{
+            Vector3i.Back, Vector3i.Forward, Vector3i.Left, Vector3i.Right, Vector3i.Back + Vector3i.Left, 
+            Vector3i.Back + Vector3i.Right, Vector3i.Forward + Vector3i.Left, Vector3i.Forward + Vector3i.Right};
+
+        var points = AStar.GetPoints();
+        foreach (int point in points) {
+            foreach (var offset in offsets) {
+                var neighbourVec = new Vector3i(AStar.GetPointPosition(point)) + offset;
+                if (CellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3(neighbourVec), out var neighbourId))
+                {
+                    AStar.ConnectPoints(point, neighbourId, true);
+                }
+            }
+        }
+    }
+
+    public void BlockCell(long id) {
+        if (CellIdToAStarId.TryGetValue(id, out var toBlockId)) {
+            AStar.SetPointDisabled(toBlockId);
+        }
+        
+    }
+
+    public Vector3[] FindPath(Vector3i from, Vector3i to) {
+        var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3(from)];
+        var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to)];
+        return AStar.GetPointPath(idFrom, idTo);
+    }
 
     /**
      * Get cell by Vector3 position
@@ -40,9 +81,9 @@ public class MapData {
     /**
      * Get cell by exact id
      */
-    public Cell GetCellById(long id) {
+    /*public Cell GetCellById(long id) {
         return InitialiseOrGetCell(id);
-    }
+    }*/
 
     public Cell SetCellType(Vector3i position, CellType? type) {
         return InitialiseOrGetCell(position).SetCellType(type);
@@ -85,6 +126,7 @@ public class MapData {
      */
     public void ClearCells() {
         _cells.Clear();
+        AStar.Clear();
     }
 
     public void SetLight(Vector3i gridVec, float f) {

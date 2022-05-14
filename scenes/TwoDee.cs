@@ -6,5 +6,5 @@ namespace SatiRogue.scenes;
 
 public partial class TwoDee : Node {
     [OnReadyGet("../GridGenerator", Export = true)]
-    public GridGenerator? GridGenerator;
+    public MapGenerator? GridGenerator;
 }

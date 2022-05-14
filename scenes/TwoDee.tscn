@@ -59,7 +59,7 @@ _cameraPath = NodePath("Camera2D")
 position = Vector2( 4, 2 )
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 5 )
-frame = 6
+frame = 1
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="TileMap/Player"]
