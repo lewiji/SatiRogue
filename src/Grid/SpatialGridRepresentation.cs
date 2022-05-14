@@ -4,6 +4,7 @@ using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
+using SatiRogue.Grid.Entities;
 using SatiRogue.Math;
 using SatiRogue.scenes;
 using SatiRogue.scenes.Debug;
@@ -94,6 +95,33 @@ public partial class SpatialGridRepresentation : Spatial {
             Logger.Debug($"Building chunk {chunkId}.");
 
             BuildChunk(chunkId, chunkCoords, chunkCells);
+        }
+        
+        foreach (var enemyData in EntityRegistry.EnemyList) {
+            switch (enemyData.EnemyType) {
+                case EnemyTypes.Maw:
+                    var tilePosition = enemyData.GridPosition;
+                    var enemyNode = new Spatial() {
+                        Translation = tilePosition.ToVector3()
+                    };
+                    var sprite = new AnimatedSprite3D {
+                        Frames = GD.Load<SpriteFrames>("res://scenes/ThreeDee/res/enemy/maw/maw_purple_sprite_Frames.tres"),
+                        MaterialOverride = GD.Load<SpatialMaterial>("res://scenes/ThreeDee/res/enemy/maw/maw_purple_spatial_mat.tres"),
+                        Playing = true,
+                        Animation = "idle",
+                        Centered = true,
+                        PixelSize = 0.05f,
+                        Translation = new Vector3(0, 0.673f, 0),
+                        RotationDegrees = new Vector3(-33f, 0, 0)
+                    };
+                    enemyNode.AddChild(sprite);
+                    _threeDee?.EnemiesSpatial?.AddChild(enemyNode);
+                    break;
+                case EnemyTypes.Ratfolk:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         Logger.Info("Chunking finished.");

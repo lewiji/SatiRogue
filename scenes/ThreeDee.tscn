@@ -58,3 +58,5 @@ script = ExtResource( 3 )
 SaveDebugScene = true
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
+
+[node name="Enemies" type="Spatial" parent="."]

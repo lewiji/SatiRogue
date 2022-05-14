@@ -42,6 +42,7 @@ public class GridGenerator : Node {
         // Flood fill spaces -> floor + walls
         FloodFillVoidSpaces(voidSpaces);
         PlacePlayer(voidSpaces);
+        PlaceEnemies(voidSpaces);
 
         Logger.Info("Finished generating grid.");
         CallDeferred(nameof(EmitMapChangedSignal));
@@ -49,7 +50,6 @@ public class GridGenerator : Node {
 
     public override void _Process(float delta) {
         if (_mapData.CellsVisibilityChanged.Count > 0) {
-            Logger.Info($"{_mapData.CellsVisibilityChanged.Count} cells visibility changed");
             EmitSignal(nameof(VisibilityChanged), _mapData.CellsVisibilityChanged.ToArray());
             _mapData.CellsVisibilityChanged.Clear();
         }
@@ -68,6 +68,15 @@ public class GridGenerator : Node {
 
         Logger.Info($"Moved player to {EntityRegistry.Player.GridPosition}");
     }
+    
+    private void PlaceEnemies(HashSet<Rect2> voidSpaces) {
+        for (var i = 0; i < 10; i++) {
+            var startingRoom = voidSpaces.ElementAt(Rng.IntRange(0, voidSpaces.Count));
+            var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
+            var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
+            EntityRegistry.RegisterEnemy(new EnemyData(new Vector3i(startX, 0, startY), EnemyTypes.Maw));
+        } 
+    } 
 
     private void AddCorridors(HashSet<Rect2> voidSpaces) {
         var arr = voidSpaces.ToArray();

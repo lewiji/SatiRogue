@@ -89,4 +89,4 @@ quality/filters/use_nearest_mipmap_filter=true
 batching/precision/uv_contract=true
 portals/pvs/use_simple_pvs=true
 quality/filters/msaa=2
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://scenes/res/EnvironmentEditor.tres"

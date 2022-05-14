@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scenes/ThreeDee/Enemy3d.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_n.png" type="Texture" id=2]
+[ext_resource path="res://src/Player/Player3d.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_o.png" type="Texture" id=4]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01.png" type="Texture" id=5]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_s.png" type="Texture" id=6]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_p.png" type="Texture" id=7]
+[ext_resource path="res://scenes/ThreeDee/res/enemy/maw/maw_purple_sprite_Frames.tres" type="SpriteFrames" id=8]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 5 )
+roughness_texture = ExtResource( 6 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 2 )
+clearcoat_enabled = true
+clearcoat = 1.0
+clearcoat_gloss = 0.5
+clearcoat_texture = ExtResource( 7 )
+ao_enabled = true
+ao_light_affect = 1.0
+ao_texture = ExtResource( 4 )
+ao_on_uv2 = false
+ao_texture_channel = 0
+uv1_scale = Vector3( 8, 8, 8 )
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
+size = Vector2( 6, 6 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Enemy3d" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.0542182, 0, 0.998529, 0, 1, 0, -0.998529, 0, 0.0542182, 0.0374221, 0.6, -0.426086 )
+
+[node name="AnimatedSprite3D" parent="Enemy3d" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.89323, 0.4496, 0, -0.4496, 0.89323, 0, 0.139033, 0 )
+frames = ExtResource( 8 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.900933, -0.0214408, -0.433428, 0.233363, 0.866008, 0.442235, 0.36587, -0.49957, 0.785219, 0, 1.54738, 0 )
+shadow_enabled = true
+shadow_bias = 0.01
+directional_shadow_mode = 0
+directional_shadow_split_1 = 0.041
+directional_shadow_split_2 = 0.075
+directional_shadow_split_3 = 0.384
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.2
+directional_shadow_depth_range = 1
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.822084, 0, -0.569366, 0, 1, 0, 0.569366, 0, 0.822084, 0.946126, 0.77969, -1.3289 )
+
+[editable path="Enemy3d"]
+[editable path="Player"]

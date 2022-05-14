@@ -1,0 +1,35 @@
+[gd_resource type="Environment" load_steps=3 format=2]
+
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__35.png" type="Texture" id=1]
+
+[sub_resource type="PanoramaSky" id=3]
+panorama = ExtResource( 1 )
+
+[resource]
+background_mode = 3
+background_sky = SubResource( 3 )
+background_color = Color( 0.184314, 0, 0.333333, 1 )
+background_energy = 0.5
+ambient_light_color = Color( 0.980392, 0.803922, 0.52549, 1 )
+ambient_light_energy = 0.5
+ambient_light_sky_contribution = 0.5
+tonemap_mode = 4
+ss_reflections_enabled = true
+ss_reflections_max_steps = 128
+ss_reflections_fade_out = 1.6245
+ss_reflections_depth_tolerance = 1.0
+ssao_enabled = true
+ssao_light_affect = 1.0
+ssao_ao_channel_affect = 1.0
+dof_blur_far_distance = 14.0
+dof_blur_far_transition = 6.0
+dof_blur_near_distance = 9.0
+dof_blur_near_transition = 4.0
+glow_enabled = true
+glow_strength = 0.8
+glow_bloom = 0.16
+glow_hdr_threshold = 0.62
+glow_hdr_luminance_cap = 16.0
+glow_hdr_scale = 0.25
+adjustment_contrast = 1.1
+adjustment_saturation = 1.08

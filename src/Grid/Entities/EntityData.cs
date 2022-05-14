@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using SatiRogue.Math;
 
@@ -7,34 +8,37 @@ public class EntityData : Node {
     [Signal]
     public delegate void PositionChanged();
 
-    protected Vector3i _gridPosition;
-
-    public Vector3i _inputDirection;
-
-    public Vector3i _lastPosition;
-
-    protected bool BlocksCell = false;
-
+    private Vector3i _gridPosition;
     public Vector3i GridPosition {
         get => _gridPosition;
         set {
-            _lastPosition = _gridPosition;
+            LastPosition = _gridPosition;
             _gridPosition = value;
             EmitSignal(nameof(PositionChanged));
         }
     }
+    public Vector3i InputDirection { get; protected set; }
+    public Vector3i LastPosition { get; protected set; }
+    public bool BlocksCell { get; set; } = false;
+    public string Uuid { get; } = Guid.NewGuid().ToString();
+
+    public EntityData(Vector3i? gridPosition = null, bool? blocksCell = null) {
+        GridPosition = gridPosition.GetValueOrDefault();
+        BlocksCell = blocksCell.GetValueOrDefault();
+    }
 
     public bool Move(MovementDirection dir) {
-        _inputDirection = EntityUtils.MovementDirectionToVector(dir);
-        var targetPosition = GridPosition + _inputDirection;
+        InputDirection = EntityUtils.MovementDirectionToVector(dir);
+        var targetPosition = GridPosition + InputDirection;
         var currentCell = GridGenerator._mapData.GetCellAt(GridPosition);
         var targetCell = GridGenerator._mapData.GetCellAt(targetPosition);
         if (!targetCell.Blocked) {
             currentCell.Occupants.Remove(GetInstanceId());
             targetCell.Occupants.Add(GetInstanceId());
             GridPosition = targetPosition;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

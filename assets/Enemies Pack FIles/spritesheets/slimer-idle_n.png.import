@@ -15,7 +15,7 @@ dest_files=[ "res://.import/slimer-idle_n.png-0af198bba246297249cfb1b8a514202e.s
 [params]
 
 compress/mode=0
-compress/lossy_quality=0.7
+compress/lossy_quality=0.3
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=1

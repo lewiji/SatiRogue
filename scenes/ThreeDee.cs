@@ -7,4 +7,6 @@ namespace SatiRogue.scenes;
 public partial class ThreeDee : Spatial {
     [OnReadyGet("../../../../GridGenerator", Export = true)]
     public GridGenerator? GridGenerator;
+
+    [OnReadyGet("Enemies", Export = true)] public Spatial? EnemiesSpatial;
 }
