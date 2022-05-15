@@ -1,12 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque;
-
-void fragment() {
-	ALBEDO = vec3(0.0);
-}"
+[ext_resource path="res://scenes/ThreeDee/res/FogTileShader.gdshader" type="Shader" id=1]
 
 [resource]
-shader = SubResource( 1 )
+shader = ExtResource( 1 )

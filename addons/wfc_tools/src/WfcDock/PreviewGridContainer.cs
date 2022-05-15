@@ -6,26 +6,31 @@ namespace SatiRogue.addons.src.WfcDock;
 
 [Tool]
 public partial class PreviewGridContainer : GridContainer {
-    [Signal] public delegate void LoadMoreMeshes();
-    [Signal] public delegate void ResourceSelected(int index);
-    
-    public RID? NewSpaceRid;
+   [Signal]
+   public delegate void LoadMoreMeshes();
 
-    [OnReadyGet] private Control? _mainDockControl;
-    [OnReadyGet] public ResourcePanel? ResourcesPanel;
+   [Signal]
+   public delegate void ResourceSelected(int index);
 
-    [OnReady] private void CreateNewPhysicsSpace() {
-        NewSpaceRid = Physics2DServer.SpaceCreate();
-    }
+   [OnReadyGet] private Control? _mainDockControl;
 
-    [OnReady] private void ConnectResized() {
-        _mainDockControl?.Connect("resized", this, nameof(OnResized));
-    }
+   public RID? NewSpaceRid;
+   [OnReadyGet] public ResourcePanel? ResourcesPanel;
 
-    public void OnResized() {
-        if (GetChildCount() == 0) return;
-        if (_mainDockControl == null) return;
-        var numColumns = (int) ((_mainDockControl.RectSize.x - 96) / GetChild<ResourcePreviewContainer>(0).RectSize.x);
-        Columns = numColumns;
-    }
+   [OnReady]
+   private void CreateNewPhysicsSpace() {
+      NewSpaceRid = Physics2DServer.SpaceCreate();
+   }
+
+   [OnReady]
+   private void ConnectResized() {
+      _mainDockControl?.Connect("resized", this, nameof(OnResized));
+   }
+
+   public void OnResized() {
+      if (GetChildCount() == 0) return;
+      if (_mainDockControl == null) return;
+      var numColumns = (int) ((_mainDockControl.RectSize.x - 96) / GetChild<ResourcePreviewContainer>(0).RectSize.x);
+      Columns = numColumns;
+   }
 }

@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands;
-using SatiRogue.Commands.Actions;
 using SatiRogue.Debug;
 
-namespace SatiRogue.Turn; 
+namespace SatiRogue.Turn;
 
-public enum Turn {PlayerTurn, EnemyTurn, Processing}
+public enum Turn {
+   PlayerTurn,
+   EnemyTurn,
+   Processing
+}
 
 public partial class TurnHandler : Node {
-   [Signal] public delegate void OnPlayerTurnStarted();
-   [Signal] public delegate void OnEnemyTurnStarted();
+   [Signal]
+   public delegate void OnEnemyTurnStarted();
 
-   [OnReady] private async void SetFirstTurn() {
-      await ToSignal(GetTree(), "idle_frame");
-      Turn = Turn.PlayerTurn;
-   }
+   [Signal]
+   public delegate void OnPlayerTurnStarted();
+
+   private readonly List<AbstractCommand> _enemyCommands = new();
+   private AbstractCommand? _playerCommand;
+
+   private Turn _turn;
 
    public Turn Turn {
       private set {
@@ -40,19 +46,21 @@ public partial class TurnHandler : Node {
       get => _turn;
    }
 
-   private Turn _turn;
-   private AbstractCommand? _playerCommand;
-   private List<AbstractCommand> _enemyCommands = new();
+   [OnReady]
+   private async void SetFirstTurn() {
+      await ToSignal(GetTree(), "idle_frame");
+      Turn = Turn.PlayerTurn;
+   }
 
    public void SetPlayerCommand(AbstractCommand command) {
-      if (Turn != Turn.PlayerTurn) 
+      if (Turn != Turn.PlayerTurn)
          throw new Exception("TurnHandler: Tried to SetPlayerCommand, but Turn is not PlayerTurn.");
       _playerCommand = command;
       Turn = Turn.EnemyTurn;
    }
 
    public void AddEnemyCommand(AbstractCommand enemyCommand) {
-      if (Turn != Turn.EnemyTurn) 
+      if (Turn != Turn.EnemyTurn)
          throw new Exception("TurnHandler: Tried to AddEnemyCommand, but Turn is not EnemyTurn.");
       _enemyCommands.Add(enemyCommand);
    }
@@ -61,7 +69,7 @@ public partial class TurnHandler : Node {
       if (Turn == Turn.Processing)
          throw new Exception("TurnHandler: ProcessTurn was called, but Turn is already Processing.");
       Turn = Turn.Processing;
-      
+
       _playerCommand?.Execute();
 
       foreach (var enemyCommand in _enemyCommands) {
@@ -70,7 +78,7 @@ public partial class TurnHandler : Node {
 
       _playerCommand = null;
       _enemyCommands.Clear();
-      
+
       CallDeferred(nameof(StartNewTurn));
    }
 

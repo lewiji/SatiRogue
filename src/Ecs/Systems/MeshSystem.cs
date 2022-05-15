@@ -1,7 +1,5 @@
 using RoguelikeMono.Ecs.Components;
 
-namespace RoguelikeMono.Ecs.Systems; 
+namespace RoguelikeMono.Ecs.Systems;
 
-public class MeshSystem : BaseSystem<CMeshRenderer> {
-   
-}
+public class MeshSystem : BaseSystem<CMeshRenderer> { }

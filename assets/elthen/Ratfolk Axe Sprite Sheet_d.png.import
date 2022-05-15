@@ -1,0 +1,37 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path.s3tc="res://.import/Ratfolk Axe Sprite Sheet_d.png-7a8afae33a2fd49f2b4ef35f620fb016.s3tc.stex"
+path.etc2="res://.import/Ratfolk Axe Sprite Sheet_d.png-7a8afae33a2fd49f2b4ef35f620fb016.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://assets/elthen/Ratfolk Axe Sprite Sheet_d.png"
+dest_files=[ "res://.import/Ratfolk Axe Sprite Sheet_d.png-7a8afae33a2fd49f2b4ef35f620fb016.s3tc.stex", "res://.import/Ratfolk Axe Sprite Sheet_d.png-7a8afae33a2fd49f2b4ef35f620fb016.etc2.stex" ]
+
+[params]
+
+compress/mode=2
+compress/lossy_quality=0.3
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=true
+flags/anisotropic=true
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

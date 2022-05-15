@@ -28,32 +28,13 @@ public enum CellVisibility {
 }
 
 public class Cell {
-   public CellType? Type {
-      get => _type;
-      set {
-         _type = value;
-         if (_type == CellType.Wall) {
-            MapGenerator._mapData.BlockCell(Id);
-         }
-      }
-   }
+   private float? _luminosity;
+   private CellType? _type;
 
    public HashSet<CellCondition> Conditions = new();
    public long Id;
    public HashSet<ulong> Occupants = new();
    public CellVisibility Visibility = CellVisibility.Unseen;
-   private float? _luminosity = null;
-   private CellType? _type;
-
-   public float? Luminosity {
-      get => _luminosity;
-      set {
-         _luminosity = value;
-         if (_luminosity != null) {
-            SetCellVisibility(CellVisibility.CurrentlyVisible);
-         }
-      }
-   }
 
    public Cell(long id, CellType? type = null, IEnumerable<ulong>? occupants = null, IEnumerable<CellCondition>? conditions = null,
       CellVisibility? visibility = null) {
@@ -64,11 +45,27 @@ public class Cell {
       Type = type;
    }
 
+   public CellType? Type {
+      get => _type;
+      set {
+         _type = value;
+         if (_type == CellType.Wall) MapGenerator._mapData.BlockCell(Id);
+      }
+   }
+
+   public float? Luminosity {
+      get => _luminosity;
+      set {
+         _luminosity = value;
+         if (_luminosity != null) SetCellVisibility(CellVisibility.CurrentlyVisible);
+      }
+   }
+
    public Vector3i Position => IdCalculator.Vec3FromId(Id);
 
    public bool Blocked =>
       Conditions.Contains(CellCondition.Destroyed) ||
-      Type is Grid.CellType.Wall or Grid.CellType.DoorClosed ||
+      Type is CellType.Wall or CellType.DoorClosed ||
       Occupants.Count(x => GD.InstanceFromId(x).Get("BlocksCell").Equals(true)) > 0;
 
    public static Cell FromPosition(Vector3i position) {

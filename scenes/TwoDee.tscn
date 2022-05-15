@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/res/TilesetMrmo.tres" type="TileSet" id=1]
 [ext_resource path="res://src/Grid/TileMapGridRepresentation.cs" type="Script" id=2]
 [ext_resource path="res://src/Player/PlayerNode2D.cs" type="Script" id=3]
 [ext_resource path="res://src/Camera/TilemapCamera.cs" type="Script" id=4]
 [ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=5]
-[ext_resource path="res://assets/AlchemyPack/bottles and vials/block_001.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__77.png" type="Texture" id=7]
 [ext_resource path="res://scenes/TwoDee.cs" type="Script" id=8]
 
@@ -44,10 +43,6 @@ rect_min_size = Vector2( 128, 0 )
 text = "x, y"
 align = 1
 
-[node name="Sprite" type="Sprite" parent="TileMap"]
-position = Vector2( 14, 17 )
-texture = ExtResource( 6 )
-
 [node name="Player" type="Node2D" parent="TileMap"]
 z_index = -1
 script = ExtResource( 3 )
@@ -59,7 +54,7 @@ _cameraPath = NodePath("Camera2D")
 position = Vector2( 4, 2 )
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 5 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="TileMap/Player"]

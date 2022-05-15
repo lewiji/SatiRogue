@@ -1,7 +1,5 @@
 ﻿using Godot;
 
-namespace SatiRogue.addons.wfc_tools.src.WfcDock; 
+namespace SatiRogue.addons.wfc_tools.src.WfcDock;
 
-public abstract class AbstractPreviewContainer : Container {
-    
-}
+public abstract class AbstractPreviewContainer : Container { }

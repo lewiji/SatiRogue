@@ -15,6 +15,7 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002EInfrastructure_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002EMicroRx_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AEnumerable_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2021_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F4844cb0f3407473abf02981d50617694109800_003F53_003F4dde10d5_003FEnumerable_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
   &lt;Assembly Path="/home/lewiji/godot/projects/RoguelikeMono/lib/activelogic/Debug/net472/main.dll" /&gt;
   &lt;Assembly Path="/home/lewiji/.nuget/packages/ecsrx/5.1.116/lib/net46/EcsRx.dll" /&gt;
@@ -24,4 +25,6 @@
   &lt;Assembly Path="/usr/lib/mono/4.5/mscorlib.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Program Files\dotnet\sdk\6.0.201\MSBuild.dll</s:String>
-	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64></wpf:ResourceDictionary>
+	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsBuildSolutionLoadingNodeCount/@EntryValue">4</s:Int64>
+	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsbuildVersion/@EntryValue">1114112</s:Int64>
+	<s:Boolean x:Key="/Default/RiderIntegrationViewOptions/ShowNativeThreads/@EntryValue">False</s:Boolean></wpf:ResourceDictionary>

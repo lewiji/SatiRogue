@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01.png" type="Texture" id=5]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_s.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_p.png" type="Texture" id=7]
-[ext_resource path="res://scenes/ThreeDee/res/enemy/maw/maw_purple_sprite_Frames.tres" type="SpriteFrames" id=8]
+[ext_resource path="res://resources/enemies/maw/maw_purple_sprite_Frames.tres" type="SpriteFrames" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_world_triplanar = true

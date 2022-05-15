@@ -1,6 +1,6 @@
 using SatiRogue.Entities;
 
-namespace SatiRogue.Commands; 
+namespace SatiRogue.Commands;
 
 public abstract class Action : AbstractCommand {
    protected EntityData Owner;

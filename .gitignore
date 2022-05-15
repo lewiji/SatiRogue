@@ -2,3 +2,4 @@
 /.import/
 /.mono/
 .directory
+mono_crash*

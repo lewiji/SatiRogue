@@ -7,31 +7,28 @@ using SatiRogue.Math;
 namespace SatiRogue.Entities;
 
 public class EntityRegistry : Node {
-    private static EntityRegistry _instance;
-    public static PlayerData? Player { get; private set; }
-    public static Dictionary<Guid, EntityData> EntityList = new();
-    public static Hashtable BlockedCells = new();
+   private static EntityRegistry _instance;
+   public static Dictionary<Guid, EntityData> EntityList = new();
+   public static Hashtable BlockedCells = new();
 
-    public EntityRegistry() {
-        _instance = this;
-    }
+   public EntityRegistry() {
+      _instance = this;
+   }
 
-    public static void RegisterEntity(EntityData entityData) {
-        if (entityData is PlayerData playerData) {
-            Player = playerData;
-        }
-        else {
-            EntityList.Add(entityData.Uuid, entityData);
-        }
+   public static PlayerData? Player { get; private set; }
 
-        if (entityData.BlocksCell) {
-            BlockedCells.Add(entityData.GridPosition, entityData.Uuid);
-        }
-        
-        _instance.AddChild(entityData);
-    }
+   public static void RegisterEntity(EntityData entityData) {
+      if (entityData is PlayerData playerData)
+         Player = playerData;
+      else
+         EntityList.Add(entityData.Uuid, entityData);
 
-    public static bool IsPositionBlocked(Vector3i position) {
-        return BlockedCells.ContainsKey(position);
-    }
+      if (entityData.BlocksCell) BlockedCells.Add(entityData.GridPosition, entityData.Uuid);
+
+      _instance.AddChild(entityData);
+   }
+
+   public static bool IsPositionBlocked(Vector3i position) {
+      return BlockedCells.ContainsKey(position);
+   }
 }
