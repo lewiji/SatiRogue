@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands;
+using SatiRogue.Components;
 using SatiRogue.Debug;
 
 namespace SatiRogue.Turn;
@@ -78,6 +79,10 @@ public partial class TurnHandler : Node {
 
       _playerCommand = null;
       _enemyCommands.Clear();
+      
+      if (MovementComponent._recordingPathfindingCalls) {
+         GD.Print($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");
+      }
 
       CallDeferred(nameof(StartNewTurn));
    }

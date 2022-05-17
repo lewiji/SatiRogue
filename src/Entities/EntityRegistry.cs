@@ -2,30 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Godot;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
 
-public class EntityRegistry : Node {
-   private static EntityRegistry _instance;
-   public static Dictionary<Guid, EntityData> EntityList = new();
+public class EntityRegistry : GameObject {
+   private static EntityRegistry? _instance;
+   /// <summary>
+   /// Dictionary of Guid strings mapped to Entities
+   /// </summary>
+   public static Dictionary<string, Entity> EntityList = new();
    public static Hashtable BlockedCells = new();
 
    public EntityRegistry() {
       _instance = this;
    }
 
-   public static PlayerData? Player { get; private set; }
+   public static PlayerEntity? Player { get; private set; }
 
-   public static void RegisterEntity(EntityData entityData) {
-      if (entityData is PlayerData playerData)
+   public static void RegisterEntity(Entity entity, IGameObjectParameters parameters) {
+      if (entity is PlayerEntity playerData)
          Player = playerData;
       else
-         EntityList.Add(entityData.Uuid, entityData);
+         EntityList.Add(entity.Uuid, entity);
 
-      if (entityData.BlocksCell) BlockedCells.Add(entityData.GridPosition, entityData.Uuid);
+      parameters.Parent ??= _instance;
+      entity.InitialiseWithParameters(parameters);
 
-      _instance.AddChild(entityData);
+      if (entity is GridEntity {BlocksCell: true} gridEntity) BlockedCells.Add(gridEntity.GridPosition, entity.Uuid);
+
+      _instance?.AddChild(entity);
    }
 
    public static bool IsPositionBlocked(Vector3i position) {

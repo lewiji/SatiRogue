@@ -1,13 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/Enemy3d.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_n.png" type="Texture" id=2]
-[ext_resource path="res://src/Player/Player3d.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_o.png" type="Texture" id=4]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01.png" type="Texture" id=5]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_s.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__01_p.png" type="Texture" id=7]
-[ext_resource path="res://resources/enemies/maw/maw_purple_sprite_Frames.tres" type="SpriteFrames" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_world_triplanar = true
@@ -30,16 +29,26 @@ uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id=2]
 material = SubResource( 1 )
-size = Vector2( 6, 6 )
+size = Vector2( 32, 32 )
 
 [node name="Spatial" type="Spatial"]
 
+[node name="ThreeDee" parent="." instance=ExtResource( 3 )]
+
+[node name="Particles" parent="ThreeDee/Environment" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 8, 26 )
+amount = 64
+lifetime = 9.0
+
+[node name="Player" parent="ThreeDee" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0.8, 23.8473 )
+
 [node name="Enemy3d" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.0542182, 0, 0.998529, 0, 1, 0, -0.998529, 0, 0.0542182, 0.0374221, 0.6, -0.426086 )
+transform = Transform( 0.0542182, 0, 0.998529, 0, 1, 0, -0.998529, 0, 0.0542182, 47.0762, 0.5, 21.3959 )
 
 [node name="AnimatedSprite3D" parent="Enemy3d" index="0"]
-transform = Transform( 1, 0, 0, 0, 0.89323, 0.4496, 0, -0.4496, 0.89323, 0, 0.139033, 0 )
-frames = ExtResource( 8 )
+transform = Transform( 0.0114142, 0.449571, -0.893172, 0, 0.89323, 0.4496, 0.999935, -0.00513184, 0.0101955, 0, 0.739033, 0 )
+frame = 1
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.900933, -0.0214408, -0.433428, 0.233363, 0.866008, 0.442235, 0.36587, -0.49957, 0.785219, 0, 1.54738, 0 )
@@ -54,11 +63,10 @@ directional_shadow_normal_bias = 0.2
 directional_shadow_depth_range = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.0388, -0.1, 21.8219 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.822084, 0, -0.569366, 0, 1, 0, 0.569366, 0, 0.822084, 0.946126, 0.77969, -1.3289 )
-
+[editable path="ThreeDee"]
+[editable path="ThreeDee/Player"]
 [editable path="Enemy3d"]
-[editable path="Player"]

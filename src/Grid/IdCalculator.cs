@@ -1,5 +1,5 @@
 using Godot;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 

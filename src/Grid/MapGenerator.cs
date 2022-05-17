@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SatiRogue.Components;
+using SatiRogue.Components.Behaviours;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 
 namespace SatiRogue.Grid;
@@ -72,7 +74,11 @@ public class MapGenerator : Node {
       var startingRoom = voidSpaces.ElementAt(Rng.IntRange(0, voidSpaces.Count));
       var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
       var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
-      EntityRegistry.RegisterEntity(new PlayerData(new Vector3i(startX, 0, startY)));
+      EntityRegistry.RegisterEntity(
+         new PlayerEntity(),
+         new GridEntityParameters {
+            GridPosition = new Vector3i(startX, 0, startY)
+         });
 
       Logger.Info($"Created player at {EntityRegistry.Player?.GridPosition}");
    }
@@ -84,10 +90,18 @@ public class MapGenerator : Node {
          var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
          var startVec = new Vector3i(startX, 0, startY);
          if (!EntityRegistry.IsPositionBlocked(startVec)) {
-            var enemyTypes = Enum.GetValues(typeof(EnemyTypes));
+            var enemyTypes = Enum.GetValues(typeof(EntityTypes));
+            var enemyType = (EntityTypes) enemyTypes.GetValue(GD.Randi() % enemyTypes.Length);
             EntityRegistry.RegisterEntity(
-               new EnemyData(startVec,
-                  (EnemyTypes) enemyTypes.GetValue(GD.Randi() % enemyTypes.Length))
+               new EnemyEntity(),
+               new EnemyEntityParameters{
+                  GridPosition = startVec,
+                  EntityType = enemyType,
+                  BlocksCell = true,
+                  Name = enemyType.ToString(),
+                  Visible = false,
+                  Components = new Component[] { new EnemyBehaviourTreeComponent() }
+               }
             );
          }
       }

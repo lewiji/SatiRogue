@@ -15,7 +15,7 @@
  */
 
 using SatiRogue.Grid;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 
 /*
 Field-of-vision calculation for a simple tiled map.

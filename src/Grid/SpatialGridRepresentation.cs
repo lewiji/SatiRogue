@@ -6,7 +6,7 @@ using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 using SatiRogue.scenes;
 using SatiRogue.scenes.Debug;
 using Array = System.Array;
@@ -74,7 +74,7 @@ public partial class SpatialGridRepresentation : Spatial {
    private void OnMapDataChanged() {
       Logger.Debug("3d: Map data changed");
 
-      var cells = MapGenerator._mapData.Cells.ToList();
+      var cells = MapGenerator._mapData.Cells.ToArray();
       var mapParams = MapGenerator.GetParams();
       _maxWidth = mapParams["Width"];
       _chunkSize = ChunkWidth * ChunkWidth;
@@ -82,44 +82,30 @@ public partial class SpatialGridRepresentation : Spatial {
 
       Logger.Info($"Chunk width: {ChunkWidth}");
       Logger.Info($"Max width: {_maxWidth}");
-      Logger.Info($"{cells.Count} map cells total.");
+      Logger.Info($"{cells.Length} map cells total.");
       Logger.Info($"Total chunks: {_totalChunks}");
 
       for (var chunkId = 0; chunkId < _totalChunks; chunkId++) {
          var chunkCoords = GetChunkMinMaxCoords(chunkId, _maxWidth + ChunkWidth);
          if (cells == null) continue;
-         var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToList();
-         Logger.Debug($"Chunking: Taking {chunkCells.Count} cells");
+         var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
+         Logger.Debug($"Chunking: Taking {chunkCells.Length} cells");
          Logger.Debug("---");
          // Remove these cells from the enumeration
-         cells = cells.Except(chunkCells).ToList();
+         cells = cells.Except(chunkCells).ToArray();
 
-         Logger.Debug($"{cells.Count} cells remaining in map data");
+         Logger.Debug($"{cells.Length} cells remaining in map data");
          Logger.Debug($"Building chunk {chunkId}.");
 
          BuildChunk(chunkId, chunkCoords, chunkCells);
       }
 
       foreach (var entityData in EntityRegistry.EntityList)
-         if (entityData.Value is EnemyData enemyData) {
+         if (entityData.Value is EnemyEntity enemyData) {
             var tilePosition = enemyData.GridPosition;
-            var enemyNode = new Entity3D(enemyData) {
+            var enemyNode = new Enemy3D(enemyData) {
                Translation = tilePosition.ToVector3()
             };
-            var sprite = new AnimatedSprite3D {
-               Frames = EnemyResourceLocator.GetResource<SpriteFrames>(enemyData.EnemyType),
-               MaterialOverride = EnemyResourceLocator.GetResource<Material>(enemyData.EnemyType),
-               Playing = true,
-               Animation = "idle",
-               Centered = true,
-               PixelSize = 0.05f,
-               RotationDegrees = new Vector3(-33f, 0, 0)
-            };
-            if (sprite.Frames != null) {
-               var firstFrameTexture = (Texture)((Godot.Collections.Array)((Dictionary)sprite.Frames.Animations[0])["frames"])[0];
-               sprite.Translation = new Vector3(firstFrameTexture.GetWidth() / 2f, firstFrameTexture.GetHeight() / 2f, 0) * sprite.PixelSize;
-            }
-            enemyNode.AddChild(sprite);
             _threeDee?.EnemiesSpatial?.AddChild(enemyNode);
          }
 
@@ -128,7 +114,7 @@ public partial class SpatialGridRepresentation : Spatial {
       if (SaveDebugScene) SaveGeometryToScene();
    }
 
-   private void BuildChunk(int chunkId, Vector3i[] chunkCoords, List<Cell> chunkCells) {
+   private void BuildChunk(int chunkId, Vector3i[] chunkCoords, Cell[] chunkCells) {
       var chunkRoom = new Room {
          Name = $"Chunk{chunkId}"
       };
@@ -181,11 +167,11 @@ public partial class SpatialGridRepresentation : Spatial {
       _fogMultiMeshes.Add(fogMultiMeshInstance);
       _chunkSpatials.Add(chunkRoom);
 
-      var debugText = (DebugSpatialText) _debugTextScene.Instance();
+      /*var debugText = (DebugSpatialText) _debugTextScene.Instance();
       debugText.Translation = new Vector3(ChunkWidth / 2, 1.5f, ChunkWidth / 2);
       chunkRoom.AddChild(debugText);
       debugText.Owner = this;
-      debugText.SetText(chunkId.ToString());
+      debugText.SetText(chunkId.ToString());*/
    }
 
    private void SaveGeometryToScene() {
@@ -193,15 +179,17 @@ public partial class SpatialGridRepresentation : Spatial {
       packed.Pack(this);
       ResourceSaver.Save("res://testgeometry.scn", packed);
    }
+   
+   private static System.Collections.Generic.Dictionary<CellType, Mesh> CellMeshResources = new System.Collections.Generic.Dictionary<CellType, Mesh> {
+      {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
+      {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
+      {CellType.Wall, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")},
+      {CellType.DoorClosed, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")},
+      {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
+   };
 
    private static Mesh? GetMeshResourceForCellType(CellType? cellType) {
-      return cellType switch {
-         CellType.Floor => GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh"),
-         CellType.Stairs => GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh"),
-         CellType.Wall => GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh"),
-         CellType.DoorClosed => GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh"),
-         CellType.DoorOpen => GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh"),
-         _ => null
-      };
+      CellMeshResources.TryGetValue(cellType.GetValueOrDefault(), out var mesh);
+      return mesh;
    }
 }

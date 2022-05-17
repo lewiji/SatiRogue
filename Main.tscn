@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Main.cs" type="Script" id=1]
 [ext_resource path="res://scenes/TwoDee.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/GridGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/Player/PlayerInputHandler.cs" type="Script" id=9]
 
 [node name="Main" type="MarginContainer"]
 anchor_right = 1.0
@@ -13,9 +12,6 @@ script = ExtResource( 1 )
 LogLevel = 3
 
 [node name="GridGenerator" parent="." instance=ExtResource( 3 )]
-
-[node name="PlayerInputHandler" type="Node" parent="."]
-script = ExtResource( 9 )
 
 [node name="ThreeDee" parent="." instance=ExtResource( 4 )]
 GridGeneratorPath = NodePath("../GridGenerator")

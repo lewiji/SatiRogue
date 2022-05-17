@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 

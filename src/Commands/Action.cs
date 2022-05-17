@@ -3,10 +3,10 @@ using SatiRogue.Entities;
 namespace SatiRogue.Commands;
 
 public abstract class Action : AbstractCommand {
-   protected EntityData Owner;
-   protected EntityData? Target;
+   protected Entity? Owner;
+   protected Entity? Target;
 
-   public Action(EntityData owner, EntityData? target = null) {
+   public Action(Entity? owner, Entity? target = null) {
       Owner = owner;
       Target = target;
    }

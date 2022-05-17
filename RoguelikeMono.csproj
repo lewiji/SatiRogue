@@ -13,6 +13,7 @@
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DocumentationFile>/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/bin/Debug/RoguelikeMono.xml</DocumentationFile>
+        <NoWarn>1701;1702;1591</NoWarn>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'ExportDebug' ">
         <DocumentationFile>/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/bin/ExportDebug/RoguelikeMono.xml</DocumentationFile>
@@ -21,20 +22,25 @@
         <WarningLevel>3</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="GodotOnReady" Version="1.1.6"/>
-        <PackageReference Include="MersenneTwister" Version="1.0.6"/>
-        <PackageReference Include="System.Text.Json" Version="6.0.3"/>
+        <PackageReference Include="GodotOnReady" Version="1.1.6" />
+        <PackageReference Include="MersenneTwister" Version="1.0.6" />
+        <PackageReference Include="System.Text.Json" Version="6.0.3" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="lib\activelogic\Debug\net472\main.dll"/>
-        <Content Include="lib\activelogic\Debug\net472\main.pdb"/>
-        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.deps.json"/>
-        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.dll"/>
-        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.pdb"/>
-        <Content Include="lib\activelogic\Release\net472\main.dll"/>
-        <Content Include="lib\activelogic\Release\net472\main.pdb"/>
+        <Content Include="lib\activelogic\Debug\net472\main.dll" />
+        <Content Include="lib\activelogic\Debug\net472\main.pdb" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.deps.json" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.dll" />
+        <Content Include="lib\activelogic\Debug\netcoreapp2.0\main.pdb" />
+        <Content Include="lib\activelogic\Release\net472\main.dll" />
+        <Content Include="lib\activelogic\Release\net472\main.pdb" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="src\Commands\Use"/>
+        <Folder Include="src\Commands\Use" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>lib\activelogic\Debug\net472\main.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

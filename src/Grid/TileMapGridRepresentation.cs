@@ -39,13 +39,13 @@ public class TileMapGridRepresentation : TileMap {
             SetCell(cell.Position.x, cell.Position.z, cellValue);
 
       foreach (var entityData in EntityRegistry.EntityList)
-         if (entityData.Value is EnemyData enemyData) {
+         if (entityData.Value is EnemyEntity enemyData) {
             var tilePosition = enemyData.GridPosition * TileSize;
-            var enemyNode = new Entity2D(enemyData) {
+            var enemyNode = new Enemy2D(enemyData) {
                Position = new Vector2(tilePosition.GetValueOrDefault().x, tilePosition.GetValueOrDefault().z)
             };
             var sprite = new AnimatedSprite {
-               Frames = EnemyResourceLocator.GetResource<SpriteFrames>(enemyData.EnemyType),
+               Frames = EntityResourceLocator.GetResource<SpriteFrames>(enemyData.EntityType),
                Material = GD.Load<ShaderMaterial>("res://scenes/TwoDee/shader/canvas_outline_material.tres"),
                Playing = true,
                Animation = "idle",

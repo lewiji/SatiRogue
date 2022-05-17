@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using SatiRogue.Math;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 
@@ -57,9 +57,10 @@ public class MapData {
       if (CellIdToAStarId.TryGetValue(id, out var toBlockId)) AStar.SetPointDisabled(toBlockId);
    }
 
-   public Vector3[] FindPath(Vector3i from, Vector3i to) {
+   public Vector3[] FindPath(Vector3i from, Vector3i? to) {
+      if (!to.HasValue) return new Vector3[]{};
       var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3(from)];
-      var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to)];
+      var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to.Value)];
       return AStar.GetPointPath(idFrom, idTo);
    }
 
@@ -127,6 +128,6 @@ public class MapData {
    }
 
    public bool IsWall(Vector3i gridVec) {
-      return GetCellAt(gridVec).Blocked;
+      return GetCellAt(gridVec).Type == CellType.Wall;
    }
 }
