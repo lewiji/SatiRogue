@@ -1,8 +1,7 @@
-using System;
-using Godot;
+using System.Collections.Generic;
 using SatiRogue.Components;
-using SatiRogue.Debug;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
@@ -29,6 +28,8 @@ public class GridEntity : Entity {
       set => GetComponent<MovementComponent>()!.GridPosition = value;
    }
 
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new();
+
    public override void _EnterTree() {
       base._EnterTree();
       Name = Parameters?.Name ?? "GridEntity";
@@ -48,13 +49,14 @@ public class GridEntity : Entity {
    }
 
    private bool GetIsVisible() {
-      return MapGenerator._mapData.GetCellAt(GridPosition).Visibility == CellVisibility.CurrentlyVisible;
+      return MapGenerator.MapData.GetCellAt(GridPosition).Visibility == CellVisibility.CurrentlyVisible;
    }
 
    public float DistanceSquaredTo(GridEntity otherEntity) {
       return GridPosition.DistanceSquaredTo(otherEntity.GridPosition);
    }
 
-   public bool HasLineOfSightTo(GridEntity otherEntity) =>
-      BresenhamsLine.Line(GridPosition, otherEntity.GridPosition, pos => !MapGenerator._mapData.IsWall(pos));
+   public bool HasLineOfSightTo(GridEntity otherEntity) {
+      return BresenhamsLine.Line(GridPosition, otherEntity.GridPosition, pos => !MapGenerator.MapData.IsWall(pos));
+   }
 }

@@ -12,17 +12,13 @@ public class ActionMove : Action {
    }
 
    public override Error Execute() {
-      if (Owner?.GetType() != typeof(MovementComponent) && !Owner!.GetType().IsSubclassOf(typeof(MovementComponent))) {
-         return Error.Failed;
-      }
-      var err = ((MovementComponent)Owner).Move(_inputDir) ? Error.Ok : Error.Failed;
+      if (Owner?.GetType() != typeof(MovementComponent) && !Owner!.GetType().IsSubclassOf(typeof(MovementComponent))) return Error.Failed;
+      var err = ((MovementComponent) Owner).Move(_inputDir) ? Error.Ok : Error.Failed;
       if (err != Error.Ok) NotifyEnemyIsBlocked();
       return err;
    }
 
    public void NotifyEnemyIsBlocked() {
-      if (Owner?.Parent is EnemyEntity enemy) {
-         (new ActionPickRandomDestination((MovementComponent)Owner)).Execute();
-      }
+      if (Owner?.Parent is EnemyEntity enemy) new ActionPickRandomDestination((MovementComponent) Owner).Execute();
    }
 }

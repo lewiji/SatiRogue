@@ -5,20 +5,20 @@ namespace SatiRogue.MathUtils;
 
 [Serializable]
 public struct Vector3i : IEquatable<Vector3i> {
-    /// <summary>
-    ///    The vector's X component. Also accessible by using the index position <c>[0]</c>.
-    /// </summary>
-    public int x;
+   /// <summary>
+   ///    The vector's X component. Also accessible by using the index position <c>[0]</c>.
+   /// </summary>
+   public int x;
 
-    /// <summary>
-    ///    The vector's Y component. Also accessible by using the index position <c>[1]</c>.
-    /// </summary>
-    public int y;
+   /// <summary>
+   ///    The vector's Y component. Also accessible by using the index position <c>[1]</c>.
+   /// </summary>
+   public int y;
 
-    /// <summary>
-    ///    The vector's Z component. Also accessible by using the index position <c>[2]</c>.
-    /// </summary>
-    public int z;
+   /// <summary>
+   ///    The vector's Z component. Also accessible by using the index position <c>[2]</c>.
+   /// </summary>
+   public int z;
 
    public Vector3 ToVector3() {
       return new Vector3(x, y, z);

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using SatiRogue.Components;
 
-namespace SatiRogue.Entities; 
+namespace SatiRogue.Entities;
 
 public interface IEntity {
    IEnumerable<Component> Components { get; }

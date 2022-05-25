@@ -1,6 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 
 namespace SatiRogue.scenes;
 

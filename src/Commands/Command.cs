@@ -2,6 +2,6 @@ using Godot;
 
 namespace SatiRogue.Commands;
 
-public abstract class AbstractCommand : ICommand {
+public abstract class Command : ICommand {
    public abstract Error Execute();
 }

@@ -10,7 +10,7 @@ public partial class Enemy3D : Spatial {
 
    public Enemy3D(EnemyEntity enemyEntity) {
       _enemyEntity = enemyEntity;
-      
+
       var sprite = new AnimatedSprite3D {
          Frames = EntityResourceLocator.GetResource<SpriteFrames>(_enemyEntity.EntityType),
          MaterialOverride = EntityResourceLocator.GetResource<Material>(_enemyEntity.EntityType),
@@ -21,9 +21,10 @@ public partial class Enemy3D : Spatial {
          RotationDegrees = new Vector3(-33f, 0, 0)
       };
       if (sprite.Frames != null) {
-         var firstFrameTexture = (Texture)((Godot.Collections.Array)((Dictionary)sprite.Frames.Animations[0])["frames"])[0];
+         var firstFrameTexture = (Texture) ((Array) ((Dictionary) sprite.Frames.Animations[0])["frames"])[0];
          sprite.Translation = new Vector3(0, firstFrameTexture.GetHeight() / 2f, 0) * sprite.PixelSize;
       }
+
       AddChild(sprite);
    }
 

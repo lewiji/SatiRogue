@@ -2,29 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
-using SatiRogue.scenes.Debug;
-using Array = System.Array;
 
 namespace SatiRogue.Grid;
 
 public partial class SpatialGridRepresentation : Spatial {
+   private static readonly Dictionary<CellType, Mesh> CellMeshResources = new() {
+      {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
+      {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
+      {CellType.Wall, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")},
+      {CellType.DoorClosed, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")},
+      {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
+   };
+
    private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
+   private readonly List<Spatial> _chunkSpatials = new();
    private readonly PackedScene _debugTextScene = GD.Load<PackedScene>("res://scenes/Debug/DebugSpatialText.tscn");
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
-   private int _chunkSize;
-   private readonly List<Spatial> _chunkSpatials = new();
    private readonly List<MultiMeshInstance> _fogMultiMeshes = new();
+   private readonly int ChunkWidth = 25;
+   private int _chunkSize;
    private int _maxWidth;
 
    [OnReadyGet("../", Export = true)] private ThreeDee? _threeDee;
    private int _totalChunks;
-   private readonly int ChunkWidth = 25;
 
    [Export] private bool SaveDebugScene { get; set; }
 
@@ -74,11 +80,11 @@ public partial class SpatialGridRepresentation : Spatial {
    private void OnMapDataChanged() {
       Logger.Debug("3d: Map data changed");
 
-      var cells = MapGenerator._mapData.Cells.ToArray();
+      var cells = MapGenerator.MapData.Cells.ToArray();
       var mapParams = MapGenerator.GetParams();
-      _maxWidth = mapParams["Width"];
+      _maxWidth = mapParams.Width;
       _chunkSize = ChunkWidth * ChunkWidth;
-      _totalChunks = Mathf.CeilToInt((mapParams["Width"] + ChunkWidth) * (mapParams["Height"] + ChunkWidth) / (float) _chunkSize);
+      _totalChunks = Mathf.CeilToInt((mapParams.Width + ChunkWidth) * (mapParams.Height + ChunkWidth) / (float) _chunkSize);
 
       Logger.Info($"Chunk width: {ChunkWidth}");
       Logger.Info($"Max width: {_maxWidth}");
@@ -179,14 +185,6 @@ public partial class SpatialGridRepresentation : Spatial {
       packed.Pack(this);
       ResourceSaver.Save("res://testgeometry.scn", packed);
    }
-   
-   private static System.Collections.Generic.Dictionary<CellType, Mesh> CellMeshResources = new System.Collections.Generic.Dictionary<CellType, Mesh> {
-      {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
-      {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
-      {CellType.Wall, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")},
-      {CellType.DoorClosed, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")},
-      {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
-   };
 
    private static Mesh? GetMeshResourceForCellType(CellType? cellType) {
       CellMeshResources.TryGetValue(cellType.GetValueOrDefault(), out var mesh);

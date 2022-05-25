@@ -1,6 +1,6 @@
 using Godot;
 
-namespace SatiRogue.Commands; 
+namespace SatiRogue.Commands;
 
 public interface ICommand {
    Error Execute();

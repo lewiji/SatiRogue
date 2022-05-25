@@ -7,7 +7,7 @@ using SatiRogue.addons.wfc_tools.src.WfcDock;
 namespace SatiRogue.addons.wfc_tools.src.ResourceStrategy;
 
 /// <summary>
-/// A base class for all resource strategies. It provides a common interface for all resource strategies.
+///    A base class for all resource strategies. It provides a common interface for all resource strategies.
 /// </summary>
 public abstract class AbstractResourceStrategy : Node, IResourceStrategy {
    private const int ResourcesPerPage = 64;

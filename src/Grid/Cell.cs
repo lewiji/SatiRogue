@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
@@ -49,7 +50,7 @@ public class Cell {
       get => _type;
       set {
          _type = value;
-         if (_type == CellType.Wall) MapGenerator._mapData.BlockCell(Id);
+         if (_type == CellType.Wall) MapGenerator.MapData.BlockCell(Id);
       }
    }
 

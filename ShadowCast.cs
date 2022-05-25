@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+using System;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 /*
@@ -109,7 +111,7 @@ public static class ShadowCast {
       // Used for distance test.
       var viewRadiusSq = viewRadius * viewRadius;
 
-      var viewCeiling = (int) System.Math.Ceiling(viewRadius);
+      var viewCeiling = (int) Math.Ceiling(viewRadius);
 
       // Set true if the previous cell we encountered was blocked.
       var prevWasBlocked = false;
@@ -120,8 +122,8 @@ public static class ShadowCast {
       // of the empty cell.
       float savedRightSlope = -1;
 
-      var xDim = MapGenerator.Width;
-      var yDim = MapGenerator.Height;
+      var xDim = MapGenerator.GetParams().Width;
+      var yDim = MapGenerator.GetParams().Height;
 
       // Outer loop: walk across each column, stopping when we reach the visibility limit.
       for (var currentCol = startColumn; currentCol <= viewCeiling; currentCol++) {

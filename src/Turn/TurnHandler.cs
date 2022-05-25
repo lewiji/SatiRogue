@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands;
@@ -21,8 +22,8 @@ public partial class TurnHandler : Node {
    [Signal]
    public delegate void OnPlayerTurnStarted();
 
-   private readonly List<AbstractCommand> _enemyCommands = new();
-   private AbstractCommand? _playerCommand;
+   private readonly Queue<Command> _enemyCommands = new();
+   private readonly Queue<Command> _playerCommands = new();
 
    private Turn _turn;
 
@@ -53,17 +54,17 @@ public partial class TurnHandler : Node {
       Turn = Turn.PlayerTurn;
    }
 
-   public void SetPlayerCommand(AbstractCommand command) {
+   public void SetPlayerCommand(Command command) {
       if (Turn != Turn.PlayerTurn)
          throw new Exception("TurnHandler: Tried to SetPlayerCommand, but Turn is not PlayerTurn.");
-      _playerCommand = command;
+      _playerCommands.Enqueue(command);
       Turn = Turn.EnemyTurn;
    }
 
-   public void AddEnemyCommand(AbstractCommand enemyCommand) {
+   public void AddEnemyCommand(Command enemyCommand) {
       if (Turn != Turn.EnemyTurn)
          throw new Exception("TurnHandler: Tried to AddEnemyCommand, but Turn is not EnemyTurn.");
-      _enemyCommands.Add(enemyCommand);
+      _enemyCommands.Enqueue(enemyCommand);
    }
 
    private void ProcessTurn() {
@@ -71,18 +72,11 @@ public partial class TurnHandler : Node {
          throw new Exception("TurnHandler: ProcessTurn was called, but Turn is already Processing.");
       Turn = Turn.Processing;
 
-      _playerCommand?.Execute();
+      while (_playerCommands.Any()) _playerCommands.Dequeue().Execute();
 
-      foreach (var enemyCommand in _enemyCommands) {
-         var err = enemyCommand.Execute();
-      }
+      while (_enemyCommands.Any()) _enemyCommands.Dequeue().Execute();
 
-      _playerCommand = null;
-      _enemyCommands.Clear();
-      
-      if (MovementComponent._recordingPathfindingCalls) {
-         GD.Print($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");
-      }
+      if (MovementComponent._recordingPathfindingCalls) GD.Print($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");
 
       CallDeferred(nameof(StartNewTurn));
    }

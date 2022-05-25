@@ -1,7 +1,3 @@
-using SatiRogue.Commands;
-using SatiRogue.Entities;
+namespace SatiRogue.Components;
 
-namespace SatiRogue.Components; 
-
-public interface IComponent {
-}
+public interface IComponent { }

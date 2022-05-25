@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
-using SatiRogue.Debug;
 using SatiRogue.Entities;
-using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Turn;
 using Action = SatiRogue.Commands.Action;
 
-namespace SatiRogue.Components; 
+namespace SatiRogue.Components;
 
 public enum MovementDirection {
    Left,
@@ -27,13 +25,44 @@ public enum MovementDirection {
 
 public partial class MovementComponent : Component {
    /// <summary>
-   /// Emitted when the entity's GridPosition changes
+   ///    Emitted when the entity's GridPosition changes
    /// </summary>
-   [Signal] public delegate void PositionChanged();
+   [Signal]
+   public delegate void PositionChanged();
 
-   public static bool _recordingPathfindingCalls = false;
-   public static int numPathingCallsThisTurn = 0;
-   
+   public static bool _recordingPathfindingCalls;
+   public static int numPathingCallsThisTurn;
+   private Vector3i? _destination;
+
+   private Vector3i? _gridPosition;
+
+   private Vector3i? _initialPosition;
+   private GridEntity? _parent;
+   private Queue<Vector3>? _path;
+
+   public MovementComponent(Vector3i? initialPosition = null) {
+      _initialPosition = initialPosition;
+   }
+
+   public Vector3i GridPosition {
+      get => _gridPosition.GetValueOrDefault();
+      set {
+         LastPosition = _gridPosition;
+         _gridPosition = value;
+         EmitSignal(nameof(PositionChanged));
+      }
+   }
+
+   public Vector3i? LastPosition { get; protected set; }
+   protected Vector3i InputDirection { get; set; }
+
+   public override GameObject? Parent {
+      get => _parent;
+      set => _parent = value as GridEntity;
+   }
+
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.EnemyTurn};
+
    [OnReady]
    private void ConnectEnemyTurnSignal() {
       Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
@@ -48,37 +77,10 @@ public partial class MovementComponent : Component {
    private async void StopRecordingPathfindingCalls() {
       //await ToSignal(GetTree(), "idle_frame");
    }
-   
-   private Vector3i? _gridPosition = null;
-   public Vector3i GridPosition {
-      get => _gridPosition.GetValueOrDefault();
-      set {
-         LastPosition = _gridPosition;
-         _gridPosition = value;
-         EmitSignal(nameof(PositionChanged));
-      }
-   }
-
-   public Vector3i? LastPosition { get; protected set; } = null;
-   protected Vector3i InputDirection { get; set; }
-   private Vector3i? _destination;
-   private Queue<Vector3>? _path;
-   private GridEntity? _parent;
-
-   public override GameObject? Parent {
-      get => _parent;
-      set => _parent = value as GridEntity;
-   }
-
-   private Vector3i? _initialPosition;
-
-   public MovementComponent(Vector3i? initialPosition = null) : base() {
-      _initialPosition = initialPosition;
-   }
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      if (Parent != null && _initialPosition != null) MapGenerator._mapData.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
+      if (Parent != null && _initialPosition != null) MapGenerator.MapData.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
       new ActionPickRandomDestination(this).Execute();
    }
 
@@ -86,48 +88,41 @@ public partial class MovementComponent : Component {
       _path = null;
       _destination = destination;
    }
-   
-   public override void HandleTurn() {
-      if (Parent is not EnemyEntity) return;
 
+   public override void HandleTurn() {
       Action action;
       if (_path == null && _destination != null) {
-         if (_recordingPathfindingCalls) {
-            numPathingCallsThisTurn += 1;
-         }
-         _path = new Queue<Vector3>(MapGenerator._mapData.FindPath(GridPosition, _destination));
+         if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
+         _path = new Queue<Vector3>(MapGenerator.MapData.FindPath(GridPosition, _destination));
          if (_path.Count > 0) _path.Dequeue();
       }
 
-      if (_path is {Count: >= 1}) {
+      if (_path is {Count: >= 1})
          action = new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()));
-      }
-      else {
+      else
          action = new ActionPickRandomDestination(this);
-      }
 
       Systems.TurnHandler.AddEnemyCommand(action);
    }
 
    public bool Move(MovementDirection dir) {
       if (Parent == null) return false;
-      
+
       InputDirection = MovementDirectionToVector(dir);
 
       var targetPosition = GridPosition + InputDirection;
-      var currentCell = MapGenerator._mapData.GetCellAt(GridPosition);
-      var targetCell = MapGenerator._mapData.GetCellAt(targetPosition);
-      
+      var currentCell = MapGenerator.MapData.GetCellAt(GridPosition);
+      var targetCell = MapGenerator.MapData.GetCellAt(targetPosition);
+
       if (targetCell.Blocked) return false;
-      
+
       currentCell.Occupants.Remove(Parent!.GetInstanceId());
       targetCell.Occupants.Add(Parent!.GetInstanceId());
       GridPosition = targetPosition;
 
       return true;
-
    }
-   
+
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {
       switch (dir) {
          case MovementDirection.Left:
