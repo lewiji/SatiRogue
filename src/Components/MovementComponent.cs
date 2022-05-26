@@ -80,7 +80,17 @@ public partial class MovementComponent : Component {
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      if (Parent != null && _initialPosition != null) MapGenerator.MapData.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
+      
+   }
+
+   [OnReady]
+   private void SetInitialPosition() {
+      GetNode<MapGenerator>(MapGenerator.Path).Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapChanged));
+   }
+
+   private void OnMapChanged() {
+      if (Parent != null && _initialPosition != null)
+            MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
       new ActionPickRandomDestination(this).Execute();
    }
 

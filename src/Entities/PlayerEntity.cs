@@ -33,7 +33,7 @@ public class PlayerEntity : GridEntity {
    }
 
    protected override void OnPositionChanged() {
-      Logger.Info("Player position changed");
+      Logger.Debug("Player position changed");
       CalculateVisibility();
       EmitSignal(nameof(PlayerPositionChanged));
    }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using SatiRogue.Grid.MapGen;
@@ -5,7 +6,7 @@ using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 
-public class MapData {
+public class MapData : Resource {
    private readonly Dictionary<long, Cell> _cells = new();
    public readonly Dictionary<long, int> CellIdToAStarId = new();
    public readonly List<Vector3> CellsVisibilityChanged = new();
@@ -42,7 +43,15 @@ public class MapData {
       var aStarId = AStar.GetAvailablePointId();
       AStar.AddPoint(aStarId, position.ToVector3());
       CellIdToAStarId.Add(id, aStarId);
+      cell.Connect(nameof(Cell.CellTypeChanged), this, nameof(OnCellTypeChanged));
       return cell;
+   }
+
+   public void OnCellTypeChanged(int typeId, long cellId) {
+      var typeEnum = (CellType)typeId;
+      if (typeEnum == CellType.Wall) {
+         BlockCell(cellId);
+      }
    }
 
    public void BlockCell(long id) {

@@ -122,8 +122,8 @@ public static class ShadowCast {
       // of the empty cell.
       float savedRightSlope = -1;
 
-      var xDim = MapGenerator.GetParams().Width;
-      var yDim = MapGenerator.GetParams().Height;
+      var xDim = MapGenerator.GetParams()?.Width;
+      var yDim = MapGenerator.GetParams()?.Height;
 
       // Outer loop: walk across each column, stopping when we reach the visibility limit.
       for (var currentCol = startColumn; currentCol <= viewCeiling; currentCol++) {

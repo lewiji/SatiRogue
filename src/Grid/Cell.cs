@@ -28,7 +28,9 @@ public enum CellVisibility {
    CurrentlyVisible
 }
 
-public class Cell {
+public class Cell : Reference {
+   [Signal] public delegate void CellTypeChanged(int cellTypeId, long cellId);
+   
    private float? _luminosity;
    private CellType? _type;
 
@@ -50,7 +52,7 @@ public class Cell {
       get => _type;
       set {
          _type = value;
-         if (_type == CellType.Wall) MapGenerator.MapData.BlockCell(Id);
+         EmitSignal(nameof(CellTypeChanged), (int)_type.GetValueOrDefault(), this.Id);
       }
    }
 

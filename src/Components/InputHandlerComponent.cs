@@ -32,12 +32,11 @@ public class InputHandlerComponent : Component {
 
    private async void HandlePlayerTurnStarted() {
       if (!_moveTimer.IsStopped()) await ToSignal(_moveTimer, "timeout");
-      Logger.Info("Player turn started. Awaiting input.");
+      Logger.Debug("Player turn started. Awaiting input.");
       CanMove = true;
    }
 
    private void HandleEnemyTurnStarted() {
-      Logger.Info("Received player input. Player turn ended. Enemy turn started.");
       CanMove = false;
    }
 

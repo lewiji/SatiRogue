@@ -27,19 +27,25 @@ public partial class TurnHandler : Node {
 
    private Turn _turn;
 
+   private int _turnNumber = 0;
+
    public Turn Turn {
       private set {
          _turn = value;
          switch (_turn) {
             case Turn.PlayerTurn:
+               _turnNumber += 1;
+               Logger.Info("========");
+               Logger.Info($"TurnHandler: Start of Turn {_turnNumber}.");
                EmitSignal(nameof(OnPlayerTurnStarted));
                break;
             case Turn.EnemyTurn:
+               Logger.Info("Player turn processed. Enemy turn started.");
                EmitSignal(nameof(OnEnemyTurnStarted));
                CallDeferred(nameof(ProcessTurn));
                break;
             case Turn.Processing:
-               Logger.Info("TurnHandler: Processing commands...");
+               Logger.Debug("TurnHandler: Processing commands...");
                break;
             default:
                throw new ArgumentOutOfRangeException();
@@ -72,17 +78,18 @@ public partial class TurnHandler : Node {
          throw new Exception("TurnHandler: ProcessTurn was called, but Turn is already Processing.");
       Turn = Turn.Processing;
 
-      while (_playerCommands.Any()) _playerCommands.Dequeue().Execute();
+      while (_playerCommands.Any() || _enemyCommands.Any()) {
+         while (_playerCommands.Any()) _playerCommands.Dequeue().Execute();
+         if (_enemyCommands.Count > 0) _enemyCommands.Dequeue().Execute();
+      }
 
-      while (_enemyCommands.Any()) _enemyCommands.Dequeue().Execute();
-
-      if (MovementComponent._recordingPathfindingCalls) GD.Print($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");
+      if (MovementComponent._recordingPathfindingCalls) Logger.Info($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");
 
       CallDeferred(nameof(StartNewTurn));
    }
 
    private void StartNewTurn() {
-      Logger.Info("TurnHandler: Processing finished, starting new turn.");
+      Logger.Debug("TurnHandler: Processing finished, starting new turn.");
       Turn = Turn.PlayerTurn;
    }
 }

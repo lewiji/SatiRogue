@@ -17,6 +17,6 @@ public abstract class BehaviourTreeComponent : Component {
    public override void HandleTurn() {
       if (ParentEntity == null || BehaviourTree == null) return;
       var status = BehaviourTree.Step();
-      if (status.failing) Logger.Info(StatusFormat.Status(status));
+      if (status.failing) Logger.Debug(StatusFormat.Status(status));
    }
 }

@@ -68,7 +68,7 @@ public partial class SpatialGridRepresentation : Spatial {
    }
 
    private void OnVisibilityChanged(Vector3[] positions) {
-      Logger.Info("Spatial visibility updating");
+      Logger.Debug("Spatial visibility updating");
       foreach (var position in positions) {
          var chunkId = GetChunkIdForPosition(new Vector3i(position));
          var localPos = position - GetChunkMinMaxCoords(chunkId, _maxWidth + ChunkWidth)[0].ToVector3();
@@ -80,8 +80,8 @@ public partial class SpatialGridRepresentation : Spatial {
    private void OnMapDataChanged() {
       Logger.Debug("3d: Map data changed");
 
-      var cells = MapGenerator.MapData.Cells.ToArray();
-      var mapParams = MapGenerator.GetParams();
+      var cells = MapGenerator.MapData?.Cells.ToArray();
+      var mapParams = MapGenerator.GetParams().GetValueOrDefault();
       _maxWidth = mapParams.Width;
       _chunkSize = ChunkWidth * ChunkWidth;
       _totalChunks = Mathf.CeilToInt((mapParams.Width + ChunkWidth) * (mapParams.Height + ChunkWidth) / (float) _chunkSize);
