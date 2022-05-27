@@ -39,8 +39,8 @@
         <Folder Include="src\Commands\Use" />
     </ItemGroup>
     <ItemGroup>
-      <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>lib\activelogic\Debug\net472\main.dll</HintPath>
-      </Reference>
+        <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>lib\activelogic\Debug\net472\main.dll</HintPath>
+        </Reference>
     </ItemGroup>
 </Project>

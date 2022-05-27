@@ -24,7 +24,7 @@ public class PlayerNode3D : Spatial {
    private void HandleInitialPlayerTurn() {
       if (EntityRegistry.Player == null)
          throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
-      EntityRegistry.Player.Connect(nameof(Entities.PlayerEntity.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
+      EntityRegistry.Player.Connect(nameof(PlayerEntity.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
 
       _camera = GetNode<Godot.Camera>(CameraPath);
       _camera.SetAsToplevel(true);

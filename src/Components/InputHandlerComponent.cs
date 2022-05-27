@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Godot;
-using SatiRogue.Commands.Actions;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -12,22 +12,31 @@ public class InputHandlerComponent : Component {
    private readonly TurnHandler _turnHandler = Systems.TurnHandler;
    public bool CanMove;
 
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.PlayerTurn, Turn.Turn.EnemyTurn};
+
    public override void _Ready() {
       AddChild(_moveTimer);
       _moveTimer.OneShot = true;
+   }
 
-      _turnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(HandlePlayerTurnStarted));
-      _turnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(HandleEnemyTurnStarted));
+   public override void HandleTurn() {
+      switch (Systems.TurnHandler.Turn) {
+         case Turn.Turn.PlayerTurn:
+            HandlePlayerTurnStarted();
+            break;
+         case Turn.Turn.EnemyTurn:
+            HandleEnemyTurnStarted();
+            break;
+      }
    }
 
    private async void HandlePlayerTurnStarted() {
       if (!_moveTimer.IsStopped()) await ToSignal(_moveTimer, "timeout");
-      Logger.Info("Player turn started. Awaiting input.");
+      Logger.Debug("Player turn started. Awaiting input.");
       CanMove = true;
    }
 
    private void HandleEnemyTurnStarted() {
-      Logger.Info("Received player input. Player turn ended. Enemy turn started.");
       CanMove = false;
    }
 
@@ -36,23 +45,18 @@ public class InputHandlerComponent : Component {
 
       var movementDirection = MovementDirection.None;
 
-      if (Input.IsActionPressed("move_left")) {
+      if (Input.IsActionPressed("move_left"))
          movementDirection = MovementDirection.Left;
-      }
-      else if (Input.IsActionPressed("move_right")) {
+      else if (Input.IsActionPressed("move_right"))
          movementDirection = MovementDirection.Right;
-      }
-      else if (Input.IsActionPressed("move_down")) {
+      else if (Input.IsActionPressed("move_down"))
          movementDirection = MovementDirection.Down;
-      }
-      else if (Input.IsActionPressed("move_up")) {
-         movementDirection = MovementDirection.Up;
-      }
+      else if (Input.IsActionPressed("move_up")) movementDirection = MovementDirection.Up;
 
       if (movementDirection == MovementDirection.None) return;
-      
+
       EntityRegistry.Player.GetComponent<PlayerMovementComponent>()?.SetDestination(movementDirection);
-      
+
       _moveTimer?.Start(0.12f);
    }
 }

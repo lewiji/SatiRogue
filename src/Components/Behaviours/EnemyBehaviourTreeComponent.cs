@@ -10,18 +10,20 @@ using static Active.Status;
 namespace SatiRogue.Components.Behaviours;
 
 public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.EnemyTurn};
+
    public override void _EnterTree() {
       base._EnterTree();
       Name = "EnemyBehaviourTreeComponent";
-      if (ParentEntity is EnemyEntity enemyEntity) 
+      if (ParentEntity is EnemyEntity enemyEntity)
          BehaviourTree = new EnemyBehaviourTree(enemyEntity);
-      else 
+      else
          Logger.Error($"EnemyBehaviourTree: Parent entity {ParentEntity?.Name} was not EnemyEntity");
    }
 
    private class EnemyBehaviourTree : Gig {
       private readonly EnemyEntity _enemyEntity;
-      private readonly int _squaredSightRange;
+      private int _squaredSightRange;
       private float _rangeToPlayer = -1;
 
       public EnemyBehaviourTree(EnemyEntity entity) {
@@ -33,7 +35,9 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
 
       private status CheckDistanceToPlayer() {
          _rangeToPlayer = _enemyEntity.DistanceSquaredTo(EntityRegistry.Player!);
-         return _rangeToPlayer > _squaredSightRange ? fail(log && $"Player was not in squared sight range {_squaredSightRange} of {_enemyEntity.Name}. Range was: {_rangeToPlayer}") : done();
+         return _rangeToPlayer > _squaredSightRange
+            ? fail(log && $"Player was not in squared sight range {_squaredSightRange} of {_enemyEntity.Name}. Range was: {_rangeToPlayer}")
+            : done();
       }
 
       private status CheckLineOfSight() {
@@ -47,6 +51,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
             _enemyEntity.GetComponent<MovementComponent>()?.SetDestination(EntityRegistry.Player!.GridPosition);
             return fail(log && $"Enemy {_enemyEntity.Name} is not adjacent to Player.");
          }
+
          return done();
       }
 

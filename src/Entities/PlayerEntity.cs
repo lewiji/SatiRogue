@@ -2,7 +2,7 @@ using System;
 using Godot;
 using SatiRogue.Components;
 using SatiRogue.Debug;
-using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Player;
 
@@ -33,7 +33,7 @@ public class PlayerEntity : GridEntity {
    }
 
    protected override void OnPositionChanged() {
-      Logger.Info("Player position changed");
+      Logger.Debug("Player position changed");
       CalculateVisibility();
       EmitSignal(nameof(PlayerPositionChanged));
    }
@@ -44,6 +44,6 @@ public class PlayerEntity : GridEntity {
    }
 
    private void CalculateVisibility() {
-      ShadowCast.ComputeVisibility(MapGenerator._mapData, GridPosition, 11.0f);
+      ShadowCast.ComputeVisibility(MapGenerator.MapData, GridPosition, 11.0f);
    }
 }

@@ -1,5 +1,6 @@
 using Godot;
 using SatiRogue.Entities;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.scenes;
 
 namespace SatiRogue.Grid;
@@ -33,7 +34,7 @@ public class TileMapGridRepresentation : TileMap {
    }
 
    private void OnMapDataChanged() {
-      var cells = MapGenerator._mapData.Cells;
+      var cells = MapGenerator.MapData.Cells;
       foreach (var cell in cells)
          if (GetTileId(cell) is { } cellValue)
             SetCell(cell.Position.x, cell.Position.z, cellValue);
@@ -60,7 +61,7 @@ public class TileMapGridRepresentation : TileMap {
    }
 
    private void OnVisibilityChanged(Vector3[] positions) {
-      var cells = MapGenerator._mapData.Cells;
+      var cells = MapGenerator.MapData.Cells;
       foreach (var cell in cells)
          if (GetTileId(cell) is { } cellValue)
             SetCell(cell.Position.x, cell.Position.z, cellValue);

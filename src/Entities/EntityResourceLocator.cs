@@ -6,7 +6,7 @@ using SatiRogue.Components.Behaviours;
 namespace SatiRogue.Entities;
 
 /// <summary>
-/// It's a struct that contains a dictionary of resource paths and a set of stats.
+///    It's a struct that contains a dictionary of resource paths and a set of stats.
 /// </summary>
 public struct EntityResourceBundle {
    public EntityResourceBundle()
@@ -22,7 +22,7 @@ public struct EntityResourceBundle {
 }
 
 /// <summary>
-/// An enum containing all possible Enemy names.
+///    An enum containing all possible Enemy names.
 /// </summary>
 public enum EntityTypes {
    Maw,
@@ -31,7 +31,7 @@ public enum EntityTypes {
 }
 
 /// <summary>
-/// A dictionary that maps an `EnemyTypes` enum to a `EnemyResourceBundle` class
+///    A dictionary that maps an `EnemyTypes` enum to a `EnemyResourceBundle` class
 /// </summary>
 public static class EntityResourceLocator {
    public static Dictionary<EntityTypes, EntityResourceBundle> ResourceBundles = new() {
@@ -84,7 +84,7 @@ public static class EntityResourceLocator {
    public static T? GetResource<T>(EntityTypes entity, string? resourceKey = null) where T : Resource {
       resourceKey ??= typeof(T).Name;
 
-      if (!_resourceCache.ContainsKey(entity)) 
+      if (!_resourceCache.ContainsKey(entity))
          _resourceCache.Add(entity, new Dictionary<string, Resource>());
 
       if (_resourceCache[entity].TryGetValue(resourceKey, out var theResource))

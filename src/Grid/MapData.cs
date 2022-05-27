@@ -1,18 +1,25 @@
+using System;
 using System.Collections.Generic;
 using Godot;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 
-public class MapData {
+public class MapData : Resource {
    private readonly Dictionary<long, Cell> _cells = new();
-   public AStar AStar = new();
-   public Dictionary<long, int> CellIdToAStarId = new();
-   public List<Vector3> CellsVisibilityChanged = new();
+   public readonly Dictionary<long, int> CellIdToAStarId = new();
+   public readonly List<Vector3> CellsVisibilityChanged = new();
+   public readonly MapGenParams MapParams;
 
-   public MapData(int width, int height) {
-      AStar.ReserveSpace(width * height);
+   public AStar AStar = new();
+
+   public MapData(MapGenParams mapParams) {
+      MapParams = mapParams;
+      AStar.ReserveSpace(MapParams.Width * MapParams.Height);
    }
+
+   public HashSet<Rect2> GeneratorSpaces { get; } = new();
 
    public IEnumerable<Cell> Cells => _cells.Values;
 
@@ -36,20 +43,14 @@ public class MapData {
       var aStarId = AStar.GetAvailablePointId();
       AStar.AddPoint(aStarId, position.ToVector3());
       CellIdToAStarId.Add(id, aStarId);
+      cell.Connect(nameof(Cell.CellTypeChanged), this, nameof(OnCellTypeChanged));
       return cell;
    }
 
-   public void ConnectPathfindingPoints() {
-      var offsets = new[] {
-         Vector3i.Back, Vector3i.Forward, Vector3i.Left, Vector3i.Right, Vector3i.Back + Vector3i.Left,
-         Vector3i.Back + Vector3i.Right, Vector3i.Forward + Vector3i.Left, Vector3i.Forward + Vector3i.Right
-      };
-
-      var points = AStar.GetPoints();
-      foreach (int point in points)
-      foreach (var offset in offsets) {
-         var neighbourVec = new Vector3i(AStar.GetPointPosition(point)) + offset;
-         if (CellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3(neighbourVec), out var neighbourId)) AStar.ConnectPoints(point, neighbourId);
+   public void OnCellTypeChanged(int typeId, long cellId) {
+      var typeEnum = (CellType)typeId;
+      if (typeEnum == CellType.Wall) {
+         BlockCell(cellId);
       }
    }
 
@@ -58,7 +59,7 @@ public class MapData {
    }
 
    public Vector3[] FindPath(Vector3i from, Vector3i? to) {
-      if (!to.HasValue) return new Vector3[]{};
+      if (!to.HasValue) return new Vector3[] { };
       var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3(from)];
       var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to.Value)];
       return AStar.GetPointPath(idFrom, idTo);

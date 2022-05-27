@@ -6,7 +6,7 @@ using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
-using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Turn;
 using Action = SatiRogue.Commands.Action;
@@ -59,7 +59,7 @@ public partial class MovementComponent : Component {
       }
    }
 
-   public Vector3i? LastPosition { get; protected set; } = null;
+   public Vector3i? LastPosition { get; protected set; }
    protected Vector3i InputDirection { get; set; }
    private Vector3i? _destination;
    private Queue<Vector3>? _path;
@@ -70,11 +70,7 @@ public partial class MovementComponent : Component {
       set => _parent = value as GridEntity;
    }
 
-   private Vector3i? _initialPosition;
-
-   public MovementComponent(Vector3i? initialPosition = null) : base() {
-      _initialPosition = initialPosition;
-   }
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.EnemyTurn};
 
    public bool HasDestination()
    {
@@ -83,55 +79,61 @@ public partial class MovementComponent : Component {
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      if (Parent != null && _initialPosition != null) MapGenerator._mapData.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
+      
+   }
+
+   [OnReady]
+   private void SetInitialPosition() {
+      GetNode<MapGenerator>(MapGenerator.Path).Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapChanged));
+   }
+
+   private void OnMapChanged() {
+      if (Parent != null && _initialPosition != null)
+            MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
+      new ActionPickRandomDestination(this).Execute();
    }
 
    public void SetDestination(Vector3i? destination) {
       _path = null;
       _destination = destination;
    }
-   
+
    public override void HandleTurn() {
       if (Parent is not EnemyEntity) return;
 
+      Action action;
       if (_path == null && _destination != null) {
-         if (_recordingPathfindingCalls) {
-            numPathingCallsThisTurn += 1;
-         }
-         _path = new Queue<Vector3>(MapGenerator._mapData.FindPath(GridPosition, _destination));
+         if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
+         _path = new Queue<Vector3>(MapGenerator.MapData.FindPath(GridPosition, _destination));
          if (_path.Count > 0) _path.Dequeue();
       }
 
-      if (_path is {Count: >= 1}) {
-         Systems.TurnHandler.AddEnemyCommand(
-            new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()))
-         );
-      }
+      if (_path is {Count: >= 1})
+         action = new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()));
       else
-      {
-         _destination = null;
-      }
+         action = new ActionPickRandomDestination(this);
+
+      Systems.TurnHandler.AddEnemyCommand(action);
    }
 
    public bool Move(MovementDirection dir) {
       if (Parent == null) return false;
-      
+
       InputDirection = MovementDirectionToVector(dir);
 
       var targetPosition = GridPosition + InputDirection;
-      var currentCell = MapGenerator._mapData.GetCellAt(GridPosition);
-      var targetCell = MapGenerator._mapData.GetCellAt(targetPosition);
-      
+      var currentCell = MapGenerator.MapData.GetCellAt(GridPosition);
+      var targetCell = MapGenerator.MapData.GetCellAt(targetPosition);
+
       if (targetCell.Blocked) return false;
-      
+
       currentCell.Occupants.Remove(Parent!.GetInstanceId());
       targetCell.Occupants.Add(Parent!.GetInstanceId());
       GridPosition = targetPosition;
 
       return true;
-
    }
-   
+
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {
       switch (dir) {
          case MovementDirection.Left:

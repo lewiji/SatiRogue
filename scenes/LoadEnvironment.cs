@@ -1,11 +1,11 @@
 using Godot;
 using GodotOnReady.Attributes;
 
-namespace SatiRogue.scenes; 
+namespace SatiRogue.scenes;
 
-public partial class LoadEnvironment : WorldEnvironment
-{
-    [OnReady] private void OpenEnvironment() {
-        Environment = GD.Load<Environment>("res://scenes/res/EnvironmentBase.tres");
-    }
+public partial class LoadEnvironment : WorldEnvironment {
+   [OnReady]
+   private void OpenEnvironment() {
+      Environment = GD.Load<Environment>("res://scenes/res/EnvironmentBase.tres");
+   }
 }

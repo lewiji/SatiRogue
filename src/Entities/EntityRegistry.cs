@@ -1,17 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Godot;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
 
 public class EntityRegistry : GameObject {
    private static EntityRegistry? _instance;
+
    /// <summary>
-   /// Dictionary of Guid strings mapped to Entities
+   ///    Dictionary of Guid strings mapped to Entities
    /// </summary>
    public static Dictionary<string, Entity> EntityList = new();
+
    public static Hashtable BlockedCells = new();
 
    public EntityRegistry() {
@@ -19,6 +19,8 @@ public class EntityRegistry : GameObject {
    }
 
    public static PlayerEntity? Player { get; private set; }
+
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new();
 
    public static void RegisterEntity(Entity entity, IGameObjectParameters parameters) {
       if (entity is PlayerEntity playerData)
