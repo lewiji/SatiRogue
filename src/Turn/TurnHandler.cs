@@ -26,7 +26,7 @@ public partial class TurnHandler : Node {
    private readonly Queue<Command> _playerCommands = new();
 
    private Turn _turn;
-
+   private readonly Timer _turnTimer = new() {OneShot = true, WaitTime = 0.11f};
    private int _turnNumber = 0;
 
    public Turn Turn {
@@ -56,6 +56,7 @@ public partial class TurnHandler : Node {
 
    [OnReady]
    private async void SetFirstTurn() {
+      AddChild(_turnTimer);
       await ToSignal(GetTree(), "idle_frame");
       Turn = Turn.PlayerTurn;
    }
@@ -73,10 +74,17 @@ public partial class TurnHandler : Node {
       _enemyCommands.Enqueue(enemyCommand);
    }
 
+   public void SetTurnSpeed(float timeSeconds)
+   {
+      _turnTimer.WaitTime = timeSeconds;
+   }
+
    private void ProcessTurn() {
       if (Turn == Turn.Processing)
          throw new Exception("TurnHandler: ProcessTurn was called, but Turn is already Processing.");
       Turn = Turn.Processing;
+      
+      _turnTimer.Start();
 
       while (_playerCommands.Any() || _enemyCommands.Any()) {
          while (_playerCommands.Any()) _playerCommands.Dequeue().Execute();
@@ -88,7 +96,10 @@ public partial class TurnHandler : Node {
       CallDeferred(nameof(StartNewTurn));
    }
 
-   private void StartNewTurn() {
+   private async void StartNewTurn()
+   {
+      if (!_turnTimer.IsStopped())
+         await ToSignal(_turnTimer, "timeout");
       Logger.Debug("TurnHandler: Processing finished, starting new turn.");
       Turn = Turn.PlayerTurn;
    }

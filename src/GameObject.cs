@@ -23,10 +23,9 @@ public interface IGameObject {
    void InitialiseWithParameters(IGameObjectParameters parameters);
 }
 
-public abstract class GameObject : Node, IGameObject {
+public abstract partial class GameObject : Node, IGameObject {
    public bool Enabled { get; set; } = true;
    protected virtual IGameObjectParameters? Parameters { get; set; }
-   protected abstract List<Turn.Turn> TurnTypesToExecuteOn { get; set; }
    public string Uuid { get; protected set; } = Guid.NewGuid().ToString();
    public virtual GameObject? Parent { get; set; }
 
@@ -38,17 +37,7 @@ public abstract class GameObject : Node, IGameObject {
       if (what == NotificationEnterTree) {
          Parent = Parameters?.Parent ?? GetParentOrNull<GameObject>();
          Name = Parameters?.Name ?? "GameObject";
-         Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-            new Array {Turn.Turn.EnemyTurn});
-         Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-            new Array {Turn.Turn.PlayerTurn});
       }
-   }
-
-
-   private void FilterTurnTypesToExecuteOn(Turn.Turn turn) {
-      if (TurnTypesToExecuteOn.Contains(turn))
-         HandleTurn();
    }
 
    public virtual void HandleTurn() {

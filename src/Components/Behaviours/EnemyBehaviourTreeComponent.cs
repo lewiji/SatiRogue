@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Active;
 using Active.Core;
 using Godot;
@@ -10,7 +11,6 @@ using static Active.Status;
 namespace SatiRogue.Components.Behaviours;
 
 public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.EnemyTurn};
 
    public override void _EnterTree() {
       base._EnterTree();

@@ -1,23 +1,12 @@
-using System.Collections.Generic;
 using Godot;
-using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Turn;
 
-namespace SatiRogue.Player;
+namespace SatiRogue.Components;
 
 public class InputHandlerComponent : Component {
-   private readonly Timer _moveTimer = new();
-   private readonly TurnHandler _turnHandler = Systems.TurnHandler;
-   public bool CanMove;
-
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.PlayerTurn, Turn.Turn.EnemyTurn};
-
-   public override void _Ready() {
-      AddChild(_moveTimer);
-      _moveTimer.OneShot = true;
-   }
+   private bool _awaitingInput;
 
    public override void HandleTurn() {
       switch (Systems.TurnHandler.Turn) {
@@ -31,17 +20,16 @@ public class InputHandlerComponent : Component {
    }
 
    private async void HandlePlayerTurnStarted() {
-      if (!_moveTimer.IsStopped()) await ToSignal(_moveTimer, "timeout");
       Logger.Debug("Player turn started. Awaiting input.");
-      CanMove = true;
+      _awaitingInput = true;
    }
 
    private void HandleEnemyTurnStarted() {
-      CanMove = false;
+      _awaitingInput = false;
    }
 
    public override void _Process(float delta) {
-      if (!CanMove || EntityRegistry.Player == null) return;
+      if (!_awaitingInput || EntityRegistry.Player == null) return;
 
       var movementDirection = MovementDirection.None;
 
@@ -55,8 +43,8 @@ public class InputHandlerComponent : Component {
 
       if (movementDirection == MovementDirection.None) return;
 
-      EntityRegistry.Player.GetComponent<PlayerMovementComponent>()?.SetDestination(movementDirection);
+      _awaitingInput = false;
 
-      _moveTimer?.Start(0.12f);
+      EntityRegistry.Player.GetComponent<PlayerMovementComponent>()?.SetDestination(movementDirection);
    }
 }

@@ -20,8 +20,6 @@ public class EntityRegistry : GameObject {
 
    public static PlayerEntity? Player { get; private set; }
 
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new();
-
    public static void RegisterEntity(Entity entity, IGameObjectParameters parameters) {
       if (entity is PlayerEntity playerData)
          Player = playerData;

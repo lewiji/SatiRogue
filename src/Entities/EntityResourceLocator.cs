@@ -11,13 +11,11 @@ namespace SatiRogue.Entities;
 public struct EntityResourceBundle {
    public EntityResourceBundle()
    {
-      Stats = default;
       Components = new Component[] { };
       ResourcePaths = new Dictionary<string, string>();
    }
 
    public Dictionary<string, string> ResourcePaths { get; set; }
-   public EntityStats Stats { get; set; }
    public Component[] Components { get; set; }
 }
 
@@ -42,7 +40,6 @@ public static class EntityResourceLocator {
                {nameof(SpriteFrames), "res://resources/enemies/maw/maw_purple_sprite_Frames.tres"},
                {nameof(Material), "res://resources/enemies/maw/maw_purple_spatial_mat.tres"}
             },
-            Stats = new EntityStats {MaxHealth = 3, Level = 2},
             Components = new Component[] {new EnemyBehaviourTreeComponent()}
          }
       }, {
@@ -52,7 +49,6 @@ public static class EntityResourceLocator {
                {nameof(SpriteFrames), "res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres"},
                {nameof(Material), "res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres"}
             },
-            Stats = new EntityStats {MaxHealth = 1, Level = 1},
             Components = new Component[] {new EnemyBehaviourTreeComponent()}
          }
       }, {
@@ -62,7 +58,6 @@ public static class EntityResourceLocator {
                {nameof(SpriteFrames), "res://resources/enemies/harpy/harpy_blue_spriteframes.tres"},
                {nameof(Material), "res://resources/enemies/harpy/harpy_blue_spatial_mat.tres"}
             },
-            Stats = new EntityStats {MaxHealth = 4, Level = 3},
             Components = new Component[] {new EnemyBehaviourTreeComponent()}
          }
       }

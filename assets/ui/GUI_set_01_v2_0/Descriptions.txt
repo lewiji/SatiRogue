@@ -1,0 +1,41 @@
+9 slice buttons probably need to get resaved, depending on the software used.
+The middle elements can also easily be cut out in any graphics software to get smaller buttons.
+
+9 slice frames are exactly 16x16 pieces each.
+
+HUD_loadingbar:
+note thet no element should be stretched. The middle step needs to be repeated. 
+Fill and middle step have the same size (+1 fill in the left end and one in the right end)
+
+the black (normal) border is meant to be used as HUD element.
+the black border is meant to be used on the menu bgs (same color as all buttons)
+
+HUD_valuebar:
+layering needs to be: bg behing fill behind foreground
+middle element is meant to be stretched.
+Fill needs to be coded in pixel-perfectly.
+
+the purple (normal) border is meant to be used as HUD element.
+the black border is meant to be used on the menu bgs (same color as all buttons)
+
+Slider rail:
+Middle element can either be repeated or stretched.
+
+Buttons:
+Buttons strips are not meant to be animated as a loop on their own.
+All buttons are meant to be used as
+normal: no interaction
+mouseover: if the cursor is above it (not on mobile)
+pressed: if you interact with it.
+
+Slot:
+the slot easily can be resized in any graphics software for different purposes
+Also it comes in 3 sies, fitting for all 3 iconsizes.
+
+Menu Selectionarrow & Menu Selectiongraticule:
+should be animated with 60 - 100ms (10-15 fps)
+It comes in 3 sizes, choose what looks best.
+
+Cursors:
+they share all the same name (within folders=
+Frame 2 is meant as the mousebutton interaction 

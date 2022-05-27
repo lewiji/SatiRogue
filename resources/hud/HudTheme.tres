@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all.png" type="Texture" id=1]
+[ext_resource path="res://fonts/ConjuredPro.otf" type="DynamicFontData" id=2]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 512, 1304, 130, 48 )
+margin_left = 7.0
+margin_right = 7.0
+margin_top = 7.0
+margin_bottom = 7.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+draw_center = false
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 3
+outline_color = Color( 0.164706, 0, 0.25098, 1 )
+font_data = ExtResource( 2 )
+
+[resource]
+default_font = SubResource( 2 )
+Panel/styles/panel = SubResource( 1 )

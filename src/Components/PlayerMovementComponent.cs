@@ -11,8 +11,6 @@ public class PlayerMovementComponent : MovementComponent {
    private PlayerEntity? _parent;
    public PlayerMovementComponent(Vector3i? initialPosition = null) : base(initialPosition) { }
 
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new();
-
    public override GameObject? Parent {
       get => _parent;
       set => _parent = value as PlayerEntity;
@@ -23,5 +21,10 @@ public class PlayerMovementComponent : MovementComponent {
       Systems.TurnHandler.SetPlayerCommand(
          new ActionMove(this, _direction.GetValueOrDefault())
       );
+   }
+
+   public override void HandleTurn()
+   {
+      _direction = null;
    }
 }

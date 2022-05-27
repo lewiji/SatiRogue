@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
-using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Turn;
 using Action = SatiRogue.Commands.Action;
 
-namespace SatiRogue.Components; 
+namespace SatiRogue.Components;
 
 public enum MovementDirection {
    Left,
@@ -27,29 +25,25 @@ public enum MovementDirection {
 
 public partial class MovementComponent : Component {
    /// <summary>
-   /// Emitted when the entity's GridPosition changes
+   ///    Emitted when the entity's GridPosition changes
    /// </summary>
-   [Signal] public delegate void PositionChanged();
+   [Signal]
+   public delegate void PositionChanged();
 
-   public static bool _recordingPathfindingCalls = false;
-   public static int numPathingCallsThisTurn = 0;
-   
-   [OnReady]
-   private void ConnectEnemyTurnSignal() {
-      //Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
-      //Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+   public static bool _recordingPathfindingCalls;
+   public static int numPathingCallsThisTurn;
+   private Vector3i? _destination;
+
+   private Vector3i? _gridPosition;
+
+   private Vector3i? _initialPosition;
+   private GridEntity? _parent;
+   private Queue<Vector3>? _path;
+
+   public MovementComponent(Vector3i? initialPosition = null) {
+      _initialPosition = initialPosition;
    }
 
-   private void RecordPathfindingCalls() {
-      numPathingCallsThisTurn = 0;
-      _recordingPathfindingCalls = true;
-   }
-
-   private async void StopRecordingPathfindingCalls() {
-      //await ToSignal(GetTree(), "idle_frame");
-   }
-   
-   private Vector3i? _gridPosition = null;
    public Vector3i GridPosition {
       get => _gridPosition.GetValueOrDefault();
       set {
@@ -61,20 +55,25 @@ public partial class MovementComponent : Component {
 
    public Vector3i? LastPosition { get; protected set; }
    protected Vector3i InputDirection { get; set; }
-   private Vector3i? _destination;
-   private Queue<Vector3>? _path;
-   private GridEntity? _parent;
 
    public override GameObject? Parent {
       get => _parent;
       set => _parent = value as GridEntity;
    }
 
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.EnemyTurn};
+   [OnReady]
+   private void ConnectEnemyTurnSignal() {
+      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
+      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+   }
 
-   public bool HasDestination()
-   {
-      return _destination.HasValue;
+   private void RecordPathfindingCalls() {
+      numPathingCallsThisTurn = 0;
+      _recordingPathfindingCalls = true;
+   }
+
+   private async void StopRecordingPathfindingCalls() {
+      //await ToSignal(GetTree(), "idle_frame");
    }
 
    public override void _EnterTree() {
@@ -98,9 +97,12 @@ public partial class MovementComponent : Component {
       _destination = destination;
    }
 
+   public bool HasDestination()
+   {
+      return _destination.HasValue;
+   }
+   
    public override void HandleTurn() {
-      if (Parent is not EnemyEntity) return;
-
       Action action;
       if (_path == null && _destination != null) {
          if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;

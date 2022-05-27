@@ -12,7 +12,7 @@ public class GridEntityParameters : EntityParameters {
    public Vector3i? GridPosition { get; set; } = null;
 }
 
-public class GridEntity : Entity {
+public abstract class GridEntity : Entity {
    private GridEntityParameters? _parameters;
 
    protected override IGameObjectParameters? Parameters {
@@ -27,8 +27,6 @@ public class GridEntity : Entity {
       get => GetComponent<MovementComponent>()!.GridPosition;
       set => GetComponent<MovementComponent>()!.GridPosition = value;
    }
-
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new();
 
    public override void _EnterTree() {
       base._EnterTree();

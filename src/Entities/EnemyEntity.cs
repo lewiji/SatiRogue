@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Godot;
+using SatiRogue.Components.Stats;
 
 namespace SatiRogue.Entities;
 
@@ -21,6 +23,8 @@ public class EnemyEntity : GridEntity {
       set => _parameters = value as EnemyEntityParameters;
    }
 
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() { Turn.Turn.EnemyTurn };
+
    public override void _EnterTree() {
       base.Parameters = _parameters;
       base._EnterTree();
@@ -30,6 +34,7 @@ public class EnemyEntity : GridEntity {
       EntityType = _parameters.EntityType;
       SightRange = _parameters.SightRange ?? 6;
       Name = _parameters.Name ?? "Enemy";
+      AddComponent(new StatHealthComponent(1));
    }
 
    protected override void OnPositionChanged() {

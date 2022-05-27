@@ -1,0 +1,39 @@
+Stripsizes:
+8x8 buttons: 	grid size of 8x8
+10x10 buttons:	grid size of 10x10
+16x16 buttons:	grid size of 18x18
+20x20 buttons:	grid size of 22x22
+24x24 buttons: 	grid size of 26x26
+
+
+Frames:
+first third: 	highlighted button
+second third:	outlined button
+third third:	normal button
+
+Animation ideas:
+if you animate the buttons keep in mind that the pressing hsould have a shorter animation then the release.
+
+let's say you have an animation with 4 frames
+[1] [2] [3] [4]
+
+with [1] being the released state and [4] being the pressed state.
+
+the pressing could have a frequence like:
+[1] [4] [3]	-energetic press with backlash
+[1] [3] [4]	-slower press
+[1] [3] [4] [3]	-energetic press with backlash
+
+for the release of the button you could display it smooth
+[4] [3] [2] [1]
+
+or you make a fast release like
+[4] [3] [1]
+
+since all the animations are delivered in 3 states, you can switch to highlighted or outlined after each animation and let each animation display like this.
+Have fun experimenting!
+
+
+
+
+
