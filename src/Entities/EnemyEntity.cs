@@ -28,7 +28,7 @@ public partial class EnemyEntity : GridEntity {
          throw new Exception("EnemyEntity was added to the tree without EnemyEntityParameters; call InitialiseWithParameters before registering the entity.");
       }
       EntityType = _parameters.EntityType;
-      SightRange = _parameters.SightRange ?? 8;
+      SightRange = _parameters.SightRange ?? 6;
       Name = _parameters.Name ?? "Enemy";
    }
 

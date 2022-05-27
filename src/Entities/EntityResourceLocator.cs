@@ -9,7 +9,14 @@ namespace SatiRogue.Entities;
 /// It's a struct that contains a dictionary of resource paths and a set of stats.
 /// </summary>
 public struct EntityResourceBundle {
-   public Dictionary<string, string> ResourcePaths { get; set; } = new();
+   public EntityResourceBundle()
+   {
+      Stats = default;
+      Components = new Component[] { };
+      ResourcePaths = new Dictionary<string, string>();
+   }
+
+   public Dictionary<string, string> ResourcePaths { get; set; }
    public EntityStats Stats { get; set; }
    public Component[] Components { get; set; }
 }

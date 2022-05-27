@@ -36,8 +36,8 @@ public partial class MovementComponent : Component {
    
    [OnReady]
    private void ConnectEnemyTurnSignal() {
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+      //Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
+      //Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
    }
 
    private void RecordPathfindingCalls() {
@@ -76,10 +76,14 @@ public partial class MovementComponent : Component {
       _initialPosition = initialPosition;
    }
 
+   public bool HasDestination()
+   {
+      return _destination.HasValue;
+   }
+
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
       if (Parent != null && _initialPosition != null) MapGenerator._mapData.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
-      new ActionPickRandomDestination(this).Execute();
    }
 
    public void SetDestination(Vector3i? destination) {
@@ -90,7 +94,6 @@ public partial class MovementComponent : Component {
    public override void HandleTurn() {
       if (Parent is not EnemyEntity) return;
 
-      Action action;
       if (_path == null && _destination != null) {
          if (_recordingPathfindingCalls) {
             numPathingCallsThisTurn += 1;
@@ -100,13 +103,14 @@ public partial class MovementComponent : Component {
       }
 
       if (_path is {Count: >= 1}) {
-         action = new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()));
+         Systems.TurnHandler.AddEnemyCommand(
+            new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()))
+         );
       }
-      else {
-         action = new ActionPickRandomDestination(this);
+      else
+      {
+         _destination = null;
       }
-
-      Systems.TurnHandler.AddEnemyCommand(action);
    }
 
    public bool Move(MovementDirection dir) {

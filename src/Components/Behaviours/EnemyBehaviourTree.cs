@@ -1,8 +1,10 @@
 using Active;
 using Active.Core;
 using Godot;
+using SatiRogue.Commands.Actions;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
+using SatiRogue.Turn;
 using static Active.Status;
 
 namespace SatiRogue.Components.Behaviours;
@@ -19,7 +21,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
 
    private class EnemyBehaviourTree : Gig {
       private readonly EnemyEntity _enemyEntity;
-      private int _squaredSightRange;
+      private readonly int _squaredSightRange;
       private float _rangeToPlayer = -1;
 
       public EnemyBehaviourTree(EnemyEntity entity) {
@@ -27,7 +29,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
          _squaredSightRange = _enemyEntity.SightRange * _enemyEntity.SightRange;
       }
 
-      public override status Step() => CheckDistanceToPlayer() && CheckLineOfSight() && MoveToPlayer() && Attack();
+      public override status Step() => CheckDistanceToPlayer() && CheckLineOfSight() && (MoveToPlayer() || Attack()) || MoveRandomly();
 
       private status CheckDistanceToPlayer() {
          _rangeToPlayer = _enemyEntity.DistanceSquaredTo(EntityRegistry.Player!);
@@ -50,6 +52,16 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
 
       private status Attack() {
          Logger.Info("ATTACKING!!!");
+         return done();
+      }
+
+      private status MoveRandomly()
+      {
+         var enemyMovement = _enemyEntity.GetComponent<MovementComponent>();
+         if (enemyMovement != null && enemyMovement.HasDestination())
+            return done();
+         Logger.Info("Moving randomly");
+         Systems.TurnHandler.AddEnemyCommand(new ActionPickRandomDestination(_enemyEntity.GetComponent<MovementComponent>()!));
          return done();
       }
    }
