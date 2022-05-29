@@ -21,7 +21,6 @@ uniform sampler2D texture_ambient_occlusion : hint_white;
 uniform vec4 ao_texture_channel;
 uniform float ao_light_affect;
 uniform sampler2D texture_depth : hint_black;
-uniform sampler2D texture_progress_gradient;
 uniform float depth_scale;
 uniform int depth_min_layers;
 uniform int depth_max_layers;
@@ -67,9 +66,20 @@ void fragment() {
 	}
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
 	
-	if (is_progress_bar > 0.1f && albedo_tex.a > 0f) {
-		vec4 progress_gradient_tex = texture(texture_progress_gradient, orig_uv);
-		if (all(lessThanEqual(progress_gradient_tex.rgb, vec3(0.1f, 0.1f, 0.1f)))) {
+	if (is_progress_bar > 0f && albedo_tex.a > 0f) {
+		vec2 coords = base_uv;
+		vec2 pointOnLineSegment = vec2(clamp(coords.x, 0.5f, 1f - 0.5f), 0.5f);
+		float sdf = distance(pointOnLineSegment, coords) * 2f - 1f;
+		
+		float borderSdf = sdf + 1f;
+		float pd = fwidth(borderSdf);
+		float borderMask = 1f - clamp(borderSdf / pd, 0, 1);
+		
+		borderSdf = ( (borderSdf - 0f) / (1f - 0f) ) * (1.03f + 0.3f) - 0.3f;
+		
+		bool fillMask = borderSdf > percent_full;
+		
+		if (fillMask) {
 			discard;
 		}
 	}

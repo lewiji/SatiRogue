@@ -29,10 +29,10 @@ public partial class StatBar3D : Spatial {
       set {
          _percent = value;
          if (_shaderMaterial != null) {
-            var gradTex = (GradientTexture) _shaderMaterial.GetShaderParam("texture_progress_gradient");
-            var linearPercent = _percent * (0.93f - 0.15f) + 0.15f;
+            //var gradTex = (GradientTexture) _shaderMaterial.GetShaderParam("texture_progress_gradient");
+            //var linearPercent = _percent * (0.93f - 0.15f) + 0.15f;
 
-            gradTex.Gradient.SetOffset(1, linearPercent);
+            //gradTex.Gradient.SetOffset(1, linearPercent);
          }
       }
    }

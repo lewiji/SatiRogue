@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=10 format=2]
+[gd_resource type="ShaderMaterial" load_steps=8 format=2]
 
 [ext_resource path="res://resources/hud/StatBar3DShader.gdshader" type="Shader" id=1]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined.png" type="Texture" id=2]
@@ -7,14 +7,6 @@
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_s.png" type="Texture" id=5]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_p.png" type="Texture" id=6]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_m.png" type="Texture" id=7]
-
-[sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0.149837, 0.15, 0.934853 )
-colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-width = 100
 
 [resource]
 shader = ExtResource( 1 )
@@ -34,7 +26,7 @@ shader_param/depth_scale = 0.11
 shader_param/depth_min_layers = 3
 shader_param/depth_max_layers = 11
 shader_param/depth_flip = Vector2( 0.09, 0.9 )
-shader_param/percent_full = 0.5
+shader_param/percent_full = 0.52
 shader_param/texture_albedo = ExtResource( 2 )
 shader_param/texture_metallic = ExtResource( 5 )
 shader_param/texture_roughness = ExtResource( 7 )
@@ -42,4 +34,3 @@ shader_param/texture_emission = ExtResource( 2 )
 shader_param/texture_normal = ExtResource( 3 )
 shader_param/texture_ambient_occlusion = ExtResource( 4 )
 shader_param/texture_depth = ExtResource( 6 )
-shader_param/texture_progress_gradient = SubResource( 2 )
