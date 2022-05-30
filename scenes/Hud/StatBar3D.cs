@@ -25,22 +25,11 @@ public partial class StatBar3D : Spatial {
       _multiMeshInstance.Multimesh.SetInstanceTransform(1, new Transform(Basis.Identity, new Vector3(0, 0, 0.025f)));
       _multiMeshInstance.Multimesh.SetInstanceCustomData(1, new Color(0.4892f, 0.5504f, 1f));
 
-      CallDeferred(nameof(SetupEntityDataBindings));
    }
 
-   private void SetupEntityDataBindings() {
-      if (GetParent() is not MeshRendererEntity meshEntity) return;
-      
-      /* Getting the health component from the parent entity. */
-      var statComponent = meshEntity.Entity?.GetComponent<StatHealthComponent>();
-      _statsComponent = statComponent;
-      statComponent?.Connect(nameof(StatsComponent.Changed), this, nameof(OnStatChanged));
-      if (statComponent != null) Percent = statComponent.Percentage;
-   }
+
    
-   private void OnStatChanged(int newValue) {
-      if (_statsComponent != null) Percent = (float) newValue / _statsComponent.MaxValue;
-   }
+
 
    [Export]
    public float Percent {

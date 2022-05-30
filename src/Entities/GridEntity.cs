@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Godot;
 using SatiRogue.Components;
 using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
@@ -14,6 +15,9 @@ public class GridEntityParameters : EntityParameters {
 
 public abstract class GridEntity : Entity {
    private GridEntityParameters? _parameters;
+   
+   [Signal]
+   public delegate void PositionChanged();
 
    protected override IGameObjectParameters? Parameters {
       get => _parameters;
@@ -44,6 +48,7 @@ public abstract class GridEntity : Entity {
 
    protected virtual void OnPositionChanged() {
       Visible = GetIsVisible();
+      EmitSignal(nameof(PositionChanged));
    }
 
    private bool GetIsVisible() {

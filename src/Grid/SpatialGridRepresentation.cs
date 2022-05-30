@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Components.Render;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
+using EnemyMeshRendererComponent = SatiRogue.Components.Render.EnemyMeshRendererComponent;
 
 namespace SatiRogue.Grid;
 
@@ -109,6 +111,7 @@ public partial class SpatialGridRepresentation : Spatial {
       foreach (var entityData in EntityRegistry.EntityList)
          if (entityData.Value is EnemyEntity enemyEntity) {
             enemyEntity.AddComponent(new EnemyMeshRendererComponent());
+            enemyEntity.AddComponent(new StatBar3DRendererComponent());
          }
 
       Logger.Info("Chunking finished.");
