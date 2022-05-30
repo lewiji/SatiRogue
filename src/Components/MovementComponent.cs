@@ -56,7 +56,7 @@ public partial class MovementComponent : Component {
    public Vector3i? LastPosition { get; protected set; }
    protected Vector3i InputDirection { get; set; }
 
-   public override GameObject? Parent {
+   public override GameObject? EcOwner {
       get => _parent;
       set => _parent = value as GridEntity;
    }
@@ -87,8 +87,8 @@ public partial class MovementComponent : Component {
    }
 
    private void OnMapChanged() {
-      if (Parent != null && _initialPosition != null)
-            MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(Parent.GetInstanceId());
+      if (EcOwner != null && _initialPosition != null)
+            MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
       new ActionPickRandomDestination(this).Execute();
    }
 
@@ -119,7 +119,7 @@ public partial class MovementComponent : Component {
    }
 
    public bool Move(MovementDirection dir) {
-      if (Parent == null) return false;
+      if (EcOwner == null) return false;
 
       InputDirection = MovementDirectionToVector(dir);
 
@@ -129,8 +129,8 @@ public partial class MovementComponent : Component {
 
       if (targetCell.Blocked) return false;
 
-      currentCell.Occupants.Remove(Parent!.GetInstanceId());
-      targetCell.Occupants.Add(Parent!.GetInstanceId());
+      currentCell.Occupants.Remove(EcOwner!.GetInstanceId());
+      targetCell.Occupants.Add(EcOwner!.GetInstanceId());
       GridPosition = targetPosition;
 
       return true;

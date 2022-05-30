@@ -107,12 +107,8 @@ public partial class SpatialGridRepresentation : Spatial {
       }
 
       foreach (var entityData in EntityRegistry.EntityList)
-         if (entityData.Value is EnemyEntity enemyData) {
-            var tilePosition = enemyData.GridPosition;
-            var enemyNode = new Enemy3D(enemyData) {
-               Translation = tilePosition.ToVector3()
-            };
-            _threeDee?.EnemiesSpatial?.AddChild(enemyNode);
+         if (entityData.Value is EnemyEntity enemyEntity) {
+            enemyEntity.AddComponent(new EnemyMeshRendererComponent());
          }
 
       Logger.Info("Chunking finished.");

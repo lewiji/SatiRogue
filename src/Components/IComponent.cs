@@ -1,3 +1,3 @@
 namespace SatiRogue.Components;
 
-public interface IComponent { }
+public interface IComponent : IGameObject { }

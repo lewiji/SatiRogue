@@ -19,6 +19,6 @@ public class ActionMove : Action {
    }
 
    public void NotifyEnemyIsBlocked() {
-      if (Owner?.Parent is EnemyEntity enemy) new ActionPickRandomDestination((MovementComponent) Owner).Execute();
+      if (Owner?.EcOwner is EnemyEntity enemy) new ActionPickRandomDestination((MovementComponent) Owner).Execute();
    }
 }

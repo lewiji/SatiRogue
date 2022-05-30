@@ -11,7 +11,7 @@ public class PlayerMovementComponent : MovementComponent {
    private PlayerEntity? _parent;
    public PlayerMovementComponent(Vector3i? initialPosition = null) : base(initialPosition) { }
 
-   public override GameObject? Parent {
+   public override GameObject? EcOwner {
       get => _parent;
       set => _parent = value as PlayerEntity;
    }

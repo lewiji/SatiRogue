@@ -9,7 +9,7 @@ public abstract class BehaviourTreeComponent : Component {
    protected Entity? ParentEntity;
    protected Gig? BehaviourTree { get; set; }
 
-   public override GameObject? Parent {
+   public override GameObject? EcOwner {
       get => ParentEntity;
       set => ParentEntity = value as Entity;
    }

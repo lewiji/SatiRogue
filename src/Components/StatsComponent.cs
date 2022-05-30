@@ -30,7 +30,6 @@ public abstract partial class StatsComponent : Component
     
     public int MaxValue { get; protected set; }
     public int MinValue { get; protected set; }
-
     public int Value
     {
         get => _value;
@@ -39,6 +38,9 @@ public abstract partial class StatsComponent : Component
             _value = value;
             EmitSignal(nameof(Changed), _value);
         }
+    }
+    public float Percentage {
+        get => (float) Value / MaxValue;
     }
 
     public virtual string GetStatName()

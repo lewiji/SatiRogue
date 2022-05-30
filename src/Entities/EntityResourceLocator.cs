@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using SatiRogue.Components;
 using SatiRogue.Components.Behaviours;
+using SatiRogue.scenes.Hud;
 
 namespace SatiRogue.Entities;
 
@@ -63,6 +64,10 @@ public static class EntityResourceLocator {
       }
    };
 
+   public static Dictionary<string, NodePath> SceneNodePaths = new ();
+
+   public static readonly PackedScene StatBar3DScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
+   
    private static readonly Dictionary<EntityTypes, Dictionary<string, Resource>> _resourceCache = new();
 
    /// <summary>

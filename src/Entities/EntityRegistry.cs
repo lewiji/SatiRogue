@@ -26,12 +26,13 @@ public class EntityRegistry : GameObject {
       else
          EntityList.Add(entity.Uuid, entity);
 
-      parameters.Parent ??= _instance;
+      parameters.EcOwner ??= _instance;
       entity.InitialiseWithParameters(parameters);
 
       if (entity is GridEntity {BlocksCell: true} gridEntity) BlockedCells.Add(gridEntity.GridPosition, entity.Uuid);
 
       _instance?.AddChild(entity);
+      entity.Owner = _instance;
    }
 
    public static bool IsPositionBlocked(Vector3i position) {

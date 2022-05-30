@@ -48,9 +48,10 @@ public abstract class Entity : GameObject, IEntity {
    }
 
    public Component AddComponent(Component component) {
-      component.Parent = this;
+      component.EcOwner = this;
       _components.Add(component);
       AddChild(component);
+      component.Owner = this;
       return component;
    }
 
