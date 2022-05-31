@@ -44,9 +44,8 @@ public partial class SpatialGridRepresentation : Spatial {
 
    private void ConnectToGridGenerator() {
       Logger.Debug("Connecting to map changed signal.");
-      var gridGenerator = _threeDee!.GridGenerator;
-      gridGenerator?.Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapDataChanged));
-      gridGenerator?.Connect(nameof(MapGenerator.VisibilityChanged), this, nameof(OnVisibilityChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
    }
 
    private Vector3i[] GetChunkMinMaxCoords(int chunkId, int maxWidth) {
@@ -70,6 +69,7 @@ public partial class SpatialGridRepresentation : Spatial {
    }
 
    private void OnVisibilityChanged(Vector3[] positions) {
+      if (_totalChunks == 0) return;
       Logger.Debug("Spatial visibility updating");
       foreach (var position in positions) {
          var chunkId = GetChunkIdForPosition(new Vector3i(position));
@@ -82,7 +82,7 @@ public partial class SpatialGridRepresentation : Spatial {
    private void OnMapDataChanged() {
       Logger.Debug("3d: Map data changed");
 
-      var cells = MapGenerator.MapData?.Cells.ToArray();
+      var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
       _maxWidth = mapParams.Width;
       _chunkSize = ChunkWidth * ChunkWidth;

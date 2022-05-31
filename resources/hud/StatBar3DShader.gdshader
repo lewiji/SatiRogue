@@ -38,30 +38,16 @@ void vertex() {
 	orig_uv = UV;
 	UV=UV*atlas_uv.xy+atlas_uv_offset.xy;
 	is_progress_bar = INSTANCE_CUSTOM.b;
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(WORLD_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(WORLD_MATRIX[1].xyz), 0.0, 0.0),vec4(0.0, 0.0, length(WORLD_MATRIX[2].xyz), 0.0),vec4(0.0, 0.0, 0.0, 1.0));
 }
 
 void fragment() {
 	vec2 base_uv = UV;
 	{
 		vec3 view_dir = normalize(normalize(-VERTEX)*mat3(TANGENT*depth_flip.x,-BINORMAL*depth_flip.y,NORMAL));
-		float num_layers = mix(float(depth_max_layers),float(depth_min_layers), abs(dot(vec3(0.0, 0.0, 1.0), view_dir)));
-		float layer_depth = 1.0 / num_layers;
-		float current_layer_depth = 0.0;
-		vec2 P = view_dir.xy * depth_scale;
-		vec2 delta = P / num_layers;
-		vec2 ofs = base_uv;
-		float depth = textureLod(texture_depth, ofs, 0.0).r;
-		float current_depth = 0.0;
-		while(current_depth < depth) {
-			ofs -= delta;
-			depth = textureLod(texture_depth, ofs, 0.0).r;
-			current_depth += layer_depth;
-		}
-		vec2 prev_ofs = ofs + delta;
-		float after_depth  = depth - current_depth;
-		float before_depth = textureLod(texture_depth, prev_ofs, 0.0).r - current_depth + layer_depth;
-		float weight = after_depth / (after_depth - before_depth);
-		ofs = mix(ofs,prev_ofs,weight);
+		float depth = texture(texture_depth, base_uv).r;
+		vec2 ofs = base_uv - view_dir.xy / view_dir.z * (depth * depth_scale);
 		base_uv=ofs;
 	}
 	vec4 albedo_tex = texture(texture_albedo,base_uv);

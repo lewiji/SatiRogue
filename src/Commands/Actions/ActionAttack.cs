@@ -22,6 +22,7 @@ public class ActionAttack : Action
     {
         Logger.Info($"{Owner!.Name} attacking {Target!.Name} for ");
         //_targetStats!.Health -= _ownerStats!.Stats.Strength;
+        _targetStats?.Subtract(1);
         return Error.Ok;
     }
 }

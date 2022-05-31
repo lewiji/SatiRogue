@@ -9,6 +9,28 @@ namespace SatiRogue.Components;
 public abstract partial class StatsComponent : Component
 {
     private int _value;
+    public StatEffectTypes StatType { get; set; }
+    public int StatTypeIndex { get; set; }
+    public int MaxValue { get; protected set; }
+    public int MinValue { get; protected set; }
+    public bool CanBeNegative { get; protected set; }
+    public int Value
+    {
+        get => _value;
+        private set
+        {
+            if (value <= MinValue && !CanBeNegative) {
+                _value = MinValue;
+                EmitSignal(nameof(Changed), _value);
+                EmitSignal(nameof(Depleted));
+            } else {
+                _value = value;
+                EmitSignal(nameof(Changed), _value);
+            }
+        }
+    }
+
+    public Entity Entity => (Entity)EcOwner!;
 
     protected StatsComponent(StatEffectTypes statType, int statTypeIndex, int maxValue, int minValue = 0, int? initialValue = null)
     {
@@ -20,25 +42,24 @@ public abstract partial class StatsComponent : Component
     }
     
     [Signal] public delegate void Changed(int newValue);
-    [OnReady] private void ConnectChangedSignal()
+    [Signal] public delegate void Depleted();
+    
+    [OnReady] private void ConnectSignals()
     {
         Connect(nameof(Changed), this, nameof(OnChanged));
+        Connect(nameof(Depleted), this, nameof(OnDepleted));
     }
     public abstract void OnChanged();
-    public StatEffectTypes StatType { get; set; }
-    public int StatTypeIndex { get; set; }
-    
-    public int MaxValue { get; protected set; }
-    public int MinValue { get; protected set; }
-    public int Value
-    {
-        get => _value;
-        private set
-        {
-            _value = value;
-            EmitSignal(nameof(Changed), _value);
-        }
+    public abstract void OnDepleted();
+
+    public void Subtract(int deductBy = 1) {
+        Value -= deductBy;
     }
+    
+    public void Add(int increaseBy = 1) {
+        Value += increaseBy;
+    }
+    
     public float Percentage {
         get => (float) Value / MaxValue;
     }

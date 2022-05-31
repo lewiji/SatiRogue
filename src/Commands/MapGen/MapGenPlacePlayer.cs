@@ -3,13 +3,14 @@ using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 
 namespace SatiRogue.Commands.MapGen;
 
 public class MapGenPlacePlayer : MapGenCommand {
-   public MapGenPlacePlayer(MapData mapData) : base(mapData) { }
+   public MapGenPlacePlayer(MapGenMapData mapData) : base(mapData) { }
 
    public override Error Execute() {
       var startingRoom = MapData.GeneratorSpaces.ElementAt((int) GD.RandRange(0, MapData.GeneratorSpaces.Count));

@@ -1,3 +1,5 @@
+using Godot;
+
 namespace SatiRogue.Commands;
 
 public abstract class Action : Command {
@@ -7,5 +9,9 @@ public abstract class Action : Command {
    public Action(GameObject? owner, GameObject? target = null) {
       Owner = owner;
       Target = target;
+   }
+
+   public bool IsOwnerEnabled() {
+      return Owner?.Enabled ?? false;
    }
 }

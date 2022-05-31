@@ -1,11 +1,12 @@
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 
 namespace SatiRogue.Commands;
 
 public abstract class MapGenCommand : Command {
-   public MapGenCommand(MapData mapData) {
+   public MapGenCommand(MapGenMapData mapData) {
       MapData = mapData;
    }
 
-   protected MapData MapData { get; }
+   protected MapGenMapData MapData { get; }
 }

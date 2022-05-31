@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/hud/StatBar3DMultiMesh.tres" type="MultiMesh" id=1]
 [ext_resource path="res://scenes/Hud/StatBar3D.cs" type="Script" id=2]
+[ext_resource path="res://resources/hud/StatBar3DShaderMat.tres" type="Material" id=3]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -34,7 +35,8 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30, 4 )
+material_override = ExtResource( 3 )
 cast_shadow = 0
 generate_lightmap = false
 multimesh = ExtResource( 1 )

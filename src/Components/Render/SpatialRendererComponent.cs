@@ -23,6 +23,11 @@ public partial class SpatialRendererComponent : RendererComponent {
       }
    }
 
+   public override void _ExitTree() {
+      base._ExitTree();
+      RootNode?.QueueFree();
+   }
+
    protected override void CreateVisualNodes() { }
    
    [OnReady]

@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.s3tc.stex"
-path.etc2="res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.etc2.stex"
+path="res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_n.png"
-dest_files=[ "res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.s3tc.stex", "res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.etc2.stex" ]
+dest_files=[ "res://.import/type5_combined_n.png-a2c3b04be7f6db023f6d50923fb79247.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.1
 compress/hdr_mode=0
 compress/bptc_ldr=0

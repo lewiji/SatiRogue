@@ -16,4 +16,8 @@ public class StatHealthComponent : StatsComponent
             
         }
     }
+
+    public override void OnDepleted() {
+        Entity.Alive = false;
+    }
 }

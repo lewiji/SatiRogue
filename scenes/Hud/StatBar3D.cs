@@ -9,13 +9,13 @@ namespace SatiRogue.scenes.Hud;
 [Tool]
 public partial class StatBar3D : Spatial {
    private float _percent;
-   private ShaderMaterial? _shaderMaterial;
+   public ShaderMaterial? ShaderMaterial;
    private StatsComponent? _statsComponent;
    [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
    [OnReady]
    private void SetInstanceTransforms() {
       if (_multiMeshInstance == null) return;
-      _shaderMaterial = _multiMeshInstance.Multimesh.Mesh.SurfaceGetMaterial(0) as ShaderMaterial;
+      ShaderMaterial = _multiMeshInstance.MaterialOverride as ShaderMaterial;
       _multiMeshInstance.Multimesh.InstanceCount = 2;
       // Frame
       _multiMeshInstance.Multimesh.SetInstanceTransform(0, new Transform(Basis.Identity, new Vector3(0, 0, 0)));
@@ -36,7 +36,7 @@ public partial class StatBar3D : Spatial {
       get => _percent;
       set {
          _percent = Mathf.Clamp(value, 0f, 1f);
-         _shaderMaterial?.SetShaderParam("percent_full", _percent);
+         ShaderMaterial?.SetShaderParam("percent_full", _percent);
       }
    }
 }

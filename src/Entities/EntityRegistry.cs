@@ -1,30 +1,36 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
+using Godot.Collections;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
 
 public class EntityRegistry : GameObject {
    private static EntityRegistry? _instance;
-
+   private static string? PlayerUuid { get; set; }
    /// <summary>
    ///    Dictionary of Guid strings mapped to Entities
    /// </summary>
-   public static Dictionary<string, Entity> EntityList = new();
+   public static System.Collections.Generic.Dictionary<string, Entity> EntityList = new();
+   public static EnemyEntity[] EnemyList => (EnemyEntity[]) EntityList.Values.OfType<EnemyEntity>();
+   public static PlayerEntity? Player {
+      get {
+         if (PlayerUuid != null) return (PlayerEntity) EntityList[PlayerUuid];
+         return null;
+      }
+   }
 
    public static Hashtable BlockedCells = new();
-
+   
    public EntityRegistry() {
       _instance = this;
    }
 
-   public static PlayerEntity? Player { get; private set; }
-
    public static void RegisterEntity(Entity entity, IGameObjectParameters parameters) {
       if (entity is PlayerEntity playerData)
-         Player = playerData;
-      else
-         EntityList.Add(entity.Uuid, entity);
+         PlayerUuid = playerData.Uuid;
+      EntityList.Add(entity.Uuid, entity);
 
       parameters.EcOwner ??= _instance;
       entity.InitialiseWithParameters(parameters);
@@ -35,7 +41,13 @@ public class EntityRegistry : GameObject {
       entity.Owner = _instance;
    }
 
+   public static void UnregisterEntity(Entity entity) {
+      EntityList.Remove(entity.Uuid);
+   }
+
    public static bool IsPositionBlocked(Vector3i position) {
       return BlockedCells.ContainsKey(position);
    }
 }
+
+internal class Uuid { }

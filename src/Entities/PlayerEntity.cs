@@ -4,6 +4,7 @@ using Godot;
 using SatiRogue.Components;
 using SatiRogue.Components.Stats;
 using SatiRogue.Debug;
+using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Player;
@@ -32,7 +33,7 @@ public class PlayerEntity : GridEntity {
    public override void _Ready() {
       Logger.Info("Player ready");
 
-      GetNode<MapGenerator>(MapGenerator.Path).Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapDataChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
       CallDeferred(nameof(OnPositionChanged));
    }
 
@@ -48,6 +49,7 @@ public class PlayerEntity : GridEntity {
    }
 
    private void CalculateVisibility() {
-      ShadowCast.ComputeVisibility(MapGenerator.MapData, GridPosition, 11.0f);
+      if (RuntimeMapNode.Instance?.MapData != null) 
+         ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
    }
 }

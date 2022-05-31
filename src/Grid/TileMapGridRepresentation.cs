@@ -28,13 +28,12 @@ public class TileMapGridRepresentation : TileMap {
    }
 
    private void ConnectToGridGenerator() {
-      var gridGenerator = GetNode<TwoDee>(_twoDeeNodePath).GridGenerator;
-      gridGenerator?.Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapDataChanged));
-      gridGenerator?.Connect(nameof(MapGenerator.VisibilityChanged), this, nameof(OnVisibilityChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
    }
 
    private void OnMapDataChanged() {
-      var cells = MapGenerator.MapData.Cells;
+      var cells = RuntimeMapNode.Instance?.MapData?.Cells;
       foreach (var cell in cells)
          if (GetTileId(cell) is { } cellValue)
             SetCell(cell.Position.x, cell.Position.z, cellValue);
@@ -61,7 +60,7 @@ public class TileMapGridRepresentation : TileMap {
    }
 
    private void OnVisibilityChanged(Vector3[] positions) {
-      var cells = MapGenerator.MapData.Cells;
+      var cells = RuntimeMapNode.Instance?.MapData?.Cells;
       foreach (var cell in cells)
          if (GetTileId(cell) is { } cellValue)
             SetCell(cell.Position.x, cell.Position.z, cellValue);

@@ -1,12 +1,13 @@
 using System.Linq;
 using Godot;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Commands.MapGen;
 
 public class MapGenCreateCorridors : MapGenCommand {
-   public MapGenCreateCorridors(MapData mapData) : base(mapData) { }
+   public MapGenCreateCorridors(MapGenMapData mapData) : base(mapData) { }
 
    public override Error Execute() {
       var arr = MapData.GeneratorSpaces.ToArray();

@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Commands.MapGen;
 
 public class MapGenFloodFill : MapGenCommand {
-   public MapGenFloodFill(MapData mapData) : base(mapData) { }
+   public MapGenFloodFill(MapGenMapData mapData) : base(mapData) { }
 
    public override Error Execute() {
       var startPoint = MapData.GeneratorSpaces.First();

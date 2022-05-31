@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
 using SatiRogue.Entities;
+using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.Turn;
@@ -83,7 +85,7 @@ public partial class MovementComponent : Component {
 
    [OnReady]
    private void SetInitialPosition() {
-      GetNode<MapGenerator>(MapGenerator.Path).Connect(nameof(MapGenerator.MapChanged), this, nameof(OnMapChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
    }
 
    private void OnMapChanged() {
@@ -106,8 +108,10 @@ public partial class MovementComponent : Component {
       Action action;
       if (_path == null && _destination != null) {
          if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
-         _path = new Queue<Vector3>(MapGenerator.MapData.FindPath(GridPosition, _destination));
-         if (_path.Count > 0) _path.Dequeue();
+         if (RuntimeMapNode.Instance?.MapData != null) {
+            _path = new Queue<Vector3>(RuntimeMapNode.Instance.MapData.FindPath(GridPosition, _destination));
+            if (_path.Count > 0) _path.Dequeue();
+         }
       }
 
       if (_path is {Count: >= 1})
@@ -124,16 +128,38 @@ public partial class MovementComponent : Component {
       InputDirection = MovementDirectionToVector(dir);
 
       var targetPosition = GridPosition + InputDirection;
-      var currentCell = MapGenerator.MapData.GetCellAt(GridPosition);
-      var targetCell = MapGenerator.MapData.GetCellAt(targetPosition);
+      var currentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition);
+      var targetCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(targetPosition);
 
-      if (targetCell.Blocked) return false;
+      if (targetCell?.Blocked ?? true) return false;
 
-      currentCell.Occupants.Remove(EcOwner!.GetInstanceId());
+      currentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
       targetCell.Occupants.Add(EcOwner!.GetInstanceId());
       GridPosition = targetPosition;
 
       return true;
+   }
+
+   public GameObject[]? TestMoveForOccupants(MovementDirection dir) {
+      if (EcOwner == null) return null;
+
+      InputDirection = MovementDirectionToVector(dir);
+
+      var targetPosition = GridPosition + InputDirection;
+      var targetCell = MapGenerator.MapData?.GetCellAt(targetPosition);
+      return targetCell == null ? 
+         Array.Empty<GameObject>() : 
+         Array.ConvertAll<ulong, GameObject>(targetCell.Occupants.ToArray(), id => (GameObject) GD.InstanceFromId(id));
+   }
+   
+   [OnReady]
+   private void ConnectSignals() {
+      _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
+   }
+
+   private void OnDead() {
+      var currentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition);
+      currentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
    }
 
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {

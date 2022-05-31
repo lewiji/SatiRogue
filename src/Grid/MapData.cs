@@ -1,134 +1,75 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Grid;
 
-public class MapData : Resource {
-   private readonly Dictionary<long, Cell> _cells = new();
-   public readonly Dictionary<long, int> CellIdToAStarId = new();
-   public readonly List<Vector3> CellsVisibilityChanged = new();
-   public readonly MapGenParams MapParams;
 
-   public AStar AStar = new();
-
-   public MapData(MapGenParams mapParams) {
-      MapParams = mapParams;
-      AStar.ReserveSpace(MapParams.Width * MapParams.Height);
+public class MapData : AbstractMapData {
+   
+   public readonly Stack<Vector3> CellsVisibilityChanged = new();
+   protected readonly Dictionary<long, int> CellIdToAStarId = new();
+   public AStar AStar { get; protected set; } = new();
+   
+   private static readonly Vector3i[] Offsets = {
+      Vector3i.Back, Vector3i.Forward, Vector3i.Left, Vector3i.Right, Vector3i.Back + Vector3i.Left,
+      Vector3i.Back + Vector3i.Right, Vector3i.Forward + Vector3i.Left, Vector3i.Forward + Vector3i.Right
+   };
+   
+   public MapData(MapGenMapData generatedMapData) {
+      IndexedCells = generatedMapData.IndexedCells;
+      InitialiseAStar();
    }
+   public Cell[] Cells => IndexedCells.Values.ToArray();
 
-   public HashSet<Rect2> GeneratorSpaces { get; } = new();
-
-   public IEnumerable<Cell> Cells => _cells.Values;
-
-   /**
-     * Adds new cell if nonexistant at position, and returns the new cell.
-     * Returns existing cell if found.
-     * Returns null if something weird happened.
-     */
-   private Cell InitialiseOrGetCell(Vector3i position) {
-      return InitialiseOrGetCell(IdCalculator.IdFromVec3(position), position);
+   private void InitialiseAStar() {
+      AStar.ReserveSpace(IndexedCells.Count);
+      foreach (var keyValuePair in IndexedCells) {
+         var aStarId = AStar.GetAvailablePointId();
+         AStar.AddPoint(aStarId, keyValuePair.Value.Position.ToVector3());
+         CellIdToAStarId.Add(keyValuePair.Key, aStarId);
+         keyValuePair.Value.Connect(nameof(Cell.CellTypeChanged), this, nameof(OnCellTypeChanged));
+      }
+      
+      var points = AStar.GetPoints();
+      foreach (int point in points)
+      foreach (var offset in Offsets) {
+         var neighbourVec = new Vector3i(AStar.GetPointPosition(point)) + offset;
+         if (CellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3(neighbourVec), out var neighbourId))
+            AStar.ConnectPoints(point, neighbourId);
+      }
    }
-
-   private Cell InitialiseOrGetCell(long id, Vector3i position) {
-      // Try to add id to collection, if already exists, return matching cell struct
-      if (_cells.ContainsKey(id))
-         return _cells[id];
-
-      // create and add new cell otherwise
-      var cell = new Cell(id);
-      _cells[id] = cell;
-      var aStarId = AStar.GetAvailablePointId();
-      AStar.AddPoint(aStarId, position.ToVector3());
-      CellIdToAStarId.Add(id, aStarId);
-      cell.Connect(nameof(Cell.CellTypeChanged), this, nameof(OnCellTypeChanged));
-      return cell;
-   }
-
-   public void OnCellTypeChanged(int typeId, long cellId) {
+   
+   private void OnCellTypeChanged(int typeId, long cellId) {
       var typeEnum = (CellType)typeId;
       if (typeEnum == CellType.Wall) {
-         BlockCell(cellId);
+         BlockAStarCell(cellId);
       }
    }
 
-   public void BlockCell(long id) {
+   private void BlockAStarCell(long id) {
       if (CellIdToAStarId.TryGetValue(id, out var toBlockId)) AStar.SetPointDisabled(toBlockId);
    }
-
+   
    public Vector3[] FindPath(Vector3i from, Vector3i? to) {
       if (!to.HasValue) return new Vector3[] { };
       var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3(from)];
       var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to.Value)];
       return AStar.GetPointPath(idFrom, idTo);
    }
-
-   /**
-     * Get cell by Vector3 position
-     */
-   public Cell GetCellAt(Vector3i position) {
-      return InitialiseOrGetCell(position);
-   }
-
-   /**
-     * Get cell by exact id
-     */
-   /*public Cell GetCellById(long id) {
-       return InitialiseOrGetCell(id);
-   }*/
-   public Cell SetCellType(Vector3i position, CellType? type) {
-      return InitialiseOrGetCell(position).SetCellType(type);
-   }
-
-   public Cell SetCellVisibility(Vector3i position, CellVisibility? visibility) {
-      return InitialiseOrGetCell(position).SetCellVisibility(visibility);
-   }
-
-   /**
-     * Add occupant to cell at specified position, and return that cell
-     */
-   public Cell AddOccupant(Vector3i position, ulong uid) {
-      return InitialiseOrGetCell(position).AddOccupant(uid);
-   }
-
-   /**
-     * Remove occupant from cell at specified position, and return that cell
-     */
-   public Cell RemoveOccupant(Vector3i position, ulong uid) {
-      return InitialiseOrGetCell(position).RemoveOccupant(uid);
-   }
-
-   /**
-     * Add condition to cell at specified position, and return that cell
-     */
-   public Cell AddCondition(Vector3i position, CellCondition condition) {
-      return InitialiseOrGetCell(position).AddCondition(condition);
-   }
-
-   /**
-     * Remove condition from cell at specified position, and return that cell
-     */
-   public Cell RemoveCondition(Vector3i position, CellCondition condition) {
-      return InitialiseOrGetCell(position).RemoveCondition(condition);
-   }
-
-   /**
-     * Clear all cells and empty grid data.
-     */
-   public void ClearCells() {
-      _cells.Clear();
-      AStar.Clear();
-   }
-
+  
    public void SetLight(Vector3i gridVec, float f) {
       var cell = GetCellAt(gridVec);
-      if (cell.Luminosity == null) CellsVisibilityChanged.Add(cell.Position.ToVector3());
+      if (cell.Luminosity == null) CellsVisibilityChanged.Push(cell.Position.ToVector3());
       cell.Luminosity = f;
    }
 
-   public bool IsWall(Vector3i gridVec) {
-      return GetCellAt(gridVec).Type == CellType.Wall;
+   public override void ClearCells() {
+      base.ClearCells();
+      AStar.Clear();
    }
+
 }

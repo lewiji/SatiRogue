@@ -6,6 +6,7 @@ using GodotOnReady.Attributes;
 using SatiRogue.Commands;
 using SatiRogue.Components;
 using SatiRogue.Debug;
+using Action = SatiRogue.Commands.Action;
 
 namespace SatiRogue.Turn;
 
@@ -88,7 +89,12 @@ public partial class TurnHandler : Node {
 
       while (_playerCommands.Any() || _enemyCommands.Any()) {
          while (_playerCommands.Any()) _playerCommands.Dequeue().Execute();
-         if (_enemyCommands.Count > 0) _enemyCommands.Dequeue().Execute();
+         if (_enemyCommands.Count > 0) {
+            var enemyCommand = _enemyCommands.Dequeue();
+            if (enemyCommand is Action enemyAction && enemyAction.IsOwnerEnabled()) {
+               enemyAction.Execute();
+            }
+         }
       }
 
       if (MovementComponent._recordingPathfindingCalls) Logger.Info($"{MovementComponent.numPathingCallsThisTurn} FindPath calls this turn");

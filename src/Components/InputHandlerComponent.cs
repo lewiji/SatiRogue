@@ -7,6 +7,7 @@ namespace SatiRogue.Components;
 
 public class InputHandlerComponent : Component {
    private bool _awaitingInput;
+   private MovementDirection? _forcedInput;
 
    public override void HandleTurn() {
       switch (Systems.TurnHandler.Turn) {
@@ -28,10 +29,14 @@ public class InputHandlerComponent : Component {
       _awaitingInput = false;
    }
 
+   public void ForceInput(MovementDirection dir) {
+      _forcedInput = dir;
+   }
+
    public override void _Process(float delta) {
       if (!_awaitingInput || EntityRegistry.Player == null) return;
-
-      var movementDirection = MovementDirection.None;
+      
+      var movementDirection = _forcedInput ?? MovementDirection.None;
 
       if (Input.IsActionPressed("move_left"))
          movementDirection = MovementDirection.Left;
@@ -42,7 +47,7 @@ public class InputHandlerComponent : Component {
       else if (Input.IsActionPressed("move_up")) movementDirection = MovementDirection.Up;
 
       if (movementDirection == MovementDirection.None) return;
-
+      _forcedInput = null;
       _awaitingInput = false;
 
       EntityRegistry.Player.GetComponent<PlayerMovementComponent>()?.SetDestination(movementDirection);

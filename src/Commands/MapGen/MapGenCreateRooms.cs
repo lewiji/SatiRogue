@@ -6,7 +6,7 @@ using SatiRogue.MathUtils;
 namespace SatiRogue.Commands.MapGen;
 
 public class MapGenCreateRooms : MapGenCommand {
-   public MapGenCreateRooms(MapData mapData) : base(mapData) { }
+   public MapGenCreateRooms(MapGenMapData mapData) : base(mapData) { }
 
    public override Error Execute() {
       var mapParams = MapData.MapParams;

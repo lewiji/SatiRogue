@@ -4,12 +4,12 @@ namespace SatiRogue.Grid.MapGen;
 
 public abstract class MapGenStrategy : IMapGenStrategy {
    protected CommandQueue CommandQueue = new();
-   protected MapData MapData;
+   protected MapGenMapData MapData;
    public MapGenStrategy(MapGenParams mapGenParams) {
       MapData = new(mapGenParams);
    }
 
-   public virtual MapData GenerateMap() {
+   public virtual MapGenMapData GenerateMap() {
       CommandQueue.ExecuteAll();
       return MapData;
    }

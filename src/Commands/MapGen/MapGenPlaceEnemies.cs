@@ -5,12 +5,13 @@ using SatiRogue.Components;
 using SatiRogue.Components.Behaviours;
 using SatiRogue.Entities;
 using SatiRogue.Grid;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Commands.MapGen;
 
 public class MapGenPlaceEnemies : MapGenCommand {
-   public MapGenPlaceEnemies(MapData mapData) : base(mapData) { }
+   public MapGenPlaceEnemies(MapGenMapData mapData) : base(mapData) { }
 
    public override Error Execute() {
       for (var i = 0; i < MapData.MapParams.NumEnemies; i++) {

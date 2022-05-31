@@ -8,14 +8,9 @@ using SatiRogue.Grid.MapGen.Strategies;
 namespace SatiRogue.Grid.MapGen;
 
 public class MapGenerator : Node {
-   [Signal]
-   public delegate void MapChanged();
-   
-   [Signal]
-   public delegate void VisibilityChanged(Vector3[] changedCells);
 
    public static NodePath? Path;
-   public static MapData? MapData;
+   public static MapGenMapData? MapData;
    public static IMapGenStrategy? MapGenStrategy;
    
    public AStar AStar = new();
@@ -50,17 +45,10 @@ public class MapGenerator : Node {
          throw new Exception($"MapGenerator: No MapData returned from MapGenStrategy {MapGenStrategy}");
 
       Logger.Info("Finished generating grid.");
-      CallDeferred(nameof(EmitMapChangedSignal));
-   }
 
-   public override void _Process(float delta) {
-      if (MapData?.CellsVisibilityChanged.Count > 0) {
-         EmitSignal(nameof(VisibilityChanged), MapData.CellsVisibilityChanged.ToArray());
-         MapData.CellsVisibilityChanged.Clear();
-      }
-   }
-
-   private void EmitMapChangedSignal() {
-      EmitSignal(nameof(MapChanged));
+      var runtimeMapNode = new RuntimeMapNode();
+      GetParent().AddChild(runtimeMapNode);
+      runtimeMapNode.Owner = GetParent();
+      runtimeMapNode.MapData = new MapData(MapData);
    }
 }
