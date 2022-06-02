@@ -14,6 +14,8 @@ namespace SatiRogue.Entities;
 public class PlayerEntity : GridEntity {
    [Signal] public delegate void PlayerPositionChanged();
 
+   [Signal] public delegate void SignalAnimation(string name);
+
    protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() { Turn.Turn.PlayerTurn };
 
    public override void _EnterTree() {
@@ -51,5 +53,9 @@ public class PlayerEntity : GridEntity {
    private void CalculateVisibility() {
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
+   }
+
+   public void PlayAnimation(string name) {
+      EmitSignal(nameof(SignalAnimation), name);
    }
 }

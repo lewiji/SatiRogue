@@ -8,10 +8,10 @@ using SatiRogue.scenes.Hud;
 using Array = Godot.Collections.Array;
 
 namespace SatiRogue.Components.Render;
-
 public partial class EnemyMeshRendererComponent : SpatialRendererComponent {
    private AnimatedSprite3D? _animatedSprite3D;
    public EnemyEntity? EnemyEntity => GridEntity as EnemyEntity;
+   
    public float YOffset;
 
    protected override void CreateVisualNodes() {
@@ -40,11 +40,22 @@ public partial class EnemyMeshRendererComponent : SpatialRendererComponent {
    }
 
    private void OnDead() {
-      var tween = new Tween();
-      RootNode.AddChild(tween);
-      tween.InterpolateProperty(_animatedSprite3D, "scale", _animatedSprite3D.Scale, Vector3.Zero, 0.3f, Tween.TransitionType.Back,
-         Tween.EaseType.In);
-      tween.Start();
+      PlayAnimation("die");
+      //var tween = new Tween();
+      //RootNode.AddChild(tween);
+      //tween.InterpolateProperty(_animatedSprite3D, "scale", _animatedSprite3D.Scale, Vector3.Zero, 0.3f, Tween.TransitionType.Back,
+      //   Tween.EaseType.In);
+      //tween.Start();
+   }
+
+   public async void PlayAnimation(string name) {
+      if (_animatedSprite3D != null && _animatedSprite3D.Frames.HasAnimation(name)) {
+         _animatedSprite3D.Play(name);
+         await ToSignal(_animatedSprite3D, "animation_finished");
+         await ToSignal(GetTree().CreateTimer(1f / _animatedSprite3D.Frames.GetAnimationSpeed(name)), "timeout");
+         if (_animatedSprite3D.Frames.HasAnimation("idle"))
+            _animatedSprite3D.Play("idle");
+      }
    }
 
 

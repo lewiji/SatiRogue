@@ -17,12 +17,12 @@ dest_files=[ "res://.import/Ratfolk Axe Sprite Sheet_o.png-2846562c27e13e40ac436
 [params]
 
 compress/mode=2
-compress/lossy_quality=0.3
+compress/lossy_quality=0.1
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=true
 flags/srgb=2

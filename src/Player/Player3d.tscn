@@ -20,6 +20,9 @@ shaded = true
 double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
+animation = "idle"
+frame = 1
+playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
 transform = Transform( 1, 0, 0, 0, 0.891006, 0.45399, 0, -0.45399, 0.891006, 0, 4.23206, 11.0949 )

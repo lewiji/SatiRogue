@@ -6,16 +6,11 @@ using SatiRogue.Entities;
 namespace SatiRogue.Components.Behaviours;
 
 public abstract class BehaviourTreeComponent : Component {
-   protected Entity? ParentEntity;
    protected Gig? BehaviourTree { get; set; }
 
-   public override GameObject? EcOwner {
-      get => ParentEntity;
-      set => ParentEntity = value as Entity;
-   }
 
    public override void HandleTurn() {
-      if (ParentEntity == null || BehaviourTree == null) return;
+      if (EcOwner == null || BehaviourTree == null) return;
       var status = BehaviourTree.Step();
       if (status.failing) Logger.Debug(StatusFormat.Status(status));
    }

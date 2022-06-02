@@ -12,7 +12,7 @@ public partial class StatBar3DRendererComponent : SpatialRendererComponent {
    private StatsComponent? _statsComponent;
    protected override void CreateVisualNodes() {
       _statBar3D = (StatBar3D) EntityResourceLocator.StatBar3DScene.Instance();
-      _statBar3D.Scale = new Vector3(0.05f,0.05f,0.05f);
+      //_statBar3D.Scale = new Vector3(0.05f,0.05f,0.05f);
       RootNode?.AddChild(_statBar3D);
       _statBar3D.Translate(new Vector3(0, GridEntity.GetComponent<EnemyMeshRendererComponent>().YOffset, 0));
       SetupEntityDataBindings();

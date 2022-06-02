@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_s.png" type="Texture" id=7]
 [ext_resource path="res://src/Player/Player3d.tscn" type="PackedScene" id=8]
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="SpatialMaterial" id=3]
 flags_vertex_lighting = true
 flags_world_triplanar = true
 params_diffuse_mode = 4
@@ -34,7 +34,7 @@ distance_fade_min_distance = 34.0
 distance_fade_max_distance = 17.0
 
 [sub_resource type="PlaneMesh" id=2]
-material = SubResource( 1 )
+material = SubResource( 3 )
 size = Vector2( 1024, 1024 )
 
 [node name="ThreeDee" type="Spatial"]
@@ -57,6 +57,9 @@ material/0 = null
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
+
+[node name="Visual" parent="Player" index="0"]
+frame = 1
 
 [node name="Enemies" type="Spatial" parent="."]
 

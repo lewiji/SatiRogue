@@ -15,10 +15,10 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
    public override void _EnterTree() {
       base._EnterTree();
       Name = "EnemyBehaviourTreeComponent";
-      if (ParentEntity is EnemyEntity enemyEntity)
+      if (EcOwner is EnemyEntity enemyEntity)
          BehaviourTree = new EnemyBehaviourTree(enemyEntity);
       else
-         Logger.Error($"EnemyBehaviourTree: Parent entity {ParentEntity?.Name} was not EnemyEntity");
+         Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");
    }
 
    private class EnemyBehaviourTree : Gig {

@@ -9,7 +9,7 @@ public class PlayerNode3D : Spatial {
    private readonly Vector3 _spriteOffset = new(0, 1f, 0);
    private Godot.Camera? _camera;
    private Vector3? _targetPosition;
-   private Spatial? _visualRepresentation;
+   private AnimatedSprite3D? _visualRepresentation;
 
    [Export] private float SpriteSmoothing { get; set; }
    [Export] private float CameraSmoothing { get; set; }
@@ -25,10 +25,10 @@ public class PlayerNode3D : Spatial {
       if (EntityRegistry.Player == null)
          throw new Exception("Trying to connect to PlayerPositionChanged signal, but Player is null in EntityRegistry");
       EntityRegistry.Player.Connect(nameof(PlayerEntity.PlayerPositionChanged), this, nameof(OnGridPositionChanged));
-
+      EntityRegistry.Player.Connect(nameof(PlayerEntity.SignalAnimation), this, nameof(PlayAnimation));
       _camera = GetNode<Godot.Camera>(CameraPath);
       _camera.SetAsToplevel(true);
-      _visualRepresentation = GetNode<Spatial>("Visual");
+      _visualRepresentation = GetNode<AnimatedSprite3D>("Visual");
       _visualRepresentation.SetAsToplevel(true);
       Teleporting = true;
 
@@ -62,6 +62,16 @@ public class PlayerNode3D : Spatial {
          if (!_visualRepresentation.Translation.IsEqualApprox(_targetPosition.Value + _spriteOffset))
             _visualRepresentation.Translation = _visualRepresentation.Translation.LinearInterpolate(
                _targetPosition.Value + _spriteOffset, SpriteSmoothing);
+      }
+   }
+   
+   public async void PlayAnimation(string name) {
+      if (_visualRepresentation != null && _visualRepresentation.Frames.HasAnimation(name)) {
+         _visualRepresentation.Play(name);
+         await ToSignal(_visualRepresentation, "animation_finished");
+         await ToSignal(GetTree().CreateTimer(1f / _visualRepresentation.Frames.GetAnimationSpeed(name)), "timeout");
+         if (_visualRepresentation.Frames.HasAnimation("idle"))
+            _visualRepresentation.Play("idle");
       }
    }
 }

@@ -1,4 +1,4 @@
 [gd_resource type="QuadMesh" format=2]
 
 [resource]
-size = Vector2( 24, 9 )
+size = Vector2( 1.2, 0.45 )

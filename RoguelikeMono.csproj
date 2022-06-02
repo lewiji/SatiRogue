@@ -1,6 +1,5 @@
 <Project Sdk="Godot.NET.Sdk/3.3.0">
     <PropertyGroup>
-        <TargetFramework>net472</TargetFramework>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>SatiRogue</RootNamespace>
@@ -10,6 +9,7 @@
         <Authors>sati.stream</Authors>
         <Company>sati.stream</Company>
         <Product>SatiRogue</Product>
+        <TargetFramework>net472</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DocumentationFile>/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/bin/Debug/RoguelikeMono.xml</DocumentationFile>

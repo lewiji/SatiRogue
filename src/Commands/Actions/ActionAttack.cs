@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using SatiRogue.Components;
+using SatiRogue.Components.Render;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 
@@ -21,8 +22,11 @@ public class ActionAttack : Action
     public override Error Execute()
     {
         Logger.Info($"{Owner!.Name} attacking {Target!.Name} for ");
-        //_targetStats!.Health -= _ownerStats!.Stats.Strength;
         _targetStats?.Subtract(1);
+        if (Owner is EnemyEntity enemyEntity)
+            enemyEntity.GetComponent<EnemyMeshRendererComponent>()?.PlayAnimation("attack");
+        else if (Owner is PlayerEntity playerEntity)
+            playerEntity.PlayAnimation("attack");
         return Error.Ok;
     }
 }
