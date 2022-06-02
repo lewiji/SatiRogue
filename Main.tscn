@@ -151,7 +151,7 @@ columns = 2
 
 [node name="Control" type="Control" parent="GridContainer"]
 margin_right = 1278.0
-margin_bottom = 477.0
+margin_bottom = 478.0
 rect_min_size = Vector2( 64, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -169,7 +169,7 @@ custom_constants/margin_bottom = 280
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 718.0
-margin_bottom = 197.0
+margin_bottom = 198.0
 texture = SubResource( 1 )
 expand = true
 
@@ -177,7 +177,7 @@ expand = true
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 718.0
-margin_bottom = 197.0
+margin_bottom = 198.0
 
 [node name="MarginContainer" type="MarginContainer" parent="GridContainer/Control/MarginContainer/Panel"]
 anchor_right = 1.0
@@ -191,7 +191,7 @@ custom_constants/margin_bottom = 18
 margin_left = 18.0
 margin_top = 18.0
 margin_right = 670.0
-margin_bottom = 149.0
+margin_bottom = 150.0
 columns = 2
 
 [node name="HealthStat" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer" instance=ExtResource( 7 )]
@@ -254,7 +254,7 @@ text = ">"
 self_modulate = Color( 1, 1, 1, 0.631373 )
 margin_left = 1282.0
 margin_right = 2560.0
-margin_bottom = 477.0
+margin_bottom = 478.0
 
 [node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainer2D"]
 size = Vector2( 576, 303 )
@@ -265,24 +265,24 @@ render_target_update_mode = 3
 GridGeneratorPath = NodePath("../../../../GridGenerator")
 
 [node name="Control2" type="Control" parent="GridContainer"]
-margin_top = 481.0
+margin_top = 482.0
 margin_right = 1278.0
-margin_bottom = 958.0
+margin_bottom = 959.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control3" type="Control" parent="GridContainer"]
 margin_left = 1282.0
-margin_top = 481.0
+margin_top = 482.0
 margin_right = 2560.0
-margin_bottom = 958.0
+margin_bottom = 959.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control4" type="Control" parent="GridContainer"]
-margin_top = 962.0
+margin_top = 963.0
 margin_right = 1278.0
-margin_bottom = 1439.0
+margin_bottom = 1440.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0

@@ -8,9 +8,11 @@ namespace SatiRogue.Components.Render;
 public partial class SpatialRendererComponent : RendererComponent {
    protected GridEntity? GridEntity => Entity as GridEntity;
    protected Spatial? RootNode;
+   protected Vector3? TargetTranslation;
+   protected bool Teleporting { get; set; }
 
    [OnReady]
-   private void CreateRootNode() {
+   protected virtual void CreateRootNode() {
       if (GridEntity == null) return;
       if (!EntityResourceLocator.SceneNodePaths.TryGetValue(nameof(ThreeDee), out var threeDeePath)) return;
       var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
@@ -37,7 +39,26 @@ public partial class SpatialRendererComponent : RendererComponent {
 
    private void HandlePositionChanged() {
       if (GridEntity == null || RootNode == null) return;
-      RootNode.Translation = GridEntity.GridPosition.ToVector3();
+      TargetTranslation = GridEntity.GridPosition.ToVector3();
       RootNode.Visible = GridEntity.Visible;
+   }
+
+   private void OnFinishedTeleporting() {
+      Teleporting = false;
+   }
+
+   public override void _PhysicsProcess(float delta) {
+      if (RootNode == null) return;
+      if (TargetTranslation.HasValue && !RootNode.Translation.IsEqualApprox(TargetTranslation.Value)) {
+         if (Teleporting) {
+            RootNode.Translation = TargetTranslation.Value;
+            CallDeferred(nameof(OnFinishedTeleporting));
+         }
+         else {
+            RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 0.16f);
+         }
+      } else if (TargetTranslation.HasValue) {
+         TargetTranslation = null;
+      }
    }
 }

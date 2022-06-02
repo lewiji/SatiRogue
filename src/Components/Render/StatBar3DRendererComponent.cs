@@ -36,48 +36,6 @@ public partial class StatBar3DRendererComponent : SpatialRendererComponent {
    }
 
    private void OnDead() {
-      var tween = new Tween();
-      RootNode.AddChild(tween);
-      _statBar3D.ShaderMaterial.SetShaderParam("emission", Colors.Red);
-      tween.InterpolateProperty(_statBar3D.ShaderMaterial, 
-         "shader_param/emission_energy", 
-         _statBar3D.ShaderMaterial.GetShaderParam("shader_param/emission_energy"), 
-         1.618f,
-         0.1f,
-         Tween.TransitionType.Expo, 
-         Tween.EaseType.In);
-      tween.InterpolateProperty(_statBar3D.ShaderMaterial, 
-         "shader_param/emission_energy", 
-         1.618f, 
-         0f,
-         0.1f,
-         Tween.TransitionType.Expo, 
-         Tween.EaseType.In,
-         0.1f);
-      tween.InterpolateProperty(_statBar3D.ShaderMaterial, 
-         "shader_param/emission_energy", 
-         0f, 
-         1.618f,
-         0.1f,
-         Tween.TransitionType.Expo, 
-         Tween.EaseType.In,
-         0.2f);
-      tween.InterpolateProperty(_statBar3D.ShaderMaterial, 
-         "shader_param/emission_energy", 
-         1.618f, 
-         0f,
-         0.1f,
-         Tween.TransitionType.Expo, 
-         Tween.EaseType.In,
-         0.4f);
-      tween.InterpolateProperty(_statBar3D,
-         "scale", 
-         null, 
-         Vector3.Zero,
-         0.12f,
-         Tween.TransitionType.Cubic, 
-         Tween.EaseType.In,
-         0.26f);
-      tween.Start();
+      _statBar3D.OnDead();
    }
 }

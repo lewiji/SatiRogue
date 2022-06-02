@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/LoadEnvironment.cs" type="Script" id=1]
 [ext_resource path="res://scenes/ThreeDee.cs" type="Script" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_n.png" type="Texture" id=5]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_o.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_s.png" type="Texture" id=7]
-[ext_resource path="res://src/Player/Player3d.tscn" type="PackedScene" id=8]
 
 [sub_resource type="SpatialMaterial" id=3]
 flags_vertex_lighting = true
@@ -51,16 +50,8 @@ portal_mode = 3
 include_in_bound = false
 mesh = SubResource( 2 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Geometry" type="Spatial" parent="."]
 script = ExtResource( 3 )
 
-[node name="Player" parent="." instance=ExtResource( 8 )]
-
-[node name="Visual" parent="Player" index="0"]
-frame = 1
-
 [node name="Enemies" type="Spatial" parent="."]
-
-[editable path="Player"]

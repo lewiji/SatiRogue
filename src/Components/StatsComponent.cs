@@ -49,8 +49,9 @@ public abstract partial class StatsComponent : Component
         Connect(nameof(Changed), this, nameof(OnChanged));
         Connect(nameof(Depleted), this, nameof(OnDepleted));
     }
-    public abstract void OnChanged();
-    public abstract void OnDepleted();
+
+    public virtual void OnChanged() { }
+    public virtual void OnDepleted() { }
 
     public void Subtract(int deductBy = 1) {
         Value -= deductBy;

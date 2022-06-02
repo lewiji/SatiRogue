@@ -8,8 +8,7 @@ using SatiRogue.scenes.Hud;
 using Array = Godot.Collections.Array;
 
 namespace SatiRogue.Components.Render;
-public partial class EnemyMeshRendererComponent : SpatialRendererComponent {
-   private AnimatedSprite3D? _animatedSprite3D;
+public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererComponent {
    public EnemyEntity? EnemyEntity => GridEntity as EnemyEntity;
    
    public float YOffset;
@@ -17,21 +16,21 @@ public partial class EnemyMeshRendererComponent : SpatialRendererComponent {
    protected override void CreateVisualNodes() {
       if (EnemyEntity == null) throw new Exception("No parent entity found for EnemyMeshRenderer");
       
-      _animatedSprite3D = new AnimatedSprite3D {
+      AnimatedSprite = new AnimatedSprite3D {
          Frames = EntityResourceLocator.GetResource<SpriteFrames>(EnemyEntity.EntityType),
          MaterialOverride = EntityResourceLocator.GetResource<Material>(EnemyEntity.EntityType),
          Playing = true,
          Animation = "idle",
          Centered = true,
          PixelSize = 0.05f,
-         RotationDegrees = new Vector3(-33f, 0, 0)
+         RotationDegrees = new Vector3(-20f, 0, 0)
       };
-      if (_animatedSprite3D.Frames != null) {
-         var firstFrameTexture = (Texture) ((Array) ((Dictionary) _animatedSprite3D.Frames.Animations[0])["frames"])[0];
-         _animatedSprite3D.Translation = new Vector3(0, firstFrameTexture.GetHeight() / 2f, 0) * _animatedSprite3D.PixelSize;
-         YOffset = _animatedSprite3D.Translation.y;
+      if (AnimatedSprite.Frames != null) {
+         var firstFrameTexture = (Texture) ((Array) ((Dictionary) AnimatedSprite.Frames.Animations[0])["frames"])[0];
+         AnimatedSprite.Translation = new Vector3(0, firstFrameTexture.GetHeight() / 2f, 0) * AnimatedSprite.PixelSize;
+         YOffset = AnimatedSprite.Translation.y;
       }
-      RootNode?.AddChild(_animatedSprite3D);
+      RootNode?.AddChild(AnimatedSprite);
    }
    
    [OnReady]
@@ -41,22 +40,5 @@ public partial class EnemyMeshRendererComponent : SpatialRendererComponent {
 
    private void OnDead() {
       PlayAnimation("die");
-      //var tween = new Tween();
-      //RootNode.AddChild(tween);
-      //tween.InterpolateProperty(_animatedSprite3D, "scale", _animatedSprite3D.Scale, Vector3.Zero, 0.3f, Tween.TransitionType.Back,
-      //   Tween.EaseType.In);
-      //tween.Start();
    }
-
-   public async void PlayAnimation(string name) {
-      if (_animatedSprite3D != null && _animatedSprite3D.Frames.HasAnimation(name)) {
-         _animatedSprite3D.Play(name);
-         await ToSignal(_animatedSprite3D, "animation_finished");
-         await ToSignal(GetTree().CreateTimer(1f / _animatedSprite3D.Frames.GetAnimationSpeed(name)), "timeout");
-         if (_animatedSprite3D.Frames.HasAnimation("idle"))
-            _animatedSprite3D.Play("idle");
-      }
-   }
-
-
 }

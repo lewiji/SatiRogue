@@ -114,12 +114,10 @@ public partial class MovementComponent : Component {
          }
       }
 
-      if (_path is {Count: >= 1})
+      if (_path is {Count: >= 1}) {
          action = new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()));
-      else
-         action = new ActionPickRandomDestination(this);
-
-      Systems.TurnHandler.AddEnemyCommand(action);
+         Systems.TurnHandler.AddEnemyCommand(action);
+      }
    }
 
    public bool Move(MovementDirection dir) {

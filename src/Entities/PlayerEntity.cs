@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using SatiRogue.Components;
+using SatiRogue.Components.Render;
 using SatiRogue.Components.Stats;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
@@ -25,6 +26,7 @@ public class PlayerEntity : GridEntity {
       BlocksCell = true;
       AddComponent(new InputHandlerComponent());
       AddComponent(new StatHealthComponent(10));
+      AddComponent(new PlayerRendererComponent());
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition) {
@@ -36,12 +38,14 @@ public class PlayerEntity : GridEntity {
       Logger.Info("Player ready");
 
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
+      Visible = true;
       CallDeferred(nameof(OnPositionChanged));
    }
 
    protected override void OnPositionChanged() {
       Logger.Debug("Player position changed");
       CalculateVisibility();
+      EmitSignal(nameof(PositionChanged));
       EmitSignal(nameof(PlayerPositionChanged));
    }
 

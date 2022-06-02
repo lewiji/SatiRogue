@@ -8,35 +8,47 @@ namespace SatiRogue.scenes.Hud;
 
 [Tool]
 public partial class StatBar3D : Spatial {
+#pragma warning disable CS8618
+   [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance _multiMeshInstance;
+   [OnReadyGet("AnimationPlayer", Export = true)] private AnimationPlayer _animationPlayer;
+   [OnReadyGet("Tween", Export = true)] private Tween _tween;
+#pragma warning restore CS8618
+   
+   private ShaderMaterial? _shaderMaterial;
    private float _percent;
-   public ShaderMaterial? ShaderMaterial;
-   private StatsComponent? _statsComponent;
-   [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
-   [OnReady]
-   private void SetInstanceTransforms() {
-      if (_multiMeshInstance == null) return;
-      ShaderMaterial = _multiMeshInstance.MaterialOverride as ShaderMaterial;
+   private float _interpolatedPercent = 0f;
+
+   [Export] public float Percent {
+      get => _percent;
+      set {
+         _percent = Mathf.Clamp(value, 0f, 1f);
+         if (Mathf.IsEqualApprox(_interpolatedPercent, _percent)) return;
+         
+         if (_tween.IsActive()) _tween.StopAll();
+         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.16f, Tween.TransitionType.Sine);
+         _tween.Start();
+      }
+   }
+
+   [OnReady] private void SetupMultiMesh() {
+      // MultiMesh
+      _shaderMaterial = _multiMeshInstance.MaterialOverride as ShaderMaterial;
       _multiMeshInstance.Multimesh.InstanceCount = 2;
       // Frame
       _multiMeshInstance.Multimesh.SetInstanceTransform(0, new Transform(Basis.Identity, new Vector3(0, 0, 0)));
       _multiMeshInstance.Multimesh.SetInstanceCustomData(0, new Color(0.464285714286f, 0, 0));
-      
       // Bar
       _multiMeshInstance.Multimesh.SetInstanceTransform(1, new Transform(Basis.Identity, new Vector3(0, 0, 0.025f)));
       _multiMeshInstance.Multimesh.SetInstanceCustomData(1, new Color(0.4892f, 0.5504f, 1f));
-
    }
 
-
-   
-
-
-   [Export]
-   public float Percent {
-      get => _percent;
-      set {
-         _percent = Mathf.Clamp(value, 0f, 1f);
-         ShaderMaterial?.SetShaderParam("percent_full", _percent);
+   public override void _Process(float delta) {
+      if (_tween.IsActive()) {
+         _shaderMaterial?.SetShaderParam("percent_full", _interpolatedPercent);
       }
+   }
+
+   public void OnDead() {
+      _animationPlayer.Play("die");
    }
 }

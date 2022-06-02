@@ -1,18 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=1]
 [ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=2]
-[ext_resource path="res://scenes/PlayerNode3D.cs" type="Script" id=4]
 [ext_resource path="res://src/Camera/SpatialCamera.cs" type="Script" id=5]
 
 [node name="Player" type="Spatial"]
-script = ExtResource( 4 )
-SpriteSmoothing = 0.28
-CameraSmoothing = 0.07
-CameraPath = NodePath("Visual/Camera")
 
 [node name="Visual" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.838671, 0.544639, 0, -0.544639, 0.838671, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.75, 0 )
 portal_mode = 2
 material_override = ExtResource( 1 )
 pixel_size = 0.05
@@ -32,9 +27,8 @@ size = 15.52
 far = 50.0
 script = ExtResource( 5 )
 
-[node name="Light" type="SpotLight" parent="Visual/Camera"]
-transform = Transform( 0.966016, 0.0537414, 0.252833, 0, 0.978148, -0.207912, -0.258482, 0.200846, 0.944906, 3.27, -1.618, 0 )
-portal_mode = 2
+[node name="Light" type="SpotLight" parent="Visual"]
+transform = Transform( 0.966016, 0.0537414, 0.252834, -0.117348, 0.962718, 0.243728, -0.230309, -0.265114, 0.936307, 3.27, 2.79041, 11.8295 )
 light_color = Color( 1, 0.964, 0.82, 1 )
 light_energy = 1.4
 shadow_enabled = true

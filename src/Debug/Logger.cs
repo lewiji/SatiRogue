@@ -4,16 +4,16 @@ using Godot;
 
 namespace SatiRogue.Debug;
 
-public enum LogLevel {
-   None,
-   Error,
-   Warn,
-   Info,
-   Debug,
-   All
-}
-
 public class Logger : Node {
+   public enum LogLevel {
+      None,
+      Error,
+      Warn,
+      Info,
+      Debug,
+      All
+   }
+
    private const int MaxLogsPerFrame = 10;
    private static readonly Queue<string> QueuedLogs = new();
 

@@ -52,16 +52,16 @@ void fragment() {
 	}
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
 	
-	if (is_progress_bar > 0f && albedo_tex.a > 0f) {
+	if (is_progress_bar > 0.f && albedo_tex.a > 0.f) {
 		vec2 coords = base_uv;
-		vec2 pointOnLineSegment = vec2(clamp(coords.x, 0.5f, 1f - 0.5f), 0.5f);
-		float sdf = distance(pointOnLineSegment, coords) * 2f - 1f;
+		vec2 pointOnLineSegment = vec2(clamp(coords.x, 0.5f, 1.f - 0.5f), 0.5f);
+		float sdf = distance(pointOnLineSegment, coords) * 2.f - 1.f;
 		
-		float borderSdf = sdf + 1f;
+		float borderSdf = sdf + 1.f;
 		float pd = fwidth(borderSdf);
-		float borderMask = 1f - clamp(borderSdf / pd, 0, 1);
+		float borderMask = 1.f - clamp(borderSdf / pd, 0, 1);
 		
-		borderSdf = ( (borderSdf - 0f) / (1f - 0f) ) * (1.03f + 0.3f) - 0.3f;
+		borderSdf = ( (borderSdf - 0.f) / (1.f - 0.f) ) * (1.03f + 0.3f) - 0.3f;
 		
 		bool fillMask = borderSdf > percent_full;
 		

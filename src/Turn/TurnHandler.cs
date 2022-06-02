@@ -65,7 +65,8 @@ public partial class TurnHandler : Node {
    public void SetPlayerCommand(Command command) {
       if (Turn != Turn.PlayerTurn)
          throw new Exception("TurnHandler: Tried to SetPlayerCommand, but Turn is not PlayerTurn.");
-      _playerCommands.Enqueue(command);
+      //_playerCommands.Enqueue(command);
+      command.Execute();
       Turn = Turn.EnemyTurn;
    }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Active;
 using Active.Core;
@@ -24,7 +25,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
    private class EnemyBehaviourTree : Gig {
       private readonly EnemyEntity _enemyEntity;
       private int _squaredSightRange;
-      private float _rangeToPlayer = -1;
+      private int _rangeToPlayer = -1;
 
       public EnemyBehaviourTree(EnemyEntity entity) {
          _enemyEntity = entity;
@@ -34,7 +35,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       public override status Step() => CheckDistanceToPlayer() && CheckLineOfSight() && (MoveToPlayer() || Attack()) || MoveRandomly();
 
       private status CheckDistanceToPlayer() {
-         _rangeToPlayer = _enemyEntity.DistanceSquaredTo(EntityRegistry.Player!);
+         _rangeToPlayer = Mathf.FloorToInt((_enemyEntity.GridPosition - EntityRegistry.Player!.GridPosition).Abs().Length());
          return _rangeToPlayer > _squaredSightRange
             ? fail(log && $"Player was not in squared sight range {_squaredSightRange} of {_enemyEntity.Name}. Range was: {_rangeToPlayer}")
             : done();
@@ -49,15 +50,19 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       private status MoveToPlayer() {
          if (_rangeToPlayer is -1 or > 1) {
             _enemyEntity.GetComponent<MovementComponent>()?.SetDestination(EntityRegistry.Player!.GridPosition);
-            return fail(log && $"Enemy {_enemyEntity.Name} is not adjacent to Player.");
+            return done();
          }
-
-         return done();
+         return fail();
       }
 
       private status Attack() {
-         Logger.Info("ATTACKING!!!");
-         return done();
+         if (_rangeToPlayer == 1) {
+            Logger.Info("ATTACKING!!!");
+            _enemyEntity.GetComponent<MovementComponent>()?.SetDestination(null);
+            Systems.TurnHandler.AddEnemyCommand(new ActionAttack(_enemyEntity, EntityRegistry.Player!));
+            return done();
+         }
+         return fail();
       }
 
       private status MoveRandomly()
