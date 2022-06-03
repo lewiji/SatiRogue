@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using SatiRogue.Components;
+using SatiRogue.Debug;
 using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
@@ -15,21 +16,47 @@ public class GridEntityParameters : EntityParameters {
 
 public abstract class GridEntity : Entity {
    private GridEntityParameters? _parameters;
-   
+   private bool _visible;
+   public MovementComponent? MovementComponent { get; protected set; }
+
    [Signal]
    public delegate void PositionChanged();
 
-   protected override IGameObjectParameters? Parameters {
+   [Signal]
+   public delegate void VisibilityChanged();
+
+   protected override IGameObjectParameters? Parameters
+   {
       get => _parameters;
-      set => _parameters = value as GridEntityParameters;
+      set
+      {
+         _parameters = value as GridEntityParameters;
+         MovementComponent = new MovementComponent(_parameters?.GridPosition.GetValueOrDefault());
+      }
    }
 
-   public bool Visible { get; protected set; }
+   public bool Visible
+   {
+      get => _visible;
+      set
+      {
+         _visible = value;
+         EmitSignal(nameof(VisibilityChanged));
+      }
+   }
+
    public bool BlocksCell { get; protected set; }
 
-   public Vector3i GridPosition {
-      get => GetComponent<MovementComponent>()!.GridPosition;
-      set => GetComponent<MovementComponent>()!.GridPosition = value;
+   public Vector3i GridPosition
+   {
+      get
+      { 
+         return MovementComponent!.GridPosition;
+      }
+      set
+      {
+         MovementComponent!.GridPosition = value;
+      }
    }
 
    public override void _EnterTree() {
@@ -41,18 +68,29 @@ public abstract class GridEntity : Entity {
    }
 
    protected virtual void RegisterMovementComponent(Vector3i? gridPosition) {
-      var movementComponent = new MovementComponent(gridPosition);
-      AddComponent(movementComponent);
-      movementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault()}");
+      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
+      AddComponent(MovementComponent);
+      MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
    }
 
    protected virtual void OnPositionChanged() {
-      Visible = GetIsVisible();
       EmitSignal(nameof(PositionChanged));
+      CheckVisibility();
+   }
+
+   public override void HandleTurn()
+   {
+      CallDeferred(nameof(CheckVisibility));
+   }
+
+   protected void CheckVisibility()
+   {
+      Visible = GetIsVisible();
    }
 
    private bool GetIsVisible() {
-      return MapGenerator.MapData.GetCellAt(GridPosition).Visibility == CellVisibility.CurrentlyVisible;
+      return MovementComponent?.CurrentCell?.Visibility == CellVisibility.CurrentlyVisible;
    }
 
    public float DistanceSquaredTo(GridEntity otherEntity) {

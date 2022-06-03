@@ -29,8 +29,10 @@ public class PlayerEntity : GridEntity {
       AddComponent(new PlayerRendererComponent());
    }
 
-   protected override void RegisterMovementComponent(Vector3i? gridPosition) {
-      AddComponent(new PlayerMovementComponent(gridPosition)).Connect(
+   protected override void RegisterMovementComponent(Vector3i? gridPosition)
+   {
+      MovementComponent = new PlayerMovementComponent(gridPosition);
+      AddComponent(MovementComponent).Connect(
          nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
    }
 
@@ -63,6 +65,13 @@ public class PlayerEntity : GridEntity {
 
    private void OnMapDataChanged() {
       Logger.Info("Player map data changed");
+      CallDeferred(nameof(CalculateVisibility));
+   }
+
+   public override void HandleTurn()
+   {
+      base.HandleTurn();
+      Logger.Info("Player handling turn");
       CallDeferred(nameof(CalculateVisibility));
    }
 

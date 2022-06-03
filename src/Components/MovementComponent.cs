@@ -41,6 +41,7 @@ public partial class MovementComponent : Component {
    private Vector3i? _initialPosition;
    private GridEntity? _parent;
    private Queue<Vector3>? _path;
+   public Cell? CurrentCell { get; protected set; }
 
    public MovementComponent(Vector3i? initialPosition = null) {
       _initialPosition = initialPosition;
@@ -80,7 +81,7 @@ public partial class MovementComponent : Component {
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      
+      OnMapChanged();
    }
 
    [OnReady]
@@ -91,7 +92,10 @@ public partial class MovementComponent : Component {
    private void OnMapChanged() {
       if (EcOwner != null && _initialPosition != null)
             MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
-      new ActionPickRandomDestination(this._parent!).Execute();
+      if (_parent is EnemyEntity)
+      {
+         new ActionPickRandomDestination(this._parent!).Execute();
+      }
    }
 
    public void SetDestination(Vector3i? destination) {
@@ -144,6 +148,8 @@ public partial class MovementComponent : Component {
 
       currentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
       targetCell.Occupants.Add(EcOwner!.GetInstanceId());
+
+      CurrentCell = targetCell;
       GridPosition = targetPosition;
 
       return true;

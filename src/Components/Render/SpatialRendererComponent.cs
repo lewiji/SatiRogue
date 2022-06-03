@@ -1,6 +1,7 @@
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Entities;
+using SatiRogue.Grid;
 using SatiRogue.scenes;
 
 namespace SatiRogue.Components.Render; 
@@ -23,8 +24,6 @@ public partial class SpatialRendererComponent : RendererComponent {
          RootNode = new Spatial() {Translation = GridEntity.GridPosition.ToVector3(), Name = GridEntity.Uuid};
          threeDeeNode.EnemiesSpatial?.AddChild(RootNode);
       }
-      
-      RootNode.Visible = GridEntity.Visible;
    }
 
    public override void _ExitTree() {
@@ -32,11 +31,18 @@ public partial class SpatialRendererComponent : RendererComponent {
       RootNode?.QueueFree();
    }
 
-   protected override void CreateVisualNodes() { }
+   protected override void CreateVisualNodes()
+   {
+      if (RootNode == null || GridEntity == null) return;
+      RootNode.Visible = GridEntity.Visible;
+      CallDeferred(nameof(CheckVisibility));
+   }
    
    [OnReady]
    private void ConnectPositionChanged() {
       GridEntity?.Connect(nameof(GridEntity.PositionChanged), this, nameof(HandlePositionChanged));
+      GridEntity?.Connect(nameof(GridEntity.VisibilityChanged), this, nameof(HandleVisibilityChanged));
+      CallDeferred(nameof(HandleVisibilityChanged));
    }
 
    protected virtual void HandlePositionChanged() {
@@ -44,8 +50,14 @@ public partial class SpatialRendererComponent : RendererComponent {
       TargetTranslation = GridEntity.GridPosition.ToVector3();
    }
 
-   public override void HandleTurn() {
-      base.HandleTurn();
+   protected virtual void HandleVisibilityChanged()
+   {
+      if (GridEntity == null || RootNode == null) return;
+      RootNode.Visible = GridEntity.Visible;
+   }
+
+   protected virtual void CheckVisibility()
+   {
       if (GridEntity == null || RootNode == null) return;
       RootNode.Visible = GridEntity.Visible;
    }

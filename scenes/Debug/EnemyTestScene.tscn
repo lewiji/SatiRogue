@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scenes/Debug/EnemyTestScene.cs" type="Script" id=1]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__35.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://scenes/Hud/StatBar3D.tscn" type="PackedScene" id=15]
 [ext_resource path="res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres" type="SpriteFrames" id=16]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_p.png" type="Texture" id=17]
+[ext_resource path="res://scenes/ThreeDee/EntityPositionMarker.tscn" type="PackedScene" id=18]
 
 [sub_resource type="PanoramaSky" id=3]
 radiance_size = 0
@@ -149,6 +150,8 @@ playing = true
 
 [node name="StatBar3D" parent="Enemy" instance=ExtResource( 15 )]
 
+[node name="EntityPositionMarker" parent="Enemy" instance=ExtResource( 18 )]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 10 )
 script = ExtResource( 4 )
@@ -243,7 +246,6 @@ portal_mode = 3
 include_in_bound = false
 mesh = SubResource( 11 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.989278, -0.0941623, 0.111632, 0, 0.764383, 0.644763, -0.146042, -0.63785, 0.756187, 17.9722, 7.8685, 26.6983 )

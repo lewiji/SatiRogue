@@ -16,24 +16,36 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
    private float CameraSmoothing { get; set; } = 0.07f;
    
    protected override void CreateRootNode() {
-      if (GridEntity == null) return;
-      if (!EntityResourceLocator.SceneNodePaths.TryGetValue(nameof(ThreeDee), out var threeDeePath)) return;
       RootNode = _playerScene;
-      
-      _playerScene.Translation = GridEntity.GridPosition.ToVector3();
-      
-      var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
-      threeDeeNode.AddChild(_playerScene);
-      _playerScene.Owner = threeDeeNode;
    }
 
    protected override void CreateVisualNodes() {
+      if (GridEntity == null) return;
+      if (!EntityResourceLocator.SceneNodePaths.TryGetValue(nameof(ThreeDee), out var threeDeePath)) return;
+      var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
+      threeDeeNode.AddChild(RootNode);
+      _playerScene.Owner = threeDeeNode;
+      
+      CallDeferred(nameof(SetInitialPosition));
+
+      EntityRegistry.Player?.Connect(nameof(PlayerEntity.SignalAnimation), this, nameof(PlayAnimation));
+   }
+   
+   protected override void HandleVisibilityChanged()
+   {
+   }
+
+   protected override void CheckVisibility()
+   {
+   }
+
+   private void SetInitialPosition()
+   {
+      RootNode.Translation = GridEntity.GridPosition.ToVector3();
       AnimatedSprite = _playerScene.GetNode<AnimatedSprite3D>("Visual");
       _camera = AnimatedSprite.GetNode<Godot.Camera>("Camera");
       _camera.SetAsToplevel(true);
       if (PlayerEntity != null) _camera.Translation = PlayerEntity.GridPosition.ToVector3() + _cameraOffset;
-
-      EntityRegistry.Player?.Connect(nameof(PlayerEntity.SignalAnimation), this, nameof(PlayAnimation));
    }
    
    public override void _Process(float delta) {

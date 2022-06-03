@@ -31,5 +31,6 @@ public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererCompon
          YOffset = AnimatedSprite.Translation.y;
       }
       RootNode?.AddChild(AnimatedSprite);
+      base.CreateVisualNodes();
    }
 }

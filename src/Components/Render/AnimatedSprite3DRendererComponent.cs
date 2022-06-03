@@ -11,11 +11,11 @@ public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponen
    protected override void HandlePositionChanged() {
       base.HandlePositionChanged();
       if (GridEntity == null || RootNode == null || AnimatedSprite ==  null) return;
-      if (GridEntity.GetComponent<MovementComponent>() is not { } movementComponent) return;
+      if (GridEntity.MovementComponent == null) return;
       
-      if (movementComponent.InputDirection == Vector3i.Left) {
+      if (GridEntity.MovementComponent.InputDirection == Vector3i.Left) {
          AnimatedSprite.FlipH = true;
-      } else if (movementComponent.InputDirection == Vector3i.Right) {
+      } else if (GridEntity.MovementComponent.InputDirection == Vector3i.Right) {
          AnimatedSprite.FlipH = false;  
       }
    }

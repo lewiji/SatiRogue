@@ -63,8 +63,11 @@ public class MapData : AbstractMapData {
   
    public void SetLight(Vector3i gridVec, float f) {
       var cell = GetCellAt(gridVec);
-      if (cell.Luminosity == null) CellsVisibilityChanged.Push(cell.Position.ToVector3());
-      cell.Luminosity = f;
+      if (cell.Luminosity == null)
+      {
+         CellsVisibilityChanged.Push(cell.Position.ToVector3());
+         cell.Luminosity = f;
+      }
    }
 
    public override void ClearCells() {

@@ -70,7 +70,7 @@ public partial class SpatialGridRepresentation : Spatial {
 
    private void OnVisibilityChanged(Vector3[] positions) {
       if (_totalChunks == 0) return;
-      Logger.Debug("Spatial visibility updating");
+      Logger.Info("Spatial visibility updating");
       foreach (var position in positions) {
          var chunkId = GetChunkIdForPosition(new Vector3i(position));
          var localPos = position - GetChunkMinMaxCoords(chunkId, _maxWidth + ChunkWidth)[0].ToVector3();
@@ -112,6 +112,7 @@ public partial class SpatialGridRepresentation : Spatial {
          if (entityData.Value is EnemyEntity enemyEntity) {
             enemyEntity.AddComponent(new EnemyMeshRendererComponent());
             enemyEntity.AddComponent(new StatBar3DRendererComponent());
+            //enemyEntity.AddComponent(new EntityPositionMarkerComponent());
          }
 
       Logger.Info("Chunking finished.");

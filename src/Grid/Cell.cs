@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SatiRogue.Debug;
+using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
@@ -30,6 +32,7 @@ public enum CellVisibility {
 
 public class Cell : Reference {
    [Signal] public delegate void CellTypeChanged(int cellTypeId, long cellId);
+   [Signal] public delegate void VisibilityChanged();
    
    private float? _luminosity;
    private CellType? _type;
@@ -37,7 +40,19 @@ public class Cell : Reference {
    public HashSet<CellCondition> Conditions = new();
    public long Id;
    public HashSet<ulong> Occupants = new();
-   public CellVisibility Visibility = CellVisibility.Unseen;
+   private CellVisibility _visibility = CellVisibility.Unseen;
+
+   public CellVisibility Visibility
+   {
+      get => _visibility;
+      set
+      {
+         if (_visibility == value) return;
+         _visibility = value;
+         SetOccupantVisibility();
+         EmitSignal(nameof(VisibilityChanged));
+      }
+   }
 
    public Cell(long id, CellType? type = null, IEnumerable<ulong>? occupants = null, IEnumerable<CellCondition>? conditions = null,
       CellVisibility? visibility = null) {
@@ -46,6 +61,18 @@ public class Cell : Reference {
       if (conditions != null) Conditions = conditions.ToHashSet();
       if (visibility != null) Visibility = visibility.Value;
       Type = type;
+   }
+
+   private void SetOccupantVisibility()
+   {
+      foreach (var occupant in Occupants)
+      {
+         if (GD.InstanceFromId(occupant) is GridEntity gridEntity)
+         {
+            gridEntity.Visible = Visibility == CellVisibility.CurrentlyVisible;
+            Logger.Info($"Setting {gridEntity.Name} Visibility: {gridEntity.Visible}");
+         }
+      }
    }
 
    public CellType? Type {
