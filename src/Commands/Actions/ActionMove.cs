@@ -15,16 +15,15 @@ public class ActionMove : Action {
    public override Error Execute() {
       if (Owner?.GetType() != typeof(GridEntity) && !Owner!.GetType().IsSubclassOf(typeof(GridEntity))) return Error.Failed;
       var err = ((GridEntity) Owner).GetComponent<MovementComponent>()!.Move(_inputDir) ? Error.Ok : Error.Failed;
-      if (Owner is EnemyEntity enemyEntity) {
-         enemyEntity.GetComponent<EnemyMeshRendererComponent>()?.PlayAnimation("walk");
-      } else if (Owner is PlayerEntity playerEntity) {
-         playerEntity.PlayAnimation("walk");
-      }
+      
+      if (Owner.GetComponent<AnimatedSprite3DRendererComponent>() is { } spriteComponent)
+         spriteComponent.PlayAnimation("walk");
+      
       if (err != Error.Ok) NotifyEnemyIsBlocked();
       return err;
    }
 
    public void NotifyEnemyIsBlocked() {
-      if (Owner is EnemyEntity enemy) new ActionPickRandomDestination((GridEntity)Owner).Execute();
+      //if (Owner is EnemyEntity enemy) new ActionPickRandomDestination((GridEntity)Owner).Execute();
    }
 }

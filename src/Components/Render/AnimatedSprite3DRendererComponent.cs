@@ -29,4 +29,13 @@ public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponen
             AnimatedSprite.Play("idle");
       }
    }
+   
+   [OnReady]
+   private void ConnectSignals() {
+      GridEntity?.Connect(nameof(Entity.Died), this, nameof(OnDead));
+   }
+
+   private void OnDead() {
+      PlayAnimation("die");
+   }
 }

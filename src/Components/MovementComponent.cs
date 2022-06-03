@@ -101,7 +101,7 @@ public partial class MovementComponent : Component {
 
    public bool HasDestination()
    {
-      return _destination.HasValue;
+      return _destination.HasValue && _path != null;
    }
 
    public MovementDirection GetNextMovementDirectionOnPath() {

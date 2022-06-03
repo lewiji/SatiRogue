@@ -17,8 +17,9 @@ public class ActionPickRandomDestination : Action {
       var randomCell = GD.Randi() % RuntimeMapNode.Instance.MapData.Cells.Count();
       var destination = RuntimeMapNode.Instance.MapData.Cells.ElementAt((int) randomCell).Position;
 
-      if (Owner is GridEntity gridEntity) {
-         gridEntity.GetComponent<MovementComponent>()?.SetDestination(destination);
+      if (Owner is GridEntity gridEntity && gridEntity.GetComponent<MovementComponent>() is { } movementComponent) {
+         movementComponent.SetDestination(destination);
+         movementComponent.Move(movementComponent.GetNextMovementDirectionOnPath());
       }
       else {
          Logger.Warn($"Tried to set destination for entity {Owner}, but no MovementComponent was found.");

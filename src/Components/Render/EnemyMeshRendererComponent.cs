@@ -32,13 +32,4 @@ public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererCompon
       }
       RootNode?.AddChild(AnimatedSprite);
    }
-   
-   [OnReady]
-   private void ConnectSignals() {
-      GridEntity?.Connect(nameof(Entity.Died), this, nameof(OnDead));
-   }
-
-   private void OnDead() {
-      PlayAnimation("die");
-   }
 }

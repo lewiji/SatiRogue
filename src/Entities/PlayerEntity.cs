@@ -48,6 +48,16 @@ public class PlayerEntity : GridEntity {
       EmitSignal(nameof(PositionChanged));
       EmitSignal(nameof(PlayerPositionChanged));
    }
+   
+   protected override async void OnDead() {
+      Enabled = false;
+      TurnTypesToExecuteOn.Clear();
+      DisableComponents();
+      await ToSignal(GetTree().CreateTimer(2f), "timeout");
+      EntityRegistry.UnregisterEntity(this);
+      ClearComponents();
+      QueueFree();
+   }
 
    private void OnMapDataChanged() {
       Logger.Info("Player map data changed");
@@ -57,9 +67,5 @@ public class PlayerEntity : GridEntity {
    private void CalculateVisibility() {
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
-   }
-
-   public void PlayAnimation(string name) {
-      EmitSignal(nameof(SignalAnimation), name);
    }
 }

@@ -59,7 +59,7 @@ public abstract class Entity : GameObject, IEntity {
       set => _parameters = value as EntityParameters;
    }
 
-   private async void OnDead() {
+   protected virtual async void OnDead() {
       Enabled = false;
       TurnTypesToExecuteOn.Clear();
       DisableComponents();

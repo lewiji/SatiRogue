@@ -32,7 +32,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
          _squaredSightRange = _enemyEntity.SightRange * _enemyEntity.SightRange;
       }
 
-      public override status Step() => CheckDistanceToPlayer() && CheckLineOfSight() && (MoveToPlayer() || Attack()) || MoveRandomly();
+      public override status Step() => CheckDistanceToPlayer() && (CheckLineOfSight() || MoveRandomly()) && (MoveToPlayer() || Attack());
 
       private status CheckDistanceToPlayer() {
          _rangeToPlayer = Mathf.FloorToInt((_enemyEntity.GridPosition - EntityRegistry.Player!.GridPosition).Abs().Length());
@@ -69,8 +69,11 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       private status MoveRandomly()
       {
          var enemyMovement = _enemyEntity.GetComponent<MovementComponent>();
-         if (enemyMovement != null && enemyMovement.HasDestination())
+         if (enemyMovement != null && enemyMovement.HasDestination()) {
+            Systems.TurnHandler.AddEnemyCommand(new ActionMove(_enemyEntity, enemyMovement.GetNextMovementDirectionOnPath()));
             return done();
+         }
+
          Logger.Info("Moving randomly");
          Systems.TurnHandler.AddEnemyCommand(new ActionPickRandomDestination(_enemyEntity));
          return done();
