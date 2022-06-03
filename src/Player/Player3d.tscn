@@ -16,7 +16,6 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]

@@ -23,6 +23,8 @@ public partial class SpatialRendererComponent : RendererComponent {
          RootNode = new Spatial() {Translation = GridEntity.GridPosition.ToVector3(), Name = GridEntity.Uuid};
          threeDeeNode.EnemiesSpatial?.AddChild(RootNode);
       }
+      
+      RootNode.Visible = GridEntity.Visible;
    }
 
    public override void _ExitTree() {
@@ -37,9 +39,14 @@ public partial class SpatialRendererComponent : RendererComponent {
       GridEntity?.Connect(nameof(GridEntity.PositionChanged), this, nameof(HandlePositionChanged));
    }
 
-   private void HandlePositionChanged() {
+   protected virtual void HandlePositionChanged() {
       if (GridEntity == null || RootNode == null) return;
       TargetTranslation = GridEntity.GridPosition.ToVector3();
+   }
+
+   public override void HandleTurn() {
+      base.HandleTurn();
+      if (GridEntity == null || RootNode == null) return;
       RootNode.Visible = GridEntity.Visible;
    }
 

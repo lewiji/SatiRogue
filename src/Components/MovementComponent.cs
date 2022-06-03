@@ -56,7 +56,7 @@ public partial class MovementComponent : Component {
    }
 
    public Vector3i? LastPosition { get; protected set; }
-   protected Vector3i InputDirection { get; set; }
+   public Vector3i InputDirection { get; protected set; }
 
    public override GameObject? EcOwner {
       get => _parent;
@@ -91,7 +91,7 @@ public partial class MovementComponent : Component {
    private void OnMapChanged() {
       if (EcOwner != null && _initialPosition != null)
             MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
-      new ActionPickRandomDestination(this).Execute();
+      new ActionPickRandomDestination(this._parent!).Execute();
    }
 
    public void SetDestination(Vector3i? destination) {
@@ -103,6 +103,22 @@ public partial class MovementComponent : Component {
    {
       return _destination.HasValue;
    }
+
+   public MovementDirection GetNextMovementDirectionOnPath() {
+      if (_destination == null) return MovementDirection.None;
+      
+      if (_path == null) {
+         if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
+            _path = new Queue<Vector3>(RuntimeMapNode.Instance.MapData.FindPath(GridPosition, _destination));
+            if (_path.Count > 0) _path.Dequeue();
+      }
+      
+      if (_path is {Count: >= 1}) {
+         return VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3());
+      }
+
+      return MovementDirection.None;
+   }
    
    public override void HandleTurn() {
       Action action;
@@ -112,11 +128,6 @@ public partial class MovementComponent : Component {
             _path = new Queue<Vector3>(RuntimeMapNode.Instance.MapData.FindPath(GridPosition, _destination));
             if (_path.Count > 0) _path.Dequeue();
          }
-      }
-
-      if (_path is {Count: >= 1}) {
-         action = new ActionMove(this, VectorToMovementDirection(_path.Dequeue() - GridPosition.ToVector3()));
-         Systems.TurnHandler.AddEnemyCommand(action);
       }
    }
 

@@ -48,11 +48,12 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       }
 
       private status MoveToPlayer() {
-         if (_rangeToPlayer is -1 or > 1) {
-            _enemyEntity.GetComponent<MovementComponent>()?.SetDestination(EntityRegistry.Player!.GridPosition);
-            return done();
-         }
-         return fail();
+         if (_rangeToPlayer is not (-1 or > 1)) return fail();
+         if (_enemyEntity.GetComponent<MovementComponent>() is not { } movementComponent) return done();
+         movementComponent.SetDestination(EntityRegistry.Player!.GridPosition);
+         Systems.TurnHandler.AddEnemyCommand(new ActionMove(_enemyEntity, 
+            movementComponent.GetNextMovementDirectionOnPath()));
+         return done();
       }
 
       private status Attack() {
@@ -71,7 +72,7 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
          if (enemyMovement != null && enemyMovement.HasDestination())
             return done();
          Logger.Info("Moving randomly");
-         Systems.TurnHandler.AddEnemyCommand(new ActionPickRandomDestination(_enemyEntity.GetComponent<MovementComponent>()!));
+         Systems.TurnHandler.AddEnemyCommand(new ActionPickRandomDestination(_enemyEntity));
          return done();
       }
    }

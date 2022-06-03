@@ -23,10 +23,11 @@ public class ActionAttack : Action
     {
         Logger.Info($"{Owner!.Name} attacking {Target!.Name} for ");
         _targetStats?.Subtract(1);
-        if (Owner is EnemyEntity enemyEntity)
-            enemyEntity.GetComponent<EnemyMeshRendererComponent>()?.PlayAnimation("attack");
-        else if (Owner is PlayerEntity playerEntity)
-            playerEntity.PlayAnimation("attack");
+        if (Owner.GetComponent<MovementComponent>() is { } movementComponent) {
+            movementComponent.GridPosition = movementComponent.GridPosition;
+        }
+        if (Owner.GetComponent<AnimatedSprite3DRendererComponent>() is { } spriteComponent)
+            spriteComponent.PlayAnimation("attack");
         return Error.Ok;
     }
 }

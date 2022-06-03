@@ -1,9 +1,24 @@
 using Godot;
+using GodotOnReady.Attributes;
+using SatiRogue.Entities;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Components.Render; 
 
-public class AnimatedSprite3DRendererComponent : SpatialRendererComponent {
+public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponent {
    protected AnimatedSprite3D? AnimatedSprite;
+   
+   protected override void HandlePositionChanged() {
+      base.HandlePositionChanged();
+      if (GridEntity == null || RootNode == null || AnimatedSprite ==  null) return;
+      if (GridEntity.GetComponent<MovementComponent>() is not { } movementComponent) return;
+      
+      if (movementComponent.InputDirection == Vector3i.Left) {
+         AnimatedSprite.FlipH = true;
+      } else if (movementComponent.InputDirection == Vector3i.Right) {
+         AnimatedSprite.FlipH = false;  
+      }
+   }
 
    public async void PlayAnimation(string name) {
       if (AnimatedSprite != null && AnimatedSprite.Frames.HasAnimation(name)) {

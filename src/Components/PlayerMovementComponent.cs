@@ -23,7 +23,7 @@ public class PlayerMovementComponent : MovementComponent {
       switch (targetCellOccupants?.Length) {
          case 0:
             Systems.TurnHandler.SetPlayerCommand(
-               new ActionMove(this, _direction.GetValueOrDefault())
+               new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
          case > 0 when targetCellOccupants.First() is EnemyEntity enemyEntity:

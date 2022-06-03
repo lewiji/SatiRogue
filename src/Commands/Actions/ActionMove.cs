@@ -8,16 +8,16 @@ namespace SatiRogue.Commands.Actions;
 public class ActionMove : Action {
    private readonly MovementDirection _inputDir;
 
-   public ActionMove(MovementComponent movementComponent, MovementDirection inputDir) : base(movementComponent) {
+   public ActionMove(GridEntity owner, MovementDirection inputDir) : base(owner) {
       _inputDir = inputDir;
    }
 
    public override Error Execute() {
-      if (Owner?.GetType() != typeof(MovementComponent) && !Owner!.GetType().IsSubclassOf(typeof(MovementComponent))) return Error.Failed;
-      var err = ((MovementComponent) Owner).Move(_inputDir) ? Error.Ok : Error.Failed;
-      if (Owner.EcOwner is EnemyEntity enemyEntity) {
+      if (Owner?.GetType() != typeof(GridEntity) && !Owner!.GetType().IsSubclassOf(typeof(GridEntity))) return Error.Failed;
+      var err = ((GridEntity) Owner).GetComponent<MovementComponent>()!.Move(_inputDir) ? Error.Ok : Error.Failed;
+      if (Owner is EnemyEntity enemyEntity) {
          enemyEntity.GetComponent<EnemyMeshRendererComponent>()?.PlayAnimation("walk");
-      } else if (Owner.EcOwner is PlayerEntity playerEntity) {
+      } else if (Owner is PlayerEntity playerEntity) {
          playerEntity.PlayAnimation("walk");
       }
       if (err != Error.Ok) NotifyEnemyIsBlocked();
@@ -25,6 +25,6 @@ public class ActionMove : Action {
    }
 
    public void NotifyEnemyIsBlocked() {
-      if (Owner?.EcOwner is EnemyEntity enemy) new ActionPickRandomDestination((MovementComponent) Owner).Execute();
+      if (Owner is EnemyEntity enemy) new ActionPickRandomDestination((GridEntity)Owner).Execute();
    }
 }
