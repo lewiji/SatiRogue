@@ -22,6 +22,10 @@ public class RuntimeMapNode : Node {
       Instance = this;
    }
 
+   public override void _ExitTree() {
+      Instance = null;
+   }
+
    public override async void _Ready() {
       await ToSignal(GetTree(), "idle_frame");
       EmitMapChangedSignal();

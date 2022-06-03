@@ -55,8 +55,10 @@ public class PlayerEntity : GridEntity {
       DisableComponents();
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
       EntityRegistry.UnregisterEntity(this);
+      EntityRegistry.Clear();
       ClearComponents();
       QueueFree();
+      GetNode<Systems>("/root/Systems").Restart();
    }
 
    private void OnMapDataChanged() {

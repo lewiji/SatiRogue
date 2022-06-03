@@ -43,6 +43,21 @@ public class EntityRegistry : GameObject {
 
    public static void UnregisterEntity(Entity entity) {
       EntityList.Remove(entity.Uuid);
+      if (entity is PlayerEntity) {
+         PlayerUuid = null;
+      }
+   }
+
+   public static void Clear() {
+      BlockedCells.Clear();
+      foreach (var keyValuePair in EntityList) {
+         if (IsInstanceValid(keyValuePair.Value)) {
+            keyValuePair.Value.ClearComponents();
+            keyValuePair.Value.QueueFree();
+         }
+      }
+      EntityList.Clear();
+      _instance = null;
    }
 
    public static bool IsPositionBlocked(Vector3i position) {
