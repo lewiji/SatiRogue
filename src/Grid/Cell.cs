@@ -96,7 +96,11 @@ public class Cell : Reference {
    public bool Blocked =>
       Conditions.Contains(CellCondition.Destroyed) ||
       Type is CellType.Wall or CellType.DoorClosed ||
-      Occupants.Count(x => GD.InstanceFromId(x).Get("BlocksCell").Equals(true)) > 0;
+      Occupants.Count(x =>
+      {
+         var instance = GD.InstanceFromId(x);
+         return instance.Get("BlocksCell").Equals(true);
+      }) > 0;
 
    public static Cell FromPosition(Vector3i position) {
       return new Cell(IdCalculator.IdFromVec3(position));

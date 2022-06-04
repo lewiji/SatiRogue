@@ -72,6 +72,7 @@ public abstract class GridEntity : Entity {
       MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
       AddComponent(MovementComponent);
       MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      CheckVisibility();
    }
 
    protected virtual void OnPositionChanged() {

@@ -8,7 +8,5 @@ public class RoomsAndCorridors : MapGenStrategy {
       CommandQueue.Add(new MapGenCreateRooms(MapData));
       CommandQueue.Add(new MapGenCreateCorridors(MapData));
       CommandQueue.Add(new MapGenFloodFill(MapData));
-      CommandQueue.Add(new MapGenPlacePlayer(MapData));
-      CommandQueue.Add(new MapGenPlaceEnemies(MapData));
    }
 }

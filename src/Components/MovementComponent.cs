@@ -89,9 +89,13 @@ public partial class MovementComponent : Component {
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
    }
 
-   private void OnMapChanged() {
+   private void OnMapChanged()
+   {
       if (EcOwner != null && _initialPosition != null)
-            MapGenerator.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
+      {
+         RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
+         CurrentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value);
+      }
       if (_parent is EnemyEntity)
       {
          new ActionPickRandomDestination(this._parent!).Execute();
@@ -137,16 +141,16 @@ public partial class MovementComponent : Component {
 
    public bool Move(MovementDirection dir) {
       if (EcOwner == null) return false;
+      if (!Enabled || !EcOwner.Enabled) return false;
 
       InputDirection = MovementDirectionToVector(dir);
 
       var targetPosition = GridPosition + InputDirection;
-      var currentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition);
       var targetCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(targetPosition);
 
       if (targetCell?.Blocked ?? true) return false;
 
-      currentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
+      RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
       targetCell.Occupants.Add(EcOwner!.GetInstanceId());
 
       CurrentCell = targetCell;
@@ -173,8 +177,7 @@ public partial class MovementComponent : Component {
    }
 
    private void OnDead() {
-      var currentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition);
-      currentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
+      CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
    }
 
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {

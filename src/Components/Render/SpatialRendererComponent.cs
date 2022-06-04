@@ -1,5 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Grid;
 using SatiRogue.scenes;
@@ -34,15 +35,14 @@ public partial class SpatialRendererComponent : RendererComponent {
    protected override void CreateVisualNodes()
    {
       if (RootNode == null || GridEntity == null) return;
-      RootNode.Visible = GridEntity.Visible;
-      CallDeferred(nameof(CheckVisibility));
+      CallDeferred(nameof(HandleVisibilityChanged));
+      CallDeferred(nameof(HandlePositionChanged));
    }
    
    [OnReady]
    private void ConnectPositionChanged() {
       GridEntity?.Connect(nameof(GridEntity.PositionChanged), this, nameof(HandlePositionChanged));
       GridEntity?.Connect(nameof(GridEntity.VisibilityChanged), this, nameof(HandleVisibilityChanged));
-      CallDeferred(nameof(HandleVisibilityChanged));
    }
 
    protected virtual void HandlePositionChanged() {
@@ -55,13 +55,7 @@ public partial class SpatialRendererComponent : RendererComponent {
       if (GridEntity == null || RootNode == null) return;
       RootNode.Visible = GridEntity.Visible;
    }
-
-   protected virtual void CheckVisibility()
-   {
-      if (GridEntity == null || RootNode == null) return;
-      RootNode.Visible = GridEntity.Visible;
-   }
-
+   
    private void OnFinishedTeleporting() {
       Teleporting = false;
    }

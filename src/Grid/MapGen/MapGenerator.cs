@@ -50,5 +50,10 @@ public class MapGenerator : Node {
       GetParent().AddChild(runtimeMapNode);
       runtimeMapNode.Owner = GetParent();
       runtimeMapNode.MapData = new MapData(MapData);
+
+      var placeEntitiesCommandQueue = new CommandQueue();
+      placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
+      placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
+      placeEntitiesCommandQueue.ExecuteAll();
    }
 }

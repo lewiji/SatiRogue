@@ -35,10 +35,6 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
    {
    }
 
-   protected override void CheckVisibility()
-   {
-   }
-
    private void SetInitialPosition()
    {
       RootNode.Translation = GridEntity.GridPosition.ToVector3();

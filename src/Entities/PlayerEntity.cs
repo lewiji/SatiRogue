@@ -65,7 +65,7 @@ public class PlayerEntity : GridEntity {
 
    private void OnMapDataChanged() {
       Logger.Info("Player map data changed");
-      CallDeferred(nameof(CalculateVisibility));
+      CalculateVisibility();
    }
 
    public override void HandleTurn()
