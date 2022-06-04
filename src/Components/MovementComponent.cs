@@ -177,6 +177,7 @@ public partial class MovementComponent : Component {
    }
 
    private void OnDead() {
+      RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
       CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
    }
 

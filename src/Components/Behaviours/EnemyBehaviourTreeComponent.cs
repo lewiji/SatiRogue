@@ -32,17 +32,17 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
          _squaredSightRange = _enemyEntity.SightRange * _enemyEntity.SightRange;
       }
 
-      public override status Step() => CheckDistanceToPlayer() && (CheckLineOfSight() || MoveRandomly()) && (MoveToPlayer() || Attack());
+      public override status Step() => CheckDistanceToPlayer() || ((CheckLineOfSight() && MoveRandomly()) || (Attack() || MoveToPlayer()));
 
       private status CheckDistanceToPlayer() {
          _rangeToPlayer = Mathf.FloorToInt((_enemyEntity.GridPosition - EntityRegistry.Player!.GridPosition).Abs().Length());
-         return _rangeToPlayer > _squaredSightRange
+         return _rangeToPlayer < _squaredSightRange
             ? fail(log && $"Player was not in squared sight range {_squaredSightRange} of {_enemyEntity.Name}. Range was: {_rangeToPlayer}")
             : done();
       }
 
       private status CheckLineOfSight() {
-         if (!_enemyEntity.HasLineOfSightTo(EntityRegistry.Player!))
+         if (_enemyEntity.HasLineOfSightTo(EntityRegistry.Player!))
             return fail(log && $"Player was not in line of sight of {_enemyEntity.Name} at {_enemyEntity.GridPosition}");
          return done();
       }

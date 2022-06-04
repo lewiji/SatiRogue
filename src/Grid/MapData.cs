@@ -25,6 +25,11 @@ public class MapData : AbstractMapData {
    }
    public Cell[] Cells => IndexedCells.Values.ToArray();
 
+   public Cell GetCellById(long cellId)
+   {
+      return IndexedCells[cellId];
+   }
+
    private void InitialiseAStar() {
       AStar.ReserveSpace(IndexedCells.Count);
       foreach (var keyValuePair in IndexedCells) {
