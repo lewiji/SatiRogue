@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://resources/props/stairs_spriteframes.tres" type="SpriteFrames" id=1]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+pixel_size = 0.5
+frames = ExtResource( 1 )

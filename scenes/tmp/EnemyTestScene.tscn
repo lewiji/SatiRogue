@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__35.png" type="Texture" id=1]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_s.png" type="Texture" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://resources/enemies/harpy/harpy_blue_spriteframes.tres" type="SpriteFrames" id=14]
 [ext_resource path="res://scenes/Hud/StatBar3D.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Debug/EnemyTestScene.cs" type="Script" id=16]
+[ext_resource path="res://resources/props/stairs_spriteframes.tres" type="SpriteFrames" id=17]
+[ext_resource path="res://scenes/tmp/new scene.tscn" type="PackedScene" id=18]
 
 [sub_resource type="PanoramaSky" id=3]
 radiance_size = 0
@@ -131,7 +133,7 @@ material_override = ExtResource( 13 )
 pixel_size = 0.05
 frames = ExtResource( 14 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="StatBar3D" parent="Enemy" instance=ExtResource( 15 )]
@@ -230,4 +232,11 @@ portal_mode = 3
 include_in_bound = false
 mesh = SubResource( 11 )
 skeleton = NodePath("../..")
-material/0 = null
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 19, 0, 17 )
+pixel_size = 0.1
+frames = ExtResource( 17 )
+
+[node name="Spatial" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 20 )

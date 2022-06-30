@@ -72,7 +72,7 @@ public abstract class GridEntity : Entity {
       MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
       AddComponent(MovementComponent);
       MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
-      CheckVisibility();
+      CallDeferred(nameof(CheckVisibility));
    }
 
    protected virtual void OnPositionChanged() {
@@ -85,7 +85,7 @@ public abstract class GridEntity : Entity {
       CallDeferred(nameof(CheckVisibility));
    }
 
-   protected void CheckVisibility()
+   public void CheckVisibility()
    {
       Visible = GetIsVisible();
    }

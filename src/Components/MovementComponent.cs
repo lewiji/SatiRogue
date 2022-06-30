@@ -81,16 +81,16 @@ public partial class MovementComponent : Component {
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      OnMapChanged();
    }
 
    [OnReady]
-   private void SetInitialPosition() {
+   private async void SetInitialPosition() {
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
+      await ToSignal(GetTree(), "idle_frame");
+      OnMapChanged();
    }
 
-   private void OnMapChanged()
-   {
+   private async void OnMapChanged() {
       if (EcOwner != null && _initialPosition != null)
       {
          RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
@@ -215,12 +215,12 @@ public partial class MovementComponent : Component {
       if (vec3.IsEqualApprox(Vector3.Back))
          return MovementDirection.Down;
       if (vec3.IsEqualApprox(Vector3.Forward + Vector3.Right))
-         return MovementDirection.UpRight;
+         return MovementDirection.Right;
       if (vec3.IsEqualApprox(Vector3.Forward + Vector3.Left))
-         return MovementDirection.UpLeft;
+         return MovementDirection.Up;
       if (vec3.IsEqualApprox(Vector3.Back + Vector3.Right))
-         return MovementDirection.DownRight;
-      if (vec3.IsEqualApprox(Vector3.Back + Vector3.Left)) return MovementDirection.DownLeft;
+         return MovementDirection.Down;
+      if (vec3.IsEqualApprox(Vector3.Back + Vector3.Left)) return MovementDirection.Left;
 
       return MovementDirection.None;
    }

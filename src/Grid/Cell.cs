@@ -49,8 +49,7 @@ public class Cell : Reference {
       {
          if (_visibility == value) return;
          _visibility = value;
-         SetOccupantVisibility();
-         EmitSignal(nameof(VisibilityChanged));
+         CallDeferred(nameof(SetOccupantVisibility));
       }
    }
 
@@ -65,14 +64,14 @@ public class Cell : Reference {
 
    private void SetOccupantVisibility()
    {
-      foreach (var occupant in Occupants)
-      {
-         if (GD.InstanceFromId(occupant) is GridEntity gridEntity)
-         {
-            gridEntity.Visible = Visibility == CellVisibility.CurrentlyVisible;
-            Logger.Info($"Setting {gridEntity.Name} Visibility: {gridEntity.Visible}");
-         }
+      foreach (var occupant in Occupants) {
+         if (GD.InstanceFromId(occupant) is not GridEntity gridEntity || !IsInstanceValid(gridEntity)) continue;
+         
+         gridEntity.CheckVisibility();
+         Logger.Info($"Setting {gridEntity.Name} Visibility: {gridEntity.Visible}");
       }
+      
+      EmitSignal(nameof(VisibilityChanged));
    }
 
    public CellType? Type {
@@ -99,7 +98,7 @@ public class Cell : Reference {
       Occupants.Count(x =>
       {
          var instance = GD.InstanceFromId(x);
-         return instance.Get("BlocksCell").Equals(true);
+         return IsInstanceValid(instance) && instance.Get("BlocksCell").Equals(true);
       }) > 0;
 
    public static Cell FromPosition(Vector3i position) {

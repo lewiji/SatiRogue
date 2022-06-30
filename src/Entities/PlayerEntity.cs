@@ -46,7 +46,7 @@ public class PlayerEntity : GridEntity {
 
    protected override void OnPositionChanged() {
       Logger.Debug("Player position changed");
-      CalculateVisibility();
+      //CalculateVisibility();
       EmitSignal(nameof(PositionChanged));
       EmitSignal(nameof(PlayerPositionChanged));
    }
@@ -65,7 +65,6 @@ public class PlayerEntity : GridEntity {
 
    private void OnMapDataChanged() {
       Logger.Info("Player map data changed");
-      CalculateVisibility();
    }
 
    public override void HandleTurn()

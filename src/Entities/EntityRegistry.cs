@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Godot.Collections;
+using SatiRogue.Debug;
 using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
@@ -36,7 +37,8 @@ public class EntityRegistry : GameObject {
       entity.InitialiseWithParameters(parameters);
 
       if (entity is GridEntity {BlocksCell: true} gridEntity) BlockedCells.Add(gridEntity.GridPosition, entity.Uuid);
-
+      if (entity is StairsEntity stairsEntity) Logger.Info($"Stairs UUID: {stairsEntity.Uuid}");
+      
       _instance?.AddChild(entity);
       entity.Owner = _instance;
    }

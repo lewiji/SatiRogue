@@ -27,12 +27,12 @@ public class MapGenerator : Node {
       GD.Randomize();
       
       MapGenStrategy ??= new RoomsAndCorridors(new MapGenParams {
-         Height = 75,
-         Width = 75,
-         NumRooms = 18,
-         MaxRoomWidth = 16,
+         Height = 25,
+         Width = 25,
+         NumRooms = 5,
+         MaxRoomWidth = 10,
          MinRoomWidth = 3,
-         NumEnemies = 24
+         NumEnemies = 0
       });
       
       CallDeferred(nameof(StartGeneration));
