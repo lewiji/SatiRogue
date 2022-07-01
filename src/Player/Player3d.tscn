@@ -16,7 +16,7 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
@@ -29,10 +29,11 @@ script = ExtResource( 5 )
 
 [node name="Light" type="SpotLight" parent="Visual/Camera"]
 transform = Transform( 0.966016, 0.0537413, 0.252833, 2.08616e-07, 0.978148, -0.207912, -0.258482, 0.200846, 0.944906, 3.27, -1.61802, 4.00543e-05 )
-light_color = Color( 1, 0.964, 0.82, 1 )
-light_energy = 1.4
+light_energy = 1.1
 shadow_enabled = true
+shadow_color = Color( 0.505882, 0.454902, 0.603922, 1 )
 shadow_bias = 0.1
 spot_range = 24.0
-spot_attenuation = 0.618
-spot_angle_attenuation = 1.27456
+spot_attenuation = 0.393839
+spot_angle = 64.0
+spot_angle_attenuation = 0.618

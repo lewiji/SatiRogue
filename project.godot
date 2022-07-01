@@ -100,7 +100,7 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
-quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )
