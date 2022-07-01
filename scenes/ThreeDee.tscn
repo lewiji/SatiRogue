@@ -57,3 +57,5 @@ script = ExtResource( 3 )
 [node name="Enemies" type="Spatial" parent="."]
 
 [node name="Stairs" type="Spatial" parent="."]
+
+[node name="GridIndicator" type="Spatial" parent="."]

@@ -1,0 +1,9 @@
+[gd_resource type="PlaneMesh" load_steps=2 format=2]
+
+[ext_resource path="res://resources/grid/grid_indicator_spatial_mat.tres" type="Material" id=1]
+
+[resource]
+material = ExtResource( 1 )
+size = Vector2( 64, 64 )
+subdivide_width = 8
+subdivide_depth = 8

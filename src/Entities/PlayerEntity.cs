@@ -27,6 +27,7 @@ public class PlayerEntity : GridEntity {
       AddComponent(new InputHandlerComponent());
       AddComponent(new StatHealthComponent(10));
       AddComponent(new PlayerRendererComponent());
+      AddComponent(new GridIndicatorSpatialComponent());
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
