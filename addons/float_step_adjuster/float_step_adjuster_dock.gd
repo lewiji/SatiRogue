@@ -33,6 +33,10 @@ func set_editor_setting_value(value : float = -1) -> void:
 	value = _currentValue if -1 else value
 	_editorSettings.set_setting("interface/inspector/default_float_step", value)
 	get_editor_setting_value()
+	
+	var inspObj : Object = InspectedObjectGetter.get_inspected_object()
+	inspObj.property_list_changed_notify()
+	print("Notified")
 
 func on_increase_pressed():
 	_currentValue *= 0.1

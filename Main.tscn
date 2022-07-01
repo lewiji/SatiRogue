@@ -155,7 +155,7 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 16 )
 
 [sub_resource type="AtlasTexture" id=46]
-flags = 9
+flags = 27
 atlas = ExtResource( 14 )
 region = Rect2( 320, 161, 32, 15 )
 margin = Rect2( 0, 0, 1, 1 )
@@ -212,7 +212,7 @@ expand_margin_right = 4.0
 draw_center = false
 
 [sub_resource type="AtlasTexture" id=66]
-flags = 9
+flags = 27
 atlas = ExtResource( 14 )
 region = Rect2( 320, 177, 32, 15 )
 margin = Rect2( 0, 0, 1, 1 )

@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "EditorInspectorPlugin",
+"class": "InspectedObjectGetter",
+"language": "GDScript",
+"path": "res://addons/float_step_adjuster/editor_inspector_plugin.gd"
+} ]
+_global_script_class_icons={
+"InspectedObjectGetter": ""
+}
+
 [application]
 
 config/name="RoguelikeMono"
