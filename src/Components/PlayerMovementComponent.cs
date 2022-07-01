@@ -36,6 +36,11 @@ public class PlayerMovementComponent : MovementComponent {
                new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
+         default:
+            Systems.TurnHandler.SetPlayerCommand(
+               new ActionDoNothing(_playerEntity!)
+            );
+            break;
       }
    }
 

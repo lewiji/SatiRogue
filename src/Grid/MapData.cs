@@ -32,6 +32,7 @@ public class MapData : AbstractMapData {
          AStar.AddPoint(aStarId, keyValuePair.Value.Position.ToVector3());
          CellIdToAStarId.Add(keyValuePair.Key, aStarId);
          keyValuePair.Value.Connect(nameof(Cell.CellTypeChanged), this, nameof(OnCellTypeChanged));
+         OnCellTypeChanged((int)keyValuePair.Value.Type.GetValueOrDefault(), keyValuePair.Value.Id);
       }
       
       var points = AStar.GetPoints();

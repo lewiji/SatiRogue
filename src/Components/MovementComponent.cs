@@ -109,7 +109,7 @@ public partial class MovementComponent : Component {
 
    public bool HasDestination()
    {
-      return _destination.HasValue && _path != null;
+      return _destination.HasValue && _path is {Count: > 0};
    }
 
    public MovementDirection GetNextMovementDirectionOnPath() {
@@ -180,6 +180,11 @@ public partial class MovementComponent : Component {
       CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
    }
 
+   public static MovementDirection GetRandomMovementDirection() {
+      var dir = Mathf.RoundToInt((float)GD.RandRange(0, 7));
+      return (MovementDirection)dir;
+   }
+
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {
       switch (dir) {
          case MovementDirection.Left:
@@ -215,12 +220,12 @@ public partial class MovementComponent : Component {
       if (vec3.IsEqualApprox(Vector3.Back))
          return MovementDirection.Down;
       if (vec3.IsEqualApprox(Vector3.Forward + Vector3.Right))
-         return MovementDirection.Right;
+         return MovementDirection.UpRight;
       if (vec3.IsEqualApprox(Vector3.Forward + Vector3.Left))
-         return MovementDirection.Up;
+         return MovementDirection.UpLeft;
       if (vec3.IsEqualApprox(Vector3.Back + Vector3.Right))
-         return MovementDirection.Down;
-      if (vec3.IsEqualApprox(Vector3.Back + Vector3.Left)) return MovementDirection.Left;
+         return MovementDirection.DownRight;
+      if (vec3.IsEqualApprox(Vector3.Back + Vector3.Left)) return MovementDirection.DownLeft;
 
       return MovementDirection.None;
    }

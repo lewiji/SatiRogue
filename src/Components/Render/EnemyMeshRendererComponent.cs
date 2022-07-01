@@ -31,6 +31,15 @@ public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererCompon
          YOffset = AnimatedSprite.Translation.y;
       }
       RootNode?.AddChild(AnimatedSprite);
+
+      var label = new Label3D();
+      label.Text = EnemyEntity.Name;
+      label.Translation = Vector3.Up * 3f;
+      label.PixelSize = 0.025f;
+      label.Billboard = SpatialMaterial.BillboardMode.Enabled;
+      label.CastShadow = GeometryInstance.ShadowCastingSetting.Off;
+      RootNode?.AddChild(label);
+      
       base.CreateVisualNodes();
    }
 }

@@ -272,12 +272,12 @@ margin_bottom = 150.0
 columns = 3
 
 [node name="HealthStat" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer" instance=ExtResource( 7 )]
-margin_bottom = 82.0
+margin_bottom = 79.0
 
 [node name="DirArrows" type="GridContainer" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer"]
 margin_left = 324.0
 margin_right = 441.0
-margin_bottom = 82.0
+margin_bottom = 79.0
 theme = SubResource( 14 )
 custom_constants/vseparation = -3
 custom_constants/hseparation = 9
@@ -329,8 +329,9 @@ text = ">"
 
 [node name="Label" type="Label" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer"]
 margin_left = 445.0
+margin_top = 24.0
 margin_right = 652.0
-margin_bottom = 82.0
+margin_bottom = 54.0
 size_flags_horizontal = 3
 text = "x, y"
 align = 1

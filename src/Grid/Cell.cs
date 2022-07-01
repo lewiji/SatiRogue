@@ -78,7 +78,9 @@ public class Cell : Reference {
       get => _type;
       set {
          _type = value;
-         EmitSignal(nameof(CellTypeChanged), (int)_type.GetValueOrDefault(), this.Id);
+         if (value != null && value != CellType.Void) {
+            EmitSignal(nameof(CellTypeChanged), (int) _type.GetValueOrDefault(), this.Id);
+         }
       }
    }
 

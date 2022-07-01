@@ -133,10 +133,16 @@ material_override = ExtResource( 13 )
 pixel_size = 0.05
 frames = ExtResource( 14 )
 animation = "idle"
-frame = 2
 playing = true
 
 [node name="StatBar3D" parent="Enemy" instance=ExtResource( 15 )]
+
+[node name="Label3D" type="Label3D" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+cast_shadow = 0
+pixel_size = 0.025
+billboard = 1
+text = "Enemy1"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 10 )
@@ -239,4 +245,4 @@ pixel_size = 0.1
 frames = ExtResource( 17 )
 
 [node name="Spatial" parent="." instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 20 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 20 )

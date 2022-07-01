@@ -9,6 +9,7 @@ using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
+using SatiRogue.Tools;
 using EnemyMeshRendererComponent = SatiRogue.Components.Render.EnemyMeshRendererComponent;
 
 namespace SatiRogue.Grid;
@@ -27,7 +28,7 @@ public partial class SpatialGridRepresentation : Spatial {
    private readonly PackedScene _debugTextScene = GD.Load<PackedScene>("res://scenes/Debug/DebugSpatialText.tscn");
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    private readonly List<MultiMeshInstance> _fogMultiMeshes = new();
-   private readonly int ChunkWidth = 5;
+   private int ChunkWidth = 15;
    private int _chunkSize;
    private int _maxWidth;
 
@@ -86,6 +87,7 @@ public partial class SpatialGridRepresentation : Spatial {
       var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
       _maxWidth = mapParams.Width;
+      ChunkWidth = mapParams.Width.Factors().GetMedian();
       _chunkSize = ChunkWidth * ChunkWidth;
       _totalChunks = Mathf.CeilToInt((mapParams.Width + ChunkWidth) * (mapParams.Height + ChunkWidth) / (float) _chunkSize);
 

@@ -26,25 +26,43 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       private readonly EnemyEntity _enemyEntity;
       private int _squaredSightRange;
       private int _rangeToPlayer = -1;
+      private int _lastSawPlayer = -1;
 
       public EnemyBehaviourTree(EnemyEntity entity) {
          _enemyEntity = entity;
          _squaredSightRange = _enemyEntity.SightRange * _enemyEntity.SightRange;
       }
 
-      public override status Step() => CheckDistanceToPlayer() && (CheckLineOfSight() || MoveRandomly()) && (MoveToPlayer() || Attack());
+      public override status Step() {
+         if (CheckDistanceToPlayer() > _squaredSightRange) return done();
+         if (CheckLineOfSight()) {
+            Logger.Info($"Enemy has line of sight {_enemyEntity.Name}");
+            return MoveToPlayer() || Attack();
+         }
 
-      private status CheckDistanceToPlayer() {
-         _rangeToPlayer = Mathf.FloorToInt((_enemyEntity.GridPosition - EntityRegistry.Player!.GridPosition).Abs().Length());
-         return _rangeToPlayer > _squaredSightRange
-            ? fail(log && $"Player was not in squared sight range {_squaredSightRange} of {_enemyEntity.Name}. Range was: {_rangeToPlayer}")
-            : done();
+         if (_rangeToPlayer <= _enemyEntity.SightRange && _lastSawPlayer is > -1 and < 5) {
+            Logger.Info($"Enemy chases unseen player: {_enemyEntity.Name}");
+            return MoveToPlayer();
+         }
+         
+         Logger.Info($"Enemy moves randomly: {_enemyEntity.Name}");
+         return MoveRandomly();
       }
 
-      private status CheckLineOfSight() {
-         if (!_enemyEntity.HasLineOfSightTo(EntityRegistry.Player!))
-            return fail(log && $"Player was not in line of sight of {_enemyEntity.Name} at {_enemyEntity.GridPosition}");
-         return done();
+      private int CheckDistanceToPlayer() {
+         _rangeToPlayer = Mathf.FloorToInt((_enemyEntity.GridPosition - EntityRegistry.Player!.GridPosition).Abs().Length());
+         return _rangeToPlayer;
+      }
+
+      private bool CheckLineOfSight() {
+         var los = _enemyEntity.HasLineOfSightTo(EntityRegistry.Player!);
+         if (los) {
+            _lastSawPlayer = 0;
+         }
+         else {
+            _lastSawPlayer += 1;
+         }
+         return los;
       }
 
       private status MoveToPlayer() {
@@ -69,13 +87,9 @@ public class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       private status MoveRandomly()
       {
          var enemyMovement = _enemyEntity.GetComponent<MovementComponent>();
-         if (enemyMovement != null && enemyMovement.HasDestination()) {
-            Systems.TurnHandler.AddEnemyCommand(new ActionMove(_enemyEntity, enemyMovement.GetNextMovementDirectionOnPath()));
-            return done();
-         }
-
-         Logger.Info("Moving randomly");
-         Systems.TurnHandler.AddEnemyCommand(new ActionPickRandomDestination(_enemyEntity));
+         _enemyEntity.GetComponent<MovementComponent>()?.SetDestination(null);
+         Systems.TurnHandler.AddEnemyCommand(new ActionMove(_enemyEntity, MovementComponent.GetRandomMovementDirection()));
+         
          return done();
       }
    }
