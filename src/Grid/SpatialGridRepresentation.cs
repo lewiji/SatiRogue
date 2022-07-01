@@ -9,6 +9,7 @@ using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
+using SatiRogue.Tools;
 using EnemyMeshRendererComponent = SatiRogue.Components.Render.EnemyMeshRendererComponent;
 
 namespace SatiRogue.Grid;
@@ -27,7 +28,7 @@ public partial class SpatialGridRepresentation : Spatial {
    private readonly PackedScene _debugTextScene = GD.Load<PackedScene>("res://scenes/Debug/DebugSpatialText.tscn");
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    private readonly List<MultiMeshInstance> _fogMultiMeshes = new();
-   private readonly int ChunkWidth = 25;
+   private int ChunkWidth = 15;
    private int _chunkSize;
    private int _maxWidth;
 
@@ -68,6 +69,7 @@ public partial class SpatialGridRepresentation : Spatial {
       return position.x / ChunkWidth + position.z / ChunkWidth * ((_maxWidth + ChunkWidth) / ChunkWidth);
    }
 
+   private static readonly Vector3 OffScreenCoords = new(-1000f, 1000f, -1000f);
    private void OnVisibilityChanged(Vector3[] positions) {
       if (_totalChunks == 0) return;
       Logger.Info("Spatial visibility updating");
@@ -75,7 +77,7 @@ public partial class SpatialGridRepresentation : Spatial {
          var chunkId = GetChunkIdForPosition(new Vector3i(position));
          var localPos = position - GetChunkMinMaxCoords(chunkId, _maxWidth + ChunkWidth)[0].ToVector3();
          var localId = (int) localPos.x + (int) localPos.z * ChunkWidth;
-         _fogMultiMeshes[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, Vector3.Down));
+         _fogMultiMeshes[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, OffScreenCoords));
       }
    }
 
@@ -85,6 +87,7 @@ public partial class SpatialGridRepresentation : Spatial {
       var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
       _maxWidth = mapParams.Width;
+      ChunkWidth = mapParams.Width.Factors().GetMedian();
       _chunkSize = ChunkWidth * ChunkWidth;
       _totalChunks = Mathf.CeilToInt((mapParams.Width + ChunkWidth) * (mapParams.Height + ChunkWidth) / (float) _chunkSize);
 

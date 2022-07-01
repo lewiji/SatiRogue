@@ -59,6 +59,8 @@ public partial class TurnHandler : Node {
    private async void SetFirstTurn() {
       AddChild(_turnTimer);
       await ToSignal(GetTree(), "idle_frame");
+      await ToSignal(GetTree(), "idle_frame");
+      await ToSignal(GetTree(), "idle_frame");
       Turn = Turn.PlayerTurn;
    }
 
@@ -66,6 +68,7 @@ public partial class TurnHandler : Node {
       if (Turn != Turn.PlayerTurn)
          throw new Exception("TurnHandler: Tried to SetPlayerCommand, but Turn is not PlayerTurn.");
       //_playerCommands.Enqueue(command);
+      Logger.Info("TurnHandler: Player command set.");
       command.Execute();
       Turn = Turn.EnemyTurn;
    }

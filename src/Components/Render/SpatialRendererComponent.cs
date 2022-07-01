@@ -40,9 +40,12 @@ public partial class SpatialRendererComponent : RendererComponent {
    }
    
    [OnReady]
-   private void ConnectPositionChanged() {
+   private async void ConnectPositionChanged() {
       GridEntity?.Connect(nameof(GridEntity.PositionChanged), this, nameof(HandlePositionChanged));
       GridEntity?.Connect(nameof(GridEntity.VisibilityChanged), this, nameof(HandleVisibilityChanged));
+      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(HandleVisibilityChanged));
+      await ToSignal(GetTree(), "idle_frame");
+      HandleVisibilityChanged();
    }
 
    protected virtual void HandlePositionChanged() {

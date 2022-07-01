@@ -31,6 +31,16 @@ public class PlayerMovementComponent : MovementComponent {
                new ActionAttack(_playerEntity!, enemyEntity)
             );
             break;
+         case > 0 when targetCellOccupants.Last() is StairsEntity stairsEntity:
+            Systems.TurnHandler.SetPlayerCommand(
+               new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
+            );
+            break;
+         default:
+            Systems.TurnHandler.SetPlayerCommand(
+               new ActionDoNothing(_playerEntity!)
+            );
+            break;
       }
    }
 

@@ -27,6 +27,7 @@ public class PlayerEntity : GridEntity {
       AddComponent(new InputHandlerComponent());
       AddComponent(new StatHealthComponent(10));
       AddComponent(new PlayerRendererComponent());
+      AddComponent(new GridIndicatorSpatialComponent());
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
@@ -46,7 +47,7 @@ public class PlayerEntity : GridEntity {
 
    protected override void OnPositionChanged() {
       Logger.Debug("Player position changed");
-      CalculateVisibility();
+      //CalculateVisibility();
       EmitSignal(nameof(PositionChanged));
       EmitSignal(nameof(PlayerPositionChanged));
    }
@@ -65,7 +66,6 @@ public class PlayerEntity : GridEntity {
 
    private void OnMapDataChanged() {
       Logger.Info("Player map data changed");
-      CalculateVisibility();
    }
 
    public override void HandleTurn()

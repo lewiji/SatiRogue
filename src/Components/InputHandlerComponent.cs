@@ -8,6 +8,7 @@ namespace SatiRogue.Components;
 public class InputHandlerComponent : Component {
    private bool _awaitingInput;
    private MovementDirection? _forcedInput;
+   public static bool InputEnabled = true;
 
    public override void HandleTurn() {
       switch (Systems.TurnHandler.Turn) {
@@ -34,7 +35,7 @@ public class InputHandlerComponent : Component {
    }
 
    public override void _Process(float delta) {
-      if (!_awaitingInput || EntityRegistry.Player == null) return;
+      if (!InputEnabled || !_awaitingInput || EntityRegistry.Player == null) return;
       
       var movementDirection = _forcedInput ?? MovementDirection.None;
 

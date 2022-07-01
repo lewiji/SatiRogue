@@ -29,10 +29,10 @@ public class MapGenerator : Node {
       MapGenStrategy ??= new RoomsAndCorridors(new MapGenParams {
          Height = 75,
          Width = 75,
-         NumRooms = 18,
-         MaxRoomWidth = 16,
-         MinRoomWidth = 3,
-         NumEnemies = 24
+         NumRooms = 12,
+         MaxRoomWidth = 20,
+         MinRoomWidth = 4,
+         NumEnemies = 15
       });
       
       CallDeferred(nameof(StartGeneration));

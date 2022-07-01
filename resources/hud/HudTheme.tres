@@ -1,7 +1,9 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=14 format=2]
 
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all.png" type="Texture" id=1]
 [ext_resource path="res://fonts/ConjuredPro.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/ui/GUI_set03_Options_v1_0/atlas_controlset_menugraphics.png" type="Texture" id=3]
+[ext_resource path="res://fonts/ImprovGOLD.otf" type="DynamicFontData" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 1 )
@@ -14,8 +16,59 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 draw_center = false
 
+[sub_resource type="DynamicFont" id=14]
+size = 64
+font_data = ExtResource( 4 )
+
+[sub_resource type="Image" id=18]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 8, 254, 8, 211, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 8, 211, 8, 254, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 218, 8, 214, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 8, 214, 8, 255, 8, 255, 8, 219, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 8, 214, 8, 255, 8, 255, 8, 219, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 218, 8, 214, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 8, 254, 8, 211, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 8, 211, 8, 254, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "LumAlpha8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=7]
+flags = 4
+flags = 4
+image = SubResource( 18 )
+size = Vector2( 16, 16 )
+
+[sub_resource type="Image" id=19]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 8, 254, 8, 211, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 8, 211, 8, 254, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 218, 8, 214, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 8, 214, 8, 255, 8, 255, 8, 219, 11, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 8, 214, 8, 255, 8, 255, 8, 219, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 218, 8, 214, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 11, 24, 0, 0, 0, 0, 12, 21, 9, 210, 8, 255, 8, 215, 10, 25, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 8, 254, 8, 211, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 8, 211, 8, 254, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 88, 12, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 22, 9, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "LumAlpha8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=9]
+flags = 4
+flags = 4
+image = SubResource( 19 )
+size = Vector2( 16, 16 )
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 3 )
+region_rect = Rect2( 272, 264, 32, 32 )
+margin_left = 7.0
+margin_right = 6.0
+margin_top = 7.0
+margin_bottom = 6.0
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 8.0
+
 [sub_resource type="DynamicFont" id=2]
 size = 32
+outline_size = 3
+outline_color = Color( 0.164706, 0, 0.25098, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 64
 outline_size = 3
 outline_color = Color( 0.164706, 0, 0.25098, 1 )
 font_data = ExtResource( 2 )
@@ -23,3 +76,13 @@ font_data = ExtResource( 2 )
 [resource]
 default_font = SubResource( 2 )
 Panel/styles/panel = SubResource( 1 )
+WindowDialog/colors/title_color = Color( 0.623529, 0.54902, 0.717647, 1 )
+WindowDialog/constants/close_h_ofs = 18
+WindowDialog/constants/close_v_ofs = 18
+WindowDialog/constants/scaleborder_size = 4
+WindowDialog/constants/title_height = 128
+WindowDialog/fonts/title_font = SubResource( 14 )
+WindowDialog/icons/close = SubResource( 7 )
+WindowDialog/icons/close_highlight = SubResource( 9 )
+WindowDialog/styles/panel = SubResource( 13 )
+popup_font/fonts/default = SubResource( 17 )

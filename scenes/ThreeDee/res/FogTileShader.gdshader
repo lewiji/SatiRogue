@@ -69,6 +69,6 @@ void fragment() {
 		discard;
 	}
 
-	float sss_tex = texture(texture_subsurface_scattering,base_uv).r;
-	SSS_STRENGTH=subsurface_scattering_strength*sss_tex;
+	//float sss_tex = texture(texture_subsurface_scattering,base_uv).r;
+	//SSS_STRENGTH=subsurface_scattering_strength*sss_tex;
 }

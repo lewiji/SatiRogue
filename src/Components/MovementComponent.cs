@@ -81,16 +81,16 @@ public partial class MovementComponent : Component {
 
    public override void _EnterTree() {
       GridPosition = _initialPosition.GetValueOrDefault();
-      OnMapChanged();
    }
 
    [OnReady]
-   private void SetInitialPosition() {
+   private async void SetInitialPosition() {
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
+      await ToSignal(GetTree(), "idle_frame");
+      OnMapChanged();
    }
 
-   private void OnMapChanged()
-   {
+   private async void OnMapChanged() {
       if (EcOwner != null && _initialPosition != null)
       {
          RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
@@ -109,7 +109,7 @@ public partial class MovementComponent : Component {
 
    public bool HasDestination()
    {
-      return _destination.HasValue && _path != null;
+      return _destination.HasValue && _path is {Count: > 0};
    }
 
    public MovementDirection GetNextMovementDirectionOnPath() {
@@ -179,6 +179,11 @@ public partial class MovementComponent : Component {
    private void OnDead() {
       RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
       CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
+   }
+
+   public static MovementDirection GetRandomMovementDirection() {
+      var dir = Mathf.RoundToInt((float)GD.RandRange(0, 7));
+      return (MovementDirection)dir;
    }
 
    public static Vector3i MovementDirectionToVector(MovementDirection dir) {
