@@ -38,6 +38,7 @@ public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererCompon
       label.PixelSize = 0.025f;
       label.Billboard = SpatialMaterial.BillboardMode.Enabled;
       label.CastShadow = GeometryInstance.ShadowCastingSetting.Off;
+      label.Visible = false;
       RootNode?.AddChild(label);
       
       base.CreateVisualNodes();

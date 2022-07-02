@@ -3,6 +3,10 @@ using Godot;
 namespace SatiRogue.Camera;
 
 public class SpatialCamera : Godot.Camera {
+   public override void _Ready() {
+      //PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
+   }
+
    public override void _Input(InputEvent @event) {
       if (@event is not InputEventMouseButton {Pressed: true} inputEventMouseButton) return;
       switch (inputEventMouseButton.ButtonIndex) {

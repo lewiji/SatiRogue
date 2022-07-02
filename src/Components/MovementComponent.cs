@@ -168,7 +168,8 @@ public partial class MovementComponent : Component {
       var targetCell = MapGenerator.MapData?.GetCellAt(targetPosition);
       return targetCell == null ? 
          Array.Empty<GameObject>() : 
-         Array.ConvertAll<ulong, GameObject>(targetCell.Occupants.ToArray(), id => (GameObject) GD.InstanceFromId(id));
+         Array.ConvertAll<ulong, GameObject>(targetCell.Occupants.ToArray(), id => (GameObject) GD.InstanceFromId(id)).Where(inst => 
+         IsInstanceValid(inst)).ToArray();
    }
    
    [OnReady]

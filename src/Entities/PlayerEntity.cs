@@ -4,6 +4,7 @@ using Godot;
 using SatiRogue.Components;
 using SatiRogue.Components.Render;
 using SatiRogue.Components.Stats;
+using SatiRogue.Components.Tools;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
@@ -28,6 +29,7 @@ public class PlayerEntity : GridEntity {
       AddComponent(new StatHealthComponent(10));
       AddComponent(new PlayerRendererComponent());
       AddComponent(new GridIndicatorSpatialComponent());
+      AddComponent(new MousePickSpatialCellComponent());
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)

@@ -1,6 +1,8 @@
+using System.Linq;
 using Godot;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
+using SatiRogue.MathUtils;
 using SatiRogue.scenes;
 
 namespace SatiRogue.Grid;
@@ -59,11 +61,27 @@ public class TileMapGridRepresentation : TileMap {
          }
    }
 
+   private void Redraw() {
+      var cells = RuntimeMapNode.Instance?.MapData?.GetSurroundingCells(EntityRegistry.Player!.GridPosition).GetEnumerator();
+      if (cells == null) return;
+      var startVec = new Vector3i(0, 0, 0);
+      var endVec = new Vector3i(MapData.SurroundingCellsRadius, 0, MapData.SurroundingCellsRadius);
+      
+      for (var y = startVec.z; y < endVec.z; y++) {
+         for (var x = startVec.x; x < endVec.x; x++) {
+            cells.MoveNext();
+            var cell = cells.Current;
+            if (cell != null && GetTileId(cell) is { } cellValue)
+               SetCell(cell.Position.x, cell.Position.z, cellValue);
+
+         }
+      }
+
+      
+   }
+
    private void OnVisibilityChanged(Vector3[] positions) {
-      var cells = RuntimeMapNode.Instance?.MapData?.Cells;
-      foreach (var cell in cells)
-         if (GetTileId(cell) is { } cellValue)
-            SetCell(cell.Position.x, cell.Position.z, cellValue);
+      Redraw();
    }
 
    private static int? GetTileId(Cell cell) {

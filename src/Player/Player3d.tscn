@@ -16,15 +16,16 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
-transform = Transform( 1, 0, 0, 0, 0.891006, 0.45399, 0, -0.45399, 0.891006, 0, 4.23206, 11.0949 )
+physics_interpolation_mode = 1
+transform = Transform( 1, 0, 0, 0, 0.906307, 0.422618, 0, -0.422618, 0.906307, 0, 4.23206, 11.0949 )
 current = true
-fov = 75.0
-size = 15.52
-far = 50.0
+fov = 50.0
+size = 0.05
+far = 32.0
 script = ExtResource( 5 )
 
 [node name="Light" type="SpotLight" parent="Visual/Camera"]
@@ -36,3 +37,8 @@ shadow_bias = 0.1
 spot_range = 24.0
 spot_attenuation = 0.618
 spot_angle_attenuation = 1.27456
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )
+debug_shape_custom_color = Color( 0, 1, 0.0862745, 1 )
+debug_shape_thickness = 3

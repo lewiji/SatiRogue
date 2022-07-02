@@ -23,16 +23,14 @@ Systems="*res://src/Systems.cs"
 
 [debug]
 
-settings/fps/force_fps=144
+settings/fps/force_fps=141
+settings/agile_event_flushing=false
 
 [display]
 
-window/size/width=2560
-window/size/height=1440
+window/size/width=1920
+window/size/height=1080
 window/size/always_on_top=true
-window/size/test_width=1280
-window/size/test_height=720
-window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 
 [editor_plugins]
@@ -79,10 +77,6 @@ show_grid={
  ]
 }
 
-[input_devices]
-
-buffering/agile_event_flushing=true
-
 [memory]
 
 limits/message_queue/max_size_kb=8192
@@ -93,14 +87,17 @@ limits/debugger_stdout/max_messages_per_frame=100
 
 [physics]
 
-common/physics_fps=100
 common/physics_jitter_fix=0.0
 common/enable_pause_aware_picking=true
+common/physics_interpolation=true
 
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+quality/shadow_atlas/quadrant_0_subdiv=2
 quality/filters/anisotropic_filter_level=16
-quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
+gles3/shaders/max_simultaneous_compiles=4
+gles3/shaders/shader_cache_size_mb=1024
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )
+quality/filters/msaa=1

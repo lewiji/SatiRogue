@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
+using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
 
@@ -11,7 +13,7 @@ namespace SatiRogue.Grid;
 public class MapData : AbstractMapData {
    
    public readonly Stack<Vector3> CellsVisibilityChanged = new();
-   protected readonly Dictionary<long, int> CellIdToAStarId = new();
+   protected readonly System.Collections.Generic.Dictionary<long, int> CellIdToAStarId = new();
    public AStar AStar { get; protected set; } = new();
    
    private static readonly Vector3i[] Offsets = {
@@ -76,4 +78,17 @@ public class MapData : AbstractMapData {
       AStar.Clear();
    }
 
+   public static int SurroundingCellsRadius = 8;
+   public IEnumerable<Cell> GetSurroundingCells(Vector3i aroundVector) {
+      var startVec = aroundVector - new Vector3i(SurroundingCellsRadius, 0, SurroundingCellsRadius);
+      var endVec = aroundVector + new Vector3i(SurroundingCellsRadius, 0, SurroundingCellsRadius);
+      var cellsArray = new Array<Cell>();
+      for (var y = startVec.z; y < endVec.z; y++) {
+         for (var x = startVec.x; x < endVec.x; x++) {
+            cellsArray.Add(GetCellAt(new Vector3i(x, 0, y)));
+         }
+      }
+
+      return cellsArray;
+   }
 }
