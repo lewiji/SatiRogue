@@ -58,6 +58,6 @@ public class MapGenerator : Node {
    }
 
    public void NextFloor() {
-      GetNode<Systems>("/root/Systems").Restart();
+      GetNode<GameController>(GameController.Path).Restart();
    }
 }

@@ -62,11 +62,11 @@ public class PlayerEntity : GridEntity {
       EntityRegistry.Clear();
       QueueFree();
       await ToSignal(GetTree(), "idle_frame");
-      GetNode<Systems>("/root/Systems").Restart();
+      GetNode<GameController>(GameController.Path).Restart();
    }
 
    private void OnMapDataChanged() {
-      Logger.Info("Player map data changed");
+      Logger.Debug("Player map data changed");
    }
 
    public override void HandleTurn()
@@ -76,7 +76,9 @@ public class PlayerEntity : GridEntity {
       CallDeferred(nameof(CalculateVisibility));
    }
 
-   private void CalculateVisibility() {
+   private async void CalculateVisibility() {
+      Logger.Info("--- Calculating player FOV ---");
+      await ToSignal(GetTree(), "idle_frame");
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
    }

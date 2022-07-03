@@ -1,6 +1,7 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Main.cs" type="Script" id=1]
+[ext_resource path="res://src/Systems.cs" type="Script" id=2]
 [ext_resource path="res://scenes/GridGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/RPGui HUD - Asset Pack/00_RPGui/RPG_gui.png" type="Texture" id=5]
@@ -312,6 +313,9 @@ script = ExtResource( 1 )
 LogLevel = 3
 
 [node name="GridGenerator" parent="." instance=ExtResource( 3 )]
+
+[node name="Systems" type="Node" parent="."]
+script = ExtResource( 2 )
 
 [node name="ThreeDee" parent="." instance=ExtResource( 4 )]
 GridGeneratorPath = NodePath("../GridGenerator")

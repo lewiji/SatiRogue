@@ -44,23 +44,25 @@ public class EntityRegistry : GameObject {
    }
 
    public static void UnregisterEntity(Entity entity) {
-      EntityList.Remove(entity.Uuid);
       if (entity is PlayerEntity) {
          PlayerUuid = null;
       }
+      EntityList.Remove(entity.Uuid);
    }
 
    public static void Clear() {
       BlockedCells.Clear();
-      foreach (var keyValuePair in EntityList) {
-         if (IsInstanceValid(keyValuePair.Value)) {
-            keyValuePair.Value.ClearComponents();
-            UnregisterEntity(keyValuePair.Value);
-            keyValuePair.Value.QueueFree();
-         }
+      var arr = EntityList.ToArray();
+      foreach (var keyValuePair in arr.Where(keyValuePair => IsInstanceValid(keyValuePair.Value))) {
+         keyValuePair.Value.ClearComponents();
+         UnregisterEntity(keyValuePair.Value);
+         keyValuePair.Value.QueueFree();
       }
-      EntityList.Clear();
       _instance = null;
+   }
+
+   private static void RemoveUuidFromList(string id) {
+      
    }
 
    public static bool IsPositionBlocked(Vector3i position) {
