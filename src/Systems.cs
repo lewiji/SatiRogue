@@ -17,6 +17,9 @@ public partial class Systems : Node {
       GetNode("/root/Main").QueueFree();
       var mainScene = GD.Load<PackedScene>("res://Main.tscn").Instance();
       mainScene.Name = "Main";
+      await ToSignal(GetTree(), "idle_frame");
+      EntityRegistry.Clear();
+      await ToSignal(GetTree(), "idle_frame");
       EntityResourceLocator.SceneNodePaths.Clear();
       GetNode("/root").AddChild(mainScene);
    }

@@ -20,6 +20,7 @@ public partial class HealthStat : MarginContainer
     private async void ConnectStatChangedSignal()
     {
         await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
         _playerHealthComponent = EntityRegistry.Player.GetComponent<StatHealthComponent>();
         _playerHealthComponent.Connect(nameof(StatsComponent.Changed), this, nameof(OnHealthChanged));
         _progress.MaxValue = _playerHealthComponent.MaxValue;

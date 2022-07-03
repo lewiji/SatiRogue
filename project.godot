@@ -95,10 +95,8 @@ common/physics_interpolation=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
-quality/shadow_atlas/quadrant_0_subdiv=2
 quality/filters/anisotropic_filter_level=16
 2d/options/ninepatch_mode=0
 gles3/shaders/max_simultaneous_compiles=4
 gles3/shaders/shader_cache_size_mb=1024
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )
-quality/filters/msaa=1

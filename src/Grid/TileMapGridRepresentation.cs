@@ -34,7 +34,8 @@ public class TileMapGridRepresentation : TileMap {
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
    }
 
-   private void OnMapDataChanged() {
+   private async void OnMapDataChanged() {
+      await ToSignal(GetTree(), "idle_frame");
       var cells = RuntimeMapNode.Instance?.MapData?.Cells;
       foreach (var cell in cells)
          if (GetTileId(cell) is { } cellValue)

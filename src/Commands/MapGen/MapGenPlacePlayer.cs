@@ -16,6 +16,7 @@ public class MapGenPlacePlayer : MapGenCommand {
       var startingRoom = MapData.GeneratorSpaces.ElementAt((int) GD.RandRange(0, MapData.GeneratorSpaces.Count));
       var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
       var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
+      Logger.Info($"Created player at {new Vector3i(startX, 0, startY)}");
       EntityRegistry.RegisterEntity(
          new PlayerEntity(),
          new GridEntityParameters {

@@ -14,7 +14,9 @@ public class RuntimeMapNode : Node {
       get => _mapData;
       set {
          _mapData = value;
-         EmitMapChangedSignal();
+         if (_mapData != null) {
+            EmitMapChangedSignal();
+         }
       }
    }
 

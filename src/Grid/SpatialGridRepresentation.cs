@@ -82,7 +82,7 @@ public partial class SpatialGridRepresentation : Spatial {
       }
    }
 
-   private void OnMapDataChanged() {
+   private async void OnMapDataChanged() { 
       _mapDataDirty = true;
    }
 
