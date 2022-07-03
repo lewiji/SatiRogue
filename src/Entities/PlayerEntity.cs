@@ -79,6 +79,7 @@ public class PlayerEntity : GridEntity {
    private async void CalculateVisibility() {
       Logger.Info("--- Calculating player FOV ---");
       await ToSignal(GetTree(), "idle_frame");
+      await ToSignal(GetTree(), "idle_frame");
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
    }

@@ -2,6 +2,7 @@ using System;
 using Godot;
 using SatiRogue.Commands;
 using SatiRogue.Commands.MapGen;
+using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Grid.MapGen.Strategies;
 
@@ -55,6 +56,11 @@ public class MapGenerator : Node {
       placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
       placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
       placeEntitiesCommandQueue.ExecuteAll();
+      CallDeferred(nameof(EnableInput));
+   }
+
+   private void EnableInput() {
+      InputHandlerComponent.InputEnabled = true;
    }
 
    public void NextFloor() {
