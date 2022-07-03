@@ -59,10 +59,9 @@ public class PlayerEntity : GridEntity {
       TurnTypesToExecuteOn.Clear();
       DisableComponents();
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
-      EntityRegistry.UnregisterEntity(this);
       EntityRegistry.Clear();
-      ClearComponents();
       QueueFree();
+      await ToSignal(GetTree(), "idle_frame");
       GetNode<Systems>("/root/Systems").Restart();
    }
 

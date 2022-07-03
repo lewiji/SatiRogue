@@ -16,10 +16,9 @@ public partial class HealthStat : MarginContainer
     [OnReadyGet("HBoxContainer/TextureProgress", Export = true, OrNull = true)] 
     private TextureProgress? _progress { get; set; }
     
-    [OnReady]
+    [OnReady(Order = 1)]
     private async void ConnectStatChangedSignal()
     {
-        await ToSignal(GetTree(), "idle_frame");
         await ToSignal(GetTree(), "idle_frame");
         _playerHealthComponent = EntityRegistry.Player.GetComponent<StatHealthComponent>();
         _playerHealthComponent.Connect(nameof(StatsComponent.Changed), this, nameof(OnHealthChanged));

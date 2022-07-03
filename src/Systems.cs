@@ -15,11 +15,10 @@ public partial class Systems : Node {
 
    public async void Restart() {
       GetNode("/root/Main").QueueFree();
+      await ToSignal(GetTree(), "idle_frame");
       var mainScene = GD.Load<PackedScene>("res://Main.tscn").Instance();
       mainScene.Name = "Main";
-      await ToSignal(GetTree(), "idle_frame");
       EntityRegistry.Clear();
-      await ToSignal(GetTree(), "idle_frame");
       EntityResourceLocator.SceneNodePaths.Clear();
       GetNode("/root").AddChild(mainScene);
    }

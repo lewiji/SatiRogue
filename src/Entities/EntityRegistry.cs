@@ -23,8 +23,8 @@ public class EntityRegistry : GameObject {
    }
 
    public static Hashtable BlockedCells = new();
-   
-   public EntityRegistry() {
+
+   public override void _EnterTree() {
       _instance = this;
    }
 
@@ -55,6 +55,7 @@ public class EntityRegistry : GameObject {
       foreach (var keyValuePair in EntityList) {
          if (IsInstanceValid(keyValuePair.Value)) {
             keyValuePair.Value.ClearComponents();
+            UnregisterEntity(keyValuePair.Value);
             keyValuePair.Value.QueueFree();
          }
       }
