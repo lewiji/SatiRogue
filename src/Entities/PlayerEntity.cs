@@ -56,12 +56,7 @@ public class PlayerEntity : GridEntity {
    
    protected override async void OnDead() {
       Enabled = false;
-      TurnTypesToExecuteOn.Clear();
-      DisableComponents();
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
-      EntityRegistry.Clear();
-      QueueFree();
-      await ToSignal(GetTree(), "idle_frame");
       GetNode<GameController>(GameController.Path).Restart();
    }
 
@@ -73,14 +68,14 @@ public class PlayerEntity : GridEntity {
    {
       base.HandleTurn();
       Logger.Info("Player handling turn");
-      CallDeferred(nameof(CalculateVisibility));
+      CallDeferred(nameof(UpdateFov));
    }
 
-   private async void CalculateVisibility() {
+   private async void UpdateFov() {
       Logger.Info("--- Calculating player FOV ---");
-      await ToSignal(GetTree(), "idle_frame");
       await ToSignal(GetTree(), "idle_frame");
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
+      CheckVisibility();
    }
 }

@@ -24,8 +24,6 @@ public partial class SpatialGridRepresentation : Spatial {
    };
 
    private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
-   private readonly List<Spatial> _chunkSpatials = new();
-   private readonly PackedScene _debugTextScene = GD.Load<PackedScene>("res://scenes/Debug/DebugSpatialText.tscn");
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    private readonly List<MultiMeshInstance> _fogMultiMeshes = new();
    private int ChunkWidth = 15;
@@ -95,6 +93,11 @@ public partial class SpatialGridRepresentation : Spatial {
 
    private void BuildMapData() {
       Logger.Debug("3d: Map data changed");
+
+      foreach (MultiMeshInstance multiMeshInstance in _fogMultiMeshes) {
+         multiMeshInstance.QueueFree();
+      }
+      _fogMultiMeshes.Clear();
 
       var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
@@ -193,7 +196,6 @@ public partial class SpatialGridRepresentation : Spatial {
       collider.Translation = new Vector3(ChunkWidth, 0.1f, ChunkWidth);
 
          _fogMultiMeshes.Add(fogMultiMeshInstance);
-      _chunkSpatials.Add(chunkRoom);
 
       /*var debugText = (DebugSpatialText) _debugTextScene.Instance();
       debugText.Translation = new Vector3(ChunkWidth / 2, 1.5f, ChunkWidth / 2);

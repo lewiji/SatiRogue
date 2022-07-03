@@ -1,4 +1,5 @@
 using Godot;
+using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 
@@ -16,6 +17,7 @@ public class GameController : Node {
    }
    public async void Restart() {
       Logger.Warn("--- RESTART REQUESTED ---");
+      InputHandlerComponent.InputEnabled = false;
       EntityRegistry.Clear();
       EntityResourceLocator.SceneNodePaths.Clear();
       GetNode("/root/Main").QueueFree();

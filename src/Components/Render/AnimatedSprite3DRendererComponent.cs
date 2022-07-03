@@ -25,6 +25,7 @@ public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponen
          AnimatedSprite.Play(name);
          await ToSignal(AnimatedSprite, "animation_finished");
          await ToSignal(GetTree().CreateTimer(1f / AnimatedSprite.Frames.GetAnimationSpeed(name)), "timeout");
+         if (!IsInstanceValid(AnimatedSprite)) return;
          if (AnimatedSprite.Frames.HasAnimation("idle") && AnimatedSprite.Animation != "die")
             AnimatedSprite.Play("idle");
       }
