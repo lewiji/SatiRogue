@@ -310,7 +310,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
 script = ExtResource( 1 )
-LogLevel = 3
+LogLevel = 2
 
 [node name="GridGenerator" parent="." instance=ExtResource( 3 )]
 

@@ -56,4 +56,8 @@ public class MapGenerator : Node {
       placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
       placeEntitiesCommandQueue.ExecuteAll();
    }
+
+   public void NextFloor() {
+      GetNode<Systems>("/root/Systems").Restart();
+   }
 }

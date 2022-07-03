@@ -20,11 +20,10 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
    private Vector3? _targetTranslation;
 
    private float SpriteSmoothing { get; set; } = 0.28f;
-   private float CameraSmoothing { get; set; } = 0.15f;
+   private float CameraSmoothing { get; set; } = 13f;
    
    protected override void CreateRootNode() {
       RootNode = _playerScene;
-      _dirty = true;
    }
 
    protected override void CreateVisualNodes() {
@@ -33,6 +32,7 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
       var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
       threeDeeNode.AddChild(RootNode);
       _playerScene.Owner = threeDeeNode;
+      _dirty = true;
       
       CallDeferred(nameof(SetInitialPosition));
 
@@ -52,7 +52,6 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
          var playerpos = PlayerEntity.GridPosition.ToVector3();
          _camera.Translation = new Vector3(playerpos.x + _cameraOffset.x, _cameraOffset.y, playerpos.z + _cameraOffset.z);
          _playerMovementComponent = PlayerEntity.GetComponent<PlayerMovementComponent>();
-         ResetPhysicsInterpolation();
       }
    }
    
@@ -60,20 +59,11 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
       base.HandlePositionChanged();
       _targetTranslation = TargetTranslation;
    }
-   
-   public override void _PhysicsProcess(float delta) {
-      base._PhysicsProcess(delta);
-      
-      if (_dirty) {
-         _dirty = false;
-         if (GridEntity != null) RootNode.Translation = GridEntity.GridPosition.ToVector3();
-         ResetPhysicsInterpolation();
-      }
-      
+
+   public override void _Process(float delta) {
       if (_targetTranslation == null || RootNode == null || _camera == null) return;
       if (Teleporting) {
          _camera.Translation = _targetTranslation.Value + _cameraOffset;
-         ResetPhysicsInterpolation();
          return;
       }
       
@@ -85,16 +75,22 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
       }
 
       var offsetTarget = new Vector3(_targetTranslation.Value.x + _cameraOffset.x, _cameraOffset.y, _targetTranslation.Value.z + _cameraOffset.z);
-      var distanceSq = Mathf.Abs(_camera.Translation.DistanceTo(offsetTarget));
-      if (distanceSq <= 0.005f) {
-         GD.Print($"Snapped at {distanceSq}");
+      var distance = Mathf.Abs(_camera.Translation.DistanceTo(offsetTarget));
+      if (distance <= 0.03f) {
          _camera.Translation = offsetTarget;
-         ResetPhysicsInterpolation();
          _targetTranslation = null;
       } else {
-         _camera.Translation = _camera.Translation.LinearInterpolate(offsetTarget, CameraSmoothing);
+         _camera.Translation = _camera.Translation.LinearInterpolate(offsetTarget, CameraSmoothing * delta);
       }
+   }
 
+   public override void _PhysicsProcess(float delta) {
+      if (_dirty) {
+         _dirty = false;
+         if (GridEntity != null) RootNode.Translation = GridEntity.GridPosition.ToVector3();
+         ResetPhysicsInterpolation();
+      }
+      base._PhysicsProcess(delta);
    }
 
 }

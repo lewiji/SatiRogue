@@ -72,12 +72,12 @@ public partial class SpatialRendererComponent : RendererComponent {
             TargetTranslation = null;
             CallDeferred(nameof(OnFinishedTeleporting));
             ResetPhysicsInterpolation();
-         } else if (distanceSq < 0.005f) {
+         } else if (distanceSq < 0.025f) {
             RootNode.Translation = TargetTranslation.Value;
             ResetPhysicsInterpolation();
             TargetTranslation = null;
          } else {
-            RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 0.18f);
+            RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 14f * delta);
          }
       }
    }

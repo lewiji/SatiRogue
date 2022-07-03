@@ -11,7 +11,8 @@ namespace SatiRogue.Components.Tools;
 
 public class MousePickSpatialCellComponent : RendererComponent {
    private GridIndicatorSpatialComponent? _gridIndicator;
-   private static GridMarker GridMarkerMeshInstance = GD.Load<PackedScene>("res://resources/grid/GridMarker.tscn").Instance<GridMarker>();
+   private static PackedScene GridMarkerMeshInstance = GD.Load<PackedScene>("res://resources/grid/GridMarker.tscn");
+   private GridMarker? _gridMarkerInstance;
    private RayCast? _rayCast;
    public override void _EnterTree() {
       _gridIndicator = Entity?.GetComponent<GridIndicatorSpatialComponent>();
@@ -36,7 +37,7 @@ public class MousePickSpatialCellComponent : RendererComponent {
          var result = (Node)_rayCast.GetCollider();
          GD.Print(result.GetParent().Name);
          _rayCast.Enabled = false;
-         GridMarkerMeshInstance.Move(_rayCast.GetCollisionPoint());
+         _gridMarkerInstance?.Move(_rayCast.GetCollisionPoint());
       }
    }
 
@@ -44,6 +45,7 @@ public class MousePickSpatialCellComponent : RendererComponent {
    protected override void CreateVisualNodes() {
       if (!EntityResourceLocator.SceneNodePaths.TryGetValue(nameof(ThreeDee), out var threeDeePath)) return;
       var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
-      threeDeeNode.GridIndicatorSpatial?.AddChild(GridMarkerMeshInstance);
+      _gridMarkerInstance = GridMarkerMeshInstance.Instance<GridMarker>();
+      threeDeeNode.GridIndicatorSpatial?.AddChild(_gridMarkerInstance);
    }
 }

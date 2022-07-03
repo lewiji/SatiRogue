@@ -21,7 +21,7 @@ public class Logger : Node {
       IncludeFields = true
    };
 
-   public static LogLevel Level { get; set; } = OS.HasFeature("debug") ? LogLevel.Debug : LogLevel.Error;
+   public static LogLevel Level { get; set; } =  LogLevel.Error;
 
    public static void Print(object what, LogLevel logLevel = LogLevel.Info) {
       if (logLevel == LogLevel.All || Level >= logLevel)

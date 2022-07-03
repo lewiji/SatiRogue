@@ -4,7 +4,7 @@ namespace SatiRogue.Camera;
 
 public class SpatialCamera : Godot.Camera {
    public override void _Ready() {
-      //PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
+      PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
    }
 
    public override void _Input(InputEvent @event) {
