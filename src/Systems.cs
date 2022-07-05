@@ -6,19 +6,17 @@ using SatiRogue.Turn;
 namespace SatiRogue;
 
 public partial class Systems : Node {
-   public static TurnHandler TurnHandler = new();
+   public static TurnHandler? TurnHandler;
+   public static string? Path;
 
-   [OnReady]
-   private void AddSystemsToScene() {
+   public override void _EnterTree() {
+      Path = GetPath();
+      TurnHandler = new TurnHandler();
       AddChild(TurnHandler);
    }
 
-   public async void Restart() {
-      EntityResourceLocator.SceneNodePaths.Clear();
-      GetNode("/root/Main").QueueFree();
-      var mainScene = GD.Load<PackedScene>("res://Main.tscn").Instance();
-      await ToSignal(GetTree(), "idle_frame");
-      GetNode("/root").AddChild(mainScene);
-      mainScene.Name = "Main";
+   public override void _ExitTree() {
+      Path = null;
+      TurnHandler = null;
    }
 }

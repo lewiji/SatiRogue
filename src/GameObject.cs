@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using SatiRogue.Components;
 using SatiRogue.Debug;
+using SatiRogue.Entities;
 using SatiRogue.Turn;
 using Array = Godot.Collections.Array;
 
@@ -24,7 +26,18 @@ public interface IGameObject {
 }
 
 public abstract partial class GameObject : Node, IGameObject {
-   public bool Enabled { get; set; } = true;
+   private bool _enabled = true;
+
+   public bool Enabled {
+      get => _enabled;
+      set {
+         _enabled = value;
+         if (this is PlayerEntity) {
+            InputHandlerComponent.InputEnabled = _enabled;
+         }
+      }
+   }
+
    protected virtual IGameObjectParameters? Parameters { get; set; }
    public string Uuid { get; protected set; } = Guid.NewGuid().ToString();
    public virtual GameObject? EcOwner { get; set; }

@@ -14,15 +14,15 @@ public class MapGenPlacePlayer : MapGenCommand {
 
    public override Error Execute() {
       var startingRoom = MapData.GeneratorSpaces.ElementAt((int) GD.RandRange(0, MapData.GeneratorSpaces.Count));
-      var startX = (int) startingRoom.Position.x + Rng.IntRange(0, (int) startingRoom.Size.x);
-      var startY = (int) startingRoom.Position.y + Rng.IntRange(0, (int) startingRoom.Size.y);
+      var startX = (int) startingRoom.Position.x + (int) GD.RandRange(0, (int) startingRoom.Size.x);
+      var startY = (int) startingRoom.Position.y + (int) GD.RandRange(0, (int) startingRoom.Size.y);
       EntityRegistry.RegisterEntity(
          new PlayerEntity(),
          new GridEntityParameters {
             GridPosition = new Vector3i(startX, 0, startY)
          });
 
-      Logger.Info($"Created player at {EntityRegistry.Player?.GridPosition}");
+      Logger.Info($"Created player at {new Vector3i(startX, 0, startY)}");
       return Error.Ok;
    }
 }

@@ -65,16 +65,20 @@ public partial class SpatialRendererComponent : RendererComponent {
 
    public override void _PhysicsProcess(float delta) {
       if (RootNode == null) return;
-      if (TargetTranslation.HasValue && !RootNode.Translation.IsEqualApprox(TargetTranslation.Value)) {
+      if (TargetTranslation.HasValue) {
+         var distanceSq = RootNode.Translation.DistanceTo(TargetTranslation.Value);
          if (Teleporting) {
             RootNode.Translation = TargetTranslation.Value;
+            TargetTranslation = null;
             CallDeferred(nameof(OnFinishedTeleporting));
+            ResetPhysicsInterpolation();
+         } else if (distanceSq < 0.025f) {
+            RootNode.Translation = TargetTranslation.Value;
+            ResetPhysicsInterpolation();
+            TargetTranslation = null;
+         } else {
+            RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 14f * delta);
          }
-         else {
-            RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 0.16f);
-         }
-      } else if (TargetTranslation.HasValue) {
-         TargetTranslation = null;
       }
    }
 }

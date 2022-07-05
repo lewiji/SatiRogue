@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using SatiRogue.Camera;
 using SatiRogue.Components;
 using SatiRogue.Components.Render;
 using SatiRogue.Debug;

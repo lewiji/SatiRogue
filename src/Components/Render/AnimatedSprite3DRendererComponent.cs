@@ -1,5 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.MathUtils;
 
@@ -22,10 +23,12 @@ public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponen
 
    public async void PlayAnimation(string name) {
       if (AnimatedSprite != null && AnimatedSprite.Frames.HasAnimation(name)) {
+         if (AnimatedSprite.Animation == "die") return;
          AnimatedSprite.Play(name);
          await ToSignal(AnimatedSprite, "animation_finished");
-         await ToSignal(GetTree().CreateTimer(1f / AnimatedSprite.Frames.GetAnimationSpeed(name)), "timeout");
-         if (AnimatedSprite.Frames.HasAnimation("idle") && AnimatedSprite.Animation != "die")
+         if (!IsInstanceValid(AnimatedSprite)) return;
+         if (AnimatedSprite.Animation == "die") return;
+         if (AnimatedSprite.Frames.HasAnimation("idle"))
             AnimatedSprite.Play("idle");
       }
    }
@@ -35,7 +38,7 @@ public partial class AnimatedSprite3DRendererComponent : SpatialRendererComponen
       GridEntity?.Connect(nameof(Entity.Died), this, nameof(OnDead));
    }
 
-   private void OnDead() {
+   protected virtual void OnDead() {
       PlayAnimation("die");
    }
 }

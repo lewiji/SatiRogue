@@ -24,13 +24,12 @@ public partial class SpatialGridRepresentation : Spatial {
    };
 
    private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
-   private readonly List<Spatial> _chunkSpatials = new();
-   private readonly PackedScene _debugTextScene = GD.Load<PackedScene>("res://scenes/Debug/DebugSpatialText.tscn");
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    private readonly List<MultiMeshInstance> _fogMultiMeshes = new();
    private int ChunkWidth = 15;
    private int _chunkSize;
    private int _maxWidth;
+   private bool _mapDataDirty = false;
 
    [OnReadyGet("../", Export = true)] private ThreeDee? _threeDee;
    private int _totalChunks;
@@ -81,8 +80,24 @@ public partial class SpatialGridRepresentation : Spatial {
       }
    }
 
-   private void OnMapDataChanged() {
+   private async void OnMapDataChanged() { 
+      _mapDataDirty = true;
+   }
+
+   public override void _PhysicsProcess(float delta) {
+      if (_mapDataDirty) {
+         _mapDataDirty = false;
+         BuildMapData();
+      }
+   }
+
+   private void BuildMapData() {
       Logger.Debug("3d: Map data changed");
+
+      foreach (MultiMeshInstance multiMeshInstance in _fogMultiMeshes) {
+         multiMeshInstance.QueueFree();
+      }
+      _fogMultiMeshes.Clear();
 
       var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
@@ -119,8 +134,6 @@ public partial class SpatialGridRepresentation : Spatial {
          }
 
       Logger.Info("Chunking finished.");
-
-      if (SaveDebugScene) SaveGeometryToScene();
    }
 
    private void BuildChunk(int chunkId, Vector3i[] chunkCoords, Cell[] chunkCells) {
@@ -143,15 +156,16 @@ public partial class SpatialGridRepresentation : Spatial {
                TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
                InstanceCount = cellsOfThisTypeInChunk.Length
             },
-            CastShadow = GeometryInstance.ShadowCastingSetting.On
+            CastShadow = GeometryInstance.ShadowCastingSetting.On,
+            PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off
          };
          chunkRoom.AddChild(mmInst);
          mmInst.Owner = this;
 
-
-         for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++)
+         for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
             mmInst.Multimesh.SetInstanceTransform(i,
                new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position.ToVector3() - chunkRoom.Translation));
+         }
       }
 
       // Create Fog MultiMesh
@@ -161,7 +175,8 @@ public partial class SpatialGridRepresentation : Spatial {
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
             InstanceCount = ChunkWidth * ChunkWidth
          },
-         CastShadow = GeometryInstance.ShadowCastingSetting.Off
+         CastShadow = GeometryInstance.ShadowCastingSetting.Off,
+         PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off
       };
       chunkRoom.AddChild(fogMultiMeshInstance);
       fogMultiMeshInstance.Owner = this;
@@ -173,8 +188,14 @@ public partial class SpatialGridRepresentation : Spatial {
          fogMultiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform(Basis.Identity, fogPosition));
       }
 
-      _fogMultiMeshes.Add(fogMultiMeshInstance);
-      _chunkSpatials.Add(chunkRoom);
+      var collider = new StaticBody();
+      var colShape = new CollisionShape();
+      chunkRoom.AddChild(collider);
+      collider.AddChild(colShape);
+      colShape.Shape = new BoxShape { Extents = new Vector3(ChunkWidth - 0.5f, 0.2f, ChunkWidth - 0.5f) };
+      collider.Translation = new Vector3(ChunkWidth, 0.1f, ChunkWidth);
+
+         _fogMultiMeshes.Add(fogMultiMeshInstance);
 
       /*var debugText = (DebugSpatialText) _debugTextScene.Instance();
       debugText.Translation = new Vector3(ChunkWidth / 2, 1.5f, ChunkWidth / 2);

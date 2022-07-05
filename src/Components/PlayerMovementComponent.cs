@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SatiRogue.Commands.Actions;
+using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.MathUtils;
 
@@ -37,6 +38,14 @@ public class PlayerMovementComponent : MovementComponent {
             );
             break;
          default:
+            if (targetCellOccupants != null)
+               foreach (var targetCellOccupant in targetCellOccupants) {
+                  Logger.Info($"{targetCellOccupant}");
+               }
+            else {
+               Logger.Info("TargetCellOccupants was nul???");
+            }
+
             Systems.TurnHandler.SetPlayerCommand(
                new ActionDoNothing(_playerEntity!)
             );

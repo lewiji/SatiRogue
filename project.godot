@@ -30,15 +30,17 @@ config/icon="res://icon.png"
 
 Logger="*res://src/Debug/Logger.cs"
 Systems="*res://src/Systems.cs"
+GameController="*res://src/GameController.cs"
 
 [debug]
 
 settings/fps/force_fps=144
+settings/agile_event_flushing=false
 
 [display]
 
-window/size/width=2560
-window/size/height=1440
+window/size/width=1920
+window/size/height=1080
 window/size/always_on_top=true
 window/size/test_width=1280
 window/size/test_height=720
@@ -47,7 +49,7 @@ window/stretch/mode="2d"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/explore-editor-theme/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [importer_defaults]
 
@@ -103,9 +105,10 @@ limits/debugger_stdout/max_messages_per_frame=100
 
 [physics]
 
-common/physics_fps=100
+common/physics_fps=36
 common/physics_jitter_fix=0.0
 common/enable_pause_aware_picking=true
+common/physics_interpolation=true
 
 [rendering]
 
@@ -113,4 +116,6 @@ common/enable_pause_aware_picking=true
 quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 2d/options/ninepatch_mode=0
+gles3/shaders/max_simultaneous_compiles=4
+gles3/shaders/shader_cache_size_mb=1024
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )

@@ -17,15 +17,20 @@ public abstract partial class StatsComponent : Component
     public int Value
     {
         get => _value;
-        private set
-        {
+        private set {
+            if (!IsInstanceValid(this)) return;
             if (value <= MinValue && !CanBeNegative) {
                 _value = MinValue;
                 EmitSignal(nameof(Changed), _value);
                 EmitSignal(nameof(Depleted));
             } else {
+                var diff = value - _value;
                 _value = value;
+                
                 EmitSignal(nameof(Changed), _value);
+                if (diff < 0f) {
+                    EmitSignal(nameof(TookDamage), -diff);
+                }
             }
         }
     }
@@ -42,16 +47,11 @@ public abstract partial class StatsComponent : Component
     }
     
     [Signal] public delegate void Changed(int newValue);
+    [Signal] public delegate void TookDamage(int damage);
     [Signal] public delegate void Depleted();
-    
-    [OnReady] private void ConnectSignals()
-    {
-        Connect(nameof(Changed), this, nameof(OnChanged));
-        Connect(nameof(Depleted), this, nameof(OnDepleted));
-    }
 
-    public virtual void OnChanged() { }
-    public virtual void OnDepleted() { }
+    public abstract void OnChanged(int newValue);
+    public abstract void OnDepleted();
 
     public void Subtract(int deductBy = 1) {
         Value -= deductBy;

@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.s3tc.stex"
-path.etc2="res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.etc2.stex"
+path="res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/overworld/Overworld256x256_n.png"
-dest_files=[ "res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.s3tc.stex", "res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.etc2.stex" ]
+dest_files=[ "res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.3
 compress/hdr_mode=0
 compress/bptc_ldr=0

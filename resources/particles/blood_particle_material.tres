@@ -1,0 +1,22 @@
+[gd_resource type="ParticlesMaterial" format=2]
+
+[resource]
+emission_shape = 5
+emission_ring_radius = 0.31
+emission_ring_inner_radius = 0.16
+emission_ring_height = 1.0
+emission_ring_axis = Vector3( 0, 1, 0 )
+direction = Vector3( 0, 1, 0 )
+spread = 11.62
+flatness = 0.25
+initial_velocity = 5.0
+initial_velocity_random = 0.1
+angular_velocity = 15.0
+angular_velocity_random = 0.5
+radial_accel = 2.0
+radial_accel_random = 0.1
+tangential_accel = 4.0
+tangential_accel_random = 0.05
+damping = 2.0
+angle_random = 1.0
+anim_speed = 1.62

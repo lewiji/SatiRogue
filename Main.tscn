@@ -1,7 +1,7 @@
 [gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Main.cs" type="Script" id=1]
-[ext_resource path="res://scenes/TwoDee.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Systems.cs" type="Script" id=2]
 [ext_resource path="res://scenes/GridGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ThreeDee.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ui/RPGui HUD - Asset Pack/00_RPGui/RPG_gui.png" type="Texture" id=5]
@@ -314,17 +314,20 @@ LogLevel = 3
 
 [node name="GridGenerator" parent="." instance=ExtResource( 3 )]
 
+[node name="Systems" type="Node" parent="."]
+script = ExtResource( 2 )
+
 [node name="ThreeDee" parent="." instance=ExtResource( 4 )]
 GridGeneratorPath = NodePath("../GridGenerator")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-margin_right = 2560.0
-margin_bottom = 1440.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 columns = 2
 
 [node name="Control" type="Control" parent="GridContainer"]
-margin_right = 1278.0
-margin_bottom = 478.0
+margin_right = 958.0
+margin_bottom = 536.0
 rect_min_size = Vector2( 64, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -340,16 +343,16 @@ custom_constants/margin_bottom = 280
 [node name="TextureRect" type="TextureRect" parent="GridContainer/Control/MarginContainer"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 718.0
-margin_bottom = 198.0
+margin_right = 398.0
+margin_bottom = 256.0
 texture = SubResource( 1 )
 expand = true
 
 [node name="Panel" type="Panel" parent="GridContainer/Control/MarginContainer"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 718.0
-margin_bottom = 198.0
+margin_right = 398.0
+margin_bottom = 256.0
 
 [node name="MarginContainer" type="MarginContainer" parent="GridContainer/Control/MarginContainer/Panel"]
 anchor_right = 1.0
@@ -362,8 +365,8 @@ custom_constants/margin_bottom = 18
 [node name="GridContainer" type="GridContainer" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer"]
 margin_left = 18.0
 margin_top = 18.0
-margin_right = 670.0
-margin_bottom = 150.0
+margin_right = 519.0
+margin_bottom = 208.0
 columns = 3
 
 [node name="HealthStat" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer" instance=ExtResource( 7 )]
@@ -425,7 +428,7 @@ text = ">"
 [node name="Label" type="Label" parent="GridContainer/Control/MarginContainer/Panel/MarginContainer/GridContainer"]
 margin_left = 445.0
 margin_top = 24.0
-margin_right = 652.0
+margin_right = 501.0
 margin_bottom = 54.0
 size_flags_horizontal = 3
 text = "x, y"
@@ -433,53 +436,51 @@ align = 1
 script = ExtResource( 10 )
 
 [node name="ViewportContainer2D" type="ViewportContainer" parent="GridContainer"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.631373 )
-margin_left = 1282.0
-margin_right = 2560.0
-margin_bottom = 478.0
+margin_left = 962.0
+margin_right = 1920.0
+margin_bottom = 358.0
 
 [node name="Viewport" type="Viewport" parent="GridContainer/ViewportContainer2D"]
 size = Vector2( 576, 303 )
 handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="TwoDee" parent="GridContainer/ViewportContainer2D/Viewport" instance=ExtResource( 2 )]
-GridGeneratorPath = NodePath("../../../../GridGenerator")
+render_target_update_mode = 0
 
 [node name="Control2" type="Control" parent="GridContainer"]
-margin_top = 482.0
-margin_right = 1278.0
-margin_bottom = 959.0
+margin_left = 962.0
+margin_right = 1920.0
+margin_bottom = 536.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control3" type="Control" parent="GridContainer"]
-margin_left = 1282.0
-margin_top = 482.0
-margin_right = 2560.0
-margin_bottom = 959.0
+margin_top = 540.0
+margin_right = 958.0
+margin_bottom = 1076.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control4" type="Control" parent="GridContainer"]
-margin_top = 963.0
-margin_right = 1278.0
-margin_bottom = 1440.0
+margin_left = 962.0
+margin_top = 540.0
+margin_right = 1920.0
+margin_bottom = 1076.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
 [node name="ConfirmContainer" type="MarginContainer" parent="."]
-margin_right = 2560.0
-margin_bottom = 1440.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 rect_min_size = Vector2( 1280, 720 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 11 )
 
 [node name="TextureRect" type="TextureRect" parent="ConfirmContainer"]
-margin_right = 2560.0
-margin_bottom = 1440.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 rect_min_size = Vector2( 1280, 720 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -487,17 +488,17 @@ texture = SubResource( 19 )
 expand = true
 
 [node name="CenterContainer" type="CenterContainer" parent="ConfirmContainer"]
-margin_right = 2560.0
-margin_bottom = 1440.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="ConfirmContainer/CenterContainer"]
 visible = true
-margin_left = 880.0
-margin_top = 590.0
-margin_right = 1680.0
-margin_bottom = 850.0
+margin_left = 560.0
+margin_top = 410.0
+margin_right = 1360.0
+margin_bottom = 670.0
 rect_min_size = Vector2( 800, 260 )
 theme = SubResource( 30 )
 popup_exclusive = true

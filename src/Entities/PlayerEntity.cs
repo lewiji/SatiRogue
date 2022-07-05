@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using SatiRogue.Camera;
 using SatiRogue.Components;
 using SatiRogue.Components.Render;
 using SatiRogue.Components.Stats;
+using SatiRogue.Components.Tools;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
@@ -15,7 +17,6 @@ namespace SatiRogue.Entities;
 public class PlayerEntity : GridEntity {
    [Signal] public delegate void PlayerPositionChanged();
 
-   [Signal] public delegate void SignalAnimation(string name);
 
    protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() { Turn.Turn.PlayerTurn };
 
@@ -25,9 +26,15 @@ public class PlayerEntity : GridEntity {
       Name = "Player";
       BlocksCell = true;
       AddComponent(new InputHandlerComponent());
-      AddComponent(new StatHealthComponent(10));
+      AddComponent(new StatHealthComponent(10)).Connect(nameof(StatsComponent.TookDamage), this, nameof(OnTookDamage));
       AddComponent(new PlayerRendererComponent());
       AddComponent(new GridIndicatorSpatialComponent());
+      AddComponent(new MousePickSpatialCellComponent());
+   }
+
+   private void OnTookDamage(int damage) {
+      Logger.Info($"Damaged: {damage}");
+      SpatialCamera.Shake(damage);
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
@@ -54,29 +61,26 @@ public class PlayerEntity : GridEntity {
    
    protected override async void OnDead() {
       Enabled = false;
-      TurnTypesToExecuteOn.Clear();
-      DisableComponents();
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
-      EntityRegistry.UnregisterEntity(this);
-      EntityRegistry.Clear();
-      ClearComponents();
-      QueueFree();
-      GetNode<Systems>("/root/Systems").Restart();
+      GetNode<GameController>(GameController.Path).Restart();
    }
 
    private void OnMapDataChanged() {
-      Logger.Info("Player map data changed");
+      Logger.Debug("Player map data changed");
    }
 
    public override void HandleTurn()
    {
       base.HandleTurn();
       Logger.Info("Player handling turn");
-      CallDeferred(nameof(CalculateVisibility));
+      CallDeferred(nameof(UpdateFov));
    }
 
-   private void CalculateVisibility() {
+   private async void UpdateFov() {
+      Logger.Info("--- Calculating player FOV ---");
+      await ToSignal(GetTree(), "idle_frame");
       if (RuntimeMapNode.Instance?.MapData != null) 
          ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
+      CheckVisibility();
    }
 }
