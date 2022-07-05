@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Logger="*res://src/Debug/Logger.cs"
+Systems="*res://src/Systems.cs"
 GameController="*res://src/GameController.cs"
 
 [debug]
@@ -31,11 +32,14 @@ settings/agile_event_flushing=false
 window/size/width=1920
 window/size/height=1080
 window/size/always_on_top=true
+window/size/test_width=1280
+window/size/test_height=720
+window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/explore-editor-theme/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [importer_defaults]
 
@@ -77,6 +81,10 @@ show_grid={
  ]
 }
 
+[input_devices]
+
+buffering/agile_event_flushing=true
+
 [memory]
 
 limits/message_queue/max_size_kb=8192
@@ -95,6 +103,7 @@ common/physics_interpolation=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 2d/options/ninepatch_mode=0
 gles3/shaders/max_simultaneous_compiles=4

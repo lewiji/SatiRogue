@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=1]
 [ext_resource path="res://scenes/res/SpriteFramesSlimer.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=3]
+[ext_resource path="res://resources/particles/blood_mesh.tres" type="QuadMesh" id=4]
 [ext_resource path="res://src/Camera/SpatialCamera.cs" type="Script" id=5]
 
 [node name="Player" type="Spatial"]
@@ -16,7 +18,7 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
@@ -38,6 +40,15 @@ spot_range = 24.0
 spot_attenuation = 0.393839
 spot_angle = 64.0
 spot_angle_attenuation = 0.618
+
+[node name="Particles" type="Particles" parent="Visual"]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 0.62
+visibility_aabb = AABB( -2.95138, -1.8599, -2.87709, 5.79328, 4.52928, 5.51955 )
+process_material = ExtResource( 3 )
+draw_pass_1 = ExtResource( 4 )
 
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )

@@ -24,8 +24,13 @@ public abstract partial class StatsComponent : Component
                 EmitSignal(nameof(Changed), _value);
                 EmitSignal(nameof(Depleted));
             } else {
+                var diff = value - _value;
                 _value = value;
+                
                 EmitSignal(nameof(Changed), _value);
+                if (diff < 0f) {
+                    EmitSignal(nameof(TookDamage), -diff);
+                }
             }
         }
     }
@@ -42,6 +47,7 @@ public abstract partial class StatsComponent : Component
     }
     
     [Signal] public delegate void Changed(int newValue);
+    [Signal] public delegate void TookDamage(int damage);
     [Signal] public delegate void Depleted();
 
     public abstract void OnChanged(int newValue);

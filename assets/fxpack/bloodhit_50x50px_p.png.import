@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/bloodhit_50x50px.png-eed983ba770efe435121ffec2c71c93d.s3tc.stex"
-path.etc2="res://.import/bloodhit_50x50px.png-eed983ba770efe435121ffec2c71c93d.etc2.stex"
+path.s3tc="res://.import/bloodhit_50x50px_p.png-3d3074e853752e77a8565f9b5199c211.s3tc.stex"
+path.etc2="res://.import/bloodhit_50x50px_p.png-3d3074e853752e77a8565f9b5199c211.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,21 +11,21 @@ metadata={
 
 [deps]
 
-source_file="res://assets/fxpack/bloodhit_50x50px.png"
-dest_files=[ "res://.import/bloodhit_50x50px.png-eed983ba770efe435121ffec2c71c93d.s3tc.stex", "res://.import/bloodhit_50x50px.png-eed983ba770efe435121ffec2c71c93d.etc2.stex" ]
+source_file="res://assets/fxpack/bloodhit_50x50px_p.png"
+dest_files=[ "res://.import/bloodhit_50x50px_p.png-3d3074e853752e77a8565f9b5199c211.s3tc.stex", "res://.import/bloodhit_50x50px_p.png-3d3074e853752e77a8565f9b5199c211.etc2.stex" ]
 
 [params]
 
 compress/mode=2
-compress/lossy_quality=0.7
+compress/lossy_quality=0.2
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=true
-flags/filter=true
+flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using SatiRogue.Camera;
 using SatiRogue.Components;
 using SatiRogue.Components.Render;
 using SatiRogue.Components.Stats;
@@ -16,7 +17,6 @@ namespace SatiRogue.Entities;
 public class PlayerEntity : GridEntity {
    [Signal] public delegate void PlayerPositionChanged();
 
-   [Signal] public delegate void SignalAnimation(string name);
 
    protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() { Turn.Turn.PlayerTurn };
 
@@ -26,10 +26,15 @@ public class PlayerEntity : GridEntity {
       Name = "Player";
       BlocksCell = true;
       AddComponent(new InputHandlerComponent());
-      AddComponent(new StatHealthComponent(10));
+      AddComponent(new StatHealthComponent(10)).Connect(nameof(StatsComponent.TookDamage), this, nameof(OnTookDamage));
       AddComponent(new PlayerRendererComponent());
       AddComponent(new GridIndicatorSpatialComponent());
       AddComponent(new MousePickSpatialCellComponent());
+   }
+
+   private void OnTookDamage(int damage) {
+      Logger.Info($"Damaged: {damage}");
+      SpatialCamera.Shake(damage);
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
