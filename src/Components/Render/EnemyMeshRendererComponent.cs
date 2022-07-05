@@ -10,8 +10,15 @@ using Array = Godot.Collections.Array;
 namespace SatiRogue.Components.Render;
 public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererComponent {
    public EnemyEntity? EnemyEntity => GridEntity as EnemyEntity;
+   public static PackedScene EnemyParticlesScene = GD.Load<PackedScene>("res://scenes/ThreeDee/Enemy/EnemyParticles.tscn");
+   private Particles? _particles;
    
    public float YOffset;
+   
+   protected override async void OnDead() {
+      base.OnDead();
+      if (_particles != null) _particles.Emitting = true;
+   }
 
    protected override void CreateVisualNodes() {
       if (EnemyEntity == null) throw new Exception("No parent entity found for EnemyMeshRenderer");
@@ -31,6 +38,10 @@ public partial class EnemyMeshRendererComponent : AnimatedSprite3DRendererCompon
          YOffset = AnimatedSprite.Translation.y;
       }
       RootNode?.AddChild(AnimatedSprite);
+
+      var particles = EnemyParticlesScene.Instance<Particles>();
+      AnimatedSprite.AddChild(particles);
+      _particles = particles;
 
       var label = new Label3D();
       label.Text = EnemyEntity.Name;

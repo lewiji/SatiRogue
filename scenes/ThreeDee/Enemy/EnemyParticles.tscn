@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=1]
+[ext_resource path="res://resources/particles/enemy_blood_mesh.tres" type="QuadMesh" id=2]
+
+[node name="Particles" type="Particles"]
+emitting = false
+amount = 16
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.6
+visibility_aabb = AABB( -2.15932, -2.06946, -2.2948, 4.71278, 4.52201, 4.71332 )
+process_material = ExtResource( 1 )
+draw_pass_1 = ExtResource( 2 )
