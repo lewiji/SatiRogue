@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -11,6 +12,7 @@ public class InputHandlerComponent : Component {
    public static bool InputEnabled = true;
 
    public override void HandleTurn() {
+      if (Systems.TurnHandler == null) return;
       switch (Systems.TurnHandler.Turn) {
          case Turn.Turn.PlayerTurn:
             HandlePlayerTurnStarted();
@@ -18,6 +20,10 @@ public class InputHandlerComponent : Component {
          case Turn.Turn.EnemyTurn:
             HandleEnemyTurnStarted();
             break;
+         case Turn.Turn.Processing:
+            break;
+         default:
+            throw new ArgumentOutOfRangeException();
       }
    }
 
