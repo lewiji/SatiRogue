@@ -4,16 +4,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoguelikeMono", "RoguelikeM
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
 		Debug|x64 = Debug|x64
+		ExportRelease|x64 = ExportRelease|x64
+		ExportDebug|x64 = ExportDebug|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.Debug|x64.ActiveCfg = Debug|x64
 		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.Debug|x64.Build.0 = Debug|x64
+		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportRelease|x64.ActiveCfg = Debug|x64
+		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportRelease|x64.Build.0 = Debug|x64
+		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportDebug|x64.ActiveCfg = ExportDebug|x64
+		{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}.ExportDebug|x64.Build.0 = ExportDebug|x64
 	EndGlobalSection
 EndGlobal

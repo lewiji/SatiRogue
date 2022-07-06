@@ -19,4 +19,4 @@ script = ExtResource( 1 )
 [node name="EntityRegistry" type="Node" parent="Systems/MapGenerator"]
 script = ExtResource( 2 )
 
-[node name="UIRoot" parent="Systems/MapGenerator/EntityRegistry" instance=ExtResource( 5 )]
+[node name="UIRoot" parent="Systems/MapGenerator" instance=ExtResource( 5 )]

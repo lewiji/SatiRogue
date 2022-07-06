@@ -12,13 +12,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <Configurations>ExportDebug;ExportRelease;Debug</Configurations>
-        <Platforms>AnyCPU;x64</Platforms>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'ExportDebug' ">
-        <DocumentationFile>/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/bin/ExportDebug/RoguelikeMono.xml</DocumentationFile>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'ExportRelease' ">
-        <WarningLevel>3</WarningLevel>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Chickensoft.GoDotNet" Version="0.0.2" />

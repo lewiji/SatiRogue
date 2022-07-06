@@ -13,7 +13,6 @@ public partial class SpatialRendererComponent : RendererComponent {
    protected Vector3? TargetTranslation;
    protected bool Teleporting { get; set; }
 
-   [OnReady]
    protected virtual void CreateRootNode() {
       if (GridEntity == null) return;
       if (!EntityResourceLocator.SceneNodePaths.TryGetValue(nameof(ThreeDee), out var threeDeePath)) return;
@@ -25,6 +24,11 @@ public partial class SpatialRendererComponent : RendererComponent {
          RootNode = new Spatial() {Translation = GridEntity.GridPosition.ToVector3(), Name = GridEntity.Uuid};
          threeDeeNode.EnemiesSpatial?.AddChild(RootNode);
       }
+   }
+
+   public override void _EnterTree() {
+      base._EnterTree();
+      CreateRootNode();
    }
 
    public override void _ExitTree() {

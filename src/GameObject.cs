@@ -27,7 +27,7 @@ public interface IGameObject {
    void InitialiseWithParameters(IGameObjectParameters parameters);
 }
 
-public abstract partial class GameObject : Node, IGameObject, IDependent {
+public abstract partial class GameObject : Node, IGameObject {
    private bool _enabled = false;
 
    public bool Enabled {
@@ -39,18 +39,6 @@ public abstract partial class GameObject : Node, IGameObject, IDependent {
          }
       }
    }
-   
-   [Dependency] protected TurnHandler TurnHandler => this.DependOn<TurnHandler>();
-
-   [OnReady]
-   private void GetDependencies() {
-      this.Depend();
-   }
-
-   public virtual void Loaded() {
-      Enabled = true;
-   }
-
    protected virtual IGameObjectParameters? Parameters { get; set; }
    public string Uuid { get; protected set; } = Guid.NewGuid().ToString();
    public virtual GameObject? EcOwner { get; set; }
@@ -60,10 +48,12 @@ public abstract partial class GameObject : Node, IGameObject, IDependent {
    }
 
    public override void _Notification(int what) {
-      if (what == NotificationEnterTree) {
-         EcOwner = Parameters?.EcOwner ?? GetParentOrNull<GameObject>();
-         Name = Parameters?.Name ?? "GameObject";
-         Owner = EcOwner;
+      switch (what) {
+         case NotificationEnterTree:
+            EcOwner = Parameters?.EcOwner ?? GetParentOrNull<GameObject>();
+            Name = Parameters?.Name ?? "GameObject";
+            Owner = EcOwner;
+            break;
       }
    }
 

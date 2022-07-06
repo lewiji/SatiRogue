@@ -12,12 +12,14 @@ public class EntityParameters : GameObjectParameters {
    public Component[] Components { get; set; } = { };
 }
 
-public abstract class Entity : GameObject, IEntity {
+public abstract class Entity : GameObject, IEntity, IDependent {
    private EntityParameters? _parameters;
    private bool _alive = true;
    public IEnumerable<Component> Components => _components;
    private List<Component> _components { get; } = new();
    protected abstract List<Turn.Turn> TurnTypesToExecuteOn { get; set; }
+   [Dependency] public TurnHandler TurnHandler => this.DependOn<TurnHandler>();
+
    public bool Alive {
       get => _alive;
       set {
@@ -37,21 +39,24 @@ public abstract class Entity : GameObject, IEntity {
       Connect(nameof(Died), this, nameof(OnDead));
    }
 
-   public override void Loaded() {
-      base.Loaded();
+   public override void _Notification(int what) {
+      base._Notification(what);
+      if (what == NotificationReady) {
+         this.Depend();
+      }
+   }
+
+
+   public virtual void Loaded() {
       TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
          new Array {Turn.Turn.EnemyTurn});
       TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
          new Array {Turn.Turn.PlayerTurn});
-   }
-
-   public override void _Ready() {
-      base._Ready();
+      Enabled = true;
       if (Parameters is not EntityParameters entityParameters) return;
       foreach (var parametersComponent in entityParameters.Components) AddComponent(parametersComponent);
-      this.Depend();
    }
-   
+
    private void FilterTurnTypesToExecuteOn(Turn.Turn turn)
    {
       if (!TurnTypesToExecuteOn.Contains(turn)) return;

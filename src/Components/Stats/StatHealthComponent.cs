@@ -8,9 +8,7 @@ namespace SatiRogue.Components.Stats;
 public partial class StatHealthComponent : StatsComponent
 {
     public StatHealthComponent(int maxValue, int? initialValue = null) : base(StatEffectTypes.Stat, (int)StatTypes.Health, maxValue, 0, initialValue ?? maxValue)
-    {
-        Logger.Error("StatHealthComponent");
-    }
+    { }
     
     [OnReady] private void ConnectSignals()
     {

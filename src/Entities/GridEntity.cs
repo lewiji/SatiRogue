@@ -31,7 +31,6 @@ public abstract class GridEntity : Entity {
       set
       {
          _parameters = value as GridEntityParameters;
-         MovementComponent = new MovementComponent(_parameters?.GridPosition.GetValueOrDefault());
       }
    }
 
@@ -49,10 +48,7 @@ public abstract class GridEntity : Entity {
 
    public Vector3i GridPosition
    {
-      get
-      { 
-         return MovementComponent!.GridPosition;
-      }
+      get => MovementComponent?.GridPosition ?? Vector3i.Zero;
       set
       {
          MovementComponent!.GridPosition = value;
@@ -64,14 +60,19 @@ public abstract class GridEntity : Entity {
       Name = Parameters?.Name ?? "GridEntity";
       BlocksCell = _parameters?.BlocksCell.GetValueOrDefault() ?? true;
       Visible = _parameters?.Visible.GetValueOrDefault() ?? false;
+   }
+
+   public override void Loaded() {
+      base.Loaded();
       RegisterMovementComponent(_parameters?.GridPosition.GetValueOrDefault());
    }
 
    protected virtual void RegisterMovementComponent(Vector3i? gridPosition) {
+      MovementComponent = new MovementComponent(_parameters?.GridPosition.GetValueOrDefault());
       Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault()}");
-      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
-      AddComponent(MovementComponent);
       MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      AddComponent(MovementComponent);
+      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
       CallDeferred(nameof(CheckVisibility));
    }
 

@@ -64,10 +64,12 @@ public partial class MovementComponent : Component {
       set => _parent = value as GridEntity;
    }
 
-   public override void Loaded() {
-      base.Loaded();
-      TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
-      TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+
+   [OnReady]
+   private void ConnectSignals() {
+      _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
+      _parent?.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
+      _parent?.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
    }
 
    private void RecordPathfindingCalls() {
@@ -171,11 +173,7 @@ public partial class MovementComponent : Component {
          Array.ConvertAll<ulong, GameObject>(targetCell.Occupants.ToArray(), id => (GameObject) GD.InstanceFromId(id)).Where(inst => 
          IsInstanceValid(inst)).ToArray();
    }
-   
-   [OnReady]
-   private void ConnectSignals() {
-      _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
-   }
+
 
    private void OnDead() {
       CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());

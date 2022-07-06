@@ -13,8 +13,7 @@ using static Active.Status;
 
 namespace SatiRogue.Components.Behaviours;
 
-public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent, IDependent {
-   [Dependency] private TurnHandler _turnHandler => this.DependOn<TurnHandler>();
+public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
 
    public override void _EnterTree() {
       base._EnterTree();
@@ -22,13 +21,9 @@ public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent, IDepe
    }
    
    [OnReady]
-   private void GetDependencies() {
-      this.Depend();
-   }
-
-   public void Loaded() {
+   private void Loaded() {
       if (EcOwner is EnemyEntity enemyEntity)
-         BehaviourTree = new EnemyBehaviourTree(enemyEntity, _turnHandler);
+         BehaviourTree = new EnemyBehaviourTree(enemyEntity, enemyEntity.TurnHandler);
       else
          Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");
    }

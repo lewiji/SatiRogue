@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Commands;
 using SatiRogue.Commands.MapGen;
 using SatiRogue.Components;
@@ -9,17 +10,21 @@ using SatiRogue.Grid.MapGen.Strategies;
 
 namespace SatiRogue.Grid.MapGen;
 
-public class MapGenerator : Node{
+public partial class MapGenerator : Node, IProvider<MapGenerator>, IProvider<RuntimeMapNode> {
    public static MapGenMapData? MapData;
    public static IMapGenStrategy? MapGenStrategy;
+   private RuntimeMapNode? _runtimeMapNode;
+   MapGenerator IProvider<MapGenerator>.Get() => this;
+   RuntimeMapNode IProvider<RuntimeMapNode>.Get() => _runtimeMapNode;
    
    public AStar AStar = new();
 
    public static MapGenParams? GetParams() {
       return MapData?.MapParams;
    }
-   
-   public override void _Ready() {
+
+   [OnReady]
+   public void Ready() {
       GD.Randomize();
       
       MapGenStrategy ??= new RoomsAndCorridors(new MapGenParams {
@@ -42,10 +47,10 @@ public class MapGenerator : Node{
 
       Logger.Info("Finished generating grid.");
 
-      var runtimeMapNode = new RuntimeMapNode();
-      GetParent().AddChild(runtimeMapNode);
-      runtimeMapNode.Owner = GetParent();
-      runtimeMapNode.MapData = new MapData(MapData);
+      _runtimeMapNode = new RuntimeMapNode();
+      GetParent().AddChild(_runtimeMapNode);
+      _runtimeMapNode.Owner = GetParent();
+      _runtimeMapNode.MapData = new MapData(MapData);
 
       var placeEntitiesCommandQueue = new CommandQueue();
       placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
@@ -53,6 +58,7 @@ public class MapGenerator : Node{
       placeEntitiesCommandQueue.ExecuteAll();
 
       CallDeferred(nameof(EnableInput));
+      this.Provided();
    }
 
    private void EnableInput() {

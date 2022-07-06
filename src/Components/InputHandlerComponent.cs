@@ -14,7 +14,8 @@ public partial class InputHandlerComponent : Component {
    public static bool InputEnabled = true;
 
    public override void HandleTurn() {
-      switch (TurnHandler.Turn) {
+      if (EcOwner == null) throw new Exception("InputHandlerComponent couldn't doesn't have owner");
+      switch (((Entity) EcOwner).TurnHandler.Turn) {
          case Turn.Turn.PlayerTurn:
             HandlePlayerTurnStarted();
             break;

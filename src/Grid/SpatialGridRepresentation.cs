@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Components.Render;
 using SatiRogue.Debug;
@@ -14,7 +15,7 @@ using EnemyMeshRendererComponent = SatiRogue.Components.Render.EnemyMeshRenderer
 
 namespace SatiRogue.Grid;
 
-public partial class SpatialGridRepresentation : Spatial {
+public partial class SpatialGridRepresentation : Spatial, IDependent {
    private static readonly Dictionary<CellType, Mesh> CellMeshResources = new() {
       {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
       {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
@@ -30,6 +31,7 @@ public partial class SpatialGridRepresentation : Spatial {
    private int _chunkSize;
    private int _maxWidth;
    private bool _mapDataDirty = false;
+   [Dependency] private RuntimeMapNode _runtimeMapNode => this.DependOn<RuntimeMapNode>();
 
    [OnReadyGet("../", Export = true)] private ThreeDee? _threeDee;
    private int _totalChunks;
@@ -39,13 +41,17 @@ public partial class SpatialGridRepresentation : Spatial {
    [OnReady]
    private void DeferredCallToGridGeneratorSignal() {
       Logger.Debug("Connecting to map changed signal on next frame...");
-      CallDeferred(nameof(ConnectToGridGenerator));
+      this.Depend();
+   }
+
+   public void Loaded() {
+      ConnectToGridGenerator();
    }
 
    private void ConnectToGridGenerator() {
       Logger.Debug("Connecting to map changed signal.");
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
+      _runtimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
+      _runtimeMapNode.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
    }
 
    private Vector3i[] GetChunkMinMaxCoords(int chunkId, int maxWidth) {
@@ -99,7 +105,7 @@ public partial class SpatialGridRepresentation : Spatial {
       }
       _fogMultiMeshes.Clear();
 
-      var cells = RuntimeMapNode.Instance?.MapData?.Cells.ToArray();
+      var cells = _runtimeMapNode.MapData?.Cells.ToArray();
       var mapParams = MapGenerator.GetParams().GetValueOrDefault();
       _maxWidth = mapParams.Width;
       ChunkWidth = mapParams.Width.Factors().GetMedian();
@@ -125,13 +131,6 @@ public partial class SpatialGridRepresentation : Spatial {
 
          BuildChunk(chunkId, chunkCoords, chunkCells);
       }
-
-      foreach (var entityData in EntityRegistry.EntityList)
-         if (entityData.Value is EnemyEntity enemyEntity) {
-            enemyEntity.AddComponent(new EnemyMeshRendererComponent());
-            enemyEntity.AddComponent(new StatBar3DRendererComponent());
-            //enemyEntity.AddComponent(new EntityPositionMarkerComponent());
-         }
 
       Logger.Info("Chunking finished.");
    }

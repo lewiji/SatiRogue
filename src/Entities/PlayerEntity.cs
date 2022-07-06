@@ -25,11 +25,6 @@ public class PlayerEntity : GridEntity {
       Uuid = Guid.Empty.ToString();
       Name = "Player";
       BlocksCell = true;
-      AddComponent(new InputHandlerComponent());
-      AddComponent(new StatHealthComponent(10)).Connect(nameof(StatsComponent.TookDamage), this, nameof(OnTookDamage));
-      AddComponent(new PlayerRendererComponent());
-      AddComponent(new GridIndicatorSpatialComponent());
-      AddComponent(new MousePickSpatialCellComponent());
    }
 
    private void OnTookDamage(int damage) {
@@ -37,11 +32,24 @@ public class PlayerEntity : GridEntity {
       SpatialCamera.Shake(damage);
    }
 
+   public override void Loaded() {
+      base.Loaded();
+      
+      AddComponent(new InputHandlerComponent());
+      AddComponent(new StatHealthComponent(10)).Connect(nameof(StatsComponent.TookDamage), this, nameof(OnTookDamage));
+      AddComponent(new PlayerRendererComponent());
+      AddComponent(new GridIndicatorSpatialComponent());
+      AddComponent(new MousePickSpatialCellComponent());
+   }
+
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
    {
       MovementComponent = new PlayerMovementComponent(gridPosition);
-      AddComponent(MovementComponent).Connect(
+      Connect(
          nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      AddComponent(MovementComponent);
+      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
+      CallDeferred(nameof(CheckVisibility));
    }
 
    public override void _Ready() {
@@ -49,7 +57,6 @@ public class PlayerEntity : GridEntity {
 
       RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
       Visible = true;
-      CallDeferred(nameof(OnPositionChanged));
    }
 
    protected override void OnPositionChanged() {

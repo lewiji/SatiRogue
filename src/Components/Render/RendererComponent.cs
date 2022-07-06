@@ -7,7 +7,7 @@ public abstract class RendererComponent : Component {
    public Entity? Entity => EcOwner as Entity;
 
    public override void _Ready() {
-      CallDeferred(nameof(CreateVisualNodes));
+      CreateVisualNodes();
    }
 
    protected abstract void CreateVisualNodes();
