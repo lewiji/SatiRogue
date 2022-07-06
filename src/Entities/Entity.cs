@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using GoDotNet;
 using SatiRogue.Components;
 using SatiRogue.Turn;
 
@@ -14,7 +15,6 @@ public class EntityParameters : GameObjectParameters {
 public abstract class Entity : GameObject, IEntity {
    private EntityParameters? _parameters;
    private bool _alive = true;
-   
    public IEnumerable<Component> Components => _components;
    private List<Component> _components { get; } = new();
    protected abstract List<Turn.Turn> TurnTypesToExecuteOn { get; set; }
@@ -28,23 +28,28 @@ public abstract class Entity : GameObject, IEntity {
          _alive = value;
       }
    }
+   
    [Signal] public delegate void Died();
 
    public override void _EnterTree() {
       base._EnterTree();
       Name = Parameters?.Name ?? "Entity";
-      
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-         new Array {Turn.Turn.EnemyTurn});
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-         new Array {Turn.Turn.PlayerTurn});
       Connect(nameof(Died), this, nameof(OnDead));
+   }
+
+   public override void Loaded() {
+      base.Loaded();
+      TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
+         new Array {Turn.Turn.EnemyTurn});
+      TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
+         new Array {Turn.Turn.PlayerTurn});
    }
 
    public override void _Ready() {
       base._Ready();
       if (Parameters is not EntityParameters entityParameters) return;
       foreach (var parametersComponent in entityParameters.Components) AddComponent(parametersComponent);
+      this.Depend();
    }
    
    private void FilterTurnTypesToExecuteOn(Turn.Turn turn)

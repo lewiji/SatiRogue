@@ -1,13 +1,16 @@
 using Godot;
+using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Components;
+using SatiRogue.Debug;
 using SatiRogue.Grid.MapGen;
 
 namespace SatiRogue.scenes.Hud; 
 
-public partial class ConfirmStairsDialog : Control {
+public partial class ConfirmStairsDialog : Control, IDependent {
    private static ConfirmationDialog? _dialogNode;
    private static TextureRect? _background;
+   [Dependency] private MapGenerator _mapGenerator => this.DependOn<MapGenerator>();
 
    [OnReady]
    private void SetInstance() {
@@ -16,6 +19,11 @@ public partial class ConfirmStairsDialog : Control {
       _background.Visible = false;
       _dialogNode.Connect("confirmed", this, nameof(OnConfirm));
       _dialogNode.GetCancel().Connect("pressed", this, nameof(OnCancelled));
+      this.Depend();
+   }
+
+   public void Loaded() {
+      Logger.Debug("ConfirmStairsDialog.cs: Received MapGenerator dependency");
    }
 
    public static void ConfirmStairs() {
@@ -25,7 +33,7 @@ public partial class ConfirmStairsDialog : Control {
    }
 
    private void OnConfirm() {
-      GetNode<MapGenerator>(MapGenerator.Path).NextFloor();
+      _mapGenerator.NextFloor();
    }
    
    private void OnCancelled() {
