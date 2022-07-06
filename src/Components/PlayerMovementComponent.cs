@@ -23,17 +23,17 @@ public class PlayerMovementComponent : MovementComponent {
       var targetCellOccupants = TestMoveForOccupants(_direction.GetValueOrDefault());
       switch (targetCellOccupants?.Length) {
          case 0:
-            Systems.TurnHandler.SetPlayerCommand(
+            TurnHandler.SetPlayerCommand(
                new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
          case > 0 when targetCellOccupants.First() is EnemyEntity enemyEntity:
-            Systems.TurnHandler.SetPlayerCommand(
+            TurnHandler.SetPlayerCommand(
                new ActionAttack(_playerEntity!, enemyEntity)
             );
             break;
          case > 0 when targetCellOccupants.Last() is StairsEntity stairsEntity:
-            Systems.TurnHandler.SetPlayerCommand(
+            TurnHandler.SetPlayerCommand(
                new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
@@ -46,7 +46,7 @@ public class PlayerMovementComponent : MovementComponent {
                Logger.Info("TargetCellOccupants was nul???");
             }
 
-            Systems.TurnHandler.SetPlayerCommand(
+            TurnHandler.SetPlayerCommand(
                new ActionDoNothing(_playerEntity!)
             );
             break;

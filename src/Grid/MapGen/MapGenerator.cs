@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using GoDotNet;
 using SatiRogue.Commands;
 using SatiRogue.Commands.MapGen;
 using SatiRogue.Components;
@@ -8,9 +9,7 @@ using SatiRogue.Grid.MapGen.Strategies;
 
 namespace SatiRogue.Grid.MapGen;
 
-public class MapGenerator : Node {
-
-   public static NodePath? Path;
+public class MapGenerator : Node{
    public static MapGenMapData? MapData;
    public static IMapGenStrategy? MapGenStrategy;
    
@@ -19,11 +18,7 @@ public class MapGenerator : Node {
    public static MapGenParams? GetParams() {
       return MapData?.MapParams;
    }
-
-   public override void _EnterTree() {
-      Path = GetPath();
-   }
-
+   
    public override void _Ready() {
       GD.Randomize();
       
@@ -56,6 +51,7 @@ public class MapGenerator : Node {
       placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
       placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
       placeEntitiesCommandQueue.ExecuteAll();
+
       CallDeferred(nameof(EnableInput));
    }
 

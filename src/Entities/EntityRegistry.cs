@@ -21,11 +21,14 @@ public class EntityRegistry : GameObject {
          return null;
       }
    }
-
    public static Hashtable BlockedCells = new();
 
    public override void _EnterTree() {
       _instance = this;
+   }
+
+   public override void _ExitTree() {
+      Clear();
    }
 
    public static void RegisterEntity(Entity entity, IGameObjectParameters parameters) {

@@ -1,22 +1,25 @@
 using Godot;
+using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Entities;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.Turn;
 
 namespace SatiRogue;
 
-public partial class Systems : Node {
-   public static TurnHandler? TurnHandler;
-   public static string? Path;
+public partial class Systems : Node, IProvider<MapGenerator>, IProvider<TurnHandler> {
+   private TurnHandler? _turnHandler;
+   [OnReadyGet("MapGenerator")] private MapGenerator _mapGenerator = null!;
+   MapGenerator IProvider<MapGenerator>.Get() => _mapGenerator;
+   TurnHandler IProvider<TurnHandler>.Get() => _turnHandler!;
 
    public override void _EnterTree() {
-      Path = GetPath();
-      TurnHandler = new TurnHandler();
-      AddChild(TurnHandler);
+      _turnHandler = new TurnHandler();
+      AddChild(_turnHandler);
    }
-
-   public override void _ExitTree() {
-      Path = null;
-      TurnHandler = null;
+   
+   [OnReady]
+   private void DoProvideMapGenerator() {
+      this.Provided();
    }
 }

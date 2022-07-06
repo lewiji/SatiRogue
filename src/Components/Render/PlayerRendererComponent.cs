@@ -21,7 +21,8 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
 
    private float SpriteSmoothing { get; set; } = 0.28f;
    private float CameraSmoothing { get; set; } = 13f;
-   
+   private Particles? _particles;
+
    protected override void CreateRootNode() {
       RootNode = _playerScene;
    }
@@ -36,7 +37,7 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
       
       CallDeferred(nameof(SetInitialPosition));
 
-      EntityRegistry.Player?.Connect(nameof(PlayerEntity.SignalAnimation), this, nameof(PlayAnimation));
+      _particles = _playerScene.GetNode<Particles>("Visual/Particles");
    }
    
    protected override void HandleVisibilityChanged()
@@ -58,6 +59,12 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
    protected override void HandlePositionChanged() {
       base.HandlePositionChanged();
       _targetTranslation = TargetTranslation;
+   }
+
+   protected override async void OnDead() {
+      base.OnDead();
+      await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
+      if (_particles != null) _particles.Emitting = true;
    }
 
    public override void _Process(float delta) {

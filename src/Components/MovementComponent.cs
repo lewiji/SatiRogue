@@ -64,10 +64,10 @@ public partial class MovementComponent : Component {
       set => _parent = value as GridEntity;
    }
 
-   [OnReady]
-   private void ConnectEnemyTurnSignal() {
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+   public override void Loaded() {
+      base.Loaded();
+      TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
+      TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
    }
 
    private void RecordPathfindingCalls() {

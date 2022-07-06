@@ -1,19 +1,20 @@
 using System;
 using Godot;
+using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Turn;
 
 namespace SatiRogue.Components;
 
-public class InputHandlerComponent : Component {
+public partial class InputHandlerComponent : Component {
    private bool _awaitingInput;
    private MovementDirection? _forcedInput;
    public static bool InputEnabled = true;
 
    public override void HandleTurn() {
-      if (Systems.TurnHandler == null) return;
-      switch (Systems.TurnHandler.Turn) {
+      switch (TurnHandler.Turn) {
          case Turn.Turn.PlayerTurn:
             HandlePlayerTurnStarted();
             break;

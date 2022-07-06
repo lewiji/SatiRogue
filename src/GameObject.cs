@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -25,8 +27,8 @@ public interface IGameObject {
    void InitialiseWithParameters(IGameObjectParameters parameters);
 }
 
-public abstract partial class GameObject : Node, IGameObject {
-   private bool _enabled = true;
+public abstract partial class GameObject : Node, IGameObject, IDependent {
+   private bool _enabled = false;
 
    public bool Enabled {
       get => _enabled;
@@ -36,6 +38,17 @@ public abstract partial class GameObject : Node, IGameObject {
             InputHandlerComponent.InputEnabled = _enabled;
          }
       }
+   }
+   
+   [Dependency] protected TurnHandler TurnHandler => this.DependOn<TurnHandler>();
+
+   [OnReady]
+   private void GetDependencies() {
+      this.Depend();
+   }
+
+   public virtual void Loaded() {
+      Enabled = true;
    }
 
    protected virtual IGameObjectParameters? Parameters { get; set; }

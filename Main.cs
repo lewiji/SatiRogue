@@ -1,13 +1,14 @@
 using Godot;
+using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Debug;
+using SatiRogue.Grid.MapGen;
 using SatiRogue.Tools;
 
 namespace SatiRogue;
 
 public class Main : Node {
    private Logger.LogLevel _logLevel;
-
-   private Rng _rng = new();
 
    [Export]
    public Logger.LogLevel LogLevel {
