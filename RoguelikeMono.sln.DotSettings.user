@@ -16,13 +16,17 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002EInfrastructure_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fecsrx_002Fbin_002FDebug_002Fnet46_002FSystemsRx_002EMicroRx_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fgo_005Fdot_005Fnet_002FFasterflect_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fgo_005Fdot_005Fnet_002FGoDotCollections_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fgo_005Fdot_005Fnet_002FGoDotLog_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fgo_005Fdot_005Fnet_002FGoDotNet_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002Fhome_002Flewiji_002Fgodot_002Fprojects_002FRoguelikeMono_002Flib_002Fgo_005Fdot_005Fnet_002FNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AEnumerable_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2021_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F4844cb0f3407473abf02981d50617694109800_003F53_003F4dde10d5_003FEnumerable_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARuntimeFeature_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2021_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ffcfbdeefab6d43d8611dfb6e80be305eeda7b0e2c92cbd4a622113777bad71f_003FRuntimeFeature_002Ecs_002Fz_003A2_002D0/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/SweaWarningsMode/@EntryValue">DoNotShowAndRun</s:String>
-	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
-  &lt;Assembly Path="\home\lewiji\dev\GodotRoguelikeMono\.mono\assemblies\Debug\GodotSharp.dll" /&gt;&#xD;
-  &lt;Assembly Path="\home\lewiji\dev\GodotRoguelikeMono\.mono\assemblies\Debug\GodotSharpEditor.dll" /&gt;&#xD;
-  &lt;Assembly Path="C:\Users\lewij\.nuget\packages\chickensoft.godotnet\0.0.2\lib\netstandard2.1\GoDotNet.dll" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
+  &lt;Assembly Path="/home/lewiji/godot/dev/godot-3.5/bin/GodotSharp/Mono/lib/mono/4.5/mscorlib.dll" /&gt;
+  &lt;Assembly Path="/home/lewiji/godot/projects/RoguelikeMono/lib/go_dot_net/GoDotNet.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">C:\Program Files\dotnet\sdk\6.0.201\MSBuild.dll</s:String>
 	<s:Int64 x:Key="/Default/Environment/Hierarchy/Build/BuildTool/MsBuildSolutionLoadingNodeCount/@EntryValue">4</s:Int64>

@@ -1,9 +1,0 @@
-[gd_resource type="DynamicFont" load_steps=2 format=2]
-
-[ext_resource path="res://addons/wfc_tools/assets/HungryPro.otf" type="DynamicFontData" id=1]
-
-[resource]
-size = 19
-outline_size = 2
-outline_color = Color( 0.0901961, 0, 0.219608, 0.470588 )
-font_data = ExtResource( 1 )

@@ -12,10 +12,10 @@ public class ActionPickRandomDestination : Action {
    public ActionPickRandomDestination(GridEntity owner) : base(owner) { }
 
    public override Error Execute() {
-      if (RuntimeMapNode.Instance?.MapData == null) return Error.Failed;
+      if (Owner?.RuntimeMapNode.MapData == null) return Error.Failed;
       
-      var randomCell = GD.Randi() % RuntimeMapNode.Instance.MapData.Cells.Count();
-      var destination = RuntimeMapNode.Instance.MapData.Cells.ElementAt((int) randomCell).Position;
+      var randomCell = GD.Randi() % Owner!.RuntimeMapNode.MapData.Cells.Count();
+      var destination = Owner?.RuntimeMapNode.MapData.Cells.ElementAt((int) randomCell).Position;
 
       if (Owner is GridEntity gridEntity && gridEntity.GetComponent<MovementComponent>() is { } movementComponent) {
          movementComponent.SetDestination(destination);

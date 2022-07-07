@@ -11,7 +11,7 @@ namespace SatiRogue.Components;
 public partial class InputHandlerComponent : Component {
    private bool _awaitingInput;
    private MovementDirection? _forcedInput;
-   public static bool InputEnabled = true;
+   public static bool InputEnabled = false;
 
    public override void HandleTurn() {
       if (EcOwner == null) throw new Exception("InputHandlerComponent couldn't doesn't have owner");

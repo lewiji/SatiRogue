@@ -6,6 +6,14 @@ using SatiRogue.Entities;
 
 namespace SatiRogue.Components;
 
+public class StatsComponentParameters : GameObjectParameters {
+    public StatEffectTypes statType;
+    public int statTypeIndex;
+    public int maxValue;
+    public int minValue = 0;
+    public int? initialValue = null;
+}
+
 public abstract partial class StatsComponent : Component
 {
     private int _value;
@@ -14,6 +22,8 @@ public abstract partial class StatsComponent : Component
     public int MaxValue { get; protected set; }
     public int MinValue { get; protected set; }
     public bool CanBeNegative { get; protected set; }
+    
+    private StatsComponentParameters? _parameters;
     public int Value
     {
         get => _value;
@@ -37,15 +47,19 @@ public abstract partial class StatsComponent : Component
 
     public Entity Entity => (Entity)EcOwner!;
 
-    protected StatsComponent(StatEffectTypes statType, int statTypeIndex, int maxValue, int minValue = 0, int? initialValue = null)
-    {
-        StatType = statType;
-        StatTypeIndex = statTypeIndex;
-        MaxValue = maxValue;
-        MinValue = minValue;
-        Value = initialValue ?? minValue;
+    public override void _EnterTree() {
+        _parameters = base.Parameters as StatsComponentParameters;
+        if (_parameters == null)
+            throw new Exception(
+                "StatsComponent was added to the tree without StatsComponentParameters; call InitialiseWithParameters before registering the entity.");
+        base._EnterTree();
+        StatType = _parameters.statType;
+        StatTypeIndex = _parameters.statTypeIndex;
+        MaxValue = _parameters.maxValue;
+        MinValue = _parameters.minValue;
+        Value = _parameters.initialValue ?? _parameters.minValue;
     }
-    
+
     [Signal] public delegate void Changed(int newValue);
     [Signal] public delegate void TookDamage(int damage);
     [Signal] public delegate void Depleted();

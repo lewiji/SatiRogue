@@ -16,7 +16,6 @@ public partial class MapGenerator : Node, IProvider<MapGenerator>, IProvider<Run
    private RuntimeMapNode? _runtimeMapNode;
    MapGenerator IProvider<MapGenerator>.Get() => this;
    RuntimeMapNode IProvider<RuntimeMapNode>.Get() => _runtimeMapNode;
-   
    public AStar AStar = new();
 
    public static MapGenParams? GetParams() {
@@ -52,20 +51,21 @@ public partial class MapGenerator : Node, IProvider<MapGenerator>, IProvider<Run
       _runtimeMapNode.Owner = GetParent();
       _runtimeMapNode.MapData = new MapData(MapData);
 
-      var placeEntitiesCommandQueue = new CommandQueue();
-      placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
-      placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
-      placeEntitiesCommandQueue.ExecuteAll();
-
       CallDeferred(nameof(EnableInput));
-      this.Provided();
    }
 
    private void EnableInput() {
-      InputHandlerComponent.InputEnabled = true;
+      
+      var placeEntitiesCommandQueue = new CommandQueue();
+      placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
+      placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
+    //  InputHandlerComponent.InputEnabled = true;
+      
+      this.Provided();
+      this.Autoload<Scheduler>().NextFrame(() => { placeEntitiesCommandQueue.ExecuteAll(); });
    }
 
    public void NextFloor() {
-      GetNode<GameController>(GameController.Path).Restart();
+      this.Autoload<GameController>().Restart();
    }
 }

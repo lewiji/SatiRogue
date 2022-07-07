@@ -4,6 +4,7 @@ using Godot;
 using Godot.Collections;
 using GoDotNet;
 using SatiRogue.Components;
+using SatiRogue.Grid;
 using SatiRogue.Turn;
 
 namespace SatiRogue.Entities;
@@ -19,6 +20,7 @@ public abstract class Entity : GameObject, IEntity, IDependent {
    private List<Component> _components { get; } = new();
    protected abstract List<Turn.Turn> TurnTypesToExecuteOn { get; set; }
    [Dependency] public TurnHandler TurnHandler => this.DependOn<TurnHandler>();
+   [Dependency] public RuntimeMapNode RuntimeMapNode => this.DependOn<RuntimeMapNode>();
 
    public bool Alive {
       get => _alive;
@@ -45,14 +47,17 @@ public abstract class Entity : GameObject, IEntity, IDependent {
          this.Depend();
       }
    }
-
-
+   
    public virtual void Loaded() {
       TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
          new Array {Turn.Turn.EnemyTurn});
       TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
          new Array {Turn.Turn.PlayerTurn});
       Enabled = true;
+      LoadComponents();
+   }
+
+   private void LoadComponents() {
       if (Parameters is not EntityParameters entityParameters) return;
       foreach (var parametersComponent in entityParameters.Components) AddComponent(parametersComponent);
    }
@@ -79,11 +84,16 @@ public abstract class Entity : GameObject, IEntity, IDependent {
       QueueFree();
    }
 
-   public Component AddComponent(Component component) {
+   public Component AddComponent(Component component, IGameObjectParameters? parameters = null) {
       component.EcOwner = this;
       _components.Add(component);
-      AddChild(component);
-      component.Owner = this;
+      if (parameters != null)
+         component.InitialiseWithParameters(parameters);
+      
+      //this.Autoload<Scheduler>().NextFrame(() => {
+         AddChild(component);
+         component.Owner = this;
+      //});
       return component;
    }
 

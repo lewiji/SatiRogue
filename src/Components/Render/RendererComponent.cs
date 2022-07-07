@@ -1,5 +1,7 @@
+using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Entities;
+using SatiRogue.Grid;
 
 namespace SatiRogue.Components.Render; 
 

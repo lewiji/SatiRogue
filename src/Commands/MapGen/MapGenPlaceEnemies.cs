@@ -26,6 +26,7 @@ public class MapGenPlaceEnemies : MapGenCommand {
          var enemyTypes = Enum.GetValues(typeof(EntityTypes));
          var enemyType = (EntityTypes) enemyTypes.GetValue(GD.Randi() % enemyTypes.Length);
 
+         
          EntityRegistry.RegisterEntity(
             new EnemyEntity(),
             new EnemyEntityParameters {
@@ -34,7 +35,7 @@ public class MapGenPlaceEnemies : MapGenCommand {
                BlocksCell = true,
                Name = enemyType.ToString(),
                Visible = false,
-               Components = new Component[] {new EnemyBehaviourTreeComponent(), new EnemyMeshRendererComponent(), new StatBar3DRendererComponent()}
+               Components = new Component[] {/*new EnemyBehaviourTreeComponent(),*/ new EnemyMeshRendererComponent(), new StatBar3DRendererComponent()}
             }
          );
       }

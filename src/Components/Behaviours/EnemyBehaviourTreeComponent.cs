@@ -19,14 +19,15 @@ public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       base._EnterTree();
       Name = "EnemyBehaviourTreeComponent";
    }
-   
-   [OnReady]
-   private void Loaded() {
-      if (EcOwner is EnemyEntity enemyEntity)
-         BehaviourTree = new EnemyBehaviourTree(enemyEntity, enemyEntity.TurnHandler);
+
+
+   public override void Loaded() {
+      /*if (EcOwner is EnemyEntity enemyEntity)
+         BehaviourTree = new EnemyBehaviourTree(enemyEntity, TurnHandler);
       else
-         Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");
+         Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");*/
    }
+
 
    private class EnemyBehaviourTree : Gig {
       private readonly EnemyEntity _enemyEntity;

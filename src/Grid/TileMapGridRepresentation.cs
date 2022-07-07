@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using GoDotNet;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
@@ -7,7 +8,7 @@ using SatiRogue.scenes;
 
 namespace SatiRogue.Grid;
 
-public class TileMapGridRepresentation : TileMap {
+public class TileMapGridRepresentation : TileMap, IDependent {
    public static int? TileSize;
    private Camera2D? _camera2D;
    private Label? _debugLabel;
@@ -15,6 +16,7 @@ public class TileMapGridRepresentation : TileMap {
    [Export] private NodePath? _cameraNodePath { get; set; }
    [Export] private NodePath? _twoDeeNodePath { get; set; }
    [Export] private NodePath? _enemiesNodePath { get; set; }
+   [Dependency] private RuntimeMapNode RuntimeMapNode => this.DependOn<RuntimeMapNode>();
 
    public override void _Ready() {
       Clear();
@@ -26,20 +28,21 @@ public class TileMapGridRepresentation : TileMap {
       _camera2D = GetNode<Camera2D>(_cameraNodePath);
       _enemiesNode2D = GetNode<Node2D>(_enemiesNodePath);
 
-      CallDeferred(nameof(ConnectToGridGenerator));
+      this.Depend();
    }
 
-   private void ConnectToGridGenerator() {
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
+   public void Loaded() {
+      RuntimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
+      RuntimeMapNode.Connect(nameof(RuntimeMapNode.VisibilityChanged), this, nameof(OnVisibilityChanged));
    }
 
    private async void OnMapDataChanged() {
       await ToSignal(GetTree(), "idle_frame");
-      var cells = RuntimeMapNode.Instance?.MapData?.Cells;
-      foreach (var cell in cells)
-         if (GetTileId(cell) is { } cellValue)
-            SetCell(cell.Position.x, cell.Position.z, cellValue);
+      var cells = RuntimeMapNode.MapData?.Cells;
+      if (cells != null)
+         foreach (var cell in cells)
+            if (GetTileId(cell) is { } cellValue)
+               SetCell(cell.Position.x, cell.Position.z, cellValue);
 
       foreach (var entityData in EntityRegistry.EntityList)
          if (entityData.Value is EnemyEntity enemyData) {
@@ -63,7 +66,7 @@ public class TileMapGridRepresentation : TileMap {
    }
 
    private void Redraw() {
-      var cells = RuntimeMapNode.Instance?.MapData?.GetSurroundingCells(EntityRegistry.Player!.GridPosition).GetEnumerator();
+      var cells = RuntimeMapNode.MapData?.GetSurroundingCells(EntityRegistry.Player!.GridPosition).GetEnumerator();
       if (cells == null) return;
       var startVec = new Vector3i(0, 0, 0);
       var endVec = new Vector3i(MapData.SurroundingCellsRadius, 0, MapData.SurroundingCellsRadius);
@@ -77,8 +80,6 @@ public class TileMapGridRepresentation : TileMap {
 
          }
       }
-
-      
    }
 
    private void OnVisibilityChanged(Vector3[] positions) {

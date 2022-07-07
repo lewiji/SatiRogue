@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
@@ -64,15 +65,17 @@ public abstract class GridEntity : Entity {
 
    public override void Loaded() {
       base.Loaded();
-      RegisterMovementComponent(_parameters?.GridPosition.GetValueOrDefault());
+      RegisterMovementComponent(_parameters?.GridPosition);
    }
 
    protected virtual void RegisterMovementComponent(Vector3i? gridPosition) {
-      MovementComponent = new MovementComponent(_parameters?.GridPosition.GetValueOrDefault());
-      Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault()}");
+      MovementComponent = new MovementComponent();
+      Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault().ToVector3()}");
       MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
-      AddComponent(MovementComponent);
-      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
+      this.Autoload<Scheduler>().NextFrame(() => {
+         AddComponent(MovementComponent);
+         if (gridPosition != null) MovementComponent.GridPosition = gridPosition.Value;
+      });
       CallDeferred(nameof(CheckVisibility));
    }
 

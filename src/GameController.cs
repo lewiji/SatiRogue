@@ -6,15 +6,7 @@ using SatiRogue.Entities;
 namespace SatiRogue; 
 
 public class GameController : Node {
-   public static string? Path;
 
-   public override void _EnterTree() {
-      Path = GetPath();
-   }
-
-   public override void _ExitTree() {
-      Path = null;
-   }
    public async void Restart() {
       Logger.Warn("--- RESTART REQUESTED ---");
       InputHandlerComponent.InputEnabled = false;

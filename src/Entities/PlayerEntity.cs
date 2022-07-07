@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
 using SatiRogue.Camera;
 using SatiRogue.Components;
 using SatiRogue.Components.Render;
@@ -34,28 +35,36 @@ public class PlayerEntity : GridEntity {
 
    public override void Loaded() {
       base.Loaded();
+      RuntimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
       
-      AddComponent(new InputHandlerComponent());
-      AddComponent(new StatHealthComponent(10)).Connect(nameof(StatsComponent.TookDamage), this, nameof(OnTookDamage));
-      AddComponent(new PlayerRendererComponent());
-      AddComponent(new GridIndicatorSpatialComponent());
-      AddComponent(new MousePickSpatialCellComponent());
+      CallDeferred(nameof(CheckVisibility));
    }
 
    protected override void RegisterMovementComponent(Vector3i? gridPosition)
    {
-      MovementComponent = new PlayerMovementComponent(gridPosition);
-      Connect(
+      MovementComponent = new PlayerMovementComponent();
+      MovementComponent.Connect(
          nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
-      AddComponent(MovementComponent);
-      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
-      CallDeferred(nameof(CheckVisibility));
+      //this.Autoload<Scheduler>().NextFrame(() => {
+         AddComponent(MovementComponent);
+         AddComponent(new InputHandlerComponent());
+         AddComponent(new StatHealthComponent(), new StatsComponentParameters {
+            statType = StatEffectTypes.Stat, 
+            statTypeIndex = (int)StatTypes.Health, 
+            maxValue = 10, 
+            minValue = 0, 
+            initialValue = 10
+         });
+         AddComponent(new PlayerRendererComponent());
+         AddComponent(new GridIndicatorSpatialComponent());
+         AddComponent(new MousePickSpatialCellComponent());
+         MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
+     // });
+      
    }
 
    public override void _Ready() {
       Logger.Info("Player ready");
-
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
       Visible = true;
    }
 
@@ -69,7 +78,7 @@ public class PlayerEntity : GridEntity {
    protected override async void OnDead() {
       Enabled = false;
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
-      GetNode<GameController>(GameController.Path).Restart();
+      this.Autoload<GameController>().Restart();
    }
 
    private void OnMapDataChanged() {
@@ -86,8 +95,8 @@ public class PlayerEntity : GridEntity {
    private async void UpdateFov() {
       Logger.Info("--- Calculating player FOV ---");
       await ToSignal(GetTree(), "idle_frame");
-      if (RuntimeMapNode.Instance?.MapData != null) 
-         ShadowCast.ComputeVisibility(RuntimeMapNode.Instance.MapData, GridPosition, 11.0f);
+      if (RuntimeMapNode.MapData != null) 
+         ShadowCast.ComputeVisibility(RuntimeMapNode.MapData, GridPosition, 11.0f);
       CheckVisibility();
    }
 }

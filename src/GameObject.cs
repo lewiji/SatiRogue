@@ -35,7 +35,7 @@ public abstract partial class GameObject : Node, IGameObject {
       set {
          _enabled = value;
          if (this is PlayerEntity) {
-            InputHandlerComponent.InputEnabled = _enabled;
+            //InputHandlerComponent.InputEnabled = _enabled;
          }
       }
    }

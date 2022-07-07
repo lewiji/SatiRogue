@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -7,15 +8,14 @@ using SatiRogue.MathUtils;
 
 namespace SatiRogue.Components;
 
-public class PlayerMovementComponent : MovementComponent {
+public partial class PlayerMovementComponent : MovementComponent {
    private MovementDirection? _direction;
 
    private PlayerEntity? _playerEntity;
-   public PlayerMovementComponent(Vector3i? initialPosition = null) : base(initialPosition) { }
 
-   public override GameObject? EcOwner {
-      get => _playerEntity;
-      set => _playerEntity = value as PlayerEntity;
+   [OnReady]
+   private void CastOwner() {
+      _playerEntity = EcOwner as PlayerEntity;
    }
 
    public void SetDestination(MovementDirection movementDirection) {

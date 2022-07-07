@@ -42,12 +42,12 @@ public partial class SpatialRendererComponent : RendererComponent {
       CallDeferred(nameof(HandleVisibilityChanged));
       CallDeferred(nameof(HandlePositionChanged));
    }
-   
+
    [OnReady]
-   private async void ConnectPositionChanged() {
+   private async void Loaded() {
       GridEntity?.Connect(nameof(GridEntity.PositionChanged), this, nameof(HandlePositionChanged));
       GridEntity?.Connect(nameof(GridEntity.VisibilityChanged), this, nameof(HandleVisibilityChanged));
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(HandleVisibilityChanged));
+      GridEntity?.RuntimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(HandleVisibilityChanged));
       await ToSignal(GetTree(), "idle_frame");
       HandleVisibilityChanged();
    }
@@ -76,9 +76,8 @@ public partial class SpatialRendererComponent : RendererComponent {
             TargetTranslation = null;
             CallDeferred(nameof(OnFinishedTeleporting));
             ResetPhysicsInterpolation();
-         } else if (distanceSq < 0.025f) {
+         } else if (distanceSq < 0.01f) {
             RootNode.Translation = TargetTranslation.Value;
-            ResetPhysicsInterpolation();
             TargetTranslation = null;
          } else {
             RootNode.Translation = RootNode.Translation.LinearInterpolate(TargetTranslation.Value, 14f * delta);

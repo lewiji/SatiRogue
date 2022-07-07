@@ -40,8 +40,7 @@ public static class EntityResourceLocator {
             ResourcePaths = {
                {nameof(SpriteFrames), "res://resources/enemies/maw/maw_purple_sprite_Frames.tres"},
                {nameof(Material), "res://resources/enemies/maw/maw_purple_spatial_mat.tres"}
-            },
-            Components = new Component[] {new EnemyBehaviourTreeComponent()}
+            }
          }
       }, {
          EntityTypes.Ratfolk,
@@ -49,8 +48,7 @@ public static class EntityResourceLocator {
             ResourcePaths = {
                {nameof(SpriteFrames), "res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres"},
                {nameof(Material), "res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres"}
-            },
-            Components = new Component[] {new EnemyBehaviourTreeComponent()}
+            }
          }
       }, {
          EntityTypes.Harpy,
@@ -58,8 +56,7 @@ public static class EntityResourceLocator {
             ResourcePaths = {
                {nameof(SpriteFrames), "res://resources/enemies/harpy/harpy_blue_spriteframes.tres"},
                {nameof(Material), "res://resources/enemies/harpy/harpy_blue_spatial_mat.tres"}
-            },
-            Components = new Component[] {new EnemyBehaviourTreeComponent()}
+            }
          }
       }
    };
