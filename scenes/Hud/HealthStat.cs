@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Components;
@@ -39,7 +38,4 @@ public partial class HealthStat : MarginContainer
         if (_progress != null && _playerHealthComponent != null) _progress.Value = _playerHealthComponent.Value;
         if (HealthLabel != null) HealthLabel.Text = health.ToString();
     }
-    
-    
-
 }

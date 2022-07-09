@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -26,18 +28,17 @@ public interface IGameObject {
 }
 
 public abstract partial class GameObject : Node, IGameObject {
-   private bool _enabled = true;
+   private bool _enabled = false;
 
    public bool Enabled {
       get => _enabled;
       set {
          _enabled = value;
          if (this is PlayerEntity) {
-            InputHandlerComponent.InputEnabled = _enabled;
+            //InputHandlerComponent.InputEnabled = _enabled;
          }
       }
    }
-
    protected virtual IGameObjectParameters? Parameters { get; set; }
    public string Uuid { get; protected set; } = Guid.NewGuid().ToString();
    public virtual GameObject? EcOwner { get; set; }
@@ -47,10 +48,12 @@ public abstract partial class GameObject : Node, IGameObject {
    }
 
    public override void _Notification(int what) {
-      if (what == NotificationEnterTree) {
-         EcOwner = Parameters?.EcOwner ?? GetParentOrNull<GameObject>();
-         Name = Parameters?.Name ?? "GameObject";
-         Owner = EcOwner;
+      switch (what) {
+         case NotificationEnterTree:
+            EcOwner = Parameters?.EcOwner ?? GetParentOrNull<GameObject>();
+            Name = Parameters?.Name ?? "GameObject";
+            Owner = EcOwner;
+            break;
       }
    }
 

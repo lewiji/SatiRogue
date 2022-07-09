@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using GoDotNet;
 using SatiRogue.Components;
+using SatiRogue.Grid;
 using SatiRogue.Turn;
 
 namespace SatiRogue.Entities;
@@ -11,13 +13,15 @@ public class EntityParameters : GameObjectParameters {
    public Component[] Components { get; set; } = { };
 }
 
-public abstract class Entity : GameObject, IEntity {
+public abstract class Entity : GameObject, IEntity, IDependent {
    private EntityParameters? _parameters;
    private bool _alive = true;
-   
    public IEnumerable<Component> Components => _components;
    private List<Component> _components { get; } = new();
    protected abstract List<Turn.Turn> TurnTypesToExecuteOn { get; set; }
+   [Dependency] public TurnHandler TurnHandler => this.DependOn<TurnHandler>();
+   [Dependency] public RuntimeMapNode RuntimeMapNode => this.DependOn<RuntimeMapNode>();
+
    public bool Alive {
       get => _alive;
       set {
@@ -28,25 +32,36 @@ public abstract class Entity : GameObject, IEntity {
          _alive = value;
       }
    }
+   
    [Signal] public delegate void Died();
 
    public override void _EnterTree() {
       base._EnterTree();
       Name = Parameters?.Name ?? "Entity";
-      
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-         new Array {Turn.Turn.EnemyTurn});
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
-         new Array {Turn.Turn.PlayerTurn});
       Connect(nameof(Died), this, nameof(OnDead));
    }
 
-   public override void _Ready() {
-      base._Ready();
+   public override void _Notification(int what) {
+      base._Notification(what);
+      if (what == NotificationReady) {
+         this.Depend();
+      }
+   }
+   
+   public virtual void Loaded() {
+      TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
+         new Array {Turn.Turn.EnemyTurn});
+      TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(FilterTurnTypesToExecuteOn),
+         new Array {Turn.Turn.PlayerTurn});
+      Enabled = true;
+      LoadComponents();
+   }
+
+   private void LoadComponents() {
       if (Parameters is not EntityParameters entityParameters) return;
       foreach (var parametersComponent in entityParameters.Components) AddComponent(parametersComponent);
    }
-   
+
    private void FilterTurnTypesToExecuteOn(Turn.Turn turn)
    {
       if (!TurnTypesToExecuteOn.Contains(turn)) return;
@@ -69,11 +84,16 @@ public abstract class Entity : GameObject, IEntity {
       QueueFree();
    }
 
-   public Component AddComponent(Component component) {
+   public Component AddComponent(Component component, IGameObjectParameters? parameters = null) {
       component.EcOwner = this;
       _components.Add(component);
-      AddChild(component);
-      component.Owner = this;
+      if (parameters != null)
+         component.InitialiseWithParameters(parameters);
+      
+      //this.Autoload<Scheduler>().NextFrame(() => {
+         AddChild(component);
+         component.Owner = this;
+      //});
       return component;
    }
 

@@ -1,23 +1,31 @@
+using System;
 using Godot;
+using GoDotNet;
+using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Turn;
 
 namespace SatiRogue.Components;
 
-public class InputHandlerComponent : Component {
+public partial class InputHandlerComponent : Component {
    private bool _awaitingInput;
    private MovementDirection? _forcedInput;
-   public static bool InputEnabled = true;
+   public static bool InputEnabled = false;
 
    public override void HandleTurn() {
-      switch (Systems.TurnHandler.Turn) {
+      if (EcOwner == null) throw new Exception("InputHandlerComponent couldn't doesn't have owner");
+      switch (((Entity) EcOwner).TurnHandler.Turn) {
          case Turn.Turn.PlayerTurn:
             HandlePlayerTurnStarted();
             break;
          case Turn.Turn.EnemyTurn:
             HandleEnemyTurnStarted();
             break;
+         case Turn.Turn.Processing:
+            break;
+         default:
+            throw new ArgumentOutOfRangeException();
       }
    }
 

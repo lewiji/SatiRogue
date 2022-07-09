@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
+using SatiRogue.Components;
 using SatiRogue.Components.Stats;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Entities;
 
@@ -34,7 +37,20 @@ public class EnemyEntity : GridEntity {
       EntityType = _parameters.EntityType;
       SightRange = _parameters.SightRange ?? 6;
       Name = _parameters.Name ?? "Enemy";
-      AddComponent(new StatHealthComponent(1));
+   }
+
+   protected override void RegisterMovementComponent(Vector3i? gridPosition) {
+      base.RegisterMovementComponent(gridPosition);
+      this.Autoload<Scheduler>().NextFrame(() => {
+         AddComponent(new StatHealthComponent(), new StatsComponentParameters {
+            statType = StatEffectTypes.Stat, 
+            statTypeIndex = (int)StatTypes.Health, 
+            maxValue = 1, 
+            minValue = 0, 
+            initialValue = 1
+         });
+      });
+      
    }
 
    protected override void OnPositionChanged() {

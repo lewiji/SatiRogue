@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
@@ -7,15 +8,14 @@ using SatiRogue.MathUtils;
 
 namespace SatiRogue.Components;
 
-public class PlayerMovementComponent : MovementComponent {
+public partial class PlayerMovementComponent : MovementComponent {
    private MovementDirection? _direction;
 
    private PlayerEntity? _playerEntity;
-   public PlayerMovementComponent(Vector3i? initialPosition = null) : base(initialPosition) { }
 
-   public override GameObject? EcOwner {
-      get => _playerEntity;
-      set => _playerEntity = value as PlayerEntity;
+   [OnReady]
+   private void CastOwner() {
+      _playerEntity = EcOwner as PlayerEntity;
    }
 
    public void SetDestination(MovementDirection movementDirection) {
@@ -23,17 +23,17 @@ public class PlayerMovementComponent : MovementComponent {
       var targetCellOccupants = TestMoveForOccupants(_direction.GetValueOrDefault());
       switch (targetCellOccupants?.Length) {
          case 0:
-            Systems.TurnHandler.SetPlayerCommand(
+            _playerEntity?.TurnHandler.SetPlayerCommand(
                new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
          case > 0 when targetCellOccupants.First() is EnemyEntity enemyEntity:
-            Systems.TurnHandler.SetPlayerCommand(
+            _playerEntity?.TurnHandler.SetPlayerCommand(
                new ActionAttack(_playerEntity!, enemyEntity)
             );
             break;
          case > 0 when targetCellOccupants.Last() is StairsEntity stairsEntity:
-            Systems.TurnHandler.SetPlayerCommand(
+            _playerEntity?.TurnHandler.SetPlayerCommand(
                new ActionMove(_playerEntity!, _direction.GetValueOrDefault())
             );
             break;
@@ -46,7 +46,7 @@ public class PlayerMovementComponent : MovementComponent {
                Logger.Info("TargetCellOccupants was nul???");
             }
 
-            Systems.TurnHandler.SetPlayerCommand(
+            _playerEntity?.TurnHandler.SetPlayerCommand(
                new ActionDoNothing(_playerEntity!)
             );
             break;

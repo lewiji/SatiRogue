@@ -43,15 +43,15 @@ public partial class MovementComponent : Component {
    private Queue<Vector3>? _path;
    public Cell? CurrentCell { get; protected set; }
 
-   public MovementComponent(Vector3i? initialPosition = null) {
-      _initialPosition = initialPosition;
-   }
 
    public Vector3i GridPosition {
       get => _gridPosition.GetValueOrDefault();
       set {
          LastPosition = _gridPosition;
          _gridPosition = value;
+         if (_initialPosition == null) {
+            _initialPosition = value;
+         }
          EmitSignal(nameof(PositionChanged));
       }
    }
@@ -59,15 +59,13 @@ public partial class MovementComponent : Component {
    public Vector3i? LastPosition { get; protected set; }
    public Vector3i InputDirection { get; protected set; }
 
-   public override GameObject? EcOwner {
-      get => _parent;
-      set => _parent = value as GridEntity;
-   }
 
-   [OnReady]
-   private void ConnectEnemyTurnSignal() {
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
-      Systems.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+   public override void _Ready() {
+      _parent = base.EcOwner as GridEntity;
+      _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
+      _parent?.TurnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(RecordPathfindingCalls));
+      _parent?.TurnHandler.Connect(nameof(TurnHandler.OnEnemyTurnStarted), this, nameof(StopRecordingPathfindingCalls));
+      SetInitialPosition();
    }
 
    private void RecordPathfindingCalls() {
@@ -79,13 +77,8 @@ public partial class MovementComponent : Component {
       //await ToSignal(GetTree(), "idle_frame");
    }
 
-   public override void _EnterTree() {
-      GridPosition = _initialPosition.GetValueOrDefault();
-   }
-
-   [OnReady]
    private async void SetInitialPosition() {
-      RuntimeMapNode.Instance?.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
+      _parent?.RuntimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapChanged));
       await ToSignal(GetTree(), "idle_frame");
       OnMapChanged();
    }
@@ -93,8 +86,8 @@ public partial class MovementComponent : Component {
    private async void OnMapChanged() {
       if (EcOwner != null && _initialPosition != null)
       {
-         RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
-         CurrentCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(_initialPosition.Value);
+         _parent?.RuntimeMapNode.MapData?.GetCellAt(_initialPosition.Value).Occupants.Add(EcOwner.GetInstanceId());
+         CurrentCell = _parent?.RuntimeMapNode.MapData?.GetCellAt(_initialPosition.Value);
       }
       if (_parent is EnemyEntity)
       {
@@ -117,8 +110,10 @@ public partial class MovementComponent : Component {
       
       if (_path == null) {
          if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
-            _path = new Queue<Vector3>(RuntimeMapNode.Instance.MapData.FindPath(GridPosition, _destination));
+         if (_parent?.RuntimeMapNode.MapData != null) {
+            _path = new Queue<Vector3>(_parent.RuntimeMapNode.MapData.FindPath(GridPosition, _destination));
             if (_path.Count > 0) _path.Dequeue();
+         }
       }
       
       if (_path is {Count: >= 1}) {
@@ -132,8 +127,8 @@ public partial class MovementComponent : Component {
       Action action;
       if (_path == null && _destination != null) {
          if (_recordingPathfindingCalls) numPathingCallsThisTurn += 1;
-         if (RuntimeMapNode.Instance?.MapData != null) {
-            _path = new Queue<Vector3>(RuntimeMapNode.Instance.MapData.FindPath(GridPosition, _destination));
+         if (_parent?.RuntimeMapNode.MapData != null) {
+            _path = new Queue<Vector3>(_parent!.RuntimeMapNode.MapData.FindPath(GridPosition, _destination));
             if (_path.Count > 0) _path.Dequeue();
          }
       }
@@ -146,11 +141,11 @@ public partial class MovementComponent : Component {
       InputDirection = MovementDirectionToVector(dir);
 
       var targetPosition = GridPosition + InputDirection;
-      var targetCell = RuntimeMapNode.Instance?.MapData?.GetCellAt(targetPosition);
+      var targetCell = _parent?.RuntimeMapNode.MapData?.GetCellAt(targetPosition);
 
       if (targetCell?.Blocked ?? true) return false;
 
-      RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
+      _parent?.RuntimeMapNode.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
       targetCell.Occupants.Add(EcOwner!.GetInstanceId());
 
       CurrentCell = targetCell;
@@ -171,11 +166,7 @@ public partial class MovementComponent : Component {
          Array.ConvertAll<ulong, GameObject>(targetCell.Occupants.ToArray(), id => (GameObject) GD.InstanceFromId(id)).Where(inst => 
          IsInstanceValid(inst)).ToArray();
    }
-   
-   [OnReady]
-   private void ConnectSignals() {
-      _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
-   }
+
 
    private void OnDead() {
       RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());

@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using SatiRogue.Components;
 using SatiRogue.Components.Behaviours;
+using SatiRogue.Components.Render;
 using SatiRogue.Entities;
 using SatiRogue.Grid;
 using SatiRogue.Grid.MapGen;
@@ -25,6 +26,7 @@ public class MapGenPlaceEnemies : MapGenCommand {
          var enemyTypes = Enum.GetValues(typeof(EntityTypes));
          var enemyType = (EntityTypes) enemyTypes.GetValue(GD.Randi() % enemyTypes.Length);
 
+         
          EntityRegistry.RegisterEntity(
             new EnemyEntity(),
             new EnemyEntityParameters {
@@ -33,7 +35,7 @@ public class MapGenPlaceEnemies : MapGenCommand {
                BlocksCell = true,
                Name = enemyType.ToString(),
                Visible = false,
-               Components = new Component[] {new EnemyBehaviourTreeComponent()}
+               Components = new Component[] {/*new EnemyBehaviourTreeComponent(),*/ new EnemyMeshRendererComponent(), new StatBar3DRendererComponent()}
             }
          );
       }

@@ -58,9 +58,7 @@ public partial class TurnHandler : Node {
    [OnReady]
    private async void SetFirstTurn() {
       AddChild(_turnTimer);
-      await ToSignal(GetTree(), "idle_frame");
-      await ToSignal(GetTree(), "idle_frame");
-      await ToSignal(GetTree(), "idle_frame");
+      await ToSignal(GetTree().CreateTimer(0.25f), "timeout");
       Turn = Turn.PlayerTurn;
    }
 

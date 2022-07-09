@@ -12,26 +12,42 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <Configurations>ExportDebug;ExportRelease;Debug</Configurations>
-        <Platforms>AnyCPU;x64</Platforms>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'ExportDebug' ">
-        <DocumentationFile>/home/lewiji/godot/projects/RoguelikeMono/.mono/temp/bin/ExportDebug/RoguelikeMono.xml</DocumentationFile>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|x64' ">
+      <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'ExportRelease' ">
-        <WarningLevel>3</WarningLevel>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+      <DebugType>full</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Chickensoft.GoDotNet" Version="0.0.2" />
         <PackageReference Include="GodotOnReady" Version="1.2.1" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="lib\activelogic\Debug\netstandard2.1\main.deps.json" />
         <Content Include="lib\activelogic\Debug\netstandard2.1\main.dll" />
         <Content Include="lib\activelogic\Debug\netstandard2.1\main.pdb" />
+        <Content Include="lib\go_dot_net\Fasterflect.dll" />
+        <Content Include="lib\go_dot_net\GoDotCollections.dll" />
+        <Content Include="lib\go_dot_net\GoDotLog.dll" />
+        <Content Include="lib\go_dot_net\Newtonsoft.Json.dll" />
     </ItemGroup>
     <ItemGroup>
+        <Reference Include="Fasterflect">
+          <HintPath>lib\go_dot_net\Fasterflect.dll</HintPath>
+        </Reference>
+        <Reference Include="GoDotCollections">
+          <HintPath>lib\go_dot_net\GoDotCollections.dll</HintPath>
+        </Reference>
+        <Reference Include="GoDotLog">
+          <HintPath>lib\go_dot_net\GoDotLog.dll</HintPath>
+        </Reference>
         <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\activelogic\Debug\netstandard2.1\main.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
         </Reference>
     </ItemGroup>
 </Project>

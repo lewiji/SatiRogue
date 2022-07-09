@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using GoDotNet;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
@@ -31,7 +32,6 @@ public abstract class GridEntity : Entity {
       set
       {
          _parameters = value as GridEntityParameters;
-         MovementComponent = new MovementComponent(_parameters?.GridPosition.GetValueOrDefault());
       }
    }
 
@@ -49,10 +49,7 @@ public abstract class GridEntity : Entity {
 
    public Vector3i GridPosition
    {
-      get
-      { 
-         return MovementComponent!.GridPosition;
-      }
+      get => MovementComponent?.GridPosition ?? Vector3i.Zero;
       set
       {
          MovementComponent!.GridPosition = value;
@@ -64,14 +61,21 @@ public abstract class GridEntity : Entity {
       Name = Parameters?.Name ?? "GridEntity";
       BlocksCell = _parameters?.BlocksCell.GetValueOrDefault() ?? true;
       Visible = _parameters?.Visible.GetValueOrDefault() ?? false;
-      RegisterMovementComponent(_parameters?.GridPosition.GetValueOrDefault());
+   }
+
+   public override void Loaded() {
+      base.Loaded();
+      RegisterMovementComponent(_parameters?.GridPosition);
    }
 
    protected virtual void RegisterMovementComponent(Vector3i? gridPosition) {
-      Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault()}");
-      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
-      AddComponent(MovementComponent);
+      MovementComponent = new MovementComponent();
+      Logger.Info($"Registering GridEntity at {gridPosition.GetValueOrDefault().ToVector3()}");
       MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      this.Autoload<Scheduler>().NextFrame(() => {
+         AddComponent(MovementComponent);
+         if (gridPosition != null) MovementComponent.GridPosition = gridPosition.Value;
+      });
       CallDeferred(nameof(CheckVisibility));
    }
 

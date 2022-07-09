@@ -1,0 +1,135 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "GoDotNet/1.0.0": {
+        "dependencies": {
+          "Chickensoft.GoDotCollections": "0.0.3",
+          "Chickensoft.GoDotLog": "0.0.5",
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "13.0.1",
+          "SauceControl.InheritDoc": "1.3.0",
+          "fasterflect": "3.0.0"
+        },
+        "runtime": {
+          "GoDotNet.dll": {}
+        }
+      },
+      "Chickensoft.GoDotCollections/0.0.3": {
+        "runtime": {
+          "lib/netstandard2.1/GoDotCollections.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Chickensoft.GoDotLog/0.0.5": {
+        "runtime": {
+          "lib/netstandard2.1/GoDotLog.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "fasterflect/3.0.0": {
+        "dependencies": {
+          "System.Reflection.Emit.ILGeneration": "4.7.0",
+          "System.Reflection.Emit.Lightweight": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard20/Fasterflect.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
+      "Microsoft.CSharp/4.7.0": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.CSharp.dll": {
+            "assemblyVersion": "4.0.5.0",
+            "fileVersion": "4.700.19.56404"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.1.25517"
+          }
+        }
+      },
+      "SauceControl.InheritDoc/1.3.0": {},
+      "System.Reflection.Emit.ILGeneration/4.7.0": {},
+      "System.Reflection.Emit.Lightweight/4.7.0": {}
+    }
+  },
+  "libraries": {
+    "GoDotNet/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Chickensoft.GoDotCollections/0.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kDQwwpNzK1tvRqYBosU8ojv94HJd34GjYLghi008tsMGj1a7ElJ/hXP6tgy2WYus5bRUcWJI4Om4Cfbs41QhEw==",
+      "path": "chickensoft.godotcollections/0.0.3",
+      "hashPath": "chickensoft.godotcollections.0.0.3.nupkg.sha512"
+    },
+    "Chickensoft.GoDotLog/0.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dqIxDfR+B02MyDVpCqyD79u0YPTz8LV9wf4T1axzA3eJqw151pwVNLJKa3VE1ZJ4qV09W3wbCeC28l07Wrzu9A==",
+      "path": "chickensoft.godotlog/0.0.5",
+      "hashPath": "chickensoft.godotlog.0.0.5.nupkg.sha512"
+    },
+    "fasterflect/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nXucxx84mYH+fS9U92a4Ak/MfWP0H204c8D2I64zsOQynnihhavO6HOCUcpp8HfKZMn3aNn01iv1bINnxH7Kow==",
+      "path": "fasterflect/3.0.0",
+      "hashPath": "fasterflect.3.0.0.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "path": "newtonsoft.json/13.0.1",
+      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "SauceControl.InheritDoc/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5TD+Msy3h4fanqlXQUTaXol79Ci2mTV7t4rS2uLRAQncIqKOUoUl/n8Y4jNVcV8WN2fVlwypm1mxvW47pJByTQ==",
+      "path": "saucecontrol.inheritdoc/1.3.0",
+      "hashPath": "saucecontrol.inheritdoc.1.3.0.nupkg.sha512"
+    },
+    "System.Reflection.Emit.ILGeneration/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AucBYo3DSI0IDxdUjKksBcQJXPHyoPyrCXYURW1WDsLI4M65Ar/goSHjdnHOAY9MiYDNKqDlIgaYm+zL2hA1KA==",
+      "path": "system.reflection.emit.ilgeneration/4.7.0",
+      "hashPath": "system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512"
+    },
+    "System.Reflection.Emit.Lightweight/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a4OLB4IITxAXJeV74MDx49Oq2+PsF6Sml54XAFv+2RyWwtDBcabzoxiiJRhdhx+gaohLh4hEGCLQyBozXoQPqA==",
+      "path": "system.reflection.emit.lightweight/4.7.0",
+      "hashPath": "system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+    }
+  }
+}

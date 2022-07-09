@@ -22,7 +22,7 @@ public class MapGenPlacePlayer : MapGenCommand {
             GridPosition = new Vector3i(startX, 0, startY)
          });
 
-      Logger.Info($"Created player at {new Vector3i(startX, 0, startY)}");
+      Logger.Info($"Created player at {new Vector3(startX, 0, startY)}");
       return Error.Ok;
    }
 }

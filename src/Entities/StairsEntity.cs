@@ -31,7 +31,6 @@ public partial class StairsEntity : GridEntity {
       base.Parameters = _parameters;
       base._EnterTree();
       Name = _parameters.Name ?? $"Stairs{_parameters.Direction}";
-      Logger.Info($"Stairs at: {_parameters.GridPosition}");
    }
 
    public override void HandleTurn() {

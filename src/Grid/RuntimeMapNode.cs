@@ -5,7 +5,6 @@ namespace SatiRogue.Grid;
 
 public class RuntimeMapNode : Node {
    private MapData? _mapData;
-   public static RuntimeMapNode? Instance;
 
    [Signal] public delegate void MapChanged();
    [Signal] public delegate void VisibilityChanged(Vector3[] changedCells);
@@ -20,15 +19,8 @@ public class RuntimeMapNode : Node {
       }
    }
 
-   public override void _EnterTree() {
-      Instance = this;
-   }
-
-   public override void _ExitTree() {
-      Instance = null;
-   }
-
    public override async void _Ready() {
+      await ToSignal(GetTree(), "idle_frame");
       await ToSignal(GetTree(), "idle_frame");
       EmitMapChangedSignal();
    }

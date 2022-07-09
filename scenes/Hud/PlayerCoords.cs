@@ -12,6 +12,9 @@ public partial class PlayerCoords : Label {
     private async void ConnectStatChangedSignal()
     {
         await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
         _playerMovementComponent = EntityRegistry.Player.GetComponent<PlayerMovementComponent>();
         _playerMovementComponent?.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
         OnPositionChanged();

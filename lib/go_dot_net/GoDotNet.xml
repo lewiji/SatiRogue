@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GoDotNet</name>
+    </assembly>
+    <members>
+        <member name="T:Main">
+            <summary>
+            The main scene and this script only exist to inform Godot that this is
+            a C# project. Opening project.godot and building will generate the
+            correct .mono files for correct language server analysis.
+            </summary>
+        </member>
+        <member name="T:AutoloadCache">
+            <summary>
+            A static class used to cache autoloads whenever they are fetched. This
+            prevents <see cref="M:GoDotNet.NodeX.Autoload``1(Godot.Node)"/> from having to fetch the
+            root node children on every invocation.
+            </summary>
+        </member>
+        <member name="M:AutoloadCache.Write(System.Type,System.Object)">
+            <summary>
+            Save a value to the cache.
+            </summary>
+            <param name="type">Type of the node.</param>
+            <param name="value">Node to save.</param>
+        </member>
+        <member name="M:AutoloadCache.Read(System.Type)">
+            <summary>
+            Read a value from the cache.
+            </summary>
+            <param name="type">Type of the node.</param>
+            <returns>Node in the cache.</returns>
+        </member>
+        <member name="M:AutoloadCache.Has(System.Type)">
+            <summary>
+            Check if a value is in the cache.
+            </summary>
+            <param name="type">Type of the node.</param>
+            <returns>True if the value is saved in the cache.</returns>
+        </member>
+        <member name="T:GoDotNet.ArrayJsonConverter">
+            <summary>
+            Newtonsoft.JSON converter used to help serialize Godot array objects.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.ArrayJsonConverter.CanConvert(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.ArrayJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.ArrayJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GoDotNet.DictionaryJsonConverter">
+            <summary>
+            Newtonsoft.JSON converter used to help serialize Godot dictionary objects.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.DictionaryJsonConverter.CanConvert(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.DictionaryJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.DictionaryJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GoDotNet.ArrayX">
+            <summary>
+            Extension on Godot arrays that allows them to be converted to dotnet
+            lists.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.ArrayX.ToDotNet``1(Godot.Collections.Array)">
+            <summary>
+            Converts a Godot array into a C# list. Runs in O(n), so try not to use
+            on huge values.
+            </summary>
+            <param name="array">Godot array (receiver).</param>
+            <typeparam name="T">Type of the items in the array.</typeparam>
+            <returns>A dotnet list containing the Godot array contents.</returns>
+        </member>
+        <member name="M:GoDotNet.ArrayX.ToDotNet``1(Godot.Collections.Array{``0})">
+            <summary>
+            Converts a Godot array into a C# list. Runs in O(n), so try not to use
+            on huge values.
+            </summary>
+            <param name="array">Godot array (receiver).</param>
+            <typeparam name="T">Type of the items in the array.</typeparam>
+            <returns>A dotnet list containing the Godot array contents.</returns>
+        </member>
+        <member name="T:GoDotNet.DictionaryX">
+            <summary>
+            Extension on Godot dictionaries that allows them to be converted to dotnet
+            dictionaries.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.DictionaryX.ToDotNet``2(Godot.Collections.Dictionary{``0,``1})">
+            <summary>
+            Converts a Godot dictionary into a C# dictionary. Runs in O(n), so try
+            not to use on huge values.
+            </summary>
+            <param name="dictionary">Godot dictionary (receiver).</param>
+            <typeparam name="TKey">Type of key used in the dictionary.
+            </typeparam>
+            <typeparam name="TValue">Type of value used in the dictionary.
+            </typeparam>
+            <returns>A dotnet dictionary containing the Godot dictionary
+            contents.</returns>
+        </member>
+        <member name="T:GoDotNet.NodeX">
+            <summary>
+            A collection of extension methods for Godot nodes.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.NodeX.Autoload``1(Godot.Node)">
+             <summary>
+             Returns an instance of a Godot Autoload singleton. Implemented as an
+             extension of Godot.Node, for your convenience.
+            
+             This can potentially return the root node of the scene if and only if
+             you specify the type of the root node, which should be unlikely (an
+             edge case that can occur since this searches the root node's children).
+            
+             This respects type inheritance. If multiple autoloads extend the same
+             type, this returns the first autoload that is assignable to the
+             specified type. For best results, ensure the autoload type hierarchy
+             does not overlap.
+             </summary>
+             <param name="node">The node (receiver) used to get the scene root.
+             </param>
+             <typeparam name="T">The type of autoload to find.</typeparam>
+             <returns>The autoload instance, or throws.</returns>
+        </member>
+        <member name="M:GoDotNet.NodeX.Unawaited``1(Godot.Node,GoDotLog.ILog,System.Func{``0})">
+            <summary>
+            Invokes a task without waiting for it to complete. If an error occurs,
+            the log will be used to output the error message, if any.
+            </summary>
+            <param name="_"></param>
+            <param name="log">Log for outputting potential errors.</param>
+            <param name="callback">Asynchronous callback to be invoked.</param>
+            <typeparam name="T">Task returned by the callback.</typeparam>
+        </member>
+        <member name="T:GoDotNet.StringX">
+            <summary>
+            String extensions.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.StringX.ToNameCase(System.String)">
+            <summary>
+            Returns the string with the first letter capitalized.
+            </summary>
+            <param name="input">String receiver.</param>
+            <returns>The string with the first letter capitalized.</returns>
+        </member>
+        <member name="T:GoDotNet.GDObject">
+             <summary>
+             A base object that can be marshalled through Godot.
+            
+             Instead of inheriting from <see cref="T:Godot.Object"/> or
+             <see cref="T:Godot.Reference"/>, classes which need to be marshalled through
+             Godot can extend this class. This class also provides static methods which
+             aid in the serialization of the object to dynamic dictionaries and string
+             dictionaries.
+             </summary>
+        </member>
+        <member name="M:GoDotNet.GDObject.FromData``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Deserializes a GDObject from a dictionary produced by
+            <see cref="M:GoDotNet.GDObject.ToData``1(``0)"/>.
+            </summary>
+            <param name="data">Dictionary data.</param>
+            <typeparam name="T">Type of GDObject to deserialize to.</typeparam>
+            <returns>GDObject instance.</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.ToData``1(``0)">
+            <summary>
+            Serializes a <see cref="T:GoDotNet.GDObject"/> to a dictionary.
+            </summary>
+            <param name="obj">Object to serialize.</param>
+            <typeparam name="T">Type of object to serialize.</typeparam>
+            <returns>Dictionary data.</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.FromStringData``1(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Deserializes a GDObject from a string dictionary produced by
+            <see cref="M:GoDotNet.GDObject.ToStringData``1(``0)"/>.
+            </summary>
+            <param name="data">Dictionary data.</param>
+            <typeparam name="T">Type of GDObject to deserialize to.</typeparam>
+            <returns>An object instance.</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.ToStringData``1(``0)">
+            <summary>
+            Serializes a <see cref="T:GoDotNet.GDObject"/> to a string dictionary.
+            </summary>
+            <param name="obj">Object to serialize.</param>
+            <typeparam name="T">Type of object to serialize.</typeparam>
+            <returns>Dictionary data.</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.GetKeys``1(``0)">
+            <summary>
+            Computes the properties of the object and returns a set of property
+            names. Uses Newtonsoft.Json to serialize object properties.
+            </summary>
+            <param name="obj">GDObject or subclass instance.</param>
+            <typeparam name="T">GDObject or subclass.</typeparam>
+            <returns>Set of property names in the object.</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.GDObject.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.GDObject.op_Equality(GoDotNet.GDObject,GoDotNet.GDObject)">
+            <summary>
+            Equality operator.
+            </summary>
+            <param name="a">GDObject instance.</param>
+            <param name="b">Another GDObject instance</param>
+            <returns>True if the instances are equal (inspects each serialized
+            property value via GetHashCode).</returns>
+        </member>
+        <member name="M:GoDotNet.GDObject.op_Inequality(GoDotNet.GDObject,GoDotNet.GDObject)">
+            <summary>
+            Inequality operator.
+            </summary>
+            <param name="a">GDObject instance.</param>
+            <param name="b">Another GDObject instance</param>
+            <returns>True if the instances are not equal (inspects each serialized
+            property value via GetHashCode).</returns>
+        </member>
+        <member name="T:GoDotNet.Scheduler">
+            <summary>
+            The scheduler helps queue up callbacks and run them at the desired time.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.Scheduler._Ready">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.Scheduler._Process(System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GoDotNet.Scheduler.NextFrame(System.Action)">
+            <summary>
+            Schedule a callback to run on the next frame.
+            </summary>
+            <param name="action">Callback to run.</param>
+        </member>
+        <member name="T:GoDotNet.IDependency">
+            <summary>
+            Dependency interface.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.IDependency.Get(Godot.Node)">
+            <summary>
+            Returns a dependency.
+            </summary>
+            <param name="node">Node requesting the dependency.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoDotNet.Dependency`1">
+            <summary>
+            Represents a node dependency. Nodes can depend on other nodes above them
+            in the tree (providers) for certain values.
+            </summary>
+            <typeparam name="TValue">Dependency value type.</typeparam>
+        </member>
+        <member name="M:GoDotNet.Dependency`1.Get(Godot.Node)">
+            <summary>
+            Use the cached provider (or find it in the tree) to get the dependency's
+            value. Throws an exception if a provider can't be found when first
+            trying to resolve the provider.
+            </summary>
+            <param name="node">The node who depends on the value.</param>
+            <returns>The value depended upon.</returns>
+        </member>
+        <member name="M:GoDotNet.Dependency`1.ResolveProvider(Godot.Node)">
+            <summary>
+            Returns the cached provider (if there is one) or looks up the provider.
+            Looking up the provider will result it in caching it for future use.
+            </summary>
+            <param name="node">The node who depends on the value.</param>
+            <returns>The provider, or throws if it can't be found.</returns>
+        </member>
+        <member name="T:GoDotNet.DependencyAttribute">
+            <summary>
+            Represents a dependency on a value provided by a node higher in the
+            current scene tree.
+            </summary>
+        </member>
+        <member name="T:GoDotNet.DependentNodeX">
+            <summary>
+            Node extensions for nodes which implement <see cref="T:GoDotNet.IDependent"/>.
+            These extensions provide dependency resolution for IDependent nodes.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.DependentNodeX.DependOn``1(Godot.Node)">
+             <summary>
+             Creates a dependency on a value that originates from a provider node
+             which is an ancestor of this node. This stops at the first ancestor
+             node which implements the correct provider. If none are found, this
+             examines the autoloaded singletons and returns the value from the first
+             one it finds which implements the correct provider.
+            
+             Nodes must implement <see cref="T:GoDotNet.IDependent"/> to use this.
+            
+             This will throw an exception if no provider is found in any of the
+             node's ancestors or autoloaded singletons.
+            
+             The underlying dependency system caches the first provider it finds in
+             the tree, so do not use this system if the node is expected to change
+             subtrees and you are relying on dynamically resolving the provider each
+             time. Instead, consider passing the value down manually.
+             </summary>
+             <param name="node">The node (receiver) which uses the dependency.
+             </param>
+             <typeparam name="T">The type of value the node depends on.</typeparam>
+             <returns>The value which is depended upon.</returns>
+        </member>
+        <member name="M:GoDotNet.DependentNodeX.TryAutoload``1(Godot.Node)">
+            <summary>
+            Tries to find an autoload of the specified type. If none is found,
+            returns null. Used by the dependency injection system.
+            </summary>
+            <param name="node">The node (receiver) used to get the scene root.
+            </param>
+            <typeparam name="T">The type of autoload to find.</typeparam>
+            <returns>The autoload, if found.</returns>
+        </member>
+        <member name="T:GoDotNet.Dependencies">
+            <summary>
+            Essentially a typedef for a with specific values dictionary.
+            </summary>
+        </member>
+        <member name="T:GoDotNet.IDependent">
+            <summary>
+            Represents a node which can depend on values provided by other nodes.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.IDependent.Loaded">
+             <summary>
+             Method that is called when all of the node's dependencies are available
+             from the providers that it depends on.
+            
+             For this method to be called, you must call
+             <see cref="M:GoDotNet.DependentX.Depend(GoDotNet.IDependent)"/> from your dependent node's
+             _Ready method.
+             </summary>
+        </member>
+        <member name="T:GoDotNet.DependentX">
+            <summary>
+            Extension class which allows nodes to call `this.Depend()` from `_Ready`.
+            Handles internal dependency loading logic.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.DependentX.GetDeps(GoDotNet.IDependent)">
+            <summary>
+            Returns the dependencies of the receiver node.
+            </summary>
+            <param name="dependent">Receiver node.</param>
+            <returns>Dictionary of dependencies, keyed by type.</returns>
+        </member>
+        <member name="M:GoDotNet.DependentX.Depend(GoDotNet.IDependent)">
+             <summary>
+             Begins the dependency resolution process for the given node by finding
+             each provider that it depends on and listening to the provider's
+             OnProvided event. For this to work, dependencies must be declared with
+             the <see cref="T:GoDotNet.DependencyAttribute"/> attribute.
+            
+             Once providers are looked up, they are cached for future usage.
+             </summary>
+             <param name="dependent"></param>
+        </member>
+        <member name="T:GoDotNet.ProviderState">
+            <summary>
+            Provider state.
+            </summary>
+        </member>
+        <member name="P:GoDotNet.ProviderState.HasProvided">
+            <summary>
+            True if the provider has provided all of its values.
+            </summary>
+        </member>
+        <member name="E:GoDotNet.ProviderState.OnProvided">
+            <summary>
+            Underlying event delegate used to inform dependent nodes that the
+            provider has initialized all of the values it provides.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.ProviderState.Announce(GoDotNet.IProviderNode)">
+            <summary>
+            Invoke the OnProvided event with the specified provider node.
+            </summary>
+            <param name="provider">Provider node which has finished initializing
+            the values it provides.</param>
+        </member>
+        <member name="T:GoDotNet.IProviderNode">
+            <summary>
+            Base interface for all providers.
+            </summary>
+        </member>
+        <member name="T:GoDotNet.IProviderNodeX">
+            <summary>
+            Base type for all provider nodes.
+            </summary>
+        </member>
+        <member name="M:GoDotNet.IProviderNodeX.Provided(GoDotNet.IProviderNode)">
+             <summary>
+             Providers should call this when all of their provided values have been
+             initialized.
+            
+             This will inform child nodes that all of the dependencies provided by
+             this provider node are now available for use.
+            
+             When all of a dependent node's providers have called
+             <see cref="M:GoDotNet.IProviderNodeX.Provided(GoDotNet.IProviderNode)" />, the dependent node's
+             <see cref="M:GoDotNet.IDependent.Loaded"/> method will be called.
+             </summary>
+        </member>
+        <member name="M:GoDotNet.IProviderNodeX.HasProvided(GoDotNet.IProviderNode)">
+            <summary>
+            Checks to see if the provider has finished providing dependencies to
+            nodes lower in the tree.
+            </summary>
+            <param name="provider">Receiver provider node.</param>
+            <returns>True if the receiver has provided values.</returns>
+        </member>
+        <member name="M:GoDotNet.IProviderNodeX.Listen(GoDotNet.IProviderNode,System.Action{GoDotNet.IProviderNode})">
+            <summary>
+            Subscribes the given action to the receiver's `OnProvided` event.
+            </summary>
+            <param name="provider">Receiver provider node.</param>
+            <param name="onProvided">Action to perform when the receiver has
+            finished providing values.</param>
+        </member>
+        <member name="M:GoDotNet.IProviderNodeX.StopListening(GoDotNet.IProviderNode,System.Action{GoDotNet.IProviderNode})">
+            <summary>
+            Unsubscribes the given action from the receiver's `OnProvided` event.
+            </summary>
+            <param name="provider">Receiver provider node.</param>
+            <param name="onProvided">Action to perform when the receiver has
+            finished providing values.</param>
+        </member>
+        <member name="T:GoDotNet.IProvider`1">
+            <summary>
+            Represents a node which provides a value of a specific type to descendent
+            nodes. Or, if implemented by an autoloaded singleton, can provide values
+            anywhere in the scene tree.
+            </summary>
+            <typeparam name="T">Type of value provided by this node.</typeparam>
+        </member>
+        <member name="M:GoDotNet.IProvider`1.Get">
+            <summary>
+            Provider nodes should implement this method to provide a value for
+            descendent nodes.
+            </summary>
+            <returns>The value to be provided.</returns>
+        </member>
+        <member name="T:GoDotNet.InvalidStateTransition`1">
+            <summary>
+            Exception thrown when attempting to transition between states
+            that are incompatible.
+            </summary>
+        </member>
+        <member name="F:GoDotNet.InvalidStateTransition`1.Current">
+            <summary>Current state.</summary>
+        </member>
+        <member name="F:GoDotNet.InvalidStateTransition`1.Desired">
+            <summary>Attempted next state which was invalid.</summary>
+        </member>
+        <member name="M:GoDotNet.InvalidStateTransition`1.#ctor(`0,`0)">
+            <summary>
+            Creates a new invalid state transition exception.
+            </summary>
+            <param name="current">Current state.</param>
+            <param name="desired">Attempted next state which was invalid.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoDotNet.IMachineState`1">
+             <summary>
+             A record type that all machine states must inherit from.
+            
+             Because records are reference types with value-based equality, states
+             can be compared easily by the state machine.
+            
+             All state types must implement `CanTransitionTo` which returns true
+             if a given state can be transitioned to from the current state.
+             </summary>
+        </member>
+        <member name="M:GoDotNet.IMachineState`1.CanTransitionTo(`0)">
+            <summary>
+            Determines whether the given state can be transitioned to from the
+            current state.
+            </summary>
+            <param name="state">The requested next state.</param>
+            <returns>True to allow the state transition, false to prevent.</returns>
+        </member>
+        <member name="T:GoDotNet.Machine`1">
+             <summary>
+             A simple implementation of a state machine. Events an emit when the state
+             is changed.
+            
+             Not intended to be subclassed — instead, use instances of this in a
+             compositional pattern.
+            
+             States can implement `CanTransitionTo` to prevent transitions to invalid
+             states.
+             </summary>
+             <typeparam name="TState">Type of state used by the machine.</typeparam>
+        </member>
+        <member name="P:GoDotNet.Machine`1.Value">
+            <summary>
+            The current state of the machine.
+            </summary>
+        </member>
+        <member name="T:GoDotNet.Machine`1.Changed">
+            <summary>
+            Event handler for when the machine's state changes.
+            </summary>
+            <param name="state">The new state of the machine.</param>
+        </member>
+        <member name="E:GoDotNet.Machine`1.OnChanged">
+            <summary>Event emitted when the machine's state changes.</summary>
+        </member>
+        <member name="P:GoDotNet.Machine`1.IsBusy">
+            <summary>
+            Whether we're currently in the process of changing the state (or not).
+            </summary>
+        </member>
+        <member name="M:GoDotNet.Machine`1.#ctor(`0,GoDotNet.Machine{`0}.Changed)">
+            <summary>
+            Creates a new machine with the given initial state.
+            </summary>
+            <param name="state">Initial state of the machine.</param>
+            <param name="onChanged"></param>
+        </member>
+        <member name="M:GoDotNet.Machine`1.Update(`0)">
+            <summary>
+            Adds a value to the queue of pending transitions. If the next state
+            is equivalent to the current state, the state will not be changed.
+            If the next state cannot be transitioned to from the current state,
+            the state will not be changed and a warning will be issued before
+            attempting to transition to any subsequent queued states.
+            </summary>
+            <param name="value">State for the machine to transition to.</param>
+        </member>
+        <member name="T:GoDotNet.Notifier`1">
+            <summary>
+            An object which stores a value and emits an event whenever the value
+            changes.
+            </summary>
+            <typeparam name="TData">Type of data emitted.</typeparam>
+        </member>
+        <member name="F:GoDotNet.Notifier`1._data">
+            <summary>Internal value.</summary>
+        </member>
+        <member name="T:GoDotNet.Notifier`1.Changed">
+            <summary>
+            Signature of the event handler for when the value changes. The notifier
+            and the previous event are passed in as arguments to make comparing
+            state changes simpler.
+            </summary>
+            <param name="current">The new value.</param>
+            <param name="previous">The previous value.</param>
+        </member>
+        <member name="M:GoDotNet.Notifier`1.#ctor(`0,GoDotNet.Notifier{`0}.Changed)">
+            <summary>
+            Creates a new notifier with the given initial value and optional
+            event handler.
+            </summary>
+            <param name="initialValue">Initial value (should not be null).</param>
+            <param name="onChanged">Event handler, if any.</param>
+        </member>
+        <member name="E:GoDotNet.Notifier`1.OnChanged">
+            <summary>
+            Event emitted when the current notifier value has changed.
+            </summary>
+        </member>
+        <member name="P:GoDotNet.Notifier`1.Value">
+            <summary>Current notifier value.</summary>
+        </member>
+    </members>
+</doc>

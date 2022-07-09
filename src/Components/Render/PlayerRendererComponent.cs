@@ -20,7 +20,7 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
    private Vector3? _targetTranslation;
 
    private float SpriteSmoothing { get; set; } = 0.28f;
-   private float CameraSmoothing { get; set; } = 13f;
+   private float CameraSmoothing { get; set; } = 14f * 1.618f;
    private Particles? _particles;
 
    protected override void CreateRootNode() {
@@ -33,7 +33,6 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
       var threeDeeNode = GetNode<ThreeDee>(threeDeePath);
       threeDeeNode.AddChild(RootNode);
       _playerScene.Owner = threeDeeNode;
-      _dirty = true;
       
       CallDeferred(nameof(SetInitialPosition));
 
@@ -53,6 +52,7 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
          var playerpos = PlayerEntity.GridPosition.ToVector3();
          _camera.Translation = new Vector3(playerpos.x + _cameraOffset.x, _cameraOffset.y, playerpos.z + _cameraOffset.z);
          _playerMovementComponent = PlayerEntity.GetComponent<PlayerMovementComponent>();
+         _dirty = true;
       }
    }
    
@@ -80,15 +80,6 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
          _lastInputDir = _playerMovementComponent.InputDirection.ToVector3();
          _lastInputDirVector3I = _playerMovementComponent.InputDirection;
       }
-
-      var offsetTarget = new Vector3(_targetTranslation.Value.x + _cameraOffset.x, _cameraOffset.y, _targetTranslation.Value.z + _cameraOffset.z);
-      var distance = Mathf.Abs(_camera.Translation.DistanceTo(offsetTarget));
-      if (distance <= 0.03f) {
-         _camera.Translation = offsetTarget;
-         _targetTranslation = null;
-      } else {
-         _camera.Translation = _camera.Translation.LinearInterpolate(offsetTarget, CameraSmoothing * delta);
-      }
    }
 
    public override void _PhysicsProcess(float delta) {
@@ -97,7 +88,18 @@ public partial class PlayerRendererComponent : AnimatedSprite3DRendererComponent
          if (GridEntity != null) RootNode.Translation = GridEntity.GridPosition.ToVector3();
          ResetPhysicsInterpolation();
       }
+      
       base._PhysicsProcess(delta);
+      
+      if (_targetTranslation == null || RootNode == null || _camera == null) return;
+      var offsetTarget = new Vector3(_targetTranslation.Value.x + _cameraOffset.x, _cameraOffset.y, _targetTranslation.Value.z + _cameraOffset.z);
+      var distance = Mathf.Abs(_camera.Translation.DistanceTo(offsetTarget));
+      if (distance <= 0.01f) {
+         _camera.Translation = offsetTarget;
+         _targetTranslation = null;
+      } else {
+         _camera.Translation = _camera.Translation.LinearInterpolate(offsetTarget, CameraSmoothing * delta);
+      }
    }
 
 }
