@@ -22,10 +22,10 @@ public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
 
 
    public override void Loaded() {
-      /*if (EcOwner is EnemyEntity enemyEntity)
-         BehaviourTree = new EnemyBehaviourTree(enemyEntity, TurnHandler);
+      if (EcOwner is EnemyEntity enemyEntity)
+         BehaviourTree = new EnemyBehaviourTree(enemyEntity);
       else
-         Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");*/
+         Logger.Error($"EnemyBehaviourTree: Parent entity {EcOwner?.Name} was not EnemyEntity");
    }
 
 
@@ -36,9 +36,9 @@ public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
       private int _lastSawPlayer = -1;
       private readonly TurnHandler _turnHandler;
 
-      public EnemyBehaviourTree(EnemyEntity entity, TurnHandler turnHandler) {
+      public EnemyBehaviourTree(EnemyEntity entity) {
          _enemyEntity = entity;
-         _turnHandler = turnHandler;
+         _turnHandler = entity.TurnHandler;
          _squaredSightRange = _enemyEntity.SightRange * _enemyEntity.SightRange;
       }
 

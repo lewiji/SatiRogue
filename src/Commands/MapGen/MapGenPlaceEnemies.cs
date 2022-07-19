@@ -35,7 +35,7 @@ public class MapGenPlaceEnemies : MapGenCommand {
                BlocksCell = true,
                Name = enemyType.ToString(),
                Visible = false,
-               Components = new Component[] {/*new EnemyBehaviourTreeComponent(),*/ new EnemyMeshRendererComponent(), new StatBar3DRendererComponent()}
+               Components = new Component[] {new EnemyBehaviourTreeComponent(), new EnemyMeshRendererComponent(), new StatBar3DRendererComponent()}
             }
          );
       }

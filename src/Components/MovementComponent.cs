@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Commands.Actions;
 using SatiRogue.Entities;
 using SatiRogue.Grid;
@@ -58,8 +57,7 @@ public partial class MovementComponent : Component {
 
    public Vector3i? LastPosition { get; protected set; }
    public Vector3i InputDirection { get; protected set; }
-
-
+   
    public override void _Ready() {
       _parent = base.EcOwner as GridEntity;
       _parent?.Connect(nameof(Entity.Died), this, nameof(OnDead));
@@ -169,7 +167,7 @@ public partial class MovementComponent : Component {
 
 
    private void OnDead() {
-      RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
+      //RuntimeMapNode.Instance?.MapData?.GetCellAt(GridPosition).RemoveOccupant(EcOwner.GetInstanceId());
       CurrentCell?.Occupants.Remove(EcOwner!.GetInstanceId());
    }
 

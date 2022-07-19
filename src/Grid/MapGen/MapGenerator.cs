@@ -51,18 +51,22 @@ public partial class MapGenerator : Node, IProvider<MapGenerator>, IProvider<Run
       _runtimeMapNode.Owner = GetParent();
       _runtimeMapNode.MapData = new MapData(MapData);
 
-      CallDeferred(nameof(EnableInput));
+      CallDeferred(nameof(PlaceEntities));
    }
 
-   private void EnableInput() {
+   private void PlaceEntities() {
       
       var placeEntitiesCommandQueue = new CommandQueue();
-      placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData));
-      placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData));
-    //  InputHandlerComponent.InputEnabled = true;
+      placeEntitiesCommandQueue.Add(new MapGenPlacePlayer(MapData!));
+      placeEntitiesCommandQueue.Add(new MapGenPlaceEnemies(MapData!));
       
       this.Provided();
-      this.Autoload<Scheduler>().NextFrame(() => { placeEntitiesCommandQueue.ExecuteAll(); });
+      
+      this.Autoload<Scheduler>().NextFrame(() =>
+      {
+         placeEntitiesCommandQueue.ExecuteAll();
+         InputHandlerComponent.InputEnabled = true;
+      });
    }
 
    public void NextFloor() {

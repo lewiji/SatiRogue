@@ -32,12 +32,7 @@ public abstract partial class GameObject : Node, IGameObject {
 
    public bool Enabled {
       get => _enabled;
-      set {
-         _enabled = value;
-         if (this is PlayerEntity) {
-            //InputHandlerComponent.InputEnabled = _enabled;
-         }
-      }
+      set => _enabled = value;
    }
    protected virtual IGameObjectParameters? Parameters { get; set; }
    public string Uuid { get; protected set; } = Guid.NewGuid().ToString();
