@@ -26,6 +26,14 @@ public class PlayerEntity : GridEntity {
       Uuid = Guid.Empty.ToString();
       Name = "Player";
       BlocksCell = true;
+      
+      AddComponent(new StatHealthComponent(), new StatsComponentParameters {
+         statType = StatEffectTypes.Stat, 
+         statTypeIndex = (int)StatTypes.Health, 
+         maxValue = 10, 
+         minValue = 0, 
+         initialValue = 10
+      });
    }
 
    private void OnTookDamage(int damage) {
@@ -48,13 +56,6 @@ public class PlayerEntity : GridEntity {
       //this.Autoload<Scheduler>().NextFrame(() => {
          AddComponent(MovementComponent);
          AddComponent(new InputHandlerComponent());
-         AddComponent(new StatHealthComponent(), new StatsComponentParameters {
-            statType = StatEffectTypes.Stat, 
-            statTypeIndex = (int)StatTypes.Health, 
-            maxValue = 10, 
-            minValue = 0, 
-            initialValue = 10
-         });
          AddComponent(new PlayerRendererComponent());
          AddComponent(new GridIndicatorSpatialComponent());
          AddComponent(new MousePickSpatialCellComponent());

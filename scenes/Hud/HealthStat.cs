@@ -19,6 +19,10 @@ public partial class HealthStat : MarginContainer
     [OnReady(Order = 1)]
     private async void ConnectStatChangedSignal() {
         await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
+        await ToSignal(GetTree(), "idle_frame");
         _playerHealthComponent = EntityRegistry.Player?.GetComponent<StatHealthComponent>();
         //if (_playerHealthComponent == null) throw new Exception("HealthStat: Couldn't locate player component StatHealthComponent");
         _playerHealthComponent?.Connect(nameof(StatsComponent.Changed), this, nameof(OnHealthChanged));
