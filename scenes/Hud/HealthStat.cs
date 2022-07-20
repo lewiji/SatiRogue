@@ -6,40 +6,30 @@ using SatiRogue.Entities;
 
 namespace SatiRogue.scenes.Hud;
 
-public partial class HealthStat : MarginContainer
-{
-    private StatHealthComponent? _playerHealthComponent;
-
+public partial class HealthStat : MarginContainer {
     [OnReadyGet("HBoxContainer/TextureProgress/CenterContainer/Label", Export = true, OrNull = true)] 
     private Label? HealthLabel { get; set; }
     
     [OnReadyGet("HBoxContainer/TextureProgress", Export = true, OrNull = true)] 
-    private TextureProgress? _progress { get; set; }
+    private TextureProgress? Progress { get; set; }
     
-    [OnReady(Order = 1)]
-    private async void ConnectStatChangedSignal() {
-        await ToSignal(GetTree(), "idle_frame");
-        await ToSignal(GetTree(), "idle_frame");
-        await ToSignal(GetTree(), "idle_frame");
-        await ToSignal(GetTree(), "idle_frame");
-        await ToSignal(GetTree(), "idle_frame");
-        _playerHealthComponent = EntityRegistry.Player?.GetComponent<StatHealthComponent>();
-        //if (_playerHealthComponent == null) throw new Exception("HealthStat: Couldn't locate player component StatHealthComponent");
-        _playerHealthComponent?.Connect(nameof(StatsComponent.Changed), this, nameof(OnHealthChanged));
-        
-        if (_progress != null && _playerHealthComponent != null) {
-                _progress.MaxValue = _playerHealthComponent.MaxValue;
-                _progress.Value = _playerHealthComponent.Value;
-                _progress.MinValue = _playerHealthComponent.Value;
-        }
-
-        if (_playerHealthComponent != null) {
-            OnHealthChanged(_playerHealthComponent.Value);
-        }
-    }
+    private StatHealthComponent? _playerHealthComponent;
 
     private void OnHealthChanged(int health) {
-        if (_progress != null && _playerHealthComponent != null) _progress.Value = _playerHealthComponent.Value;
+        if (Progress != null && _playerHealthComponent != null) Progress.Value = _playerHealthComponent.Value;
         if (HealthLabel != null) HealthLabel.Text = health.ToString();
+    }
+
+    public override void _Process(float delta) {
+        if (Progress == null || _playerHealthComponent != null) return;
+        _playerHealthComponent = EntityRegistry.Player?.GetComponent<StatHealthComponent>();
+        if (_playerHealthComponent == null) return;
+        
+        // On first successful get of player health component, connect signals, set values
+        _playerHealthComponent.Connect(nameof(StatsComponent.Changed), this, nameof(OnHealthChanged));
+        Progress.MaxValue = _playerHealthComponent.MaxValue;
+        Progress.Value = _playerHealthComponent.Value;
+        Progress.MinValue = _playerHealthComponent.Value;
+        OnHealthChanged(_playerHealthComponent.Value);
     }
 }
