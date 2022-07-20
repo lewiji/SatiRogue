@@ -1,0 +1,6 @@
+[submodule "lib/RelEcs"]
+	path = lib/RelEcs
+	url = git@github.com:Byteron/RelEcs.git
+[submodule "lib/RelEcsGodot"]
+	path = lib/RelEcsGodot
+	url = git@github.com:Byteron/RelEcsGodot.git
