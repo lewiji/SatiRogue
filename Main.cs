@@ -3,11 +3,13 @@ using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Grid.MapGen;
+using SatiRogue.RelEcs;
+using SatiRogue.RelEcs.States;
 using SatiRogue.Tools;
 
 namespace SatiRogue;
 
-public class Main : Node {
+public partial class Main : Node {
    private Logger.LogLevel _logLevel;
 
    [Export]
@@ -17,5 +19,12 @@ public class Main : Node {
 		 _logLevel = value;
 		 Logger.Level = _logLevel;
 	  }
+   }
+
+   [OnReady]
+   private void AddGameStateController() {
+	   var gsc = new GameStateController();
+	   AddChild(gsc);
+	   gsc.PushState(new PlayState());
    }
 }
