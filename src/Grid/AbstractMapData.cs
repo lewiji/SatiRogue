@@ -12,7 +12,7 @@ public abstract class AbstractMapData : Resource {
      * Returns null if something weird happened.
      */
    private Cell InitialiseOrGetCell(Vector3i position) {
-      return InitialiseOrGetCell(IdCalculator.IdFromVec3(position), position);
+      return InitialiseOrGetCell(IdCalculator.IdFromVec3i(position), position);
    }
 
    private Cell InitialiseOrGetCell(long id, Vector3i position) {

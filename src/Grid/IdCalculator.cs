@@ -4,36 +4,68 @@ using SatiRogue.MathUtils;
 namespace SatiRogue.Grid;
 
 public static class IdCalculator {
-   public static long IdFromVec3(Vector3i vec) {
+   public static long IdFromVec3i(Vector3i vec) {
+      return SignedCantorPairVec3i(vec);
+   }
+   
+   public static long IdFromVec3(Vector3 vec) {
       return SignedCantorPairVec3(vec);
    }
 
-   public static Vector3i Vec3FromId(long id) {
+   public static Vector3i Vec3iFromId(long id) {
+      return SignedReverseCantorPairVec3i(id);
+   }
+   
+   public static Vector3 Vec3FromId(long id) {
       return SignedReverseCantorPairVec3(id);
    }
 
-   public static long CantorPairVec3(Vector3i vec) {
+   public static long CantorPairVec3i(Vector3i vec) {
+      var xPairY = CantorPair(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y));
+      var xyPairZ = CantorPair(xPairY, Mathf.FloorToInt(vec.z));
+      return xyPairZ;
+   }
+   
+   public static long CantorPairVec3(Vector3 vec) {
       var xPairY = CantorPair(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y));
       var xyPairZ = CantorPair(xPairY, Mathf.FloorToInt(vec.z));
       return xyPairZ;
    }
 
-   public static Vector3i ReverseCantorPairVec3(long cantor) {
+   public static Vector3i ReverseCantorPairVec3i(long cantor) {
       ReverseCantorPair(cantor, out var xPairY, out var z);
       ReverseCantorPair(xPairY, out var x, out var y);
       return new Vector3i(x, y, z);
    }
+   
+   public static Vector3 ReverseCantorPairVec3(long cantor) {
+      ReverseCantorPair(cantor, out var xPairY, out var z);
+      ReverseCantorPair(xPairY, out var x, out var y);
+      return new Vector3(x, y, z);
+   }
 
-   public static long SignedCantorPairVec3(Vector3i vec) {
+   public static long SignedCantorPairVec3i(Vector3i vec) {
       var xPairY = SignedCantorPair(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y));
       var xyPairZ = SignedCantorPair(xPairY, Mathf.FloorToInt(vec.z));
       return xyPairZ;
    }
 
-   public static Vector3i SignedReverseCantorPairVec3(long cantor) {
+   public static long SignedCantorPairVec3(Vector3 vec) {
+      var xPairY = SignedCantorPair(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y));
+      var xyPairZ = SignedCantorPair(xPairY, Mathf.FloorToInt(vec.z));
+      return xyPairZ;
+   }
+   
+   public static Vector3i SignedReverseCantorPairVec3i(long cantor) {
       SignedReverseCantorPair(cantor, out var xPairY, out var z);
       SignedReverseCantorPair(xPairY, out var x, out var y);
       return new Vector3i(x, y, z);
+   }
+   
+   public static Vector3 SignedReverseCantorPairVec3(long cantor) {
+      SignedReverseCantorPair(cantor, out var xPairY, out var z);
+      SignedReverseCantorPair(xPairY, out var x, out var y);
+      return new Vector3(x, y, z);
    }
 
    public static long CantorPair(long x, long y) {

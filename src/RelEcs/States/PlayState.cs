@@ -6,9 +6,15 @@ public class PlayState : GameState
 {
    public override void Init(GameStateController gameStates)
    {
-      InitSystems.Add(new SpawnPlayerSystem());
+      InitSystems
+         .Add(new SpatialMapSystem())
+         .Add(new SpawnPlayerSystem());
 
-      UpdateSystems
+      ProcessSystems
+         .Add(new InputSystem())
          .Add(new MovementSystem());
+
+      PhysicsSystems
+         .Add(new InterpolateWalkAnimationSystem());
    }
 }

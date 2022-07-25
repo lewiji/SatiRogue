@@ -1,16 +1,19 @@
 using Godot;
 using RelEcs;
 using SatiRogue.MathUtils;
+using SatiRogue.RelEcs.Components;
 
 namespace SatiRogue.RelEcs; 
 
-public class MovementSystem : ASystem {
+public class MovementSystem : GDSystem {
    public override void Run() {
-      foreach (var (node, gridPos, input) in Query<Spatial, GridPositionComponent, InputDirectionComponent>()) {
+      foreach (var (gridPos, input) in Query<GridPositionComponent, InputDirectionComponent>()) {
+         
+         if (input.Direction == Vector2.Zero) continue;
+         
          gridPos.LastPosition = gridPos.Position;
-         gridPos.Position += new Vector3i((int) input.Direction.x, 0, (int) input.Direction.y);
+         gridPos.Position += new Vector3(input.Direction.x, 0, input.Direction.y);
          input.Direction = Vector2.Zero;
-         node.Translation = gridPos.Position.ToVector3();
       }
    }
 }

@@ -92,7 +92,7 @@ public class Cell : Reference {
       }
    }
 
-   public Vector3i Position => IdCalculator.Vec3FromId(Id);
+   public Vector3i Position => IdCalculator.Vec3iFromId(Id);
 
    public bool Blocked =>
       Conditions.Contains(CellCondition.Destroyed) ||
@@ -104,7 +104,7 @@ public class Cell : Reference {
       }) > 0;
 
    public static Cell FromPosition(Vector3i position) {
-      return new Cell(IdCalculator.IdFromVec3(position));
+      return new Cell(IdCalculator.IdFromVec3i(position));
    }
 
    public Cell SetCellType(CellType? type) {

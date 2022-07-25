@@ -1,6 +1,7 @@
 using Godot;
 using RelEcs;
 using SatiRogue.RelEcs.Components;
+using SatiRogue.RelEcs.Systems;
 
 namespace SatiRogue.RelEcs.Nodes.Actors; 
 
@@ -11,6 +12,8 @@ public class Player : Character, ISpawnable {
          .Add(new HealthComponent(Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
-         .Add<Controllable>();
+         .Add(new InterpolateWalkAnimationSystem())
+         .Add<Controllable>()
+         .Add<Walkable>();
    }
 }

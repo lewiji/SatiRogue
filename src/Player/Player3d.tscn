@@ -8,6 +8,7 @@
 [ext_resource path="res://src/RelEcs/Nodes/Actors/Player.cs" type="Script" id=6]
 
 [node name="Player" type="Spatial"]
+physics_interpolation_mode = 2
 script = ExtResource( 6 )
 
 [node name="Visual" type="AnimatedSprite3D" parent="."]
@@ -20,11 +21,9 @@ double_sided = false
 alpha_cut = 2
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 2
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
-physics_interpolation_mode = 1
 transform = Transform( 1, 0, 0, 0, 0.906307, 0.422618, 0, -0.422618, 0.906307, 0, 4.23206, 11.0949 )
 current = true
 fov = 50.0
@@ -33,7 +32,6 @@ far = 32.0
 script = ExtResource( 5 )
 
 [node name="Light" type="SpotLight" parent="Visual/Camera"]
-physics_interpolation_mode = 1
 transform = Transform( 0.966016, 0.0537413, 0.252833, 2.08616e-07, 0.978148, -0.207912, -0.258482, 0.200846, 0.944906, 3.27, -1.61802, 4.00543e-05 )
 light_energy = 1.1
 shadow_enabled = true

@@ -4,7 +4,7 @@ using SatiRogue.RelEcs.Components;
 
 namespace SatiRogue.RelEcs.Systems; 
 
-public class PlayerMovementSystem : GodotSystem {
+public class InputSystem : GDSystem {
    public override void Run() {
       var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
       foreach (var input in query) {

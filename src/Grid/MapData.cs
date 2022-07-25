@@ -46,7 +46,7 @@ public class MapData : AbstractMapData {
       foreach (int point in points)
       foreach (var offset in Offsets) {
          var neighbourVec = new Vector3i(AStar.GetPointPosition(point)) + offset;
-         if (CellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3(neighbourVec), out var neighbourId))
+         if (CellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3i(neighbourVec), out var neighbourId))
             AStar.ConnectPoints(point, neighbourId);
       }
    }
@@ -64,8 +64,8 @@ public class MapData : AbstractMapData {
    
    public Vector3[] FindPath(Vector3i from, Vector3i? to) {
       if (!to.HasValue) return new Vector3[] { };
-      var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3(from)];
-      var idTo = CellIdToAStarId[IdCalculator.IdFromVec3(to.Value)];
+      var idFrom = CellIdToAStarId[IdCalculator.IdFromVec3i(from)];
+      var idTo = CellIdToAStarId[IdCalculator.IdFromVec3i(to.Value)];
       return AStar.GetPointPath(idFrom, idTo);
    }
   

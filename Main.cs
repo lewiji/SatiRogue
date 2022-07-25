@@ -11,6 +11,7 @@ namespace SatiRogue;
 
 public partial class Main : Node {
    private Logger.LogLevel _logLevel;
+   private GameStateController _gsc;
 
    [Export]
    public Logger.LogLevel LogLevel {
@@ -21,10 +22,22 @@ public partial class Main : Node {
 	  }
    }
 
+
    [OnReady]
-   private void AddGameStateController() {
-	   var gsc = new GameStateController();
-	   AddChild(gsc);
-	   gsc.PushState(new PlayState());
+   private void CreateGameStateController() {
+	   _gsc = new GameStateController();
+	   AddChild(_gsc);
+	   _gsc.World.AddElement(this);
+   }
+
+   [OnReady]
+   private void AddMapGenState() {
+	   var mapGenState = new MapGenState();
+	   _gsc.PushState(mapGenState);
+   }
+
+   public void OnMapGenInitFinished() {
+	   var playState = new PlayState();
+	   _gsc.PushState(playState);
    }
 }

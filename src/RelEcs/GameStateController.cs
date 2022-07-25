@@ -9,13 +9,20 @@ public class DeltaTime
    public float Value;
 }
 
+public class PhysicsDeltaTime
+{
+   public float Value;
+}
+
 public class GameStateController : Node {
    public readonly World World = new();
    private readonly Stack<GameState> _stack = new();
 
    public GameStateController() {
+      GD.Randomize();
       World.AddElement(this);
       World.AddElement(new DeltaTime());
+      World.AddElement(new PhysicsDeltaTime());
       World.AddElement(new Nodes.Entities());
    }
 
@@ -44,11 +51,22 @@ public class GameStateController : Node {
 
       var currentState = _stack.Peek();
       World.GetElement<DeltaTime>().Value = delta;
-      currentState.UpdateSystems.Run(World);
+      currentState.ProcessSystems.Run(World);
 
       World.Tick();
    }
-   
+
+   public override void _PhysicsProcess(float delta) {
+      if (_stack.Count == 0)
+      {
+         return;
+      }
+
+      var currentState = _stack.Peek();
+      World.GetElement<PhysicsDeltaTime>().Value = delta;
+      currentState.PhysicsSystems.Run(World);
+   }
+
    public override void _ExitTree()
    {
       foreach (var state in _stack)
