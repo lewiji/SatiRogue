@@ -51,11 +51,21 @@ public class MapGenData {
       return cell;
    }
    
-   private Cell InitialiseOrGetCell(Vector3 position) {
-      return InitialiseOrGetCell(IdCalculator.IdFromVec3(position), position);
+   public Cell SetCellType(long id, CellType type) {
+      var cell = InitialiseOrGetCell(id);
+      cell.Type = type;
+      return cell;
    }
    
-   private Cell InitialiseOrGetCell(long id, Vector3 position) {
+   public Cell GetCellAt(Vector3 position) {
+      return InitialiseOrGetCell(position);
+   }
+
+   private Cell InitialiseOrGetCell(Vector3 position) {
+      return InitialiseOrGetCell(IdCalculator.IdFromVec3(position));
+   }
+
+   private Cell InitialiseOrGetCell(long id) {
       // Try to add id to collection, if already exists, return matching cell struct
       if (IndexedCells.ContainsKey(id))
          return IndexedCells[id];

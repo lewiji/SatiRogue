@@ -9,10 +9,12 @@ public class PlayState : GameState
       InitSystems
          .Add(new SpatialMapSystem())
          .Add(new SpawnPlayerSystem());
+      
+      OnTurnSystems
+         .Add(new MovementSystem());
 
       ProcessSystems
-         .Add(new InputSystem())
-         .Add(new MovementSystem());
+         .Add(new InputSystem());
 
       PhysicsSystems
          .Add(new InterpolateWalkAnimationSystem());

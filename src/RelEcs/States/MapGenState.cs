@@ -1,8 +1,9 @@
 using RelEcs;
 using SatiRogue.RelEcs.Components.MapGen;
 using SatiRogue.RelEcs.Systems;
+using SatiRogue.RelEcs.Systems.MapGenStrategies;
 using SatiRogue.RelEcs.Systems.MapGenStratgies;
-using CreateRooms = SatiRogue.RelEcs.Systems.MapGenStratgies.CreateRooms;
+using CreateRooms = SatiRogue.RelEcs.Systems.MapGenStrategies.CreateRooms;
 
 namespace SatiRogue.RelEcs.States; 
 
@@ -27,6 +28,8 @@ public class MapGenState : GameState {
          InitSystems
             .Add(new InitMapGen())
             .Add(new CreateRooms())
+            .Add(new CreateCorridors())
+            .Add(new FloodFill())
             .Add(new PassToPlayState());
       }
    }

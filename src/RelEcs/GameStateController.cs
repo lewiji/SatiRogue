@@ -24,12 +24,14 @@ public class GameStateController : Node {
       World.AddElement(new DeltaTime());
       World.AddElement(new PhysicsDeltaTime());
       World.AddElement(new Nodes.Entities());
+      World.AddElement(new Nodes.MapGeometry());
    }
 
    public override void _Ready() {
       Name = "GameStateController";
       World.AddElement(GetTree());
       AddChild(World.GetElement<Nodes.Entities>());
+      AddChild(World.GetElement<Nodes.MapGeometry>());
    }
    
    public override void _UnhandledInput(InputEvent e)

@@ -12,17 +12,13 @@ public partial class SpatialCamera : Godot.Camera {
    [Export] private float ShakeMaxRoll { get; set; } = 0.1f;
    private float _currentShakeIntensity = 0f;
    private float _shakePowerExponent = 3f;
+   [OnReadyGet("../../")] private Spatial Target { get; set; }
 
    [OnReady]
    private void InitNoise() {
       _noise.Seed = (int)GD.Randi();
       _noise.Period = 4;
       _noise.Octaves = 2;
-   }
-
-   [OnReady]
-   private void DisablePhysicsInterpolation() {
-      PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
    }
 
    public static void Shake(float intensity = 1f) {
@@ -47,6 +43,7 @@ public partial class SpatialCamera : Godot.Camera {
          ProcessShake();
       }
    }
+
 
    private void ProcessShake() {
       _noiseY += 1;

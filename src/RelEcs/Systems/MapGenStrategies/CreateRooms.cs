@@ -2,7 +2,7 @@ using Godot;
 using RelEcs;
 using SatiRogue.RelEcs.Components.MapGen;
 
-namespace SatiRogue.RelEcs.Systems.MapGenStratgies; 
+namespace SatiRogue.RelEcs.Systems.MapGenStrategies; 
 
 public class CreateRooms : GDSystem {
    public override void Run() {
