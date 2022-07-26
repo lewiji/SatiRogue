@@ -19,9 +19,8 @@ public class TurnHandlerSystem : GDSystem {
       Send(new TurnChangedTrigger(turn.CurrentTurn));
 
       if (turn.CurrentTurn != TurnType.Processing) return;
-      Logger.Info("Running TurnSystems...");
+      // Process turn by running OnTurnSystems
       GetElement<PlayState>().OnTurnSystems.Run(World);
-
    }
 
    public override void Run() {

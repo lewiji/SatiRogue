@@ -31,7 +31,7 @@ public class InterpolateWalkAnimationSystem : GDSystem {
          spatial.Translation = gridPos.Position;
       }
       else {
-         TryGetElement<DeltaTime>(out var delta);
+         TryGetElement<PhysicsDeltaTime>(out var delta);
          spatial.Translation = spatial.Translation.LinearInterpolate(gridPos.Position, _lerpWeight * delta.Value);
       }
    }
