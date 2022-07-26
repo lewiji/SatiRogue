@@ -16,7 +16,6 @@ public class SpawnEnemySystem : GDSystem {
          var enemyNode = _enemyScene.Instance<Nodes.Actors.Enemy>();
          entitiesNode.AddChild(enemyNode);
          Spawn(enemyNode).Id();
-         World.AddElement(enemyNode);
       }
    }
 }
