@@ -7,10 +7,11 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class EnemyBehaviourSystem : GDSystem {
    public override void Run() {
-      var player = Query<Nodes.Actors.Player, GridPositionComponent>().GetEnumerator().Current;
-      foreach (var (enemy, bTree, inputDir, gridPos) in Query<Enemy, BehaviourTree, InputDirectionComponent, GridPositionComponent>()) {
-         if (enemy.Behaving) {
-            bTree.Step(World, inputDir, gridPos, player.Item2);
+      foreach (var (player, playerGridPos) in Query<Nodes.Actors.Player, GridPositionComponent>()) {
+         foreach (var (enemy, bTree, inputDir, gridPos) in Query<Enemy, BehaviourTree, InputDirectionComponent, GridPositionComponent>()) {
+            if (enemy.Behaving) {
+               bTree.Step(World, inputDir, gridPos, playerGridPos);
+            }
          }
       }
    }

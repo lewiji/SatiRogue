@@ -2,6 +2,8 @@ using Active.Core;
 using static Active.Status;
 using Godot;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Play.Components;
+using SatiRogue.Ecs.Play.Components.Actor;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Components.Actor; 
@@ -17,9 +19,8 @@ public class BehaviourTree {
       TreeInstance = treeInstance;
    }
 
-   public status? Step(World world, InputDirectionComponent inputDir, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
-      return TreeInstance?.Step(world, inputDir, gridPos, playerGridPos);
-   }
+   public status? Step(World world, InputDirectionComponent inputDir, GridPositionComponent gridPos, GridPositionComponent playerGridPos)
+      => TreeInstance?.Step(world, inputDir, gridPos, playerGridPos);
 }
 
 public class BaseBt : Gig {
@@ -45,8 +46,6 @@ public class BaseBt : Gig {
    
    private status MoveRandomly() {
       _inputDir.Direction = new Vector2(Mathf.Round((float) GD.RandRange(-1, 1)), Mathf.Round((float) GD.RandRange(-1, 1)));
-      Logger.Info("Moved randomly");
-      //_turnHandler.AddEnemyCommand(new ActionMove(_enemyEntity, MovementComponent.GetRandomMovementDirection()));
       return done();
    }
    
