@@ -1,17 +1,14 @@
 using Godot;
-using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-using SatiRogue.Grid.MapGen;
-using SatiRogue.RelEcs;
-using SatiRogue.RelEcs.States;
-using SatiRogue.Tools;
+using SatiRogue.Ecs;
+using SatiRogue.Ecs.Core;
 
 namespace SatiRogue;
 
 public partial class Main : Node {
    private Logger.LogLevel _logLevel;
-   private GameStateController _gsc;
+   private GameStateController _gsc = null!;
 
    [Export]
    public Logger.LogLevel LogLevel {

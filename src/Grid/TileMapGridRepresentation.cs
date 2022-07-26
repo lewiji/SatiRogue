@@ -1,10 +1,11 @@
 using System.Linq;
 using Godot;
-using GoDotNet;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
+using GoDotNet;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
+using Enemy2D = SatiRogue.Entities.VisualRepresentation.Enemy2D;
 
 namespace SatiRogue.Grid;
 

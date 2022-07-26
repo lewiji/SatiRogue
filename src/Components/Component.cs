@@ -1,7 +1,7 @@
 using Godot;
-using GoDotNet;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
+using GoDotNet;
 using SatiRogue.Turn;
 
 namespace SatiRogue.Components;

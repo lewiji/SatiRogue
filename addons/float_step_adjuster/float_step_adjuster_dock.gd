@@ -36,7 +36,6 @@ func set_editor_setting_value(value : float = -1) -> void:
 	
 	var inspObj : Object = InspectedObjectGetter.get_inspected_object()
 	inspObj.property_list_changed_notify()
-	print("Notified")
 
 func on_increase_pressed():
 	_currentValue *= 0.1

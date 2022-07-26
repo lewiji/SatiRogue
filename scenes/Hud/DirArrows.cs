@@ -1,19 +1,16 @@
 using Godot;
-using System;
-using Godot.Collections;
 using GoDotNet;
-using GodotOnReady.Attributes;
-using SatiRogue;
 using SatiRogue.Components;
 using SatiRogue.Entities;
 using SatiRogue.Turn;
-using Array = Godot.Collections.Array;
+
+namespace SatiRogue.scenes.Hud; 
 
 public class DirArrows : GridContainer, IDependent  {
    /*([OnReadyGet] private ToolButton? Up;
-   [OnReadyGet] private ToolButton? Left;
-   [OnReadyGet] private ToolButton? Right;
-   [OnReadyGet] private ToolButton? Down;*/
+[OnReadyGet] private ToolButton? Left;
+[OnReadyGet] private ToolButton? Right;
+[OnReadyGet] private ToolButton? Down;*/
    private MovementDirection _movementDirection = MovementDirection.None;
 
    [Dependency] private TurnHandler _turnHandler => this.DependOn<TurnHandler>();
@@ -26,20 +23,20 @@ public class DirArrows : GridContainer, IDependent  {
       _turnHandler.Connect(nameof(TurnHandler.OnPlayerTurnStarted), this, nameof(OnTurn));
       
       /*Up?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Up});
-      Left?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Left});
-      Right?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Right});
-      Down?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Down});
-      
-      Up?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Up});
-      Left?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Left});
-      Right?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Right});
-      Down?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Down});*/
+   Left?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Left});
+   Right?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Right});
+   Down?.Connect("button_down", this, nameof(OnPressed), new Array{MovementDirection.Down});
+   
+   Up?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Up});
+   Left?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Left});
+   Right?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Right});
+   Down?.Connect("button_up", this, nameof(OnReleased), new Array{MovementDirection.Down});*/
    }
    
    private void OnPressed(MovementDirection movementDirection) {
       GD.Print("yyy");
       _movementDirection = movementDirection;
-      if (_turnHandler.Turn == Turn.PlayerTurn) {
+      if (_turnHandler.Turn == Turn.Turn.PlayerTurn) {
          OnTurn();
       }
    }

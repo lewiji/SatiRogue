@@ -2,7 +2,7 @@ using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Grid;
 
-namespace SatiRogue.Entities;
+namespace SatiRogue.Entities.VisualRepresentation;
 
 public partial class Enemy2D : Node2D {
    private readonly EnemyEntity? _enemyEntity;

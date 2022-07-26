@@ -1,12 +1,12 @@
 using System;
 using Godot;
-using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Commands;
 using SatiRogue.Commands.MapGen;
 using SatiRogue.Components;
 using SatiRogue.Debug;
 using SatiRogue.Grid.MapGen.Strategies;
+using GoDotNet;
 
 namespace SatiRogue.Grid.MapGen;
 

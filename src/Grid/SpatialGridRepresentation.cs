@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using GoDotNet;
 using GodotOnReady.Attributes;
 using SatiRogue.Components.Render;
 using SatiRogue.Debug;
 using SatiRogue.Entities;
 using SatiRogue.Grid.MapGen;
+using GoDotNet;
 using SatiRogue.MathUtils;
 using SatiRogue.scenes;
 using SatiRogue.Tools;

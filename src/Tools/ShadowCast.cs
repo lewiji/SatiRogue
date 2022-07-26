@@ -46,7 +46,7 @@ External dependencies:
   If you lack something similar, just convert it to a pair of ints.
 */
 
-namespace SatiRogue;
+namespace SatiRogue.Tools;
 
 public static class ShadowCast {
    private static readonly OctantTransform[] s_octantTransform = {

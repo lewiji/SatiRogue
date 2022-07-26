@@ -9,9 +9,8 @@ using SatiRogue.Components.Stats;
 using SatiRogue.Components.Tools;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
-using SatiRogue.Grid.MapGen;
 using SatiRogue.MathUtils;
-using SatiRogue.Player;
+using SatiRogue.Tools;
 
 namespace SatiRogue.Entities;
 
