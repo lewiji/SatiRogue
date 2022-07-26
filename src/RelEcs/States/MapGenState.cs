@@ -1,6 +1,4 @@
 using RelEcs;
-using SatiRogue.RelEcs.Components.MapGen;
-using SatiRogue.RelEcs.Systems;
 using SatiRogue.RelEcs.Systems.MapGenStrategies;
 using SatiRogue.RelEcs.Systems.MapGenStratgies;
 using CreateRooms = SatiRogue.RelEcs.Systems.MapGenStrategies.CreateRooms;

@@ -13,5 +13,4 @@ public class GameState : Spatial {
    public readonly SystemGroup ExitSystems = new();
 
    public virtual void Init(GameStateController gameStates) { }
-   public virtual void Ready() { }
 }

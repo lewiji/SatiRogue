@@ -24,35 +24,34 @@ public class SpatialMapSystem : GDSystem {
    
    private MapGenData _mapGenData = null!;
    private MapGeometry _mapGeometry = null!;
-   private int _chunkWidth;
-   private int _chunkSize;
-   private int _maxWidth;
-   private int _totalChunks;
 
    public override void Run() {
       _mapGenData = GetElement<MapGenData>();
       _mapGeometry = GetElement<MapGeometry>();
-      var generatorParameters = _mapGenData.GeneratorParameters;
-      _maxWidth = generatorParameters.Width;
-      _chunkWidth = generatorParameters.Width.Factors().GetMedian();
-      _chunkSize = _chunkWidth * _chunkWidth;
-      _totalChunks = Mathf.CeilToInt((generatorParameters.Width + _chunkWidth) * (generatorParameters.Height + _chunkWidth) / (float) _chunkSize);
+      
+      var maxWidth = _mapGenData.GeneratorParameters.Width;
+      var chunkWidth = _mapGenData.GeneratorParameters.Width.Factors().GetMedian();
+      var chunkSize = chunkWidth * chunkWidth;
+      var totalChunks = Mathf.CeilToInt(
+         (_mapGenData.GeneratorParameters.Width + chunkWidth) * 
+         (_mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
+      BuildChunks(maxWidth, totalChunks, chunkWidth);
+   }
+
+   private void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
       var cells = _mapGenData.IndexedCells.Values.ToArray();
-
-      for (var chunkId = 0; chunkId < _totalChunks; chunkId++) {
-         var chunkCoords = GetChunkMinMaxCoords(chunkId, _maxWidth + _chunkWidth);
+      
+      for (var chunkId = 0; chunkId < totalChunks; chunkId++) {
+         var chunkCoords = GetChunkMinMaxCoords(chunkId,  chunkWidth, maxWidth + chunkWidth);
          if (cells == null) continue;
-         var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
-         Logger.Debug($"Chunking: Taking {chunkCells.Length} cells");
-         Logger.Debug("---");
          // Remove these cells from the enumeration
+         var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
          cells = cells.Except(chunkCells).ToArray();
-
          BuildChunk(chunkId, chunkCoords, chunkCells);
       }
    }
-   
+
    private void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells) {
       var chunkRoom = new Spatial() {
          Name = $"Chunk{chunkId}"
@@ -90,13 +89,13 @@ public class SpatialMapSystem : GDSystem {
       return mesh;
    }
    
-   private Vector3[] GetChunkMinMaxCoords(int chunkId, int maxWidth) {
+   private Vector3[] GetChunkMinMaxCoords(int chunkId, int chunkWidth, int maxWidth) {
       var start = new Vector3(
-         chunkId * _chunkWidth % maxWidth,
+         chunkId * chunkWidth % maxWidth,
          0,
-         Mathf.FloorToInt(chunkId * (float) _chunkWidth / maxWidth) * _chunkWidth);
+         Mathf.FloorToInt(chunkId * (float) chunkWidth / maxWidth) * chunkWidth);
 
-      var end = start + new Vector3(_chunkWidth, 0, _chunkWidth);
+      var end = start + new Vector3(chunkWidth, 0, chunkWidth);
       var coords = new[] {start, end};
       return coords;
    }
