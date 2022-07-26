@@ -133,7 +133,7 @@ public class GameStateController : Node {
       if (World.HasElement<GameState>()) World.ReplaceElement(newState);
       else World.AddElement(newState);
         
-      newState.Init(this);
+      newState.SetupSystems(this);
       newState.InitSystems.Run(World);
    }
 
@@ -151,7 +151,7 @@ public class GameStateController : Node {
       _stack.Push(newState);
       AddChild(newState);
       World.ReplaceElement(newState);
-      newState.Init(this);
+      newState.SetupSystems(this);
       newState.InitSystems.Run(World);
    }
 

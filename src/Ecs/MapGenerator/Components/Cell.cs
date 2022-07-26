@@ -36,8 +36,7 @@ public class Cell {
    public bool Blocked => 
       Conditions.Contains(CellCondition.Destroyed) ||
       Type is CellType.Wall or CellType.DoorClosed ||
-      Occupants.Count(x => GD.InstanceFromId(x) is Character instance && instance.Get("BlocksCell").Equals(true)) > 0;
-
+      Occupants.Any(x => GD.InstanceFromId(x) is Character {BlocksCell: true});
 
    private long _id;
 }

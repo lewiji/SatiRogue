@@ -23,8 +23,15 @@ public class TurnHandlerSystem : GDSystem {
       GetElement<PlayState>().OnTurnSystems.Run(World);
    }
 
+   public override void Ready() {
+      
+      _turnHandlerEntity = Spawn()
+         .Add(new Components.Turn())
+         .Id();
+      CallDeferred(nameof(SetCurrentTurn), (int)TurnType.PlayerTurn);
+   }
+
    public override void Run() {
-      Init();
       ProcessTurnChanges();
       HandlePlayerInputTrigger();
    }
@@ -54,16 +61,6 @@ public class TurnHandlerSystem : GDSystem {
             default:
                throw new ArgumentOutOfRangeException();
          }
-      }
-   }
-
-   private void Init() { // Initial setup
-      if (!_hasRun) {
-         _hasRun = true;
-         _turnHandlerEntity = Spawn()
-            .Add(new Components.Turn())
-            .Id();
-         SetCurrentTurn(TurnType.PlayerTurn);
       }
    }
 
