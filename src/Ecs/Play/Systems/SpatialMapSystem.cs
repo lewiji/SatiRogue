@@ -77,7 +77,7 @@ public class SpatialMapSystem : GDSystem {
 
          for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
             mmInst.Multimesh.SetInstanceTransform(i,
-               new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position.GetValueOrDefault() - chunkRoom.Translation));
+               new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position - chunkRoom.Translation));
          }
       }
    }
@@ -99,7 +99,7 @@ public class SpatialMapSystem : GDSystem {
    }
    
    private bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
-      var position = c.Position.GetValueOrDefault();
+      var position = c.Position;
       return position.x >= chunkCoords[0].x && position.x <= chunkCoords[1].x &&
              position.z >= chunkCoords[0].z && position.z <= chunkCoords[1].z;
    }

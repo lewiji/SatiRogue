@@ -19,10 +19,15 @@ public class Cell {
       get => _id;
       set {
          _id = value;
-         Position ??= IdCalculator.Vec3FromId(_id);
+         _position ??= IdCalculator.Vec3FromId(_id);
       }
    }
-   public Vector3? Position;
+   private Vector3? _position;
+   public Vector3 Position {
+      get => _position.GetValueOrDefault();
+      set => _position = value;
+   }
+   
    public float Luminosity;
    public CellType? Type;
    public HashSet<ulong> Occupants = new();
@@ -35,6 +40,7 @@ public class Cell {
               var instance = GD.InstanceFromId(x);
               return instance.Get("BlocksCell").Equals(true);
            }) > 0;
-   
+
+
    private long _id;
 }

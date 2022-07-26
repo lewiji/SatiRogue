@@ -10,7 +10,7 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class MovementSystem : GDSystem {
    public override void Run() {
-      foreach (var (character, gridPos, input) in Query<Character, GridPositionComponent, PlayerInputDirectionComponent>()) {
+      foreach (var (character, gridPos, input) in Query<Character, GridPositionComponent, InputDirectionComponent>()) {
          if (input.Direction == Vector2.Zero) continue;
          
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);

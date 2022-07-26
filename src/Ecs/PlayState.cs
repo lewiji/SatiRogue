@@ -13,7 +13,8 @@ public class PlayState : GameState {
       
       InitSystems
          .Add(new SpatialMapSystem())
-         .Add(new SpawnPlayerSystem());
+         .Add(new SpawnPlayerSystem())
+         .Add(new SetInitialPositionSystem());
       
       OnTurnSystems
          .Add(new MovementSystem());
