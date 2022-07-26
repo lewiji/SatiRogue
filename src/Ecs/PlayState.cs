@@ -14,6 +14,7 @@ public class PlayState : GameState {
       InitSystems
          .Add(new SpatialMapSystem())
          .Add(new SpawnPlayerSystem())
+         .Add(new SpawnEnemySystem())
          .Add(new SetInitialPositionSystem());
       
       OnTurnSystems

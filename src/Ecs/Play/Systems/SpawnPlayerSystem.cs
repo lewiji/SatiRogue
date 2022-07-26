@@ -1,8 +1,5 @@
-using System.Linq;
 using Godot;
 using SatiRogue.Debug;
-using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.Play.Components;
 using RelEcs;
 
 namespace SatiRogue.Ecs.Play.Systems; 

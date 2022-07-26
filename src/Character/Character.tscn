@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Ecs/Play/Nodes/Actors/Character.cs" type="Script" id=3]
+
+[node name="Character" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Visual" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
+pixel_size = 0.05

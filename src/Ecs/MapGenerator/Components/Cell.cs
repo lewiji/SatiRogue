@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Grid;
 
 namespace SatiRogue.Ecs.MapGenerator.Components; 
@@ -35,11 +36,7 @@ public class Cell {
    public bool Blocked => 
       Conditions.Contains(CellCondition.Destroyed) ||
       Type is CellType.Wall or CellType.DoorClosed ||
-      Occupants.Count(x =>
-           {
-              var instance = GD.InstanceFromId(x);
-              return instance.Get("BlocksCell").Equals(true);
-           }) > 0;
+      Occupants.Count(x => GD.InstanceFromId(x) is Character instance && instance.Get("BlocksCell").Equals(true)) > 0;
 
 
    private long _id;
