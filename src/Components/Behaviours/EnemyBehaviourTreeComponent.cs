@@ -28,7 +28,7 @@ public partial class EnemyBehaviourTreeComponent : BehaviourTreeComponent {
    }
 
 
-   private class EnemyBehaviourTree : Gig {
+   public class EnemyBehaviourTree : Gig {
       private readonly EnemyEntity _enemyEntity;
       private int _squaredSightRange;
       private int _rangeToPlayer = -1;

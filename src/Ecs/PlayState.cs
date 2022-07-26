@@ -18,6 +18,7 @@ public class PlayState : GameState {
          .Add(new SetInitialPositionSystem());
       
       OnTurnSystems
+         .Add(new EnemyBehaviourSystem())
          .Add(new MovementSystem());
 
       ProcessSystems

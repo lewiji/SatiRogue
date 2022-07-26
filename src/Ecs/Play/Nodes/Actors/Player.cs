@@ -14,7 +14,6 @@ public class Player : Character, ISpawnable {
          .Add(new HealthComponent(Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
-         .Add(new InterpolateWalkAnimationSystem())
          .Add<Controllable>()
          .Add<Walkable>();
    }

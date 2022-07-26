@@ -1,4 +1,5 @@
 using RelEcs;
+using SatiRogue.Components.Behaviours;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Systems;
@@ -13,7 +14,7 @@ public class Enemy : Character, ISpawnable {
          .Add(new HealthComponent(Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
-         .Add(new InterpolateWalkAnimationSystem())
+         .Add(new BehaviourTree())
          .Add<Walkable>();
    }
 }

@@ -12,12 +12,11 @@ public class SpawnEnemySystem : GDSystem {
       var numEnemies = GetElement<MapGenData>().GeneratorParameters.NumEnemies;
       Logger.Info($"Spawning {numEnemies} enemies");
       var entitiesNode = World.GetElement<Core.Entities>();
-      for (int enemy = 0; enemy < numEnemies; enemy++) {
+      for (var enemy = 0; enemy < numEnemies; enemy++) {
          var enemyNode = _enemyScene.Instance<Nodes.Actors.Enemy>();
          entitiesNode.AddChild(enemyNode);
          Spawn(enemyNode).Id();
          World.AddElement(enemyNode);
       }
-      
    }
 }
