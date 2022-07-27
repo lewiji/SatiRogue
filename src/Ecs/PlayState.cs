@@ -23,11 +23,12 @@ public class PlayState : GameState {
       
       OnTurnSystems
          .Add(new EnemyBehaviourSystem())
+         .Add(new HealthSystem())
          .Add(new MovementSystem());
 
       PhysicsSystems
          .Add(new InterpolateWalkAnimationSystem())
-         .Add(new TurnHandlerSystem())
-         .Add(new InputSystem());
+         .Add(new InputSystem())
+         .Add(new TurnHandlerSystem());
    }
 }

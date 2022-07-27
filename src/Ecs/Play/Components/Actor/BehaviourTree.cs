@@ -25,15 +25,15 @@ public class BehaviourTree {
       TreeInstance = treeInstance;
    }
 
-   public void Step(World world, Enemy enemy, InputDirectionComponent inputDir, GridPositionComponent gridPos, Nodes.Actors.Player player,
+   public void Step(World world, Enemy enemy, InputDirectionComponent inputDir, GridPositionComponent gridPos, HealthComponent playerHealthComponent,
       GridPositionComponent playerGridPos) =>
-      TreeInstance!.Step(world, enemy, inputDir, gridPos, player, playerGridPos);
+      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos);
 }
 
 public class BaseBt : Gig {
    private int _lastSawPlayer = -1;
    private float _rangeToPlayer = -1;
-   public status Step(World world, Enemy enemy, InputDirectionComponent inputDir, GridPositionComponent gridPos, Nodes.Actors.Player player,
+   public status Step(World world, Enemy enemy, InputDirectionComponent inputDir, GridPositionComponent gridPos, HealthComponent playerHealth,
       GridPositionComponent playerGridPos) {
       if (!PlayerInRange(enemy, gridPos, playerGridPos)) {
          if (_rangeToPlayer > enemy.SightRange * 2f) {
@@ -43,7 +43,8 @@ public class BaseBt : Gig {
          return MoveRandomly(inputDir);
       }
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
-         return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir) || Attack(inputDir) || MoveRandomly(inputDir);
+         return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir) || Attack(playerHealth, inputDir) || MoveRandomly
+         (inputDir);
       }
 
       if (_lastSawPlayer is > -1 and < 5) {
@@ -65,9 +66,11 @@ public class BaseBt : Gig {
       return fail();
    }
    
-   private status Attack(InputDirectionComponent inputDir) {
+   private status Attack(HealthComponent playerHealth, InputDirectionComponent inputDir) {
       if (Math.Abs(_rangeToPlayer - 1) > 0.4f) return fail();
       Logger.Info("ATTACKING!!!");
+      playerHealth.Value -= 1;
+      Logger.Info($"Player health: {playerHealth.Value}");
       inputDir.Direction = Vector2.Zero;
       // TODO attack
       return done();
