@@ -8,8 +8,8 @@ namespace SatiRogue.Ecs.Play.Systems;
 public class EnemyBehaviourSystem : GDSystem {
    public override void Run() {
       foreach (var (player, playerGridPos, playerHealthComponent) in Query<Nodes.Actors.Player, GridPositionComponent, HealthComponent>()) {
-         foreach (var (enemy, bTree, inputDir, gridPos) in Query<Enemy, BehaviourTree, InputDirectionComponent, GridPositionComponent>()) {
-            if (enemy.Behaving) {
+         foreach (var (enemy, bTree, inputDir, gridPos, healthComponent) in Query<Enemy, BehaviourTree, InputDirectionComponent, GridPositionComponent, HealthComponent>()) {
+            if (enemy.Behaving && healthComponent.IsAlive) {
                bTree.Step(World, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos);
             }
          }

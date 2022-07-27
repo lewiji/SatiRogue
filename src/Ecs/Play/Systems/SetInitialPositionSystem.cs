@@ -18,9 +18,9 @@ public class SetInitialPositionSystem : GDSystem {
       var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
       foreach (var (character, gridPos) in query) {
          if (!availableCells.Any()) continue;
-         
          var chosenCell = availableCells[(int)(GD.Randi() % availableCells.Length)];
          if (chosenCell.Value.Blocked) continue;
+         
          gridPos.Position = chosenCell.Value.Position;
          chosenCell.Value.Occupants.Add(character.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);

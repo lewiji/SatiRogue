@@ -11,7 +11,7 @@ public class HealthSystem : GDSystem {
       foreach (var (entity, health) in Query<Entity, HealthComponent>())
       {
          if (health.Value <= 0) {
-            Logger.Info("Dead!!!");
+            Logger.Info($"HealthSystem: Entity {entity} is dead!");
             DespawnAndFree(entity);
          }
       }

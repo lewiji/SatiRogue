@@ -70,7 +70,6 @@ public class BaseBt : Gig {
       if (Math.Abs(_rangeToPlayer - 1) > 0.4f) return fail();
       Logger.Info("ATTACKING!!!");
       playerHealth.Value -= 1;
-      Logger.Info($"Player health: {playerHealth.Value}");
       inputDir.Direction = Vector2.Zero;
       // TODO attack
       return done();

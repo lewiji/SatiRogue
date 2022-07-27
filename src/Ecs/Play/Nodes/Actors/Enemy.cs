@@ -8,6 +8,7 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Enemy : Character, ISpawnable {
    public void Spawn(EntityBuilder entityBuilder) {
+      Health = 1;
       entityBuilder
          .Add(this)
          .Add(this as Character)

@@ -20,15 +20,16 @@ public class PlayState : GameState {
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
          .Add(new SetInitialPositionSystem());
-      
+
       OnTurnSystems
+         .Add(new PlayerMovementSystem())
          .Add(new EnemyBehaviourSystem())
-         .Add(new HealthSystem())
-         .Add(new MovementSystem());
+         .Add(new EnemyMovementSystem());
 
       PhysicsSystems
          .Add(new InterpolateWalkAnimationSystem())
          .Add(new InputSystem())
-         .Add(new TurnHandlerSystem());
+         .Add(new TurnHandlerSystem())
+         .Add(new HealthSystem());
    }
 }
