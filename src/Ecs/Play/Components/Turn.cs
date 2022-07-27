@@ -7,7 +7,7 @@ public enum TurnType {
 }
 
 public class Turn {
-   private TurnType _currentTurn = TurnType.Processing;
+   private TurnType _currentTurn = TurnType.PlayerTurn;
 
    public TurnType CurrentTurn {
       get => _currentTurn;

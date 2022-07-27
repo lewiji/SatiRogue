@@ -103,6 +103,7 @@ public abstract class GridEntity : Entity {
    }
 
    public bool HasLineOfSightTo(GridEntity otherEntity) {
-      return BresenhamsLine.Line(GridPosition, otherEntity.GridPosition, pos => !MapGenerator.MapData.IsWall(pos));
+      return false;
+      //BresenhamsLine.Line(GridPosition, otherEntity.GridPosition, pos => !MapGenerator.MapData.IsWall(pos));
    }
 }

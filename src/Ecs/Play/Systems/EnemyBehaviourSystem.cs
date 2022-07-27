@@ -10,7 +10,7 @@ public class EnemyBehaviourSystem : GDSystem {
       foreach (var (player, playerGridPos) in Query<Nodes.Actors.Player, GridPositionComponent>()) {
          foreach (var (enemy, bTree, inputDir, gridPos) in Query<Enemy, BehaviourTree, InputDirectionComponent, GridPositionComponent>()) {
             if (enemy.Behaving) {
-               bTree.Step(World, inputDir, gridPos, playerGridPos);
+               bTree.Step(World, enemy, inputDir, gridPos, player, playerGridPos);
             }
          }
       }

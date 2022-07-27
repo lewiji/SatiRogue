@@ -2,11 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
 using RelEcs;
+using SatiRogue.Debug;
+using SatiRogue.Grid;
 using SatiRogue.Tools;
 using Array = System.Array;
+using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
+using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 
 namespace SatiRogue.Ecs.Play.Systems; 
 
@@ -34,19 +39,32 @@ public class SpatialMapSystem : GDSystem {
          (_mapGenData.GeneratorParameters.Width + chunkWidth) * 
          (_mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
+      Logger.Info("Building chunks");
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
 
    private void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
       var cells = _mapGenData.IndexedCells.Values.ToArray();
-      
+
+      Cell[] chunkCells = new Cell[chunkWidth * chunkWidth];
       for (var chunkId = 0; chunkId < totalChunks; chunkId++) {
          var chunkCoords = GetChunkMinMaxCoords(chunkId,  chunkWidth, maxWidth + chunkWidth);
          if (cells == null) continue;
+         var cellCount = 0;
          // Remove these cells from the enumeration
-         var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
-         cells = cells.Except(chunkCells).ToArray();
+         for (var y = chunkCoords[0].z; y < chunkCoords[1].z; y++) {
+            for (var x = chunkCoords[0].x; x < chunkCoords[1].x; x++) {
+               var id = IdCalculator.IdFromVec3(new Vector3(x, 0, y));
+               var found = _mapGenData.IndexedCells.TryGetValue(id, out var cell);
+               if (found) {
+                  chunkCells[cellCount] = cell!;
+                  cellCount++;
+               }
+            }
+         }
+         
          BuildChunk(chunkId, chunkCoords, chunkCells);
+         Array.Clear(chunkCells, 0, cellCount);
       }
    }
 
@@ -59,7 +77,7 @@ public class SpatialMapSystem : GDSystem {
       chunkRoom.Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
       // Create MultiMesh for each cell type in this chunk data
       foreach (CellType cellType in _cellTypes) {
-         var cellsOfThisTypeInChunk = chunkCells.Where(cell => cell.Type == cellType).ToArray();
+         var cellsOfThisTypeInChunk = chunkCells.Where(cell => cell != null && cell.Type == cellType).ToArray();
          var meshForCellType = GetMeshResourceForCellType(cellType);
          if (meshForCellType == null) continue;
 

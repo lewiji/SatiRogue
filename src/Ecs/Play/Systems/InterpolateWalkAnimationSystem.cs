@@ -9,31 +9,26 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class InterpolateWalkAnimationSystem : GDSystem {
    private float _lerpWeight => 14f;
+   private PhysicsDeltaTime? _delta;
    
    public override void Run() {
+      _delta ??= GetElement<PhysicsDeltaTime>();
       foreach (var (spatial, gridPos, walkable) in Query<Character, GridPositionComponent, Walkable>()) {
-         if (!gridPos.Position.IsEqualApprox(spatial.Translation)) {
-            if (walkable.Teleporting) {
-               TeleportSpatial(spatial, gridPos);
-            } else {
-               InterpolateSpatial(spatial, gridPos);
-            }
+         if (walkable.Teleporting) {
+            TeleportSpatial(spatial, gridPos);
+         } else {
+            InterpolateSpatial(spatial, gridPos);
          }
-         
+
          if (walkable.Teleporting) walkable.Teleporting = false;
       }
-      
    }
 
    private void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      var distanceSq = spatial.Translation.DistanceTo(gridPos.Position);
-      if (distanceSq < 0.01f) {
-         spatial.Translation = gridPos.Position;
-      }
-      else {
-         TryGetElement<PhysicsDeltaTime>(out var delta);
-         spatial.Translation = spatial.Translation.LinearInterpolate(gridPos.Position, _lerpWeight * delta.Value);
-      }
+      var currentTranslation = spatial.Translation;
+      if (currentTranslation.DistanceSquaredTo(gridPos.Position) < 0.005f) return;
+      
+      spatial.Translation = currentTranslation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
    }
 
    private static void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {

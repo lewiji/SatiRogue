@@ -57,8 +57,6 @@ public class GameStateController : Node {
       var currentState = _stack.Peek();
       World.GetElement<DeltaTime>().Value = delta;
       currentState.ProcessSystems.Run(World);
-
-      World.Tick();
    }
 
    public override void _PhysicsProcess(float delta) {
@@ -70,6 +68,7 @@ public class GameStateController : Node {
       var currentState = _stack.Peek();
       World.GetElement<PhysicsDeltaTime>().Value = delta;
       currentState.PhysicsSystems.Run(World);
+      World.Tick();
    }
 
    public override void _ExitTree()

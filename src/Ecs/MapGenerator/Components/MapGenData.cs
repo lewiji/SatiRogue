@@ -7,12 +7,12 @@ namespace SatiRogue.Ecs.MapGenerator.Components;
 public struct GeneratorParameters {
    public GeneratorParameters() { }
 
-   public int Height { get; set; } = 75;
-   public int Width { get; set; } = 75;
-   public int NumRooms { get; set; } = 12;
-   public int MinRoomWidth { get; set; } = 20;
-   public int MaxRoomWidth { get; set; } = 4;
-   public int NumEnemies { get; set; } = 15;
+   public int Height { get; set; } = 128;
+   public int Width { get; set; } = 128;
+   public int NumRooms { get; set; } = 32;
+   public int MinRoomWidth { get; set; } = 1;
+   public int MaxRoomWidth { get; set; } = 16;
+   public int NumEnemies { get; set; } = 128;
 }
 
 
@@ -73,5 +73,9 @@ public class MapGenData {
       var cell = new Cell{Id = id};
       IndexedCells[id] = cell;
       return cell;
+   }
+
+   public bool IsWall(Vector3 gridVec) {
+      return GetCellAt(gridVec).Type == CellType.Wall;
    }
 }

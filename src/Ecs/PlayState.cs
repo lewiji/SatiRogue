@@ -13,6 +13,7 @@ public class PlayState : GameState {
       
       InitSystems
          .Add(new SpatialMapSystem())
+         .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
          .Add(new SetInitialPositionSystem());
@@ -21,11 +22,9 @@ public class PlayState : GameState {
          .Add(new EnemyBehaviourSystem())
          .Add(new MovementSystem());
 
-      ProcessSystems
+      PhysicsSystems
+         .Add(new InterpolateWalkAnimationSystem())
          .Add(new TurnHandlerSystem())
          .Add(new InputSystem());
-
-      PhysicsSystems
-         .Add(new InterpolateWalkAnimationSystem());
    }
 }

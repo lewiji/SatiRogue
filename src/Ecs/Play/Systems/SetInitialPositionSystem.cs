@@ -13,15 +13,14 @@ public class SetInitialPositionSystem : GDSystem {
       var mapData = GetElement<MapGenData>();
       var query = Query<Character, GridPositionComponent>();
 
+      var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
       foreach (var (character, gridPos) in query) {
-         var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
-         if (availableCells.Length == 0) continue;
+         if (!availableCells.Any()) continue;
          
-         var chosenCell = availableCells[GD.Randi() % availableCells.Length];
+         var chosenCell = availableCells[(int)(GD.Randi() % availableCells.Length)];
+         if (chosenCell.Value.Blocked) continue;
          gridPos.Position = chosenCell.Value.Position;
          chosenCell.Value.Occupants.Add(character.GetInstanceId());
-         
-         Logger.Info($"{character} initial gridpos: {gridPos.Position}");
       }
    }
 }

@@ -8,5 +8,6 @@ public class Character : Spatial {
    [Export] public float Speed = 1;
    [Export] public bool BlocksCell = true;
    [Export] public bool Enabled = true;
+   [Export] public int SightRange = 10;
    public bool Behaving => Health > 0 && Enabled;
 }

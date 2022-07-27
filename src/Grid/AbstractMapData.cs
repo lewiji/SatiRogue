@@ -75,6 +75,7 @@ public abstract class AbstractMapData : Resource {
       IndexedCells.Clear();
    }
    
+   
    public bool IsWall(Vector3i gridVec) {
       return GetCellAt(gridVec).Type == CellType.Wall;
    }
