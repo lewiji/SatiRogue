@@ -29,6 +29,7 @@ public class MapGenState : GameState {
             .Add(new CreateRooms())
             .Add(new CreateCorridors())
             .Add(new FloodFill())
+            .Add(new GenPathfindingNodes())
             .Add(new PassToPlayState());
       }
    }

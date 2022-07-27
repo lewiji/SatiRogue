@@ -1,6 +1,9 @@
+using Godot;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Systems;
 using RelEcs;
+using SatiRogue.Grid;
+using SatiRogue.MathUtils;
 
 namespace SatiRogue.Ecs; 
 

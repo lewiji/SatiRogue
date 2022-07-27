@@ -4,6 +4,7 @@ using static Active.Status;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
+using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
@@ -42,21 +43,26 @@ public class BaseBt : Gig {
          return MoveRandomly(inputDir);
       }
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
-         return MoveTowardsGridPos(gridPos, playerGridPos, inputDir) || Attack(inputDir);
+         return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir) || Attack(inputDir) || MoveRandomly(inputDir);
       }
 
       if (_lastSawPlayer is > -1 and < 5) {
-         return MoveTowardsGridPos(gridPos, playerGridPos, inputDir);
+         return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir) || MoveRandomly(inputDir);
       }
 
       _lastSawPlayer = -1;
       return MoveRandomly(inputDir);
    }
 
-   private status MoveTowardsGridPos(GridPositionComponent pos1, GridPositionComponent pos2, InputDirectionComponent inputDir) {
+   private status MoveTowardsGridPos(PathfindingHelper pathfindingHelper, GridPositionComponent pos1, GridPositionComponent pos2, InputDirectionComponent inputDir) {
       if (_rangeToPlayer is not (-1 or > 1)) return fail();
-      inputDir.Direction = (pos2.Position - pos1.Position).Normalized().ToVector2();
-      return done();
+      var path = pathfindingHelper.FindPath(pos1.Position, pos2.Position);
+      if (path.Length > 1) {
+         inputDir.Direction = (path[1] - pos1.Position).Round().ToVector2();
+         return done();
+      }
+
+      return fail();
    }
    
    private status Attack(InputDirectionComponent inputDir) {
