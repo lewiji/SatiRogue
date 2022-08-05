@@ -37,7 +37,7 @@ public class PlayerMovementSystem : GDSystem {
                if (IsAlive(entity!)) GetComponent<HealthComponent>(entity!).Value -= 1;
             }
          }
-         input.Direction = Vector2.Zero;
+         //input.Direction = Vector2.Zero;
       }
    }
 }

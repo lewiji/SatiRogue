@@ -2,6 +2,7 @@ using Godot;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Systems;
 using RelEcs;
+using SatiRogue.Ecs.Play.Systems.Init;
 using SatiRogue.Grid;
 using SatiRogue.MathUtils;
 
@@ -19,12 +20,15 @@ public class PlayState : GameState {
          .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
-         .Add(new SetInitialPositionSystem());
+         .Add(new SetInitialPositionSystem())
+         .Add(new CharacterHealthBarSystem());
 
       OnTurnSystems
          .Add(new PlayerMovementSystem())
          .Add(new EnemyBehaviourSystem())
-         .Add(new EnemyMovementSystem());
+         .Add(new EnemyMovementSystem())
+         .Add(new CharacterAnimationSystem())
+         .Add(new ResetInputDirectionSystem());
 
       PhysicsSystems
          .Add(new InterpolateWalkAnimationSystem())

@@ -1,13 +1,12 @@
 using System.Linq;
 using Godot;
 using RelEcs;
-using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 
-namespace SatiRogue.Ecs.Play.Systems; 
+namespace SatiRogue.Ecs.Play.Systems.Init; 
 
 public class SetInitialPositionSystem : GDSystem {
    public override void Run() {

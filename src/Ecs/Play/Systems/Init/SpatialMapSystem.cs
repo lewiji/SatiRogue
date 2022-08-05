@@ -24,6 +24,9 @@ public class SpatialMapSystem : GDSystem {
       {CellType.DoorClosed, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")},
       {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
    };
+
+   private static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
+   
    
    private MapGenData _mapGenData = null!;
    private MapGeometry _mapGeometry = null!;
@@ -40,6 +43,7 @@ public class SpatialMapSystem : GDSystem {
          (_mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
       Logger.Info("Building chunks");
+      _mapGeometry.AddChild(FloorPlaneScene.Instance());
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
 

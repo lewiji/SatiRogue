@@ -27,11 +27,7 @@ public class EnemyMovementSystem : GDSystem {
             gridPos.Position += new Vector3(input.Direction.x, 0, input.Direction.y);
             targetCell.Occupants.Add(enemy.GetInstanceId());
             pathfindingHelper.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
-            input.Direction = Vector2.Zero;
             Logger.Debug($"Moved {enemy} to: {gridPos.Position}");
-         }
-         else {
-            input.Direction = Vector2.Zero;
          }
       }
    }

@@ -1,8 +1,5 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Components;
-using SatiRogue.Components.Stats;
-using SatiRogue.Entities;
 
 namespace SatiRogue.scenes.Hud; 
 
@@ -24,7 +21,7 @@ public partial class StatBar3D : Spatial {
 
          if (_tween == null) return;
          if (_tween.IsActive()) _tween.StopAll();
-         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.16f, Tween.TransitionType.Sine);
+         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.2f, Tween.TransitionType.Sine);
          _tween.Start();
       }
    }
@@ -42,13 +39,23 @@ public partial class StatBar3D : Spatial {
       _multiMeshInstance.Multimesh.SetInstanceCustomData(1, new Color(0.4892f, 0.5504f, 1f));
    }
 
-   public override void _Process(float delta) {
+   [OnReady]
+   private void SetupTween() {
+      if (_tween == null) return;
+      _tween.Connect("tween_step", this, nameof(OnTweenStep));
+   }
+
+   private void OnTweenStep(Object obj, NodePath key, float elapsed, float value) {
+      _shaderMaterial?.SetShaderParam("percent_full", value);
+   }
+
+   /*public override void _Process(float delta) {
       if (_tween == null) {
          _shaderMaterial?.SetShaderParam("percent_full", _percent);
       } else if (_tween.IsActive()) {
          _shaderMaterial?.SetShaderParam("percent_full", _interpolatedPercent);
       }
-   }
+   }*/
 
    public void OnDead() {
       _animationPlayer?.Play("die");
