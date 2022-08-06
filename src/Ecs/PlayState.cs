@@ -34,6 +34,7 @@ public class PlayState : GameState {
          .Add(new InterpolateWalkAnimationSystem())
          .Add(new InputSystem())
          .Add(new TurnHandlerSystem())
-         .Add(new HealthSystem());
+         .Add(new HealthSystem())
+         .Add(new CharacterDeathSystem());
    }
 }

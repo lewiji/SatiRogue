@@ -16,6 +16,7 @@ public class Enemy : Character, ISpawnable {
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add(new BehaviourTree())
-         .Add<Walkable>();
+         .Add<Walkable>()
+         .Add<Alive>();
    }
 }

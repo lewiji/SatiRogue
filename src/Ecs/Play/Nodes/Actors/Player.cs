@@ -15,6 +15,7 @@ public class Player : Character, ISpawnable {
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add<Controllable>()
-         .Add<Walkable>();
+         .Add<Walkable>()
+         .Add<Alive>();
    }
 }
