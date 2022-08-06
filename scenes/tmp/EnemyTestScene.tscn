@@ -86,7 +86,7 @@ size = Vector2( 1024, 1024 )
 script = ExtResource( 16 )
 
 [node name="Enemy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.87, 0.910088, 19.232 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.87, 0.910088, 16.532 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Enemy"]
 transform = Transform( 1, -7.45058e-09, 0, 0, 1, -2.98023e-08, -1.49012e-08, 2.98023e-08, 1, 0, 0.592254, 0 )
@@ -94,7 +94,7 @@ material_override = ExtResource( 13 )
 pixel_size = 0.05
 frames = ExtResource( 14 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="StatBar3D" parent="Enemy" instance=ExtResource( 15 )]
@@ -118,16 +118,6 @@ shadow_bias = 0.08
 spot_range = 24.0
 spot_attenuation = 0.618
 spot_angle_attenuation = 1.27456
-
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.793353, 0.42135, -0.43938, 0, 0.72176, 0.692143, 0.608761, -0.549114, 0.572611, 19.0877, 4.85168, 2.78084 )
-light_color = Color( 0.980392, 0.980392, 0.980392, 1 )
-shadow_enabled = true
-shadow_bias = 0.0
-directional_shadow_mode = 0
-directional_shadow_normal_bias = 0.18
-directional_shadow_depth_range = 1
-directional_shadow_max_distance = 50.0
 
 [node name="Chunk8" type="Room" parent="."]
 
@@ -226,4 +216,5 @@ environment = ExtResource( 18 )
 [node name="Player" parent="." instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 15 )
 
+[editable path="Enemy/StatBar3D"]
 [editable path="GridIndicator2"]

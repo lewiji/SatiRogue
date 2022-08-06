@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/Hud/StatBar3D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__06.png" type="Texture" id=2]
@@ -7,11 +7,6 @@
 [ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__06_o.png" type="Texture" id=5]
 [ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__06_p.png" type="Texture" id=6]
 [ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__06_m.png" type="Texture" id=7]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_n.png" type="Texture" id=9]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_o.png" type="Texture" id=10]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_s.png" type="Texture" id=11]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined_p.png" type="Texture" id=12]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.882353, 0.290196, 0, 1 )
@@ -90,111 +85,6 @@ uv1_scale = Vector3( 12, 6, 1 )
 material = SubResource( 3 )
 size = Vector3( 48, 0.2, 48 )
 
-[sub_resource type="Shader" id=7]
-code = "// NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
-
-shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert_wrap,specular_schlick_ggx;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
-uniform float specular;
-uniform float metallic;
-uniform float alpha_scissor_threshold;
-uniform float roughness : hint_range(0,1);
-uniform float point_size : hint_range(0,128);
-uniform sampler2D texture_metallic : hint_white;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_white;
-uniform vec4 roughness_texture_channel;
-uniform sampler2D texture_emission : hint_black_albedo;
-uniform vec4 emission : hint_color;
-uniform float emission_energy;
-uniform sampler2D texture_normal : hint_normal;
-uniform float normal_scale : hint_range(-16,16);
-uniform sampler2D texture_ambient_occlusion : hint_white;
-uniform vec4 ao_texture_channel;
-uniform float ao_light_affect;
-uniform sampler2D texture_depth : hint_black;
-uniform float depth_scale;
-uniform int depth_min_layers;
-uniform int depth_max_layers;
-uniform vec2 depth_flip;
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-
-void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
-	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(WORLD_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(WORLD_MATRIX[1].xyz), 0.0, 0.0),vec4(0.0, 0.0, length(WORLD_MATRIX[2].xyz), 0.0),vec4(0.0, 0.0, 0.0, 1.0));
-}
-
-
-
-
-void fragment() {
-	vec2 base_uv = UV;
-	{
-		vec3 view_dir = normalize(normalize(-VERTEX)*mat3(TANGENT*depth_flip.x,-BINORMAL*depth_flip.y,NORMAL));
-		float depth = texture(texture_depth, base_uv).r;
-		vec2 ofs = base_uv - view_dir.xy / view_dir.z * (depth * depth_scale);
-		base_uv=ofs;
-	}
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-	SPECULAR = specular;
-	NORMALMAP = texture(texture_normal,base_uv).rgb;
-	NORMALMAP_DEPTH = normal_scale;
-	vec3 emission_tex = texture(texture_emission,base_uv).rgb;
-	EMISSION = (emission.rgb+emission_tex)*emission_energy;
-	ALPHA = albedo.a * albedo_tex.a;
-	AO = dot(texture(texture_ambient_occlusion,base_uv),ao_texture_channel);
-	AO_LIGHT_AFFECT = ao_light_affect;
-	ALPHA_SCISSOR=alpha_scissor_threshold;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=8]
-shader = SubResource( 7 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/specular = 0.5
-shader_param/metallic = 1.0
-shader_param/alpha_scissor_threshold = 0.98
-shader_param/roughness = 0.25
-shader_param/point_size = 1.0
-shader_param/metallic_texture_channel = Plane( 1, 0, 0, 0 )
-shader_param/roughness_texture_channel = Plane( 1, 0, 0, 0 )
-shader_param/emission = Color( 0, 0, 0, 1 )
-shader_param/emission_energy = 0.2
-shader_param/normal_scale = 1.0
-shader_param/ao_texture_channel = Plane( 1, 0, 0, 0 )
-shader_param/ao_light_affect = 0.75
-shader_param/depth_scale = 0.03
-shader_param/depth_min_layers = 3
-shader_param/depth_max_layers = 12
-shader_param/depth_flip = Vector2( 1, 1 )
-shader_param/uv1_scale = Vector3( 1, 1, 1 )
-shader_param/uv1_offset = Vector3( 0, 0, 0 )
-shader_param/uv2_scale = Vector3( 1, 1, 1 )
-shader_param/uv2_offset = Vector3( 0, 0, 0 )
-shader_param/texture_albedo = ExtResource( 8 )
-shader_param/texture_metallic = ExtResource( 10 )
-shader_param/texture_roughness = ExtResource( 11 )
-shader_param/texture_emission = ExtResource( 8 )
-shader_param/texture_normal = ExtResource( 9 )
-shader_param/texture_ambient_occlusion = ExtResource( 10 )
-shader_param/texture_depth = ExtResource( 12 )
-
-[sub_resource type="QuadMesh" id=6]
-material = SubResource( 8 )
-size = Vector2( 24, 9 )
-
 [node name="Spatial" type="Spatial"]
 
 [node name="Camera" type="Camera" parent="."]
@@ -217,9 +107,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.09152, 0 )
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, -5.1 )
 mesh = SubResource( 4 )
-material/0 = null
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7, 0, -8 )
-mesh = SubResource( 6 )
-material/0 = null

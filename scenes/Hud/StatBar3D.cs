@@ -1,34 +1,39 @@
+using System;
 using Godot;
 using GodotOnReady.Attributes;
-
-namespace SatiRogue.scenes.Hud; 
+using Object = Godot.Object;
+namespace SatiRogue.scenes.Hud;
 
 [Tool]
 public partial class StatBar3D : Spatial {
-   [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
    [OnReadyGet("AnimationPlayer", Export = true)] private AnimationPlayer? _animationPlayer;
-   [OnReadyGet("Tween", Export = true)] private Tween? _tween;
-   
-   private ShaderMaterial? _shaderMaterial;
-   private float _percent;
    private float _interpolatedPercent = 0f;
+   [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
+   private float _percent;
+
+   private ShaderMaterial? _shaderMaterial;
+   [OnReadyGet("Tween", Export = true)] private Tween? _tween;
 
    [Export] public float Percent {
       get => _percent;
       set {
          _percent = Mathf.Clamp(value, 0f, 1f);
+
          if (Mathf.IsEqualApprox(_interpolatedPercent, _percent)) return;
 
          if (_tween == null) return;
          if (_tween.IsActive()) _tween.StopAll();
          _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.2f, Tween.TransitionType.Sine);
          _tween.Start();
+
+         if (_percent < 0.999f) { Visible = true; }
       }
    }
 
    [OnReady] private void SetupMultiMesh() {
       // MultiMesh
       _shaderMaterial = _multiMeshInstance?.MaterialOverride as ShaderMaterial;
+
       if (_multiMeshInstance == null) return;
       _multiMeshInstance.Multimesh.InstanceCount = 2;
       // Frame
@@ -43,10 +48,17 @@ public partial class StatBar3D : Spatial {
    private void SetupTween() {
       if (_tween == null) return;
       _tween.Connect("tween_step", this, nameof(OnTweenStep));
+      _tween.Connect("tween_all_completed", this, nameof(OnTweenCompleted));
    }
 
    private void OnTweenStep(Object obj, NodePath key, float elapsed, float value) {
       _shaderMaterial?.SetShaderParam("percent_full", value);
+   }
+
+   private void OnTweenCompleted() {
+      _shaderMaterial?.SetShaderParam("percent_full", _percent);
+
+      if (Math.Abs(_percent - 1f) < 0.01f) { Visible = false; }
    }
 
    /*public override void _Process(float delta) {

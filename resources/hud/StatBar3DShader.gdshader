@@ -1,17 +1,12 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert_wrap,specular_schlick_ggx;
+render_mode blend_add,depth_draw_never,cull_back,diffuse_lambert,specular_disabled;
 uniform vec4 albedo : hint_color;
 uniform sampler2D texture_albedo : hint_albedo;
-uniform float specular;
 uniform float metallic;
-uniform float alpha_scissor_threshold;
-uniform float roughness : hint_range(0,1);
 uniform sampler2D texture_metallic : hint_white;
 uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_white;
-uniform vec4 roughness_texture_channel;
 uniform sampler2D texture_emission : hint_black_albedo;
 uniform vec4 emission : hint_color;
 uniform float emission_energy;
@@ -20,11 +15,6 @@ uniform float normal_scale : hint_range(-16,16);
 uniform sampler2D texture_ambient_occlusion : hint_white;
 uniform vec4 ao_texture_channel;
 uniform float ao_light_affect;
-uniform sampler2D texture_depth : hint_black;
-uniform float depth_scale;
-uniform int depth_min_layers;
-uniform int depth_max_layers;
-uniform vec2 depth_flip;
 uniform float percent_full;
 
 varying vec3 atlas_uv;
@@ -44,12 +34,6 @@ void vertex() {
 
 void fragment() {
 	vec2 base_uv = UV;
-	{
-		vec3 view_dir = normalize(normalize(-VERTEX)*mat3(TANGENT*depth_flip.x,-BINORMAL*depth_flip.y,NORMAL));
-		float depth = texture(texture_depth, base_uv).r;
-		vec2 ofs = base_uv - view_dir.xy / view_dir.z * (depth * depth_scale);
-		base_uv=ofs;
-	}
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
 	
 	if (is_progress_bar > 0.f && albedo_tex.a > 0.f) {
@@ -72,15 +56,11 @@ void fragment() {
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
 	METALLIC = metallic_tex * metallic;
-	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
-	SPECULAR = specular;
 	NORMALMAP = texture(texture_normal,base_uv).rgb;
 	NORMALMAP_DEPTH = normal_scale;
 	vec3 emission_tex = texture(texture_emission,base_uv).rgb;
 	EMISSION = (emission.rgb+emission_tex)*emission_energy;
-	ALPHA = albedo.a * albedo_tex.a;
+	ALPHA = albedo.a;
 	AO = dot(texture(texture_ambient_occlusion,base_uv),ao_texture_channel);
 	AO_LIGHT_AFFECT = ao_light_affect;
-	ALPHA_SCISSOR=alpha_scissor_threshold;
 }
