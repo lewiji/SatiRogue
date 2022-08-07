@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/elthen/Ratfolk Axe Sprite Sheet_d.png" type="Texture" id=5]
 
 [resource]
+resource_local_to_scene = true
 flags_albedo_tex_force_srgb = true
 params_diffuse_mode = 4
 params_specular_mode = 3

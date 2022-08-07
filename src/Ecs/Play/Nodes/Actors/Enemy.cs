@@ -1,16 +1,17 @@
+using Godot;
 using RelEcs;
-using SatiRogue.Components.Behaviours;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Systems;
-
-namespace SatiRogue.Ecs.Play.Nodes.Actors; 
+namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Enemy : Character, ISpawnable {
+   public SpriteFrames? Frames;
+   public SpatialMaterial? Material;
+
    public void Spawn(EntityBuilder entityBuilder) {
       Health = 1;
-      entityBuilder
-         .Add(this)
+
+      entityBuilder.Add(this)
          .Add(this as Character)
          .Add(new HealthComponent(Health))
          .Add(new GridPositionComponent())
@@ -18,5 +19,13 @@ public class Enemy : Character, ISpawnable {
          .Add(new BehaviourTree())
          .Add<Walkable>()
          .Add<Alive>();
+   }
+
+   public override void _Ready() {
+      base._Ready();
+
+      if (AnimatedSprite3D == null) return;
+      AnimatedSprite3D.Frames = Frames;
+      AnimatedSprite3D.MaterialOverride = Material;
    }
 }
