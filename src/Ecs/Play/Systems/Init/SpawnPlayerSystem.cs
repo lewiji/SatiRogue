@@ -5,7 +5,7 @@ using RelEcs;
 namespace SatiRogue.Ecs.Play.Systems; 
 
 public class SpawnPlayerSystem : GDSystem {
-   private PackedScene _playerScene = GD.Load<PackedScene>("res://src/Player/Player3d.tscn");
+   private readonly PackedScene _playerScene = GD.Load<PackedScene>("res://src/Player/Player3d.tscn");
 
    public override void Run() {
       Logger.Info("Spawning Player entity");

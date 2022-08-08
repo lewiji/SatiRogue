@@ -13,6 +13,5 @@ script = ExtResource( 1 )
 material_override = ExtResource( 3 )
 material_overlay = ExtResource( 5 )
 frames = ExtResource( 4 )
-animation = "die"
-frame = 4
+animation = "idle"
 playing = true

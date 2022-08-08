@@ -25,5 +25,17 @@ public class Enemy : Character, ISpawnable {
       if (AnimatedSprite3D == null) return;
       AnimatedSprite3D.Frames = Frames;
       AnimatedSprite3D.MaterialOverride = Material;
+
+      if (WallPeekSprite == null) return;
+      WallPeekSprite.Frames = Frames;
+      var peekMat = Material?.Duplicate() as SpatialMaterial;
+      WallPeekSprite.MaterialOverride = peekMat;
+
+      if (peekMat != null) {
+         peekMat.FlagsNoDepthTest = true;
+         peekMat.DistanceFadeMode = SpatialMaterial.DistanceFadeModeEnum.PixelDither;
+         peekMat.DistanceFadeMinDistance = 0f;
+         peekMat.DistanceFadeMaxDistance = 16f;
+      }
    }
 }

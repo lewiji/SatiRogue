@@ -1,31 +1,27 @@
-[gd_resource type="ParticlesMaterial" load_steps=3 format=2]
+[gd_resource type="ParticlesMaterial" load_steps=2 format=2]
 
-[sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0 ), 0.0, 0.152769, 0, 0, Vector2( 0.135279, 0.816886 ), 1.01048, 1.01048, 0, 0, Vector2( 0.668435, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.986737, 0.00109649 ), -4.49755, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=2]
-width = 128
-curve = SubResource( 1 )
+[ext_resource path="res://resources/particles/blood_scale_curve.tres" type="Texture" id=1]
 
 [resource]
-trail_divisor = 5
+trail_divisor = 4
 emission_shape = 5
 emission_ring_radius = 0.31
 emission_ring_inner_radius = 0.16
 emission_ring_height = 1.0
 emission_ring_axis = Vector3( 0, 1, 0 )
 direction = Vector3( 0, 1, 0 )
-spread = 11.62
-flatness = 0.25
-initial_velocity = 5.0
+spread = 21.0
+flatness = 0.32
+initial_velocity = 6.0
 initial_velocity_random = 0.1
 angular_velocity = 15.0
 angular_velocity_random = 0.5
-radial_accel = 2.0
+radial_accel = 1.62
 radial_accel_random = 0.1
-tangential_accel = 4.0
+tangential_accel = 3.24
 tangential_accel_random = 0.05
-damping = 2.0
-angle_random = 1.0
-scale_curve = SubResource( 2 )
-anim_speed = 1.62
+damping = 1.62
+angle_random = 0.62
+scale_random = 0.21
+scale_curve = ExtResource( 1 )
+anim_speed = 1.0

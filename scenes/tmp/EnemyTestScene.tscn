@@ -109,7 +109,7 @@ size = Vector2( 1024, 1024 )
 script = ExtResource( 16 )
 
 [node name="Enemy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.87, 0.910088, 16.532 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6614, 0.910088, 16.532 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Enemy"]
 transform = Transform( 1, -7.45058e-09, 0, 0, 1, -2.98023e-08, -1.49012e-08, 2.98023e-08, 1, 0, 0.592254, 0 )

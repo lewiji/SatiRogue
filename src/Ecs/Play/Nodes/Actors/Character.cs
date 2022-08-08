@@ -11,6 +11,7 @@ public class Character : Spatial {
    [Export] public int SightRange = 10;
    [Export] public float Speed = 1;
    [Export] public int Strength = 1;
+   public AnimatedSprite3D? WallPeekSprite;
    public bool Behaving { get => Alive && Enabled; }
    public bool Alive {
       get => _alive;
@@ -18,8 +19,7 @@ public class Character : Spatial {
          if (!value) {
             Enabled = false;
             BlocksCell = false;
-         }
-         else if (_alive != value) {
+         } else if (_alive != value) {
             // alive has gone from false to true, rise from your grave
             Enabled = true;
             BlocksCell = true;
@@ -32,6 +32,7 @@ public class Character : Spatial {
    public override void _Ready() {
       _particles = GetNode("Particles") as Particles;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
+      //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
       AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAnimationFinished));
    }
 

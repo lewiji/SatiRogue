@@ -10,9 +10,10 @@ public partial class StatBar3D : Spatial {
    private float _interpolatedPercent = 0f;
    [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
    private float _percent;
-
    private ShaderMaterial? _shaderMaterial;
    [OnReadyGet("Tween", Export = true)] private Tween? _tween;
+
+   public bool Hidden = false;
 
    [Export] public float Percent {
       get => _percent;
@@ -26,7 +27,9 @@ public partial class StatBar3D : Spatial {
          _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.2f, Tween.TransitionType.Sine);
          _tween.Start();
 
-         if (_percent < 0.999f) { Visible = true; }
+         if (!Hidden && _percent < 0.999f) {
+            Visible = true;
+         }
       }
    }
 
@@ -40,7 +43,7 @@ public partial class StatBar3D : Spatial {
       _multiMeshInstance.Multimesh.SetInstanceTransform(0, new Transform(Basis.Identity, new Vector3(0, 0, 0)));
       _multiMeshInstance.Multimesh.SetInstanceCustomData(0, new Color(0.464285714286f, 0, 0));
       // Bar
-      _multiMeshInstance.Multimesh.SetInstanceTransform(1, new Transform(Basis.Identity, new Vector3(0, 0, 0.025f)));
+      _multiMeshInstance.Multimesh.SetInstanceTransform(1, new Transform(Basis.Identity, new Vector3(0, 0.01f, 0.015f)));
       _multiMeshInstance.Multimesh.SetInstanceCustomData(1, new Color(0.4892f, 0.5504f, 1f));
    }
 
@@ -58,7 +61,9 @@ public partial class StatBar3D : Spatial {
    private void OnTweenCompleted() {
       _shaderMaterial?.SetShaderParam("percent_full", _percent);
 
-      if (Math.Abs(_percent - 1f) < 0.01f) { Visible = false; }
+      if (Hidden || Math.Abs(_percent - 1f) < 0.01f) {
+         Visible = false;
+      }
    }
 
    /*public override void _Process(float delta) {

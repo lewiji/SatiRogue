@@ -16,6 +16,10 @@ public class CharacterHealthBarSystem : GDSystem {
          character.AddChild(healthBarNode);
          On(entity).Add(healthBarNode);
          healthBarNode.Percent = health.Percent;
+
+         if (character is Nodes.Actors.Player) {
+            healthBarNode.Hidden = true;
+         }
       }
    }
 }

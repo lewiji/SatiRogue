@@ -1,9 +1,10 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_add,depth_draw_never,cull_back,diffuse_lambert,specular_disabled;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert,specular_disabled;
 uniform vec4 albedo : hint_color;
 uniform sampler2D texture_albedo : hint_albedo;
+uniform float alpha_scissor_threshold;
 uniform float metallic;
 uniform sampler2D texture_metallic : hint_white;
 uniform vec4 metallic_texture_channel;
@@ -60,7 +61,8 @@ void fragment() {
 	NORMALMAP_DEPTH = normal_scale;
 	vec3 emission_tex = texture(texture_emission,base_uv).rgb;
 	EMISSION = (emission.rgb+emission_tex)*emission_energy;
-	ALPHA = albedo.a;
+	ALPHA = albedo.a * albedo_tex.a;
 	AO = dot(texture(texture_ambient_occlusion,base_uv),ao_texture_channel);
 	AO_LIGHT_AFFECT = ao_light_affect;
+	ALPHA_SCISSOR=alpha_scissor_threshold;
 }

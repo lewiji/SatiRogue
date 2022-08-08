@@ -91,15 +91,6 @@ spot_attenuation = 0.618
 spot_angle = 50.0
 spot_angle_attenuation = 0.787678
 
-[node name="Particles" type="Particles" parent="Visual"]
-emitting = false
-amount = 32
-one_shot = true
-explosiveness = 0.62
-visibility_aabb = AABB( -2.95138, -1.8599, -2.87709, 5.79328, 4.52928, 5.51955 )
-process_material = ExtResource( 3 )
-draw_pass_1 = ExtResource( 4 )
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Visual"]
 stream = ExtResource( 8 )
 unit_size = 5.0
@@ -126,3 +117,15 @@ playback_process_mode = 0
 playback_speed = 0.62
 anims/RESET = SubResource( 1 )
 anims/on_death = SubResource( 2 )
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
+emitting = false
+amount = 64
+lifetime = 1.32
+one_shot = true
+explosiveness = 0.62
+randomness = 0.2
+visibility_aabb = AABB( -4.26578, -5.48778, -4.27105, 7.99024, 8.14132, 7.65105 )
+process_material = ExtResource( 3 )
+draw_pass_1 = ExtResource( 4 )
