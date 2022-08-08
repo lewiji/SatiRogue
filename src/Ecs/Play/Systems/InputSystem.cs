@@ -8,7 +8,7 @@ public class InputSystem : GDSystem {
    public static bool InputHandled = true;
 
    public override void Run() {
-      var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
+      var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build();
 
       foreach (var input in query) {
          var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");

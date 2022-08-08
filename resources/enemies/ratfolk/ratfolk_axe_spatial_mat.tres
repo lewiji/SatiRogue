@@ -7,7 +7,6 @@
 [ext_resource path="res://assets/elthen/Ratfolk Axe Sprite Sheet_d.png" type="Texture" id=5]
 
 [resource]
-resource_local_to_scene = true
 flags_albedo_tex_force_srgb = true
 params_diffuse_mode = 4
 params_specular_mode = 3
@@ -33,9 +32,7 @@ ao_on_uv2 = false
 ao_texture_channel = 0
 depth_enabled = true
 depth_scale = 0.005
-depth_deep_parallax = true
-depth_min_layers = 3
-depth_max_layers = 8
+depth_deep_parallax = false
 depth_flip_tangent = false
-depth_flip_binormal = false
+depth_flip_binormal = true
 depth_texture = ExtResource( 5 )

@@ -1,10 +1,11 @@
 using Godot;
-using Godot.Collections;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 namespace SatiRogue.Ecs.Play.Systems;
+
+public readonly record struct EnemyGraphics(SpriteFrames Frames, Material Material) { }
 
 public class SpawnEnemySystem : GDSystem {
    private static readonly PackedScene _enemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
@@ -17,16 +18,10 @@ public class SpawnEnemySystem : GDSystem {
       RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
    private static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
 
-   private static readonly Array<SpatialMaterial> EnemySpatialMaterialList = new() {
-      HarpyMat,
-      MawMat,
-      RatMat
-   };
-
-   private static readonly Array<SpriteFrames> EnemySpriteFramesList = new() {
-      HarpyFrames,
-      MawFrames,
-      RatFrames
+   private static readonly EnemyGraphics[] EnemyGraphicsArray = {
+      new(HarpyFrames, HarpyMat),
+      new(MawFrames, MawMat),
+      new(RatFrames, RatMat)
    };
 
    public override void Run() {
@@ -36,12 +31,12 @@ public class SpawnEnemySystem : GDSystem {
 
       for (var enemy = 0; enemy < numEnemies; enemy++) {
          var enemyNode = _enemyScene.Instance<Enemy>();
-         var monsterId = Mathf.FloorToInt((float) GD.RandRange(0, EnemySpatialMaterialList.Count));
-
-         enemyNode.Material = EnemySpatialMaterialList[monsterId];
-         enemyNode.Frames = EnemySpriteFramesList[monsterId];
-         ;
+         var monsterId = Mathf.FloorToInt((float) GD.RandRange(0, EnemyGraphicsArray.Length));
+         var health = Mathf.RoundToInt((float) GD.RandRange(1, 3));
+         enemyNode.Material = EnemyGraphicsArray[monsterId].Material;
+         enemyNode.Frames = EnemyGraphicsArray[monsterId].Frames;
          entitiesNode.AddChild(enemyNode);
+         enemyNode.Health = health;
          Spawn(enemyNode);
       }
    }

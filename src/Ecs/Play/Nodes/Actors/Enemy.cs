@@ -6,11 +6,9 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Enemy : Character, ISpawnable {
    public SpriteFrames? Frames;
-   public SpatialMaterial? Material;
+   public Material? Material;
 
    public void Spawn(EntityBuilder entityBuilder) {
-      Health = 1;
-
       entityBuilder.Add(this)
          .Add(this as Character)
          .Add(new HealthComponent(Health))

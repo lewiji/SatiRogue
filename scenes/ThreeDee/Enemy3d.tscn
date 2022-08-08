@@ -11,5 +11,5 @@ material_override = ExtResource( 1 )
 pixel_size = 0.05
 frames = ExtResource( 5 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true

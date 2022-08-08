@@ -26,6 +26,10 @@ run/delta_sync_after_draw=true
 boot_splash/bg_color=Color( 0.0745098, 0.0196078, 0.117647, 1 )
 config/icon="res://icon.png"
 
+[audio]
+
+output_latency=32
+
 [autoload]
 
 Logger="*res://src/Debug/Logger.cs"

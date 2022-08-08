@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Ambience Dark Chamber Loop.ogg-f4b8f3b76ed00afc1da49740e5edb733.oggstr"
+
+[deps]
+
+source_file="res://audio/Ambience Dark Chamber Loop.ogg"
+dest_files=[ "res://.import/Ambience Dark Chamber Loop.ogg-f4b8f3b76ed00afc1da49740e5edb733.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

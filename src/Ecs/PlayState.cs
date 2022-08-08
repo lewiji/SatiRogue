@@ -13,11 +13,13 @@ public class PlayState : GameState {
       _gsc.World.AddElement(this);
 
       InitSystems.Add(new SpatialMapSystem())
+         .Add(new SetupAudioSystem())
          .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
          .Add(new SetInitialPositionSystem())
-         .Add(new CharacterHealthBarSystem());
+         .Add(new CharacterHealthBarSystem())
+         .Add(new SpawnHudSystem());
 
       OnTurnSystems.Add(new PlayerMovementSystem())
          .Add(new EnemyBehaviourSystem())
@@ -25,10 +27,17 @@ public class PlayState : GameState {
          .Add(new ResetInputDirectionSystem())
          .Add(new HealthSystem());
 
+      var turnHandlerSystem = new TurnHandlerSystem();
+      var inputSystem = new InputSystem();
+
       PhysicsSystems.Add(new InterpolateWalkAnimationSystem())
-         .Add(new InputSystem())
-         .Add(new TurnHandlerSystem())
+         .Add(inputSystem)
+         .Add(turnHandlerSystem)
          .Add(new CharacterAnimationSystem())
+         .Add(new AudioSystem())
          .Add(new CharacterDeathSystem());
+
+      _gsc.World.AddElement(turnHandlerSystem);
+      _gsc.World.AddElement(inputSystem);
    }
 }

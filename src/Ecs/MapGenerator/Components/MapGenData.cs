@@ -1,20 +1,18 @@
 using System.Collections.Generic;
 using Godot;
 using SatiRogue.Grid;
-
 namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public struct GeneratorParameters {
    public GeneratorParameters() { }
 
-   public int Height { get; set; } = 256;
-   public int Width { get; set; } = 256;
-   public int NumRooms { get; set; } = 50;
-   public int MinRoomWidth { get; set; } = 1;
-   public int MaxRoomWidth { get; set; } = 30;
-   public int NumEnemies { get; set; } = 100;
+   public int Height { get; set; } = 64;
+   public int Width { get; set; } = 64;
+   public int NumRooms { get; set; } = 16;
+   public int MinRoomWidth { get; set; } = 3;
+   public int MaxRoomWidth { get; set; } = 11;
+   public int NumEnemies { get; set; } = 24;
 }
-
 
 public struct MapGenRoomParams {
    public MapGenRoomParams(GeneratorParameters mapParams) {
@@ -37,26 +35,30 @@ public struct MapGenRoomParams {
 }
 
 public class MapGenData {
-   public Dictionary<long, Cell> IndexedCells { get; protected set; } = new();
-   public HashSet<Rect2> GeneratorSpaces;
    public GeneratorParameters GeneratorParameters;
+   public HashSet<Rect2> GeneratorSpaces;
+
    public MapGenData(GeneratorParameters? mapParams = null) {
       GeneratorSpaces = new HashSet<Rect2>();
       GeneratorParameters = mapParams ?? new GeneratorParameters();
    }
-   
+
+   public Dictionary<long, Cell> IndexedCells { get; protected set; } = new();
+
    public Cell SetCellType(Vector3 position, CellType type) {
       var cell = InitialiseOrGetCell(position);
       cell.Type = type;
+
       return cell;
    }
-   
+
    public Cell SetCellType(long id, CellType type) {
       var cell = InitialiseOrGetCell(id);
       cell.Type = type;
+
       return cell;
    }
-   
+
    public Cell GetCellAt(Vector3 position) {
       return InitialiseOrGetCell(position);
    }
@@ -67,11 +69,11 @@ public class MapGenData {
 
    private Cell InitialiseOrGetCell(long id) {
       // Try to add id to collection, if already exists, return matching cell struct
-      if (IndexedCells.ContainsKey(id))
-         return IndexedCells[id];
+      if (IndexedCells.ContainsKey(id)) return IndexedCells[id];
       // create and add new cell otherwise
-      var cell = new Cell{Id = id};
+      var cell = new Cell {Id = id};
       IndexedCells[id] = cell;
+
       return cell;
    }
 

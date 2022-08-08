@@ -12,6 +12,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 pixel_size = 0.05
 
 [node name="Particles" type="Particles" parent="."]
+physics_interpolation_mode = 1
 visible = false
 emitting = false
 amount = 72
