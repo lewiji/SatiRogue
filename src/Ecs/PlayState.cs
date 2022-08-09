@@ -13,12 +13,13 @@ public class PlayState : GameState {
       _gsc.World.AddElement(this);
 
       InitSystems.Add(new SpatialMapSystem())
-         .Add(new InitFogSystem())
          .Add(new SetupAudioSystem())
          .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
          .Add(new SetInitialPositionSystem())
+         .Add(new InitFogSystem())
+         .Add(new FogSystem())
          .Add(new CharacterHealthBarSystem())
          .Add(new SpawnHudSystem());
 

@@ -62,7 +62,7 @@ public class Cell : Reference {
       foreach (var occupant in Occupants) {
          if (GD.InstanceFromId(occupant) is not Character character || !IsInstanceValid(character)) continue;
 
-         character.CheckVisibility();
+         character.CheckVisibility(_visibility == CellVisibility.CurrentlyVisible);
          Logger.Info($"Setting {character.Name} Visibility: {character.Visible}");
       }
 

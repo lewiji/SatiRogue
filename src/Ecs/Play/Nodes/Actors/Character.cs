@@ -66,8 +66,8 @@ public class Character : Spatial {
       tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
    }
 
-   public void CheckVisibility() {
-      Visible = GetIsVisible();
+   public void CheckVisibility(bool visible) {
+      Visible = visible;
    }
 
    private bool GetIsVisible() {
