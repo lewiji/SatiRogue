@@ -15,9 +15,9 @@
  */
 
 using System;
-using SatiRogue.Grid;
+using Godot;
+using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Grid.MapGen;
-using SatiRogue.MathUtils;
 
 /*
 Field-of-vision calculation for a simple tiled map.
@@ -66,7 +66,7 @@ public static class ShadowCast {
    /// <param name="grid">The cell grid definition.</param>
    /// <param name="gridPosn">The player's position within the grid.</param>
    /// <param name="viewRadius">Maximum view distance; can be a fractional value.</param>
-   public static void ComputeVisibility(MapData grid, Vector3i gridPosn, float viewRadius) {
+   public static void ComputeVisibility(MapGenData grid, Vector3 gridPosn, float viewRadius) {
       //Debug.Assert(gridPosn.x >= 0 && gridPosn.x < grid.xDim);
       //Debug.Assert(gridPosn.y >= 0 && gridPosn.y < grid.yDim);
 
@@ -83,9 +83,9 @@ public static class ShadowCast {
       // NOTE: depending on the compiler, it's possible that passing the octant transform
       // values as four integers rather than an object reference would speed things up.
       // It's much tidier this way though.
-      for (var txidx = 0; txidx < s_octantTransform.Length; txidx++) CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, s_octantTransform[txidx]);
+      for (var txidx = 0; txidx < s_octantTransform.Length; txidx++)
+         CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, s_octantTransform[txidx]);
    }
-
 
    /// <summary>
    ///    Recursively casts light into cells.  Operates on a single octant.
@@ -104,8 +104,13 @@ public static class ShadowCast {
    /// </param>
    /// <param name="txfrm">Coordinate multipliers for the octant transform.</param>
    /// Maximum recursion depth is (Ceiling(viewRadius)).
-   private static void CastLight(MapData grid, Vector3i gridPosn, float viewRadius,
-      int startColumn, float leftViewSlope, float rightViewSlope, OctantTransform txfrm) {
+   private static void CastLight(MapGenData grid,
+      Vector3 gridPosn,
+      float viewRadius,
+      int startColumn,
+      float leftViewSlope,
+      float rightViewSlope,
+      OctantTransform txfrm) {
       //Debug.Assert(leftViewSlope >= rightViewSlope);
 
       // Used for distance test.
@@ -164,6 +169,7 @@ public static class ShadowCast {
             // as you approach it.  This is mostly a matter of personal preference.
             if (rightBlockSlope > leftViewSlope) // Block is above the left edge of our view area; skip.
                continue;
+
             if (leftBlockSlope < rightViewSlope) // Block is below the right edge of our view area; we're done.
                break;
 
@@ -178,7 +184,7 @@ public static class ShadowCast {
             //  cell is visible, and reduce the view area as if it were a wall.  This
             //  could reduce iteration at the corners.
             float distanceSquared = xc * xc + yc * yc;
-            var gridVec = new Vector3i(gridX, 0, gridY);
+            var gridVec = new Vector3(gridX, 0, gridY);
             if (distanceSquared <= viewRadiusSq) grid.SetLight(gridVec, distanceSquared);
 
             var curBlocked = grid.IsWall(gridVec);
@@ -187,15 +193,13 @@ public static class ShadowCast {
                if (curBlocked) {
                   // Still traversing a column of walls.
                   savedRightSlope = rightBlockSlope;
-               }
-               else {
+               } else {
                   // Found the end of the column of walls.  Set the left edge of our
                   // view area to the right corner of the last wall we saw.
                   prevWasBlocked = false;
                   leftViewSlope = savedRightSlope;
                }
-            }
-            else {
+            } else {
                if (curBlocked) {
                   // Found a wall.  Split the view area, recursively pursuing the
                   // part to the left.  The leftmost corner of the wall we just found
@@ -205,8 +209,7 @@ public static class ShadowCast {
                   // corner will be greater than the initial view slope (1.0).  Handle
                   // that here.
                   if (leftBlockSlope <= leftViewSlope)
-                     CastLight(grid, gridPosn, viewRadius, currentCol + 1,
-                        leftViewSlope, leftBlockSlope, txfrm);
+                     CastLight(grid, gridPosn, viewRadius, currentCol + 1, leftViewSlope, leftBlockSlope, txfrm);
 
                   // Once that's done, we keep searching to the right (down the column),
                   // looking for another opening.
@@ -243,8 +246,7 @@ public static class ShadowCast {
 
       public override string ToString() {
          // consider formatting in constructor to reduce garbage
-         return string.Format("[OctantTransform {0,2:D} {1,2:D} {2,2:D} {3,2:D}]",
-            Xx, Xy, Yx, Yy);
+         return string.Format("[OctantTransform {0,2:D} {1,2:D} {2,2:D} {3,2:D}]", Xx, Xy, Yx, Yy);
       }
    }
 }

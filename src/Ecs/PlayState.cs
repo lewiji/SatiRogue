@@ -13,6 +13,7 @@ public class PlayState : GameState {
       _gsc.World.AddElement(this);
 
       InitSystems.Add(new SpatialMapSystem())
+         .Add(new InitFogSystem())
          .Add(new SetupAudioSystem())
          .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
@@ -24,6 +25,7 @@ public class PlayState : GameState {
       OnTurnSystems.Add(new PlayerMovementSystem())
          .Add(new EnemyBehaviourSystem())
          .Add(new CharacterMovementSystem())
+         .Add(new FogSystem())
          .Add(new ResetInputDirectionSystem())
          .Add(new HealthSystem());
 

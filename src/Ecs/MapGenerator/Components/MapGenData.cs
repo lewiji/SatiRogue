@@ -35,6 +35,7 @@ public struct MapGenRoomParams {
 }
 
 public class MapGenData {
+   public readonly Stack<Vector3> CellsVisibilityChanged = new();
    public GeneratorParameters GeneratorParameters;
    public HashSet<Rect2> GeneratorSpaces;
 
@@ -79,5 +80,14 @@ public class MapGenData {
 
    public bool IsWall(Vector3 gridVec) {
       return GetCellAt(gridVec).Type == CellType.Wall;
+   }
+
+   public void SetLight(Vector3 gridVec, float f) {
+      var cell = GetCellAt(gridVec);
+
+      if (cell.Luminosity == null) {
+         CellsVisibilityChanged.Push(cell.Position);
+         cell.Luminosity = f;
+      }
    }
 }

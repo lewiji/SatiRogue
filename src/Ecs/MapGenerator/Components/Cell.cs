@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Grid;
-
-namespace SatiRogue.Ecs.MapGenerator.Components; 
+namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public enum CellType {
    Floor,
@@ -15,7 +15,18 @@ public enum CellType {
    Void
 }
 
-public class Cell {
+public class Cell : Reference {
+   [Signal] public delegate void VisibilityChanged();
+
+   private long _id;
+
+   private float? _luminosity;
+   private Vector3? _position;
+
+   private CellVisibility _visibility = CellVisibility.Unseen;
+   public HashSet<CellCondition> Conditions = new();
+   public HashSet<ulong> Occupants = new();
+   public CellType? Type;
    public long Id {
       get => _id;
       set {
@@ -23,20 +34,44 @@ public class Cell {
          _position ??= IdCalculator.Vec3FromId(_id);
       }
    }
-   private Vector3? _position;
    public Vector3 Position {
       get => _position.GetValueOrDefault();
       set => _position = value;
    }
-   
-   public float Luminosity;
-   public CellType? Type;
-   public HashSet<ulong> Occupants = new();
-   public HashSet<CellCondition> Conditions = new();
-   public bool Blocked => 
-      Conditions.Contains(CellCondition.Destroyed) ||
-      Type is CellType.Wall or CellType.DoorClosed ||
-      Occupants.Any(x => GD.InstanceFromId(x) is Character {BlocksCell: true});
+   public float? Luminosity {
+      get => _luminosity;
+      set {
+         _luminosity = value;
+         if (_luminosity != null) SetCellVisibility(CellVisibility.CurrentlyVisible);
+      }
+   }
+   public CellVisibility Visibility {
+      get => _visibility;
+      set {
+         if (_visibility == value) return;
+         _visibility = value;
+         CallDeferred(nameof(SetOccupantVisibility));
+      }
+   }
+   public bool Blocked {
+      get => Conditions.Contains(CellCondition.Destroyed) || Type is CellType.Wall or CellType.DoorClosed
+                                                          || Occupants.Any(x => GD.InstanceFromId(x) is Character {BlocksCell: true});
+   }
 
-   private long _id;
+   private void SetOccupantVisibility() {
+      foreach (var occupant in Occupants) {
+         if (GD.InstanceFromId(occupant) is not Character character || !IsInstanceValid(character)) continue;
+
+         character.CheckVisibility();
+         Logger.Info($"Setting {character.Name} Visibility: {character.Visible}");
+      }
+
+      EmitSignal(nameof(VisibilityChanged));
+   }
+
+   public Cell SetCellVisibility(CellVisibility? visibility) {
+      Visibility = visibility.GetValueOrDefault();
+
+      return this;
+   }
 }

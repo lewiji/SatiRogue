@@ -1,4 +1,6 @@
 using Godot;
+using SatiRogue.Grid;
+using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Character : Spatial {
@@ -28,10 +30,12 @@ public class Character : Spatial {
          _alive = value;
       }
    }
+   public Cell? CurrentCell { get; set; }
 
    public override void _Ready() {
       _particles = GetNode("Particles") as Particles;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
+      // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
       AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAnimationFinished));
    }
@@ -60,5 +64,13 @@ public class Character : Spatial {
       tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
       tween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
       tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
+   }
+
+   public void CheckVisibility() {
+      Visible = GetIsVisible();
+   }
+
+   private bool GetIsVisible() {
+      return CurrentCell?.Visibility == CellVisibility.CurrentlyVisible;
    }
 }

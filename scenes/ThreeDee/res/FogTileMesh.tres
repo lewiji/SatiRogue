@@ -4,4 +4,3 @@
 
 [resource]
 material = ExtResource( 1 )
-size = Vector3( 1, 2, 1 )

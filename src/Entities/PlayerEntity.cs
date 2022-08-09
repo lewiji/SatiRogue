@@ -10,27 +10,24 @@ using SatiRogue.Components.Tools;
 using SatiRogue.Debug;
 using SatiRogue.Grid;
 using SatiRogue.MathUtils;
-using SatiRogue.Tools;
-
 namespace SatiRogue.Entities;
 
 public class PlayerEntity : GridEntity {
    [Signal] public delegate void PlayerPositionChanged();
 
-
-   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() { Turn.Turn.PlayerTurn };
+   protected override List<Turn.Turn> TurnTypesToExecuteOn { get; set; } = new() {Turn.Turn.PlayerTurn};
 
    public override void _EnterTree() {
       base._EnterTree();
       Uuid = Guid.Empty.ToString();
       Name = "Player";
       BlocksCell = true;
-      
+
       AddComponent(new StatHealthComponent(), new StatsComponentParameters {
-         statType = StatEffectTypes.Stat, 
-         statTypeIndex = (int)StatTypes.Health, 
-         maxValue = 10, 
-         minValue = 0, 
+         statType = StatEffectTypes.Stat,
+         statTypeIndex = (int) StatTypes.Health,
+         maxValue = 10,
+         minValue = 0,
          initialValue = 10
       });
    }
@@ -43,24 +40,21 @@ public class PlayerEntity : GridEntity {
    public override void Loaded() {
       base.Loaded();
       RuntimeMapNode.Connect(nameof(RuntimeMapNode.MapChanged), this, nameof(OnMapDataChanged));
-      
+
       CallDeferred(nameof(CheckVisibility));
    }
 
-   protected override void RegisterMovementComponent(Vector3i? gridPosition)
-   {
+   protected override void RegisterMovementComponent(Vector3i? gridPosition) {
       MovementComponent = new PlayerMovementComponent();
-      MovementComponent.Connect(
-         nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
+      MovementComponent.Connect(nameof(MovementComponent.PositionChanged), this, nameof(OnPositionChanged));
       //this.Autoload<Scheduler>().NextFrame(() => {
-         AddComponent(MovementComponent);
-         AddComponent(new InputHandlerComponent());
-         AddComponent(new PlayerRendererComponent());
-         AddComponent(new GridIndicatorSpatialComponent());
-         AddComponent(new MousePickSpatialCellComponent());
-         MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
-     // });
-      
+      AddComponent(MovementComponent);
+      AddComponent(new InputHandlerComponent());
+      AddComponent(new PlayerRendererComponent());
+      AddComponent(new GridIndicatorSpatialComponent());
+      AddComponent(new MousePickSpatialCellComponent());
+      MovementComponent.GridPosition = gridPosition.GetValueOrDefault();
+      // });
    }
 
    public override void _Ready() {
@@ -74,7 +68,7 @@ public class PlayerEntity : GridEntity {
       EmitSignal(nameof(PositionChanged));
       EmitSignal(nameof(PlayerPositionChanged));
    }
-   
+
    protected override async void OnDead() {
       Enabled = false;
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
@@ -85,8 +79,7 @@ public class PlayerEntity : GridEntity {
       Logger.Debug("Player map data changed");
    }
 
-   public override void HandleTurn()
-   {
+   public override void HandleTurn() {
       base.HandleTurn();
       Logger.Info("Player handling turn");
       CallDeferred(nameof(UpdateFov));
@@ -95,8 +88,9 @@ public class PlayerEntity : GridEntity {
    private async void UpdateFov() {
       Logger.Info("--- Calculating player FOV ---");
       await ToSignal(GetTree(), "idle_frame");
-      if (RuntimeMapNode.MapData != null) 
-         ShadowCast.ComputeVisibility(RuntimeMapNode.MapData, GridPosition, 11.0f);
-      CheckVisibility();
+
+      if (RuntimeMapNode.MapData != null)
+         //ShadowCast.ComputeVisibility(RuntimeMapNode.MapData, GridPosition, 11.0f);
+         CheckVisibility();
    }
 }

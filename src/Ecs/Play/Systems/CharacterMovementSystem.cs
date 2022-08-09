@@ -41,6 +41,7 @@ public class CharacterMovementSystem : GDSystem {
 
       currentCell.Occupants.Remove(character.GetInstanceId());
       targetCell.Occupants.Add(character.GetInstanceId());
+      character.CurrentCell = targetCell;
       pathfindingHelper.SetCellWeight(currentCell.Id, currentCell.Occupants.Count);
       pathfindingHelper.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
