@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=2]
+[ext_resource path="res://src/Ecs/Play/Nodes/Hud/ItemSlot.cs" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 9
+atlas = ExtResource( 2 )
+region = Rect2( 146, 162, 44, 44 )
+
+[node name="Item" type="CenterContainer"]
+margin_right = 100.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+LabelPath = NodePath("MarginContainer/LabelName")
+TextureRectPath = NodePath("TextureRect/CenterContainer/TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 18.0
+margin_top = 168.0
+margin_right = 82.0
+margin_bottom = 232.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 1 )
+expand = true
+
+[node name="CenterContainer" type="CenterContainer" parent="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/CenterContainer"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 55.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 46, 46 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 34.0
+margin_top = 167.0
+margin_right = 66.0
+margin_bottom = 233.0
+rect_min_size = Vector2( 32, 32 )
+custom_constants/margin_top = 40
+
+[node name="LabelName" type="Label" parent="MarginContainer"]
+margin_top = 40.0
+margin_right = 32.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 1 )
+text = "Item"
+align = 1
+valign = 2

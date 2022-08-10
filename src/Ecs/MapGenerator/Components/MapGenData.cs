@@ -6,12 +6,12 @@ namespace SatiRogue.Ecs.MapGenerator.Components;
 public struct GeneratorParameters {
    public GeneratorParameters() { }
 
-   public int Height { get; set; } = 64;
-   public int Width { get; set; } = 64;
-   public int NumRooms { get; set; } = 16;
+   public int Height { get; set; } = 128;
+   public int Width { get; set; } = 128;
+   public int NumRooms { get; set; } = 40;
    public int MinRoomWidth { get; set; } = 3;
-   public int MaxRoomWidth { get; set; } = 11;
-   public int NumEnemies { get; set; } = 16;
+   public int MaxRoomWidth { get; set; } = 20;
+   public int NumEnemies { get; set; } = 48;
 }
 
 public struct MapGenRoomParams {

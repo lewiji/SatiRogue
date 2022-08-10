@@ -12,4 +12,11 @@ public partial class Loot : Control {
          _richTextLabel.BbcodeText = $" {_numLoots}";
       }
    }
+
+   public override void _Input(InputEvent @event) {
+      if (@event is InputEventMouseButton {Pressed: false} mouseJustPressed) {
+         var invGui = GetParent().GetNode<Inventory>("Inventory");
+         invGui.Open();
+      }
+   }
 }
