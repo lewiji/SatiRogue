@@ -14,4 +14,5 @@ material_override = ExtResource( 3 )
 material_overlay = ExtResource( 5 )
 frames = ExtResource( 4 )
 animation = "idle"
+frame = 3
 playing = true

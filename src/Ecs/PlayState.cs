@@ -17,6 +17,7 @@ public class PlayState : GameState {
          .Add(new TurnHandlerInitSystem())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
+         .Add(new SpawnItemsSystem())
          .Add(new SetInitialPositionSystem())
          .Add(new InitFogSystem())
          .Add(new FogSystem())

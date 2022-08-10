@@ -5,10 +5,10 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
-public partial class Player : Character, ISpawnable {
+public partial class Player : Character {
    [OnReadyGet("AnimationPlayer")] public AnimationPlayer AnimationPlayer = null!;
 
-   public void Spawn(EntityBuilder entityBuilder) {
+   public override void Spawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this)
          .Add(this as Character)
          .Add(new HealthComponent(Health))

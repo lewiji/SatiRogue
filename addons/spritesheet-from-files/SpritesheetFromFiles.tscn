@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/spritesheet-from-files/SpritesheetFromFiles.gd" type="Script" id=1]
+[ext_resource path="res://addons/spritesheet-from-files/Actions.res" type="PackedScene" id=2]
+[ext_resource path="res://addons/spritesheet-from-files/Options.res" type="PackedScene" id=3]
+[ext_resource path="res://addons/spritesheet-from-files/Data.gd" type="Script" id=4]
+[ext_resource path="res://addons/spritesheet-from-files/FileList.res" type="PackedScene" id=5]
+[ext_resource path="res://addons/spritesheet-from-files/SpriteSheetGenerator.gd" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.145098, 0.117647, 0.141176, 1 )
+
+[node name="SpritesheetFromFiles" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Data" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="SpriteSheetGenerator" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+visible = false
+margin_right = 1920.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_styles/normal = SubResource( 1 )
+align = 1
+
+[node name="Mid" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 1060.0
+rect_min_size = Vector2( 600, 128 )
+size_flags_vertical = 3
+
+[node name="FileList" parent="VBoxContainer/Mid" instance=ExtResource( 5 )]
+margin_right = 1810.0
+margin_bottom = 1060.0
+
+[node name="Options" parent="VBoxContainer/Mid" instance=ExtResource( 3 )]
+margin_left = 1814.0
+margin_right = 1920.0
+margin_bottom = 1060.0
+
+[node name="Actions" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 1060.0
+margin_right = 1920.0
+margin_bottom = 1080.0

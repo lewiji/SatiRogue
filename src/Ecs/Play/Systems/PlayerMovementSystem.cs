@@ -6,6 +6,8 @@ using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
+using SatiRogue.Ecs.Play.Nodes.Hud;
+using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class PlayerMovementSystem : CharacterMovementSystem {
@@ -31,21 +33,34 @@ public class PlayerMovementSystem : CharacterMovementSystem {
 
    private void HandleOccupants(Cell targetCell, Nodes.Actors.Player player, InputDirectionComponent inputDirectionComponent) {
       foreach (var targetId in targetCell.Occupants) {
-         var target = GD.InstanceFromId(targetId) as Character;
+         var target = GD.InstanceFromId(targetId);
          var entity = target?.GetMeta("Entity") as Entity;
 
-         if (IsAlive(entity!)) {
-            GetComponent<HealthComponent>(entity!).Value -= 1;
-            Send(new CharacterAnimationTrigger(player, "attack"));
-            Send(new CharacterAnimationTrigger(target!, "hit"));
+         switch (target) {
+            case Character character when IsAlive(entity!): {
+               GetComponent<HealthComponent>(entity!).Value -= 1;
+               Send(new CharacterAnimationTrigger(player, "attack"));
+               Send(new CharacterAnimationTrigger(character, "hit"));
 
-            if (player.AnimatedSprite3D != null) {
-               player.AnimatedSprite3D.FlipH = inputDirectionComponent.Direction.x switch {
-                  < 0 => true,
-                  > 0 => false,
-                  _ => player.AnimatedSprite3D.FlipH
-               };
+               if (player.AnimatedSprite3D != null) {
+                  player.AnimatedSprite3D.FlipH = inputDirectionComponent.Direction.x switch {
+                     < 0 => true,
+                     > 0 => false,
+                     _ => player.AnimatedSprite3D.FlipH
+                  };
+               }
+               break;
             }
+            case Chest chest when HasComponent<Closed>(entity!):
+               chest.Open = true;
+               chest.BlocksCell = false;
+               On(entity!).Remove<Closed>().Add<Open>();
+               GetElement<Loot>().NumLoots += 1;
+               break;
+            case Health health when !health.Taken:
+               health.Taken = true;
+               GetComponent<HealthComponent>((Entity) player.GetMeta("Entity")).Value += 1;
+               break;
          }
       }
    }

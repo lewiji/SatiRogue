@@ -120,12 +120,13 @@ anims/on_death = SubResource( 2 )
 
 [node name="Particles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
+generate_lightmap = false
 emitting = false
-amount = 64
-lifetime = 1.32
+amount = 128
+lifetime = 2.2
 one_shot = true
+speed_scale = 1.62
 explosiveness = 0.62
-randomness = 0.2
-visibility_aabb = AABB( -4.26578, -5.48778, -4.27105, 7.99024, 8.14132, 7.65105 )
+visibility_aabb = AABB( -8.60355, -6.49244, -10.091, 17.281, 13.1657, 21.249 )
 process_material = ExtResource( 3 )
 draw_pass_1 = ExtResource( 4 )

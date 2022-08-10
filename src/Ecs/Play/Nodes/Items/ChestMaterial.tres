@@ -1,0 +1,29 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+flags_albedo_tex_force_srgb = true
+params_diffuse_mode = 4
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.5
+metallic = 0.5
+roughness = 0.5
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 0.1
+emission_operator = 0
+emission_on_uv2 = false
+normal_enabled = true
+normal_scale = 1.0
+anisotropy_enabled = true
+anisotropy = 0.9
+ao_enabled = true
+ao_light_affect = 0.5
+ao_on_uv2 = false
+ao_texture_channel = 0
+depth_enabled = true
+depth_scale = -0.016
+depth_deep_parallax = true
+depth_min_layers = 16
+depth_max_layers = 32
+depth_flip_tangent = false
+depth_flip_binormal = true

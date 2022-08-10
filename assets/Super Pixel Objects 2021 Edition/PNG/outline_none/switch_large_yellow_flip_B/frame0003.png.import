@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/frame0003.png-28e55154acc043e037b4343d0958b07a.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/switch_large_yellow_flip_B/frame0003.png"
+dest_files=[ "res://.import/frame0003.png-28e55154acc043e037b4343d0958b07a.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=true
+flags/anisotropic=true
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

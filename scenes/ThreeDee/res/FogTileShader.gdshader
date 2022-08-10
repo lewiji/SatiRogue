@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_lambert,specular_toon,vertex_lighting;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_lambert,specular_toon,vertex_lighting,async_visible;
 uniform vec4 albedo : hint_color;
 uniform sampler2D texture_albedo : hint_albedo;
 uniform float specular;

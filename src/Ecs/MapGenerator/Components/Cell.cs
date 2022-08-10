@@ -48,14 +48,15 @@ public class Cell : Reference {
    public CellVisibility Visibility {
       get => _visibility;
       set {
-         if (_visibility == value) return;
          _visibility = value;
-         CallDeferred(nameof(SetOccupantVisibility));
+         SetOccupantVisibility();
       }
    }
    public bool Blocked {
-      get => Conditions.Contains(CellCondition.Destroyed) || Type is CellType.Wall or CellType.DoorClosed
-                                                          || Occupants.Any(x => GD.InstanceFromId(x) is Character {BlocksCell: true});
+      get => Conditions.Contains(CellCondition.Destroyed) || Type is CellType.Wall or CellType.DoorClosed || Occupants.Any(x =>
+         GD.InstanceFromId(x) is Play.Nodes.GameObject {
+            BlocksCell: true
+         });
    }
 
    private void SetOccupantVisibility() {

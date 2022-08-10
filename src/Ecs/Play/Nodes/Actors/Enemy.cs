@@ -4,11 +4,11 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
-public class Enemy : Character, ISpawnable {
+public class Enemy : Character {
    public SpriteFrames? Frames;
    public Material? Material;
 
-   public void Spawn(EntityBuilder entityBuilder) {
+   public override void Spawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this)
          .Add(this as Character)
          .Add(new HealthComponent(Health))

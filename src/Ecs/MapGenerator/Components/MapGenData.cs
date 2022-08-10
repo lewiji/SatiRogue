@@ -11,7 +11,7 @@ public struct GeneratorParameters {
    public int NumRooms { get; set; } = 16;
    public int MinRoomWidth { get; set; } = 3;
    public int MaxRoomWidth { get; set; } = 11;
-   public int NumEnemies { get; set; } = 24;
+   public int NumEnemies { get; set; } = 16;
 }
 
 public struct MapGenRoomParams {
@@ -85,9 +85,9 @@ public class MapGenData {
    public void SetLight(Vector3 gridVec, float f) {
       var cell = GetCellAt(gridVec);
 
-      if (cell.Luminosity == null) {
-         CellsVisibilityChanged.Push(cell.Position);
-         cell.Luminosity = f;
-      }
+      //if (cell.Luminosity == null) {
+      CellsVisibilityChanged.Push(cell.Position);
+      cell.Luminosity = f;
+      //}
    }
 }

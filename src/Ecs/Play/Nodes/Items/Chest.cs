@@ -1,12 +1,16 @@
 using Godot;
 using GodotOnReady.Attributes;
+using RelEcs;
+using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 [Tool]
-public partial class Chest : Spatial {
+public partial class Chest : Item {
    private bool _open;
    [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;
+   [OnReadyGet("Particles")] public Particles? Particles;
    public bool Locked { get; set; }
+
    [Export] public bool Open {
       get => _open;
       set {
@@ -17,10 +21,15 @@ public partial class Chest : Spatial {
             } // Opening
             else if (!_open && value && AnimatedSprite3D.Animation is not "open" or "opening") {
                AnimatedSprite3D.Animation = "opening";
+               if (Particles != null) Particles.Emitting = true;
             }
          }
          _open = value;
       }
+   }
+
+   public override void Spawn(EntityBuilder entityBuilder) {
+      entityBuilder.Add(this).Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
    }
 
    [OnReady] private void ConnectAnimationFinished() {

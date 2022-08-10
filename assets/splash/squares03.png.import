@@ -2,25 +2,27 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.stex"
+path.s3tc="res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.s3tc.stex"
+path.etc2="res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/splash/squares03.png"
-dest_files=[ "res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.stex" ]
+dest_files=[ "res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.s3tc.stex", "res://.import/squares03.png-2f3aa40ea4e9ec4444e559041fb2484a.etc2.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
+flags/repeat=true
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=true
 flags/srgb=2
@@ -31,5 +33,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

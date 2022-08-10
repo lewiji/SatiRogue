@@ -7,6 +7,7 @@ namespace SatiRogue.Ecs.Play.Systems.Init;
 public class SpawnHudSystem : GDSystem {
    private static readonly PackedScene HudScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/HUD.tscn");
    private static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Health.tscn");
+   private static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");
 
    public override void Run() {
       var gsc = GetElement<GameStateController>();
@@ -17,6 +18,11 @@ public class SpawnHudSystem : GDSystem {
       hud.AddChild(healthUi);
       Spawn(healthUi);
       AddElement(healthUi);
+
+      var lootUi = LootUiScene.Instance<Loot>();
+      hud.AddChild(lootUi);
+      Spawn(lootUi);
+      AddElement(lootUi);
 
       var fade = hud.GetNode<Fade>("FadeCanvasLayer/Fade");
       AddElement(fade);

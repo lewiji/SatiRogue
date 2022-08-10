@@ -3,12 +3,10 @@ using SatiRogue.Grid;
 using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
-public class Character : Spatial {
+public class Character : GameObject {
    private bool _alive = true;
    private Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
-   [Export] public bool BlocksCell = true;
-   [Export] public bool Enabled = true;
    [Export] public int Health = 10;
    [Export] public int SightRange = 10;
    [Export] public float Speed = 1;
@@ -33,6 +31,7 @@ public class Character : Spatial {
    public Cell? CurrentCell { get; set; }
 
    public override void _Ready() {
+      Visible = false;
       _particles = GetNode("Particles") as Particles;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
       // TODO try this again
