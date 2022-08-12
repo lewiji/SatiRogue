@@ -39,6 +39,7 @@ margin_top = 9.0
 margin_right = 55.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 46, 46 )
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand = true
@@ -49,6 +50,7 @@ margin_top = 167.0
 margin_right = 66.0
 margin_bottom = 233.0
 rect_min_size = Vector2( 32, 32 )
+mouse_filter = 2
 custom_constants/margin_top = 40
 
 [node name="LabelName" type="Label" parent="MarginContainer"]
@@ -58,6 +60,5 @@ margin_bottom = 66.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 1 )
-text = "Item"
 align = 1
 valign = 2

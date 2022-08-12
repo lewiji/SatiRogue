@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "InspectedObjectGetter",
 "language": "GDScript",
 "path": "res://addons/float_step_adjuster/editor_inspector_plugin.gd"
+}, {
+"base": "Resource",
+"class": "LaigterSettings",
+"language": "GDScript",
+"path": "res://addons/generate_laigter_maps/LaigterSettings.gd"
 } ]
 _global_script_class_icons={
-"InspectedObjectGetter": ""
+"InspectedObjectGetter": "",
+"LaigterSettings": ""
 }
 
 [application]
@@ -35,6 +41,10 @@ Logger="*res://src/Debug/Logger.cs"
 GameScheduler="*res://src/Tools/GameScheduler.cs"
 GameController="*res://src/GameController.cs"
 
+[debug]
+
+settings/stdout/verbose_stdout=true
+
 [display]
 
 window/size/width=900
@@ -45,7 +55,7 @@ window/stretch/mode="2d"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/spritesheet-from-files/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/generate_laigter_maps/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [importer_defaults]
 

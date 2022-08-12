@@ -1,0 +1,189 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/generate_laigter_maps/LaigterDock.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.101961, 0, 0.25098, 0.329412 )
+corner_detail = 1
+
+[node name="Laigter" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "└─▪ laigter --help
+Usage: laigter [options]
+Test helper
+
+Options:
+-h, --help
+Displays help on commandline options.
+
+--help-all                            
+Displays help including Qt specific options.
+
+-v, --version 
+ Displays version information.
+
+-s, --software-opengl
+ Use software opengl renderer.
+
+-g, --no-gui   
+do not start graphical interface
+
+-d, --diffuse <diffuse texture path>  
+diffuse texture to load
+
+-n, --normal                         
+ generate normals
+
+-c, --specular                        
+generate specular
+
+-o, --occlusion                       
+generate occlusion
+
+-p, --parallax                        
+generate parallax
+
+-r, --preset <preset file path>       
+preset to load
+"
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 900.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 900.0
+margin_bottom = 40.0
+
+[node name="NormalCheck" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_right = 90.0
+margin_bottom = 40.0
+pressed = true
+text = "N"
+
+[node name="SpecularCheck" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 94.0
+margin_right = 181.0
+margin_bottom = 40.0
+pressed = true
+text = "S"
+
+[node name="OcclusionCheck" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 185.0
+margin_right = 276.0
+margin_bottom = 40.0
+pressed = true
+text = "O"
+
+[node name="ParallaxCheck" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 280.0
+margin_right = 368.0
+margin_bottom = 40.0
+pressed = true
+text = "P"
+
+[node name="PresetMenu" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 372.0
+margin_right = 444.0
+margin_bottom = 40.0
+text = "Presets..."
+items = [ "Default", null, 0, false, false, 0, 0, null, "", false, "", null, 0, false, false, 1, 0, null, "", true, "Load Preset...", null, 0, false, false, 2, 0, null, "", false ]
+
+[node name="DropContainer" type="MarginContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 44.0
+margin_right = 900.0
+margin_bottom = 876.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/DropContainer"]
+unique_name_in_owner = true
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 898.0
+margin_bottom = 830.0
+rect_min_size = Vector2( 96, 64 )
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Label" type="Label" parent="VBoxContainer/DropContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Drop Image(s) Here"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DropContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 898.0
+margin_bottom = 830.0
+mouse_filter = 1
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="ImagePreview" type="TextureRect" parent="VBoxContainer/DropContainer/MarginContainer"]
+unique_name_in_owner = true
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 886.0
+margin_bottom = 818.0
+rect_min_size = Vector2( 32, 32 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+stretch_mode = 6
+
+[node name="GenerateMaps" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 880.0
+margin_right = 900.0
+margin_bottom = 900.0
+text = "Generate"
+
+[node name="FileDialogContainer" type="CenterContainer" parent="."]
+visible = false
+margin_right = 900.0
+margin_bottom = 900.0
+mouse_filter = 2
+
+[node name="FileDialog" type="FileDialog" parent="FileDialogContainer"]
+unique_name_in_owner = true
+visible = true
+margin_left = 100.0
+margin_top = 200.0
+margin_right = 800.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 700, 500 )
+popup_exclusive = true
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2

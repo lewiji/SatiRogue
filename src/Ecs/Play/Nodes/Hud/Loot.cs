@@ -13,10 +13,13 @@ public partial class Loot : Control {
       }
    }
 
-   public override void _Input(InputEvent @event) {
-      if (@event is InputEventMouseButton {Pressed: false} mouseJustPressed) {
-         var invGui = GetParent().GetNode<Inventory>("Inventory");
-         invGui.Open();
-      }
+   [OnReady] private void ConnectGuiInput() {
+      Connect("gui_input", this, nameof(OnGuiInput));
+   }
+
+   private void OnGuiInput(InputEvent @event) {
+      if (@event is not InputEventMouseButton {Pressed: false}) return;
+      var invGui = GetParent().GetNode<Inventory>("Inventory");
+      invGui.Toggle();
    }
 }

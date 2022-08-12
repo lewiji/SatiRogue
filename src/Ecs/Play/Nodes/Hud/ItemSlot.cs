@@ -4,6 +4,9 @@ namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
 [Tool]
 public partial class ItemSlot : CenterContainer {
+   [Signal] public delegate void OnPressed(int itemIndex);
+   [OnReadyGet("TextureRect/CenterContainer")] private Control _clickTarget = null!;
+
    private string _itemName = "";
    private Texture? _itemTexture;
    [OnReadyGet] public Label? Label;
@@ -28,5 +31,12 @@ public partial class ItemSlot : CenterContainer {
    [OnReady] private void SetInitial() {
       if (TextureRect != null) TextureRect.Texture = _itemTexture;
       if (Label != null) Label.Text = _itemName;
+      _clickTarget.Connect("gui_input", this, nameof(OnGuiInput));
+   }
+
+   private void OnGuiInput(InputEvent @event) {
+      if (@event is InputEventMouseButton {Pressed: false} mouseJustPressed) {
+         EmitSignal(nameof(OnPressed), GetIndex());
+      }
    }
 }
