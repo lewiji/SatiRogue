@@ -6,7 +6,7 @@
 bg_color = Color( 0.101961, 0, 0.25098, 0.329412 )
 corner_detail = 1
 
-[node name="Laigter" type="MarginContainer"]
+[node name="LaigterTools" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -69,6 +69,7 @@ margin_bottom = 40.0
 unique_name_in_owner = true
 margin_right = 90.0
 margin_bottom = 40.0
+hint_tooltip = "Generate a normal map image from the input texture"
 pressed = true
 text = "N"
 
@@ -77,6 +78,7 @@ unique_name_in_owner = true
 margin_left = 94.0
 margin_right = 181.0
 margin_bottom = 40.0
+hint_tooltip = "Generate a specular map image from the input texture"
 pressed = true
 text = "S"
 
@@ -85,6 +87,7 @@ unique_name_in_owner = true
 margin_left = 185.0
 margin_right = 276.0
 margin_bottom = 40.0
+hint_tooltip = "Generate an ambient occlusion map image from the input texture"
 pressed = true
 text = "O"
 
@@ -93,6 +96,7 @@ unique_name_in_owner = true
 margin_left = 280.0
 margin_right = 368.0
 margin_bottom = 40.0
+hint_tooltip = "Generate a depth map image from the input texture"
 pressed = true
 text = "P"
 

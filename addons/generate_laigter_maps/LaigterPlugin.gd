@@ -18,6 +18,7 @@ func _enter_tree():
    settings.set_temp_config_value(dock_instance_ids, [dock.get_instance_id(), dockPreview.get_instance_id()])
    dock.setup_options(settings)
    dock.connect("on_images_generated", dockPreview, "on_images_generated")
+   
 
 # cleanup
 func _exit_tree():

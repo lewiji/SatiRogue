@@ -76,33 +76,19 @@ func get_cmd_flags() -> String:
 
 func on_generate_pressed():
    if (input_texture != null):
-      var time = OS.get_system_time_secs()
-      var user_tex_cache_dir = get_cache_resource_path(input_texture, time)
-      var cache_texture_path = "%s/%s" % [user_tex_cache_dir, input_texture.resource_path.get_file()]
-      
-      print(input_texture.get_rid().get_id())
-      
+      var filehash = input_texture.resource_path.hash()
+      var user_tex_cache_dir = get_cache_resource_path(input_texture, filehash)
+      var cached_texture_file_path = "%s/%s" % [user_tex_cache_dir, input_texture.resource_path.get_file()]  
       var dir = Directory.new()
-      if (!dir.dir_exists(user_tex_cache_dir)):
-         if dir.make_dir_recursive(user_tex_cache_dir) == OK:
-            print("created tmp dir: %s" % user_tex_cache_dir)
-         else:
-            print("failed to create cache dir: %s" % user_tex_cache_dir)
-            return
-         
-      if (!dir.file_exists(input_texture.resource_path)):
-         print("failed find source texture")
-         return
-         
-      print("copying from %s to %s" % [input_texture.resource_path, cache_texture_path])         
-      if (dir.copy(input_texture.resource_path, cache_texture_path) != OK):
-         print("failed to copy texture resource to tmp user:// dir")
-         return
       
-      var abs_path_input_texture = get_absolute_resource_path(cache_texture_path)
-      var cmd = "/usr/bin/laigter --no-gui %s -d '%s'" % [get_cmd_flags(), cache_texture_path]
+      assert(dir.file_exists(input_texture.resource_path), "failed find source texture at %s" % input_texture.resource_path)
+      assert(dir.dir_exists(user_tex_cache_dir) or dir.make_dir_recursive(user_tex_cache_dir) == OK, "failed to create cache dir: %s" % user_tex_cache_dir)
+      assert(dir.copy(input_texture.resource_path, cached_texture_file_path) == OK, "failed to copy texture resource to tmp user:// dir. Error %d")
+      print("copying '%s' from\n'%s' to '%s'" % [input_texture.resource_path.get_file(), input_texture.resource_path.get_base_dir(), cached_texture_file_path])
+      
+      var cmd = "/usr/bin/laigter --no-gui %s -d '%s'" % [get_cmd_flags(), cached_texture_file_path]
       if (execute_cmd(cmd) == 0):
-         emit_signal("on_images_generated", "user://%d" % time)
+         emit_signal("on_images_generated", "user://%d" % filehash)
       
       
 func get_cache_resource_path(input_texture: Resource, dir: int):
