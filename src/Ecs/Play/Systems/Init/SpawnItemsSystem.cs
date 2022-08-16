@@ -8,6 +8,7 @@ namespace SatiRogue.Ecs.Play.Systems.Init;
 public class SpawnItemsSystem : GDSystem {
    private static readonly PackedScene ChestScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Chest.tscn");
    private static readonly PackedScene HealthScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Health.tscn");
+   private static readonly PackedScene SpatialItemScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/SpatialItem.tscn");
 
    public override void Run() {
       var numChests = Mathf.CeilToInt(GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
@@ -27,6 +28,15 @@ public class SpawnItemsSystem : GDSystem {
          var healthNode = HealthScene.Instance<Health>();
          entitiesNode.AddChild(healthNode);
          Spawn(healthNode);
+      }
+
+      var numAnkhs = Mathf.CeilToInt(GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 6f));
+      Logger.Info($"Spawning {numAnkhs} Ankhs");
+
+      for (var ankhIndex = 0; ankhIndex < numHealth; ankhIndex++) {
+         var spatialItem = SpatialItemScene.Instance<SpatialItem>();
+         entitiesNode.AddChild(spatialItem);
+         Spawn(spatialItem);
       }
    }
 }

@@ -4,7 +4,6 @@ using RelEcs;
 using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
-[Tool]
 public partial class Chest : Item {
    private bool _open;
    [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;

@@ -1,0 +1,5 @@
+[gd_resource type="OpenSimplexNoise" format=2]
+
+[resource]
+seed = 108
+octaves = 4

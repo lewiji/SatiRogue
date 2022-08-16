@@ -61,6 +61,11 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                health.Taken = true;
                GetComponent<HealthComponent>((Entity) player.GetMeta("Entity")).Value += 1;
                break;
+            case SpatialItem spatialItem when HasComponent<Collectable>(entity!):
+               On(entity!).Remove<Collectable>().Remove<GridPositionComponent>().Add<InInventory>();
+               spatialItem.BlocksCell = false;
+               spatialItem.Visible = false;
+               break;
          }
       }
    }
