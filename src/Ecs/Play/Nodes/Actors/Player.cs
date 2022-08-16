@@ -7,6 +7,7 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public partial class Player : Character {
    [OnReadyGet("AnimationPlayer")] public AnimationPlayer AnimationPlayer = null!;
+   [OnReadyGet("DirectionIndicator")] public DirectionIndicator DirectionIndicator = null!;
 
    [OnReady] private void SetStats() {
       Health = 100;

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FNTSY_TX_64__26_n.png-5acecf04b4cf4d5d59037e09115f7db9.stex"
+path="res://.import/ArrowOrigin3.png-b96d158ac2a93b2888a407a38b8f0f59.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__26_n.png"
-dest_files=[ "res://.import/FNTSY_TX_64__26_n.png-5acecf04b4cf4d5d59037e09115f7db9.stex" ]
+source_file="res://assets/heroic_items/ArrowOrigin/ArrowOrigin3.png"
+dest_files=[ "res://.import/ArrowOrigin3.png-b96d158ac2a93b2888a407a38b8f0f59.stex" ]
 
 [params]
 
@@ -18,12 +18,12 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=1
-flags/repeat=true
+compress/normal_map=0
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

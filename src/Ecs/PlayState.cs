@@ -26,6 +26,7 @@ public class PlayState : GameState {
          .Add(new InventorySystem());
 
       OnTurnSystems.Add(new PlayerMovementSystem())
+         .Add(new PlayerShootSystem())
          .Add(new EnemyBehaviourSystem())
          .Add(new CharacterMovementSystem())
          .Add(new FogSystem())
@@ -38,7 +39,9 @@ public class PlayState : GameState {
       PhysicsSystems.Add(new InterpolateWalkAnimationSystem())
          .Add(inputSystem)
          .Add(turnHandlerSystem)
+         .Add(new ProjectileSystem())
          .Add(new CharacterAnimationSystem())
+         .Add(new PlayerIndicatorSystem())
          .Add(new AudioSystem())
          .Add(new CharacterDeathSystem());
 

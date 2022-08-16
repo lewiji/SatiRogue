@@ -1,7 +1,16 @@
 using Godot;
-
-namespace SatiRogue.Ecs.Play.Components.Actor; 
+namespace SatiRogue.Ecs.Play.Components.Actor;
 
 public class InputDirectionComponent {
-   public Vector2 Direction { get; set; }
+   private Vector2 _direction;
+   public Vector2 Direction {
+      get => _direction;
+      set {
+         if (_direction != Vector2.Zero) {
+            LastDirection = _direction;
+         }
+         _direction = value;
+      }
+   }
+   public Vector2 LastDirection { get; set; }
 }

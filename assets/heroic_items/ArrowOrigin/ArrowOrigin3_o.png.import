@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ArrowOrigin 3.png-d64600c448ff873ddf96c01fb25d696f.stex"
+path="res://.import/ArrowOrigin3_o.png-7d4f26c3a3311627f11752f5988d9e9e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/heroic_items/ArrowOrigin/ArrowOrigin 3.png"
-dest_files=[ "res://.import/ArrowOrigin 3.png-d64600c448ff873ddf96c01fb25d696f.stex" ]
+source_file="res://assets/heroic_items/ArrowOrigin/ArrowOrigin3_o.png"
+dest_files=[ "res://.import/ArrowOrigin3_o.png-7d4f26c3a3311627f11752f5988d9e9e.stex" ]
 
 [params]
 
