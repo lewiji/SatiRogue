@@ -133,3 +133,4 @@ process_material = ExtResource( 3 )
 draw_pass_1 = ExtResource( 4 )
 
 [node name="DirectionIndicator" parent="." instance=ExtResource( 9 )]
+visible = false

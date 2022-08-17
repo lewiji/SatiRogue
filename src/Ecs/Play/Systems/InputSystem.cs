@@ -30,11 +30,13 @@ public class InputSystem : GDSystem {
          if (aim) {
             foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Not<Aiming>().Build()) {
                On(entity).Add<Aiming>();
+               player.DirectionIndicator.Visible = true;
             }
          } else {
             foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<Aiming>().Build()) {
                GD.Print("Removing aiming");
                On(entity).Remove<Aiming>();
+               player.DirectionIndicator.Visible = false;
             }
          }
       }
