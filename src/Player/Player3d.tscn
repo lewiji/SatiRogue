@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=1]
 [ext_resource path="res://scenes/res/SpriteFramesPlayer.tres" type="SpriteFrames" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://resources/enemies/flash_overlay_shadermaterial.tres" type="Material" id=7]
 [ext_resource path="res://audio/Barefoot Dirt footsteps 4.wav" type="AudioStream" id=8]
 [ext_resource path="res://src/Ecs/Play/Nodes/DirectionIndicator.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/Ecs/Play/Nodes/DiagonalLockIndicator.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -133,4 +134,7 @@ process_material = ExtResource( 3 )
 draw_pass_1 = ExtResource( 4 )
 
 [node name="DirectionIndicator" parent="." instance=ExtResource( 9 )]
+visible = false
+
+[node name="DiagonalLockIndicator" parent="." instance=ExtResource( 10 )]
 visible = false

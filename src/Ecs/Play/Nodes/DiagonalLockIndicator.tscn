@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=1]
+
+[node name="DiagonalLockIndicator" type="Spatial"]
+
+[node name="ArrowUR" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.69, 0.01, -0.69 )
+cast_shadow = 0
+pixel_size = 0.03
+transparent = false
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 977, 33, 14, 14 )
+
+[node name="ArrowUL" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7, 0.01, -0.7 )
+cast_shadow = 0
+flip_h = true
+pixel_size = 0.03
+transparent = false
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 977, 33, 14, 14 )
+
+[node name="ArrowDR" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.69, 0.01, 0.7 )
+cast_shadow = 0
+flip_v = true
+pixel_size = 0.03
+transparent = false
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 977, 33, 14, 14 )
+
+[node name="ArrowDL" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.7, 0.01, 0.7 )
+cast_shadow = 0
+flip_h = true
+flip_v = true
+pixel_size = 0.03
+transparent = false
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 977, 33, 14, 14 )

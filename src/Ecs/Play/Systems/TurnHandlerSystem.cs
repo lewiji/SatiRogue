@@ -35,9 +35,10 @@ public class TurnHandlerSystem : GDSystem {
 
          if (turn.CurrentTurn == TurnType.PlayerTurn) {
             SetCurrentTurn(TurnType.EnemyTurn);
-            InputSystem.InputHandled = true;
+            InputSystem.HandlingInput = true;
+         } else {
+            InputSystem.HandlingInput = true;
          }
-         else { InputSystem.InputHandled = true; }
       }
    }
 
