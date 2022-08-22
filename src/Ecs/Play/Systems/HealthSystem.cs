@@ -7,7 +7,7 @@ using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.scenes.Hud;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class HealthSystem : GDSystem {
+public class HealthSystem : GdSystem {
    public override void Run() {
       var query = QueryBuilder<Entity, Character, HealthComponent, StatBar3D>().Has<Alive>().Build();
 
@@ -15,7 +15,9 @@ public class HealthSystem : GDSystem {
          if (Mathf.IsEqualApprox(statBar3D.Percent, health.Percent)) continue;
          statBar3D.Percent = health.Percent;
 
-         if (character is Nodes.Actors.Player) { GetElement<HealthUI>().Percent = health.Percent; }
+         if (character is Nodes.Actors.Player) {
+            GetElement<HealthUI>().Percent = health.Percent;
+         }
 
          if (health.Value > 0) continue;
          Send(new CharacterAnimationTrigger(character, "die"));

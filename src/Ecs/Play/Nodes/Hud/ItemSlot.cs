@@ -4,7 +4,6 @@ using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-[Tool]
 public partial class ItemSlot : CenterContainer {
    [Signal] public delegate void OnPressed(int itemIndex);
 
@@ -90,11 +89,14 @@ public partial class ItemSlot : CenterContainer {
    }
 
    private void OnGuiInput(InputEvent @event) {
-      if (@event is not InputEventMouseButton {Pressed: false} inputEventMouseButton) return;
-      if (IsEmpty) return;
+      if (@event is InputEventMouseButton {Pressed: false} inputEventMouseButton) {
+         if (IsEmpty) return;
 
-      EmitSignal(nameof(OnPressed), GetIndex());
+         EmitSignal(nameof(OnPressed), GetIndex());
 
-      _popupMenu.Popup_(new Rect2(inputEventMouseButton.GlobalPosition, new Vector2(55, 74)));
+         _popupMenu.Popup_(new Rect2(inputEventMouseButton.GlobalPosition, new Vector2(55, 74)));
+      }
+
+      @event.Dispose();
    }
 }

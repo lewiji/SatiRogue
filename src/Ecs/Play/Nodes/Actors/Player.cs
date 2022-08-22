@@ -11,7 +11,7 @@ public partial class Player : Character {
    [OnReadyGet("DirectionIndicator")] public DirectionIndicator DirectionIndicator = null!;
 
    [OnReady] private void SetStats() {
-      Health = 100;
+      Health = 10000;
    }
 
    public override void Spawn(EntityBuilder entityBuilder) {

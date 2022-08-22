@@ -8,7 +8,7 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class PlayerShootSystem : GDSystem {
+public class PlayerShootSystem : GdSystem {
    private readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Arrow.tscn");
 
    public override void Run() {

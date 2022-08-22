@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class InputSystem : GDSystem {
+public class InputSystem : GdSystem {
    public static bool HandlingInput = true;
 
    public override void Run() {

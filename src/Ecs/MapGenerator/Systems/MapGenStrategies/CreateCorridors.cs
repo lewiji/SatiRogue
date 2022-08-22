@@ -4,12 +4,13 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
 using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 
-namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies; 
+namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class CreateCorridors : GDSystem {
+public class CreateCorridors : GdSystem {
    public override void Run() {
       var mapGenData = GetElement<MapGenData>();
       var arr = mapGenData.GeneratorSpaces.ToArray();
+
       for (var i = 1; i < arr.Length; i++) {
          var lastSpace = arr[i - 1];
          var currSpace = arr[i];
@@ -30,6 +31,5 @@ public class CreateCorridors : GDSystem {
             for (var y = (int) lastCentre.y; y > (int) currCentre.y; y--)
                mapGenData.SetCellType(new Vector3((int) currCentre.x, 0, y), CellType.Void);
       }
-
    }
 }

@@ -2,7 +2,6 @@ using Godot;
 using SatiRogue.Entities;
 namespace SatiRogue.scenes.Debug;
 
-[Tool]
 public class EnemyTestScene : Spatial {
    private AnimatedSprite3D? _enemySprite;
    private EntityTypes _entityType = EntityTypes.Harpy;

@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class ProjectileSystem : GDSystem {
+public class ProjectileSystem : GdSystem {
    private PhysicsDeltaTime? _delta;
 
    public override void Run() {

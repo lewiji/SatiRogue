@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
@@ -12,29 +13,42 @@ public partial class Main : Node {
 
    [Export]
    public Logger.LogLevel LogLevel {
-	  get => _logLevel;
-	  set {
-		 _logLevel = value;
-		 Logger.Level = _logLevel;
-	  }
+      get => _logLevel;
+      set {
+         _logLevel = value;
+         Logger.Level = _logLevel;
+      }
    }
-
 
    [OnReady]
    private void CreateGameStateController() {
-	   _gsc = new GameStateController();
-	   AddChild(_gsc);
-	   _gsc.World.AddElement(this);
+      _gsc = new GameStateController();
+      AddChild(_gsc);
+      _gsc.World.AddElement(this);
+   }
+
+   private void CreateManualGcTimer() {
+      var timer = new Timer();
+      timer.WaitTime = 3f;
+      AddChild(timer);
+      timer.Connect("timeout", this, nameof(ClearGc));
+      timer.Start();
+   }
+
+   private void ClearGc() {
+      GC.Collect(GC.MaxGeneration);
+      GC.WaitForPendingFinalizers();
+      GC.Collect();
    }
 
    [OnReady]
    private void AddMapGenState() {
-	   var mapGenState = new MapGenState();
-	   _gsc.PushState(mapGenState);
+      var mapGenState = new MapGenState();
+      _gsc.PushState(mapGenState);
    }
 
    public void OnMapGenInitFinished() {
-	   var playState = new PlayState();
-	   _gsc.PushState(playState);
+      var playState = new PlayState();
+      _gsc.PushState(playState);
    }
 }

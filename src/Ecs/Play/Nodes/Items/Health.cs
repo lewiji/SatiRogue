@@ -20,17 +20,15 @@ public partial class Health : Item {
 
          _taken = value;
 
-         if (_taken) {
-            AnimationPlayer?.Connect("animation_finished", this, nameof(OnAnimationFinished));
-            AnimationPlayer?.Play("taken");
-            BlocksCell = false;
-         }
+         if (!_taken) return;
+         AnimationPlayer?.Connect("animation_finished", this, nameof(OnAnimationFinished));
+         AnimationPlayer?.Play("taken");
+         BlocksCell = false;
       }
    }
 
-   private void OnAnimationFinished() {
-      QueueFree();
-      _world?.Despawn(_entity!.Identity);
+   private void OnAnimationFinished(string name) {
+      _world?.DespawnAndFree(_entity!);
    }
 
    public override void Spawn(EntityBuilder entityBuilder) {

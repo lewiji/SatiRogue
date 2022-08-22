@@ -13,7 +13,7 @@ using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class SpatialMapSystem : GDSystem {
+public class SpatialMapSystem : GdSystem {
    private static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
       {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
       {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},

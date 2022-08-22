@@ -4,7 +4,7 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SpawnHudSystem : GDSystem {
+public class SpawnHudSystem : GdSystem {
    private static readonly PackedScene HudScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/HUD.tscn");
    private static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Health.tscn");
    private static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");

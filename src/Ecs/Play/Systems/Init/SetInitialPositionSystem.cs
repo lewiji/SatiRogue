@@ -8,7 +8,7 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SetInitialPositionSystem : GDSystem {
+public class SetInitialPositionSystem : GdSystem {
    public override void Run() {
       var mapData = GetElement<MapGenData>();
       var pathfindingHelper = GetElement<PathfindingHelper>();

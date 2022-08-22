@@ -4,7 +4,6 @@ using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
-[Tool]
 public partial class Inventory : Control {
    [Signal] public delegate void OpenChanged(bool isOpen);
    private static readonly PackedScene ItemSlotScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Item.tscn");

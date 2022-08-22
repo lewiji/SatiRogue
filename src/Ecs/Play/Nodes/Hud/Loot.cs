@@ -18,8 +18,10 @@ public partial class Loot : Control {
    }
 
    private void OnGuiInput(InputEvent @event) {
-      if (@event is not InputEventMouseButton {Pressed: false}) return;
-      var invGui = GetParent().GetNode<Inventory>("Inventory");
-      invGui.Toggle();
+      if (@event is InputEventMouseButton {Pressed: false}) {
+         var invGui = GetParent().GetNode<Inventory>("Inventory");
+         invGui.Toggle();
+      }
+      @event.Dispose();
    }
 }

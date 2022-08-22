@@ -10,7 +10,7 @@ namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class FogMultiMeshes : List<MultiMeshInstance> { }
 
-public class InitFogSystem : GDSystem {
+public class InitFogSystem : GdSystem {
    private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    private readonly FogMultiMeshes _fogMultiMeshes = new();
    private MapGeometry? _mapGeometry;

@@ -137,4 +137,5 @@ draw_pass_1 = ExtResource( 4 )
 visible = false
 
 [node name="DiagonalLockIndicator" parent="." instance=ExtResource( 10 )]
+physics_interpolation_mode = 1
 visible = false

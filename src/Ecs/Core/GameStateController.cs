@@ -40,6 +40,7 @@ public class GameStateController : Node {
       }
 
       World.Send(e);
+      e.Dispose();
    }
 
    public override void _Process(float delta) {

@@ -3,7 +3,7 @@ using RelEcs;
 using SatiRogue.Ecs.Play.Nodes;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SetupAudioSystem : GDSystem {
+public class SetupAudioSystem : GdSystem {
    private static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
 
    public override void Run() {

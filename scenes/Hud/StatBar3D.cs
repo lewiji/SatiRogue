@@ -4,16 +4,21 @@ using GodotOnReady.Attributes;
 using Object = Godot.Object;
 namespace SatiRogue.scenes.Hud;
 
-[Tool]
 public partial class StatBar3D : Spatial {
+   public bool Hidden = false;
+
    [OnReadyGet("AnimationPlayer", Export = true)] private AnimationPlayer? _animationPlayer;
-   private float _interpolatedPercent = 0f;
    [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)] private MultiMeshInstance? _multiMeshInstance;
-   private float _percent;
-   private ShaderMaterial? _shaderMaterial;
    [OnReadyGet("Tween", Export = true)] private Tween? _tween;
 
-   public bool Hidden = false;
+   private float _interpolatedPercent = 0f;
+   private float _percent;
+   private ShaderMaterial? _shaderMaterial;
+
+   private static Color _bgColor = new(0.464285714286f, 0, 0);
+   private static Color _fgColor = new(0.4892f, 0.5504f, 1f);
+   private static Transform _bgTransform = new(Basis.Identity, new Vector3(0, 0, 0));
+   private static Transform _fgTransform = new(Basis.Identity, new Vector3(0, 0.01f, 0.015f));
 
    [Export] public float Percent {
       get => _percent;
@@ -24,7 +29,7 @@ public partial class StatBar3D : Spatial {
 
          if (_tween == null) return;
          if (_tween.IsActive()) _tween.StopAll();
-         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.2f, Tween.TransitionType.Sine);
+         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.062f, Tween.TransitionType.Sine);
          _tween.Start();
 
          if (!Hidden && _percent < 0.999f) {
@@ -40,11 +45,11 @@ public partial class StatBar3D : Spatial {
       if (_multiMeshInstance == null) return;
       _multiMeshInstance.Multimesh.InstanceCount = 2;
       // Frame
-      _multiMeshInstance.Multimesh.SetInstanceTransform(0, new Transform(Basis.Identity, new Vector3(0, 0, 0)));
-      _multiMeshInstance.Multimesh.SetInstanceCustomData(0, new Color(0.464285714286f, 0, 0));
+      _multiMeshInstance.Multimesh.SetInstanceTransform(0, _bgTransform);
+      _multiMeshInstance.Multimesh.SetInstanceCustomData(0, _bgColor);
       // Bar
-      _multiMeshInstance.Multimesh.SetInstanceTransform(1, new Transform(Basis.Identity, new Vector3(0, 0.01f, 0.015f)));
-      _multiMeshInstance.Multimesh.SetInstanceCustomData(1, new Color(0.4892f, 0.5504f, 1f));
+      _multiMeshInstance.Multimesh.SetInstanceTransform(1, _fgTransform);
+      _multiMeshInstance.Multimesh.SetInstanceCustomData(1, _fgColor);
    }
 
    [OnReady]
@@ -65,14 +70,6 @@ public partial class StatBar3D : Spatial {
          Visible = false;
       }
    }
-
-   /*public override void _Process(float delta) {
-      if (_tween == null) {
-         _shaderMaterial?.SetShaderParam("percent_full", _percent);
-      } else if (_tween.IsActive()) {
-         _shaderMaterial?.SetShaderParam("percent_full", _interpolatedPercent);
-      }
-   }*/
 
    public void OnDead() {
       _animationPlayer?.Play("die");

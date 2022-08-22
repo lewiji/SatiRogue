@@ -2,9 +2,9 @@ using Godot;
 using SatiRogue.Debug;
 using RelEcs;
 
-namespace SatiRogue.Ecs.Play.Systems; 
+namespace SatiRogue.Ecs.Play.Systems;
 
-public class SpawnPlayerSystem : GDSystem {
+public class SpawnPlayerSystem : GdSystem {
    private readonly PackedScene _playerScene = GD.Load<PackedScene>("res://src/Player/Player3d.tscn");
 
    public override void Run() {

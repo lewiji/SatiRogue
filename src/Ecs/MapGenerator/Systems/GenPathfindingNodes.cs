@@ -50,7 +50,7 @@ public class PathfindingHelper {
    }
 }
 
-public class GenPathfindingNodes : GDSystem {
+public class GenPathfindingNodes : GdSystem {
    private static readonly Vector3[] Offsets = {
       Vector3.Back, Vector3.Forward, Vector3.Left, Vector3.Right, Vector3.Back + Vector3.Left,
       Vector3.Back + Vector3.Right, Vector3.Forward + Vector3.Left, Vector3.Forward + Vector3.Right

@@ -9,7 +9,7 @@ using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterMovementSystem : GDSystem {
+public class CharacterMovementSystem : GdSystem {
    public override void Run() {
       var mapData = GetElement<MapGenData>();
       var pathfindingHelper = GetElement<PathfindingHelper>();

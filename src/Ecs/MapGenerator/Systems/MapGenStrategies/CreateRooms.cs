@@ -2,12 +2,13 @@ using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
 
-namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies; 
+namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class CreateRooms : GDSystem {
+public class CreateRooms : GdSystem {
    public override void Run() {
       var mapGenData = GetElement<MapGenData>();
       var mapParams = mapGenData.GeneratorParameters;
+
       for (var roomIndex = 0; roomIndex < mapParams.NumRooms; roomIndex++) {
          var roomParams = new MapGenRoomParams(mapParams);
 
@@ -20,6 +21,5 @@ public class CreateRooms : GDSystem {
 
          mapGenData.GeneratorSpaces.Add(roomParams.FloorSpace);
       }
-      
    }
 }

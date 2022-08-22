@@ -5,14 +5,15 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 
-namespace SatiRogue.Ecs.Play.Systems; 
+namespace SatiRogue.Ecs.Play.Systems;
 
-public class InterpolateWalkAnimationSystem : GDSystem {
-   private float _lerpWeight => 14f;
+public class InterpolateWalkAnimationSystem : GdSystem {
+   private float _lerpWeight = 14f;
    private PhysicsDeltaTime? _delta;
-   
+
    public override void Run() {
       _delta ??= GetElement<PhysicsDeltaTime>();
+
       foreach (var (spatial, gridPos, walkable) in Query<Character, GridPositionComponent, Walkable>()) {
          if (walkable.Teleporting) {
             TeleportSpatial(spatial, gridPos);
@@ -27,7 +28,7 @@ public class InterpolateWalkAnimationSystem : GDSystem {
    private void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
       var currentTranslation = spatial.Translation;
       if (currentTranslation.DistanceSquaredTo(gridPos.Position) < 0.005f) return;
-      
+
       spatial.Translation = currentTranslation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
    }
 

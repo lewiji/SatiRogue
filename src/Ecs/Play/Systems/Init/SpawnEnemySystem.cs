@@ -7,7 +7,7 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public readonly record struct EnemyGraphics(SpriteFrames Frames, Material Material) { }
 
-public class SpawnEnemySystem : GDSystem {
+public class SpawnEnemySystem : GdSystem {
    private static readonly PackedScene _enemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
 
    private static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");

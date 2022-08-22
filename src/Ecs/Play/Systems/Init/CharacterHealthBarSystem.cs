@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.scenes.Hud;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class CharacterHealthBarSystem : GDSystem {
+public class CharacterHealthBarSystem : GdSystem {
    private static readonly PackedScene HealthBarScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
 
    public override void Run() {

@@ -7,7 +7,7 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterDeathSystem : GDSystem {
+public class CharacterDeathSystem : GdSystem {
    public override void Run() {
       foreach (var charDiedTrigger in Receive<CharacterDiedTrigger>()) {
          charDiedTrigger.Character.Alive = false;

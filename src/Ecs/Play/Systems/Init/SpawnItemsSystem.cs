@@ -5,7 +5,7 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SpawnItemsSystem : GDSystem {
+public class SpawnItemsSystem : GdSystem {
    private static readonly PackedScene ChestScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Chest.tscn");
    private static readonly PackedScene HealthScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Health.tscn");
    private static readonly PackedScene SpatialItemScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/SpatialItem.tscn");

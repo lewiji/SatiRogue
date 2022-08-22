@@ -1,11 +1,12 @@
 using System;
 using Godot;
 using RelEcs;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class TurnHandlerSystem : GDSystem {
+public class TurnHandlerSystem : GdSystem {
    private readonly float _minTurnTime = 0.1f;
    public int TurnNumber { get; private set; }
 

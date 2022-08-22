@@ -6,6 +6,7 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 public class Character : GameObject {
    private bool _alive = true;
    private Particles? _particles;
+   private Tween _deathTween = new();
    public AnimatedSprite3D? AnimatedSprite3D;
    [Export] public int Health = 10;
    [Export] public int SightRange = 10;
@@ -33,6 +34,7 @@ public class Character : GameObject {
    public override void _Ready() {
       Visible = false;
       _particles = GetNode("Particles") as Particles;
+      AddChild(_deathTween);
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
       // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
@@ -67,6 +69,11 @@ public class Character : GameObject {
 
    public void CheckVisibility(bool visible) {
       Visible = visible;
+   }
+
+   public override void _ExitTree() {
+      AnimatedSprite3D?.MaterialOverlay.Dispose();
+      _deathTween.Dispose();
    }
 
    private bool GetIsVisible() {

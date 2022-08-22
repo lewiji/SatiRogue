@@ -4,7 +4,7 @@ using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components.Actor;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterAnimationSystem : GDSystem {
+public class CharacterAnimationSystem : GdSystem {
    public override void Run() {
       foreach (var (character, name) in Receive<CharacterAnimationTrigger>()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite) continue;

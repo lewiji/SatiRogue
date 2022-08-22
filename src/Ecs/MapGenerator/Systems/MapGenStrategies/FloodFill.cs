@@ -4,16 +4,16 @@ using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
 
-namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies; 
+namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class FloodFill : GDSystem {
+public class FloodFill : GdSystem {
    public override void Run() {
       var mapGenData = GetElement<MapGenData>();
       var startPoint = mapGenData.GeneratorSpaces.First();
       var centre = startPoint.Position + startPoint.Size / 2f;
       FloodFillWalls(mapGenData, (int) centre.x, (int) centre.y);
    }
-   
+
    /** Flood fill from centre of voids, convert voids to floor, and set edges (nulls) as walls **/
    private void FloodFillWalls(MapGenData mapGenData, int posX, int posY) {
       var tiles = new Stack<Vector3>();
@@ -22,6 +22,7 @@ public class FloodFill : GDSystem {
       while (tiles.Count > 0) {
          var position = tiles.Pop();
          var cell = mapGenData.GetCellAt(position);
+
          switch (cell.Type) {
             // null is an uncarved space, make it a wall
             case null:

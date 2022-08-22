@@ -4,7 +4,7 @@ using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Nodes;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class AudioSystem : GDSystem {
+public class AudioSystem : GdSystem {
    public override void Run() {
       var audioTriggers = Receive<CharacterAudioTrigger>();
 

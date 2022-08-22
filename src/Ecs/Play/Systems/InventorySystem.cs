@@ -6,7 +6,7 @@ using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class InventorySystem : GDSystem {
+public class InventorySystem : GdSystem {
    private Inventory? _inventoryUi;
 
    public override void Run() {

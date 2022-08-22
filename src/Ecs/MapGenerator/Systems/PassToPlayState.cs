@@ -1,8 +1,8 @@
 using RelEcs;
 
-namespace SatiRogue.Ecs.MapGenerator.Systems; 
+namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class PassToPlayState : GDSystem {
+public class PassToPlayState : GdSystem {
    public override void Run() {
       GetElement<Main>().OnMapGenInitFinished();
    }

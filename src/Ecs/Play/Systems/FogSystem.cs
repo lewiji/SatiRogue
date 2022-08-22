@@ -8,7 +8,7 @@ using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class FogSystem : GDSystem {
+public class FogSystem : GdSystem {
    public override void Run() {
       var mapGenData = GetElement<MapGenData>();
       var fogMultiMeshes = GetElement<FogMultiMeshes>();
@@ -28,7 +28,8 @@ public class FogSystem : GDSystem {
 
       Logger.Info("Fog visibility updating");
 
-      foreach (var position in mapGenData.CellsVisibilityChanged) {
+      while (mapGenData.CellsVisibilityChanged.Count > 0) {
+         var position = mapGenData.CellsVisibilityChanged.Pop();
          var chunkId = GetChunkIdForPosition(new Vector3i(position), chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
