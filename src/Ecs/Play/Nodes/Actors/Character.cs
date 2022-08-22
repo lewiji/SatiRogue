@@ -6,7 +6,6 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 public class Character : GameObject {
    private bool _alive = true;
    private Particles? _particles;
-   private Tween _deathTween = new();
    public AnimatedSprite3D? AnimatedSprite3D;
    [Export] public int Health = 10;
    [Export] public int SightRange = 10;
@@ -34,7 +33,6 @@ public class Character : GameObject {
    public override void _Ready() {
       Visible = false;
       _particles = GetNode("Particles") as Particles;
-      AddChild(_deathTween);
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
       // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
@@ -50,7 +48,6 @@ public class Character : GameObject {
          _particles.Visible = true;
          _particles.Emitting = true;
       }
-      var tween = GetTree().CreateTween();
 
       if (AnimatedSprite3D == null) return;
       var colorBlank = new Color(1f, 0f, 0f, 0f);
@@ -58,13 +55,15 @@ public class Character : GameObject {
       var mat = AnimatedSprite3D.MaterialOverlay;
       mat.Set("shader_param/texture_albedo", AnimatedSprite3D.MaterialOverride.Get("albedo_texture"));
       mat.Set("shader_param/uv1_offset", AnimatedSprite3D.MaterialOverride.Get("uv1_offset"));
-      tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.25f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      tween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
+
+      var deathTween = GetTree().CreateTween();
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.25f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
+      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
    }
 
    public void CheckVisibility(bool visible) {
@@ -73,7 +72,6 @@ public class Character : GameObject {
 
    public override void _ExitTree() {
       AnimatedSprite3D?.MaterialOverlay.Dispose();
-      _deathTween.Dispose();
    }
 
    private bool GetIsVisible() {
