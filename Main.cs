@@ -29,7 +29,7 @@ public partial class Main : Node {
       _gsc.World.AddElement(this);
    }
 
-   [OnReady]
+   //[OnReady]
    private void CreateMonitorTimer() {
       var timer = new Timer();
       timer.WaitTime = 1f;
@@ -44,10 +44,12 @@ public partial class Main : Node {
 
       var delta = _totalObjects - _lastObjects;
 
-      GD.Print(delta);
+      Console.Write(_totalObjects);
+      Console.Write(", ");
+      Console.WriteLine(delta);
    }
 
-   [OnReady]
+   //[OnReady]
    private void CreateManualGcTimer() {
       var timer = new Timer();
       timer.WaitTime = 3f;
@@ -57,9 +59,8 @@ public partial class Main : Node {
    }
 
    private void ClearGc() {
-      GC.Collect(GC.MaxGeneration);
-      GC.WaitForPendingFinalizers();
       GC.Collect();
+      GC.WaitForPendingFinalizers();
 
       PrintStrayNodes();
    }

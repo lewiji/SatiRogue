@@ -9,9 +9,7 @@ public class InputSystem : GdSystem {
    public static bool HandlingInput = true;
 
    public override void Run() {
-      var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build();
-
-      foreach (var input in query) {
+      foreach (var input in QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
          var aim = Input.IsActionPressed("aim");
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
          var shoot = Input.IsActionJustPressed("shoot");
@@ -73,7 +71,6 @@ public class InputSystem : GdSystem {
 
    private void RemoveAim() {
       foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<Aiming>().Build()) {
-         GD.Print("Removing aiming");
          On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;
       }

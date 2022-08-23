@@ -37,7 +37,7 @@ public partial class Inventory : Control {
 
    private void CreateItemSlots() {
       if (_gridContainer == null) {
-         GD.Print("gridContainer not initialised for inventory");
+         Logger.Error("gridContainer not initialised for inventory");
          return;
       }
       var oldItemSlots = _gridContainer.GetChildren();
@@ -77,7 +77,7 @@ public partial class Inventory : Control {
 
    public ItemSlot[] GetItemSlots() {
       if (_gridContainer == null) {
-         GD.Print("gridContainer not initialised for inventory");
+         Logger.Error("gridContainer not initialised for inventory");
          return new ItemSlot[] { };
       }
       var childs = _gridContainer.GetChildren();

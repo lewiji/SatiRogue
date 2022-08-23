@@ -1,5 +1,6 @@
 using Godot;
 using RelEcs;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
@@ -19,7 +20,7 @@ public class PlayerShootSystem : GdSystem {
             if (input.LastDirection != Vector2.Zero) {
                direction = input.LastDirection;
             }
-            GD.Print($"Firing {direction}");
+            Logger.Debug($"Firing {direction}");
             var arrow = _arrowScene.Instance<Arrow>();
             var entitiesNode = World.GetElement<Core.Entities>();
             entitiesNode.AddChild(arrow);

@@ -28,7 +28,8 @@ public partial class Health : Item {
    }
 
    private void OnAnimationFinished(string name) {
-      _world?.DespawnAndFree(_entity!);
+      _world?.Despawn(_entity!.Identity);
+      QueueFree();
    }
 
    public override void Spawn(EntityBuilder entityBuilder) {

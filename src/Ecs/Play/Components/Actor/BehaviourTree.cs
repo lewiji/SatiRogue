@@ -45,14 +45,14 @@ public class BaseBt : Gig {
       HealthComponent playerHealth,
       GridPositionComponent playerGridPos) {
       if (!PlayerInRange(enemy, gridPos, playerGridPos)) {
-         if (_rangeToPlayer > enemy.SightRange * 2f) { return done(); }
+         if (_rangeToPlayer > enemy.SightRange * 2f) {
+            return done();
+         }
 
          return MoveRandomly(inputDir);
       }
 
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
-         GD.Print(_rangeToPlayer);
-
          return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir)
                 || Attack(playerHealth, playerGridPos, gridPos, inputDir, enemy, world) || MoveRandomly(inputDir);
       }
@@ -96,7 +96,9 @@ public class BaseBt : Gig {
       world.Send(new CharacterAnimationTrigger(enemy, "attack"));
       world.Send(new CharacterAnimationTrigger(player, "hit"));
 
-      if (enemy.AnimatedSprite3D != null) { enemy.AnimatedSprite3D.FlipH = playerGridPos.Position.x > gridPos.Position.x; }
+      if (enemy.AnimatedSprite3D != null) {
+         enemy.AnimatedSprite3D.FlipH = playerGridPos.Position.x > gridPos.Position.x;
+      }
 
       // TODO attack
       return done();
@@ -126,8 +128,11 @@ public class BaseBt : Gig {
       var mapData = world.GetElement<MapGenData>();
       var los = BresenhamsLine.Line(pos1.Position, pos2.Position, pos => !mapData.IsWall(pos));
 
-      if (los) { _lastSawPlayer = 0; }
-      else if (_lastSawPlayer != -1) { _lastSawPlayer += 1; }
+      if (los) {
+         _lastSawPlayer = 0;
+      } else if (_lastSawPlayer != -1) {
+         _lastSawPlayer += 1;
+      }
 
       return los;
    }

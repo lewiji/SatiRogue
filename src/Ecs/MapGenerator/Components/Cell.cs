@@ -64,7 +64,7 @@ public class Cell : Reference {
          if (GD.InstanceFromId(occupant) is not Character character || !IsInstanceValid(character)) continue;
 
          character.CheckVisibility(_visibility == CellVisibility.CurrentlyVisible);
-         Logger.Info($"Setting {character.Name} Visibility: {character.Visible}");
+         Logger.Debug($"Setting {character.Name} Visibility: {character.Visible}");
       }
 
       EmitSignal(nameof(VisibilityChanged));

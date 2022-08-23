@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Core;
@@ -34,14 +35,14 @@ public class GameStateController : Node {
       AddChild(World.GetElement<AudioNodes>());
    }
 
-   public override void _UnhandledInput(InputEvent e) {
+   /*public override void _UnhandledInput(InputEvent e) {
       if (_stack.Count == 0) {
          return;
       }
 
       World.Send(e);
       e.Dispose();
-   }
+   }*/
 
    public override void _Process(float delta) {
       if (_stack.Count == 0) {
@@ -102,7 +103,7 @@ public class GameStateController : Node {
          var currentState = _stack.Peek();
 
          if (currentState.GetType() == newState.GetType()) {
-            GD.PrintErr($"{currentState.GetType()} already at the top of the stack!");
+            Logger.Warn($"{currentState.GetType()} already at the top of the stack!");
 
             return;
          }

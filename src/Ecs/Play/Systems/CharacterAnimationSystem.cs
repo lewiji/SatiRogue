@@ -6,6 +6,11 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class CharacterAnimationSystem : GdSystem {
    public override void Run() {
+      PlayRequestedAnimation();
+      RevertToIdleAnimation();
+   }
+
+   private void PlayRequestedAnimation() {
       foreach (var (character, name) in Receive<CharacterAnimationTrigger>()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite) continue;
 
@@ -21,7 +26,9 @@ public class CharacterAnimationSystem : GdSystem {
             character.OnDeathAnimation();
          }
       }
+   }
 
+   private void RevertToIdleAnimation() {
       foreach (var newTurn in Receive<NewTurnTrigger>()) {
          var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
 
