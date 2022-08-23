@@ -1,15 +1,24 @@
 using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Core.Nodes;
 namespace SatiRogue.Ecs.Menu.Systems;
 
 public class InitMenu : GdSystem {
    private static readonly PackedScene MenuScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Menu.tscn");
 
    public override void Run() {
-      var gsc = GetElement<GameStateController>();
+      var menuState = GetElement<MenuState>();
       var menu = MenuScene.Instance<Nodes.Menu>();
-      gsc.AddChild(menu);
+      menu.Connect(nameof(Nodes.Menu.NewGameRequested), this, nameof(OnNewGameRequested));
+      menuState.AddChild(menu);
       AddElement(menu);
+   }
+
+   private async void OnNewGameRequested() {
+      var fade = GetElement<Fade>();
+      await fade.FadeToBlack();
+      GetElement<Main>().ChangeToMapGenState();
+      await fade.FadeFromBlack();
    }
 }

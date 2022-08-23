@@ -2,7 +2,7 @@ using Godot;
 using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
-public partial class Fade : Control {
+public partial class DeathScreen : Control {
    [OnReadyGet("AnimationPlayer")] private AnimationPlayer _animationPlayer = null!;
 
    public void FadeToDeath() {

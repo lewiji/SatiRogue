@@ -30,7 +30,7 @@ public class SpawnHudSystem : GdSystem {
       Spawn(invUi);
       AddElement(invUi);
 
-      var fade = hud.GetNode<Fade>("FadeCanvasLayer/Fade");
+      var fade = hud.GetNode<DeathScreen>("FadeCanvasLayer/Fade");
       AddElement(fade);
    }
 }

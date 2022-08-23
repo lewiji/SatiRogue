@@ -30,17 +30,23 @@ public partial class Main : Node {
    }
 
    [OnReady]
+   private void AddCoreState() {
+      var coreState = new CoreState();
+      _gsc.PushState(coreState);
+   }
+
+   [OnReady]
    private void AddMenuState() {
       var menuState = new MenuState();
       _gsc.PushState(menuState);
    }
 
-   private void AddMapGenState() {
+   public void ChangeToMapGenState() {
       var mapGenState = new MapGenState();
       _gsc.PushState(mapGenState);
    }
 
-   public void OnMapGenInitFinished() {
+   public void ChangeToPlayState() {
       var playState = new PlayState();
       _gsc.PushState(playState);
    }

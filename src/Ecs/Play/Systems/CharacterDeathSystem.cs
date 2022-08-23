@@ -14,7 +14,7 @@ public class CharacterDeathSystem : GdSystem {
 
          if (charDiedTrigger.Character is Nodes.Actors.Player player) {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
-            timer.Connect("timeout", this, nameof(HandlePlayerDeath), new Array {player});
+            timer.Connect("timeout", this, nameof(HandlePlayerDeath));
             GetElement<Nodes.Actors.Player>().AnimationPlayer.Play("on_death");
          } else {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
@@ -33,7 +33,7 @@ public class CharacterDeathSystem : GdSystem {
       DespawnAndFree(entity);
    }
 
-   private void HandlePlayerDeath(Entity entity, Nodes.Actors.Player player) {
-      GetElement<Fade>().FadeToDeath();
+   private void HandlePlayerDeath() {
+      GetElement<DeathScreen>().FadeToDeath();
    }
 }

@@ -201,7 +201,6 @@ fit_content_height = true
 scroll_active = false
 custom_effects = [ ExtResource( 18 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 19 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 21 ) ]
 script = ExtResource( 20 )
-time = 1.0
 length = 32.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/VBoxContainer/LogoContainer/Label"]
@@ -278,6 +277,7 @@ size_flags_vertical = 3
 custom_constants/separation = 32
 
 [node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 material = ExtResource( 14 )
 margin_right = 360.0
 margin_bottom = 64.0
@@ -304,6 +304,7 @@ anchor_bottom = 1.225
 occluder = SubResource( 3 )
 
 [node name="ContinueGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 material = ExtResource( 14 )
 margin_top = 96.0
 margin_right = 360.0
@@ -332,6 +333,7 @@ anchor_bottom = 1.225
 occluder = SubResource( 3 )
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 material = ExtResource( 14 )
 margin_top = 192.0
 margin_right = 360.0
@@ -359,6 +361,7 @@ anchor_bottom = 1.225
 occluder = SubResource( 3 )
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 material = ExtResource( 14 )
 margin_top = 288.0
 margin_right = 360.0

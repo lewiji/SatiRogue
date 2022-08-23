@@ -109,6 +109,7 @@ public class GameStateController : Node {
          }
 
          currentState.PauseSystems.Run(World);
+         currentState.Visible = false;
       }
 
       newState.Name = newState.GetType().Name;
