@@ -3,9 +3,8 @@ using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-namespace SatiRogue.Ecs.Play.Systems;
 
-public readonly record struct EnemyGraphics(SpriteFrames Frames, Material Material) { }
+namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnEnemySystem : GdSystem {
    private static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
@@ -41,3 +40,5 @@ public class SpawnEnemySystem : GdSystem {
       }
    }
 }
+
+public readonly record struct EnemyGraphics(SpriteFrames Frames, Material Material) { }

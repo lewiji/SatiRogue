@@ -5,7 +5,7 @@
 [resource]
 resource_name = "Rain"
 script = ExtResource( 1 )
-speed = 0.618
-offset = 6.18
-factor_t = 1.618
-target_color = Color( 0.12, 0, 0.36, 0.239216 )
+speed = 0.31
+offset = 1.62
+factor_t = 4.85
+target_color = Color( 0.8, 0.643137, 0.368627, 0.286275 )
