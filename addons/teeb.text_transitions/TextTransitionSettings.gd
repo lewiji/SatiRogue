@@ -1,7 +1,6 @@
 tool
 extends Node
 
-
 var transitions = {}
 
 

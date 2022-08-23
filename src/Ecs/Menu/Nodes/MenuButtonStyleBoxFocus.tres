@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/UI Assets pack_v.1_st/UI_n.png" type="Texture" id=2]
 
 [resource]
-content_margin_right = 32.0
 texture = ExtResource( 1 )
 normal_map = ExtResource( 2 )
 region_rect = Rect2( 82, 338, 44, 12 )
@@ -12,6 +11,10 @@ margin_left = 20.0
 margin_right = 20.0
 margin_top = 5.0
 margin_bottom = 5.0
+expand_margin_left = 32.0
+expand_margin_right = 32.0
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 modulate_color = Color( 1, 1, 1, 0.662745 )

@@ -60,9 +60,6 @@ script = SubResource( 1 )
 
 [node name="Node2D" type="Control"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 time = 1.0
 
 [node name="bounce" parent="." instance=ExtResource( 1 )]
@@ -127,6 +124,7 @@ margin_bottom = 275.323
 bbcode_enabled = true
 bbcode_text = "[color=gray]redacted:[/color] [redacted id=redacted]A long time ago, in a far away place...[/redacted]"
 text = "redacted: A long time ago, in a far away place..."
+custom_effects = [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), null, null ]
 id = "redacted"
 reverse = false
 animation_time = 0.5
@@ -139,6 +137,7 @@ margin_bottom = 314.824
 bbcode_enabled = true
 bbcode_text = "[color=gray]wfc:[/color] [wfc id=wfc]A long time ago, in a far away place...[/wfc]"
 text = "wfc: A long time ago, in a far away place..."
+custom_effects = [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), null, null ]
 id = "wfc"
 length = 32.0
 reverse = false
@@ -152,6 +151,7 @@ margin_bottom = 354.713
 bbcode_enabled = true
 bbcode_text = "[color=gray]word:[/color] [word id=word]A long time ago, in a far away place...[/word]"
 text = "word: A long time ago, in a far away place..."
+custom_effects = [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), null, null ]
 id = "word"
 length = 4.0
 reverse = false

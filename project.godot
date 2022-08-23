@@ -50,6 +50,7 @@ output_latency=32
 
 [autoload]
 
+TextTransitionSettings="*res://addons/teeb.text_transitions/TextTransitionSettings.gd"
 Logger="*res://src/Debug/Logger.cs"
 GameScheduler="*res://src/Tools/GameScheduler.cs"
 GameController="*res://src/GameController.cs"
@@ -72,7 +73,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/laigter_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/laigter_tools/plugin.cfg", "res://addons/scene_reloader/plugin.cfg" )
 
 [importer_defaults]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__52.png" type="Texture" id=1]
 [ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxNormal.tres" type="StyleBox" id=5]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxPressed.tres" type="StyleBox" id=6]
-[ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=7]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxDisabled.tres" type="StyleBox" id=8]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxFocus.tres" type="StyleBox" id=9]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuBorderStylebox.tres" type="StyleBox" id=10]
@@ -18,29 +17,82 @@
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShaderMaterial.tres" type="Material" id=16]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonGroup.tres" type="ButtonGroup" id=17]
 [ext_resource path="res://addons/teeb.text_effects/resources/Rain.tres" type="RichTextEffect" id=18]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Redacted.tres" type="RichTextEffect" id=19]
+[ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=20]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Word.tres" type="RichTextEffect" id=21]
+[ext_resource path="res://addons/teeb.text_transitions/resources/WFC.tres" type="RichTextEffect" id=22]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=23]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Bounce.tres" type="RichTextEffect" id=24]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Embers.tres" type="RichTextEffect" id=25]
+[ext_resource path="res://addons/teeb.text_transitions/resources/Console.tres" type="RichTextEffect" id=26]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=27]
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "fade_in"
+length = 1.62
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.831345, 0.888859, 1, -0.233391, -0.644752, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.62 )
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "fade_out"
+length = 0.62
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.309755, -0.63422, 0, -0.0765082, 0.741414, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.62 )
+}
 
 [sub_resource type="OccluderPolygon2D" id=9]
-polygon = PoolVector2Array( 1, 358, 635, 359, 635, 356, 1, 355 )
+polygon = PoolVector2Array( 2, 292, 632, 292, 630, 293, 4, 293 )
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 9
-atlas = ExtResource( 7 )
-region = Rect2( 356, 99, 10, 10 )
+flags = 27
+atlas = ExtResource( 27 )
+region = Rect2( 992, 128, 14, 14 )
 
 [sub_resource type="OccluderPolygon2D" id=3]
-closed = false
-cull_mode = 1
-polygon = PoolVector2Array( 0, 3, 2, 0, 152, 0, 154, 3, 154, 37, 152, 39, 2, 39, 0, 37 )
+polygon = PoolVector2Array( 186, 50, 183, 50, -30, 50, -29, 51, 183, 51 )
 
 [sub_resource type="AtlasTexture" id=6]
-flags = 9
-atlas = ExtResource( 7 )
-region = Rect2( 324, 100, 10, 10 )
+flags = 27
+atlas = ExtResource( 27 )
+region = Rect2( 1025, 129, 14, 14 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 27
+atlas = ExtResource( 27 )
+region = Rect2( 944, 112, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=8]
-flags = 9
-atlas = ExtResource( 7 )
-region = Rect2( 339, 65, 10, 14 )
+flags = 27
+atlas = ExtResource( 27 )
+region = Rect2( 945, 145, 14, 14 )
 
 [sub_resource type="Animation" id=10]
 length = 0.001
@@ -51,7 +103,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
 }
 tracks/1/type = "bezier"
@@ -61,7 +113,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 768, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
 }
 
@@ -142,11 +194,25 @@ custom_constants/shadow_offset_x = 4
 custom_constants/shadow_offset_y = 2
 custom_fonts/normal_font = ExtResource( 2 )
 bbcode_enabled = true
-bbcode_text = "[center][rain]SatiRogue[/rain][/center]"
+bbcode_text = "[center][wfc][rain]SatiRogue[/rain][/wfc][/center]"
 text = "SatiRogue"
 fit_content_height = true
 scroll_active = false
-custom_effects = [ ExtResource( 18 ) ]
+custom_effects = [ ExtResource( 18 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 19 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 21 ) ]
+script = ExtResource( 20 )
+length = 32.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/VBoxContainer/LogoContainer/Label"]
+autoplay = "fade_in"
+anims/RESET = SubResource( 12 )
+anims/fade_in = SubResource( 13 )
+anims/fade_out = SubResource( 14 )
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/LogoContainer"]
+margin_left = 434.0
+margin_top = 37.0
+margin_right = 434.0
+margin_bottom = 37.0
 
 [node name="MenuButtonsContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 79.0
@@ -155,17 +221,17 @@ margin_bottom = 563.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 96
-custom_constants/margin_top = 32
+custom_constants/margin_top = 96
 custom_constants/margin_left = 96
-custom_constants/margin_bottom = 96
+custom_constants/margin_bottom = 48
 
 [node name="Border" type="Panel" parent="MarginContainer/VBoxContainer/MenuButtonsContainer"]
 light_mask = 2
 margin_left = 96.0
-margin_top = 32.0
+margin_top = 96.0
 margin_right = 772.0
-margin_bottom = 388.0
-rect_min_size = Vector2( 300, 200 )
+margin_bottom = 436.0
+rect_min_size = Vector2( 300, 216 )
 custom_styles/panel = ExtResource( 10 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border"]
@@ -180,7 +246,7 @@ modulate = Color( 0.741176, 0.741176, 0.741176, 0.729412 )
 material = ExtResource( 16 )
 margin_left = 20.0
 margin_right = 656.0
-margin_bottom = 356.0
+margin_bottom = 340.0
 custom_styles/panel = ExtResource( 15 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/MarginContainer/Bg"]
@@ -191,16 +257,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer"]
-margin_left = 261.0
-margin_top = 87.0
-margin_right = 415.0
-margin_bottom = 268.0
-custom_constants/separation = 32
+margin_left = 230.0
+margin_top = 38.0
+margin_right = 446.0
+margin_bottom = 302.0
+custom_constants/separation = 36
 
 [node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 material = ExtResource( 14 )
-margin_right = 154.0
+margin_right = 216.0
 margin_bottom = 39.0
+rect_min_size = Vector2( 216, 39 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/hover = ExtResource( 4 )
@@ -218,9 +285,9 @@ occluder = SubResource( 3 )
 
 [node name="ContinueGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 material = ExtResource( 14 )
-margin_top = 71.0
-margin_right = 154.0
-margin_bottom = 110.0
+margin_top = 75.0
+margin_right = 216.0
+margin_bottom = 114.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/hover = ExtResource( 4 )
@@ -237,11 +304,32 @@ expand_icon = true
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/ContinueGame"]
 occluder = SubResource( 3 )
 
+[node name="Options" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
+material = ExtResource( 14 )
+margin_top = 150.0
+margin_right = 216.0
+margin_bottom = 189.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/focus = ExtResource( 9 )
+custom_styles/disabled = ExtResource( 8 )
+custom_styles/normal = ExtResource( 5 )
+disabled = true
+group = ExtResource( 17 )
+text = "OPTIONS"
+icon = SubResource( 15 )
+expand_icon = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Options"]
+occluder = SubResource( 3 )
+
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 material = ExtResource( 14 )
-margin_top = 142.0
-margin_right = 154.0
-margin_bottom = 181.0
+margin_top = 225.0
+margin_right = 216.0
+margin_bottom = 264.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/hover = ExtResource( 4 )
@@ -269,12 +357,10 @@ unique_name_in_owner = true
 texture = ExtResource( 12 )
 offset = Vector2( 450, 450 )
 texture_scale = 3.75
-energy = 0.0
+range_height = 768.0
 range_item_cull_mask = 3
 shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 0.784314 )
-shadow_filter = 1
-shadow_filter_smooth = 2.0
+shadow_color = Color( 0, 0, 0, 0.921569 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "scroll_light"

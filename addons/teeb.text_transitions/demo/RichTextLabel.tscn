@@ -70,9 +70,6 @@ margin_bottom = 40.0
 custom_fonts/normal_font = ExtResource( 9 )
 custom_effects = [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 6 ), null, null ]
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 time = 1.0
 reverse = true
 
