@@ -2,25 +2,27 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.stex"
+path.s3tc="res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.s3tc.stex"
+path.etc2="res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/light/rainbow_1.png"
-dest_files=[ "res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.stex" ]
+dest_files=[ "res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.s3tc.stex", "res://.import/rainbow_1.png-35385d77d0b8bd0ec105af8d56a764c2.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
+compress/mode=2
+compress/lossy_quality=0.3
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=true
-flags/filter=false
+flags/repeat=0
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=true
 flags/srgb=1

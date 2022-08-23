@@ -146,6 +146,7 @@ diagonal_lock={
 GENERATE_SPECULAR=false
 GENERATE_OCCLUSION=false
 GENERATE_PARALLAX=false
+HIDE_LAIGTER_GUI=false
 
 [memory]
 

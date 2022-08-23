@@ -7,6 +7,13 @@ namespace SatiRogue.Ecs.Core.Nodes;
 public partial class Fade : CanvasLayer {
    [OnReadyGet("AnimationPlayer")] private AnimationPlayer _animationPlayer = null!;
 
+   [OnReady]
+   private async void FadeToMenu()
+   {
+      await ToSignal(GetTree().CreateTimer(0.35f), "timeout");
+      FadeFromBlack();
+   }
+
    public async Task FadeToBlack() {
       _animationPlayer.Play("fade_to_black");
       await ToSignal(_animationPlayer, "animation_finished");

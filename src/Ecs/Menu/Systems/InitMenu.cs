@@ -17,8 +17,10 @@ public class InitMenu : GdSystem {
 
    private async void OnNewGameRequested() {
       var fade = GetElement<Fade>();
+      await ToSignal(fade.GetTree(), "idle_frame");
       await fade.FadeToBlack();
       GetElement<Main>().ChangeToMapGenState();
+      await ToSignal(fade.GetTree(), "idle_frame");
       await fade.FadeFromBlack();
    }
 }

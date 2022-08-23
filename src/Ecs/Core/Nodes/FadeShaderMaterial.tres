@@ -5,6 +5,6 @@
 
 [resource]
 shader = ExtResource( 2 )
-shader_param/time_scale_x = -0.3
-shader_param/time_scale_y = 0.4
+shader_param/time_scale_x = 0.3333
+shader_param/time_scale_y = -0.206
 shader_param/normal_map = ExtResource( 1 )
