@@ -140,6 +140,12 @@ diagonal_lock={
  ]
 }
 
+[laigter_config]
+
+GENERATE_SPECULAR=false
+GENERATE_OCCLUSION=false
+GENERATE_PARALLAX=false
+
 [memory]
 
 limits/message_queue/max_size_kb=8192
@@ -152,7 +158,6 @@ common/enable_object_picking=false
 
 [rendering]
 
-2d/snapping/use_gpu_pixel_snap=true
 quality/filters/anisotropic_filter_level=16
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2

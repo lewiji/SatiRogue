@@ -10,7 +10,6 @@ public class PlayState : GameState {
 
    public override void Init(GameStateController gameStates) {
       CreateSystems(gameStates);
-      //CreateSystemsDebug();
    }
 
    private void CreateSystems(GameStateController gameStates) {
@@ -52,9 +51,5 @@ public class PlayState : GameState {
 
       _gsc.World.AddElement(turnHandlerSystem);
       _gsc.World.AddElement(inputSystem);
-   }
-
-   private void CreateSystemsDebug() {
-      PhysicsSystems.Add(new CharacterAnimationSystem());
    }
 }

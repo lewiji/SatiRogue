@@ -29,43 +29,12 @@ public partial class Main : Node {
       _gsc.World.AddElement(this);
    }
 
-   //[OnReady]
-   private void CreateMonitorTimer() {
-      var timer = new Timer();
-      timer.WaitTime = 1f;
-      AddChild(timer);
-      timer.Connect("timeout", this, nameof(CheckMonitors));
-      timer.Start();
-   }
-
-   private void CheckMonitors() {
-      _lastObjects = _totalObjects;
-      _totalObjects = Performance.GetMonitor(Performance.Monitor.ObjectCount);
-
-      var delta = _totalObjects - _lastObjects;
-
-      Console.Write(_totalObjects);
-      Console.Write(", ");
-      Console.WriteLine(delta);
-   }
-
-   //[OnReady]
-   private void CreateManualGcTimer() {
-      var timer = new Timer();
-      timer.WaitTime = 3f;
-      AddChild(timer);
-      timer.Connect("timeout", this, nameof(ClearGc));
-      timer.Start();
-   }
-
-   private void ClearGc() {
-      GC.Collect();
-      GC.WaitForPendingFinalizers();
-
-      PrintStrayNodes();
-   }
-
    [OnReady]
+   private void AddMenuState() {
+      var menuState = new MenuState();
+      _gsc.PushState(menuState);
+   }
+
    private void AddMapGenState() {
       var mapGenState = new MapGenState();
       _gsc.PushState(mapGenState);
@@ -74,5 +43,41 @@ public partial class Main : Node {
    public void OnMapGenInitFinished() {
       var playState = new PlayState();
       _gsc.PushState(playState);
+   }
+
+   [OnReady]
+   private void CreateMonitorTimer() {
+      if (LogLevel > Logger.LogLevel.Debug) return;
+
+      var timer = new Timer {WaitTime = 1f, Autostart = true};
+      timer.Connect("timeout", this, nameof(CheckMonitors));
+      AddChild(timer);
+
+      Logger.Warn("ObjectCount Monitor logging is switched on.");
+   }
+
+   private void CheckMonitors() {
+      _lastObjects = _totalObjects;
+      _totalObjects = Performance.GetMonitor(Performance.Monitor.ObjectCount);
+
+      var delta = _totalObjects - _lastObjects;
+
+      Logger.Debug($"{_totalObjects}, {delta}");
+   }
+
+   [OnReady]
+   private void CreateManualGcTimer() {
+      if (LogLevel > Logger.LogLevel.Debug) return;
+
+      var timer = new Timer {WaitTime = 3f, Autostart = true};
+      timer.Connect("timeout", this, nameof(ClearGc));
+      AddChild(timer);
+
+      Logger.Warn("Manual GC is switched on.");
+   }
+
+   private void ClearGc() {
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
    }
 }

@@ -29,8 +29,10 @@ public class BehaviourTree {
       InputDirectionComponent inputDir,
       GridPositionComponent gridPos,
       HealthComponent playerHealthComponent,
-      GridPositionComponent playerGridPos) {
-      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos);
+      GridPositionComponent playerGridPos,
+      Stats enemyStats,
+      Stats playerStats) {
+      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos, enemyStats, playerStats);
    }
 }
 
@@ -43,9 +45,11 @@ public class BaseBt : Gig {
       InputDirectionComponent inputDir,
       GridPositionComponent gridPos,
       HealthComponent playerHealth,
-      GridPositionComponent playerGridPos) {
-      if (!PlayerInRange(enemy, gridPos, playerGridPos)) {
-         if (_rangeToPlayer > enemy.SightRange * 2f) {
+      GridPositionComponent playerGridPos,
+      Stats enemyStats,
+      Stats playerStats) {
+      if (!PlayerInRange(enemyStats, gridPos, playerGridPos)) {
+         if (_rangeToPlayer > enemyStats.SightRange * 2f) {
             return done();
          }
 
@@ -108,8 +112,8 @@ public class BaseBt : Gig {
       throw new NotImplementedException("Call Step(World, Enemy...) instead");
    }
 
-   private bool PlayerInRange(Enemy enemy, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
-      return DistanceBetween(gridPos, playerGridPos) <= enemy.SightRange;
+   private bool PlayerInRange(Stats enemyStats, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
+      return DistanceBetween(gridPos, playerGridPos) <= enemyStats.SightRange;
    }
 
    private status MoveRandomly(InputDirectionComponent inputDir) {

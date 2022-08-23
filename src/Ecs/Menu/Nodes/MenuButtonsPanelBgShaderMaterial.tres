@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShader.gdshader" type="Shader" id=1]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI_n.png" type="Texture" id=2]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/blur_amount = 1.618
+shader_param/interp_amount = 0.95
+shader_param/normal_map = ExtResource( 2 )

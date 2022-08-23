@@ -10,14 +10,13 @@ public partial class Player : Character {
    [OnReadyGet("DiagonalLockIndicator")] public Spatial DiagonalLockIndicator = null!;
    [OnReadyGet("DirectionIndicator")] public DirectionIndicator DirectionIndicator = null!;
 
-   [OnReady] private void SetStats() {
-      Health = 10000;
-   }
-
    public override void Spawn(EntityBuilder entityBuilder) {
+      var stats = new Stats(10, 10, 1, 1, 0);
+
       entityBuilder.Add(this)
          .Add(this as Character)
-         .Add(new HealthComponent(Health))
+         .Add(stats)
+         .Add(new HealthComponent(stats.Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add<Controllable>()

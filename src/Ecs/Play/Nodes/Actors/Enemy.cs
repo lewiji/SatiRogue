@@ -7,11 +7,13 @@ namespace SatiRogue.Ecs.Play.Nodes.Actors;
 public class Enemy : Character {
    public SpriteFrames? Frames;
    public Material? Material;
+   public Stats Stats = new(1, 10, 1, 1, 0);
 
    public override void Spawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this)
          .Add(this as Character)
-         .Add(new HealthComponent(Health))
+         .Add(Stats)
+         .Add(new HealthComponent(Stats.Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add(new BehaviourTree())

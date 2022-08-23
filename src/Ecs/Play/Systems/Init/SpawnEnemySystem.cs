@@ -8,7 +8,7 @@ namespace SatiRogue.Ecs.Play.Systems;
 public readonly record struct EnemyGraphics(SpriteFrames Frames, Material Material) { }
 
 public class SpawnEnemySystem : GdSystem {
-   private static readonly PackedScene _enemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
+   private static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
 
    private static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");
    private static readonly SpriteFrames HarpyFrames = GD.Load<SpriteFrames>("res://resources/enemies/harpy/harpy_blue_spriteframes.tres");
@@ -30,13 +30,13 @@ public class SpawnEnemySystem : GdSystem {
       var entitiesNode = World.GetElement<Core.Entities>();
 
       for (var enemy = 0; enemy < numEnemies; enemy++) {
-         var enemyNode = _enemyScene.Instance<Enemy>();
+         var enemyNode = EnemyScene.Instance<Enemy>();
          var monsterId = Mathf.FloorToInt((float) GD.RandRange(0, EnemyGraphicsArray.Length));
          var health = Mathf.RoundToInt((float) GD.RandRange(1, 3));
          enemyNode.Material = EnemyGraphicsArray[monsterId].Material;
          enemyNode.Frames = EnemyGraphicsArray[monsterId].Frames;
          entitiesNode.AddChild(enemyNode);
-         enemyNode.Health = health;
+         enemyNode.Stats.Health = health;
          Spawn(enemyNode);
       }
    }

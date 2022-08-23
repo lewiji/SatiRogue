@@ -14,17 +14,19 @@ public class CharacterDeathSystem : GdSystem {
 
          if (charDiedTrigger.Character is Nodes.Actors.Player player) {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
-            timer.Connect("timeout", this, nameof(HandlePlayerDeath), new Array {charDiedTrigger.Entity, player});
+            timer.Connect("timeout", this, nameof(HandlePlayerDeath), new Array {player});
             GetElement<Nodes.Actors.Player>().AnimationPlayer.Play("on_death");
          } else {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
-            timer.Connect("timeout", this, nameof(FreeEntity), new Array {charDiedTrigger.Entity, charDiedTrigger.Character});
+            timer.Connect("timeout", this, nameof(FreeEntity), new Array {charDiedTrigger.Character});
          }
       }
    }
 
-   private void FreeEntity(Entity entity, Character character) {
+   private void FreeEntity(Character character) {
       var mapData = GetElement<MapGenData>();
+
+      var entity = character.GetMeta("Entity") as Entity;
       var gridPos = GetComponent<GridPositionComponent>(entity);
       var currentCell = mapData.GetCellAt(gridPos.Position);
       currentCell.Occupants.Remove(character.GetInstanceId());

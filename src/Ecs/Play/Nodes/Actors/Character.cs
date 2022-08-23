@@ -7,10 +7,6 @@ public class Character : GameObject {
    private bool _alive = true;
    private Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
-   [Export] public int Health = 10;
-   [Export] public int SightRange = 10;
-   [Export] public float Speed = 1;
-   [Export] public int Strength = 1;
    public AnimatedSprite3D? WallPeekSprite;
    public bool Behaving { get => Alive && Enabled; }
    public bool Alive {
