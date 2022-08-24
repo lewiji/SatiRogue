@@ -7,7 +7,6 @@ public class Character : GameObject {
    private bool _alive = true;
    private Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
-   public AnimatedSprite3D? WallPeekSprite;
    public bool Behaving { get => Alive && Enabled; }
    public bool Alive {
       get => _alive;

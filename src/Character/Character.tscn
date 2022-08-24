@@ -17,13 +17,7 @@ material_override = ExtResource( 4 )
 pixel_size = 0.04
 frames = ExtResource( 5 )
 animation = "idle"
-frame = 1
-playing = true
-
-[node name="VisualWallPeek" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
-pixel_size = 0.05
-animation = "idle"
+frame = 2
 playing = true
 
 [node name="Particles" type="Particles" parent="."]

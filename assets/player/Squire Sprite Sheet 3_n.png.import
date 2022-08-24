@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.s3tc.stex"
-path.etc2="res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.etc2.stex"
+path="res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/player/Squire Sprite Sheet 3_n.png"
-dest_files=[ "res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.s3tc.stex", "res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.etc2.stex" ]
+dest_files=[ "res://.import/Squire Sprite Sheet 3_n.png-f0e613c0e93277dcbe71833cd6d9e9ab.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.1
 compress/hdr_mode=0
 compress/bptc_ldr=0

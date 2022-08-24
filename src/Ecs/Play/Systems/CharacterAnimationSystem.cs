@@ -18,10 +18,6 @@ public class CharacterAnimationSystem : GdSystem {
 
          if (sprite.Frames.HasAnimation(name)) {
             sprite.Play(name);
-
-            if (character.WallPeekSprite != null) {
-               character.WallPeekSprite.Play(name);
-            }
          }
 
          if (name == "die") {
@@ -40,10 +36,6 @@ public class CharacterAnimationSystem : GdSystem {
 
             if (player.AnimatedSprite3D?.Animation == "walk") {
                player.AnimatedSprite3D.Animation = "idle";
-
-               if (player.WallPeekSprite != null) {
-                  player.WallPeekSprite.Animation = "idle";
-               }
             }
          }
       }

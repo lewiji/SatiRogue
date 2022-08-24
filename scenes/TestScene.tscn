@@ -945,7 +945,7 @@ transform = Transform( 1, 0, 0, 0, 0.913545, 0.406737, 0, -0.406737, 0.913545, 9
 [node name="Visual" parent="Health" index="0"]
 generate_lightmap = false
 pixel_size = 0.015
-frame = 7
+frame = 1
 
 [node name="Enemy" parent="." instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 92.1041, 0, 89.5409 )
