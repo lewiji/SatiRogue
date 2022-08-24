@@ -16,6 +16,7 @@ public class GameState : Control {
       SizeFlagsVertical = (int) SizeFlags.ExpandFill;
       AnchorRight = 1f;
       AnchorBottom = 1f;
+      MouseFilter = MouseFilterEnum.Ignore;
    }
 
    public void SetupSystems(GameStateController gameStates) {

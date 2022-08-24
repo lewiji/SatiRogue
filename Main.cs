@@ -28,6 +28,12 @@ public partial class Main : Node {
       AddChild(_gsc);
       _gsc.World.AddElement(this);
    }
+   
+   
+   [OnReady]
+   private void AddWorldEnvironmentElement() {
+      _gsc.World.AddElement(GetNode<WorldEnvironment>("WorldEnvironment"));
+   }
 
    [OnReady]
    private void AddCoreState() {

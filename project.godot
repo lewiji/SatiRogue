@@ -40,13 +40,14 @@ _global_script_class_icons={
 
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
+run/delta_sync_after_draw=true
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [audio]
 
-output_latency=32
+output_latency=64
 
 [autoload]
 
@@ -56,7 +57,6 @@ GameScheduler="*res://src/Tools/GameScheduler.cs"
 
 [debug]
 
-settings/fps/force_fps=144
 settings/physics_interpolation/enable_warnings=false
 
 [display]
@@ -148,6 +148,10 @@ GENERATE_OCCLUSION=true
 GENERATE_PARALLAX=true
 HIDE_LAIGTER_GUI=false
 
+[logging]
+
+file_logging/enable_file_logging.pc=false
+
 [memory]
 
 limits/message_queue/max_size_kb=8192
@@ -155,14 +159,18 @@ limits/message_queue/max_size_kb=8192
 [physics]
 
 common/physics_jitter_fix=0.0
-3d/active_soft_world=false
+common/physics_interpolation=true
 common/enable_object_picking=false
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
+threads/thread_model=2
+quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
+quality/spatial_partitioning/render_tree_balance=1.0
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2
-gles3/shaders/max_simultaneous_compiles=4
+gles3/shaders/max_simultaneous_compiles=6
 gles3/shaders/shader_cache_size_mb=1024
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )

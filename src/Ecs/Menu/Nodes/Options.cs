@@ -1,18 +1,23 @@
 using Godot;
+using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Loading.Nodes;
 
 namespace SatiRogue.Ecs.Menu.Nodes; 
 
 public partial class Options : Control {
-   [Signal] public delegate void OptionChanged(Option.OptionType optionLocation, string key, bool value);
-   [OnReady] private void DebugOptionChanged() {
-      Connect(nameof(OptionChanged), this, nameof(OnOptionChanged));
+   [Signal] public delegate void OptionChanged(Option.OptionType optionLocation, Dictionary keyValue);
+   [OnReadyGet("%CloseButton")] private Button _closeButton = null!;
+
+   [OnReady] private void ConnectCloseButton() {
+      _closeButton.Connect("pressed", this, nameof(OnClosePressed));
    }
 
-   private void OnOptionChanged(Option.OptionType optionLocation, string key, bool value) {
-      GD.Print(optionLocation);
-      GD.Print(key);
-      GD.Print(value);
+   public override void _EnterTree() {
+      Visible = false;
+   }
+
+   void OnClosePressed() {
+      Hide();
    }
 }

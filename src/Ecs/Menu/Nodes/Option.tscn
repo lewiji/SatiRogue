@@ -1,0 +1,98 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=2]
+[ext_resource path="res://src/Ecs/Menu/Nodes/OptionBgStylebox.tres" type="StyleBox" id=3]
+[ext_resource path="res://src/Ecs/Menu/Nodes/OptionFont.tres" type="DynamicFont" id=4]
+
+[sub_resource type="CSharpScript" id=5]
+script/source = "using System;
+using Godot;
+using Godot.Collections;
+using GodotOnReady.Attributes;
+using SatiRogue.Ecs.Menu.Nodes;
+using World = RelEcs.World;
+
+namespace SatiRogue.Ecs.Loading.Nodes; 
+
+[Tool]
+public partial class Option : Control {
+   public enum OptionType { ProjectSetting, EnvironmentSetting }
+   
+   [OnReadyGet(\"%CheckBox\")] private CheckBox _checkBox = null!;
+   private string _label = \"\";
+   
+   [Export] public string OptionLabel {
+      get => _label;
+      set {
+         _label = value;
+         if (IsInsideTree()) {
+            _checkBox.Text = _label;
+         }
+      }
+   }
+   
+   [Export] public OptionType OptionLocation { get; set; }
+   
+   [Export] public string OptionKey { get; set; } = \"\";
+
+   [OnReady] private void SetLabelState() {
+      _checkBox.Text = _label;
+   }
+
+   [OnReady] private void ConnectCheckbox() {
+      _checkBox.Connect(\"toggled\", this, nameof(OnCheckboxToggled));
+   }
+
+   private void OnCheckboxToggled(bool pressed) {
+      Owner.EmitSignal(nameof(Options.OptionChanged), (int)OptionLocation, new Dictionary{{OptionKey, pressed}});
+   }
+}"
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 27
+atlas = ExtResource( 2 )
+region = Rect2( 144, 164, 16, 9 )
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 27
+atlas = ExtResource( 2 )
+region = Rect2( 64, 179, 16, 10 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 27
+atlas = ExtResource( 2 )
+region = Rect2( 128, 164, 16, 9 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 27
+atlas = ExtResource( 2 )
+region = Rect2( 48, 179, 16, 10 )
+
+[node name="OptionSSAO" type="PanelContainer"]
+margin_right = 328.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 300, 36 )
+custom_styles/panel = ExtResource( 3 )
+script = SubResource( 5 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 8.0
+margin_right = 320.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 300, 32 )
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
+unique_name_in_owner = true
+margin_right = 88.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 0, 30 )
+custom_colors/font_color = Color( 1, 0.847059, 0.729412, 1 )
+custom_constants/check_vadjust = 3
+custom_constants/hseparation = 16
+custom_fonts/font = ExtResource( 4 )
+custom_icons/checked_disabled = SubResource( 4 )
+custom_icons/checked = SubResource( 1 )
+custom_icons/unchecked_disabled = SubResource( 2 )
+custom_icons/unchecked = SubResource( 3 )
+text = "Option"

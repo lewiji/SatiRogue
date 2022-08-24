@@ -1,63 +1,171 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=1]
-[ext_resource path="res://src/Ecs/Loading/Nodes/Option.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Ecs/Menu/Nodes/Option.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Ecs/Menu/Nodes/Options.cs" type="Script" id=3]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=4]
+[ext_resource path="res://src/Ecs/Menu/Nodes/OptionsPanelStylebox.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/ribbon.png" type="Texture" id=6]
+[ext_resource path="res://fonts/Natural Pro.otf" type="DynamicFontData" id=7]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__37_s.png" type="Texture" id=8]
+[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__37_n.png" type="Texture" id=9]
+[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShader.gdshader" type="Shader" id=10]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 10 )
+shader_param/blur_amount = 1.618
+shader_param/interp_amount = 0.95
+shader_param/normal_map = ExtResource( 9 )
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 9
+atlas = ExtResource( 4 )
+region = Rect2( 308, 34, 72, 10 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 6 )
+region_rect = Rect2( 225, 64, 30, 16 )
+margin_left = 22.0
+margin_right = 22.0
+margin_top = 8.0
+margin_bottom = 7.0
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 225, 48, 30, 16 )
+margin_left = 22.0
+margin_right = 22.0
+margin_top = 8.0
+margin_bottom = 7.0
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 6 )
+region_rect = Rect2( 289, 16, 30, 16 )
+margin_left = 23.0
+margin_right = 23.0
+margin_top = 7.0
+margin_bottom = 6.0
 
 [node name="Options" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_right = 86
-custom_constants/margin_top = 64
-custom_constants/margin_left = 86
-custom_constants/margin_bottom = 64
+rect_min_size = Vector2( 900, 900 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 3 )
 
-[node name="Panel" type="Panel" parent="."]
-margin_left = 86.0
-margin_top = 64.0
-margin_right = 814.0
-margin_bottom = 836.0
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color( 0.24, 0.24, 0.24, 0.964706 )
+material = SubResource( 6 )
+margin_right = 900.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 8 )
+stretch_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 900.0
+margin_bottom = 900.0
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+margin_left = 200.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 500, 500 )
+size_flags_horizontal = 0
+custom_styles/panel = ExtResource( 5 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
 anchor_right = 1.0
 margin_bottom = 139.0
 
-[node name="Label" type="Label" parent="Panel/MarginContainer"]
-margin_top = 32.0
-margin_right = 728.0
-margin_bottom = 106.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+margin_right = 500.0
+margin_bottom = 139.0
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 97.0
+size_flags_vertical = 7
+size_flags_stretch_ratio = 1.62
+custom_colors/font_color = Color( 1, 0.737255, 0.266667, 1 )
+custom_colors/font_color_shadow = Color( 0.396078, 0.231373, 0.611765, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 custom_fonts/font = ExtResource( 1 )
 text = "OPTIONS"
 align = 1
 valign = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+margin_top = 101.0
+margin_right = 500.0
+margin_bottom = 139.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.62
+texture = SubResource( 1 )
+stretch_mode = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
-margin_left = 164.0
-margin_top = 136.0
-margin_right = 564.0
-margin_bottom = 636.0
-rect_min_size = Vector2( 400, 500 )
+[node name="OptionsContainer" type="VBoxContainer" parent="CenterContainer/Panel/CenterContainer"]
+unique_name_in_owner = true
+margin_left = 50.0
+margin_top = 150.0
+margin_right = 450.0
+margin_bottom = 350.0
+rect_min_size = Vector2( 400, 200 )
 
-[node name="OptionSSAO" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="OptionSSAO" parent="CenterContainer/Panel/CenterContainer/OptionsContainer" instance=ExtResource( 2 )]
+margin_right = 400.0
+margin_bottom = 47.0
 OptionLabel = "Ambient Occlusion"
 OptionLocation = 1
 OptionKey = "ssao_enabled"
 
-[node name="OptionSSR" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 50.0
-margin_bottom = 96.0
+[node name="OptionSSR" parent="CenterContainer/Panel/CenterContainer/OptionsContainer" instance=ExtResource( 2 )]
+margin_top = 51.0
+margin_right = 400.0
+margin_bottom = 98.0
 OptionLabel = "Screen Space Reflections"
 OptionLocation = 1
 OptionKey = "ss_reflections_enabled"
 
-[node name="OptionDOF" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 100.0
-margin_bottom = 146.0
+[node name="OptionDOF" parent="CenterContainer/Panel/CenterContainer/OptionsContainer" instance=ExtResource( 2 )]
+margin_top = 102.0
+margin_right = 400.0
+margin_bottom = 149.0
 OptionLabel = "Depth of Field"
 OptionLocation = 1
 OptionKey = "dof_blur_far_enabled,dof_blur_near_enabled"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -67.0
+custom_constants/margin_right = 162
+custom_constants/margin_top = 20
+custom_constants/margin_left = 162
+custom_constants/margin_bottom = 20
+
+[node name="CloseButton" type="Button" parent="CenterContainer/Panel/MarginContainer2"]
+unique_name_in_owner = true
+margin_left = 207.0
+margin_top = 20.0
+margin_right = 293.0
+margin_bottom = 50.0
+size_flags_horizontal = 4
+custom_colors/font_color = Color( 1, 0.905882, 0.709804, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 2 )
+text = "Close"

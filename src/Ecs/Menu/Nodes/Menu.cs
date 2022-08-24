@@ -7,6 +7,7 @@ namespace SatiRogue.Ecs.Menu.Nodes;
 [Tool]
 public partial class Menu : Control {
    [Signal] public delegate void NewGameRequested();
+   [Signal] public delegate void OptionsRequested();
 
    [OnReadyGet("%Light2D")] private Light2D _light2D = null!;
    [OnReadyGet("%NewGame")] private Button _newGame = null!;
@@ -17,6 +18,11 @@ public partial class Menu : Control {
    [OnReady] private void ConnectButtons() {
       _newGame.Connect("pressed", this, nameof(OnNewGamePressed));
       _quit.Connect("pressed", this, nameof(OnQuitPressed));
+      _options.Connect("pressed", this, nameof(OnOptionsPressed));
+   }
+
+   void OnOptionsPressed() {
+      EmitSignal(nameof(OptionsRequested));
    }
 
    private void OnNewGamePressed() {

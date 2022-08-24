@@ -1,6 +1,8 @@
 using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Loading.Nodes;
+using SatiRogue.Ecs.Menu.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
@@ -32,5 +34,11 @@ public class SpawnHudSystem : GdSystem {
 
       var fade = hud.GetNode<DeathScreen>("FadeCanvasLayer/Fade");
       AddElement(fade);
+
+      hud.GetNode<Button>("OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
+   }
+
+   private void OnOptionsPressed() {
+      GetElement<Options>().Show();
    }
 }

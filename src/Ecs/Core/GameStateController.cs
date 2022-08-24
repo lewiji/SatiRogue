@@ -109,7 +109,12 @@ public class GameStateController : Node {
          }
 
          currentState.PauseSystems.Run(World);
-         if (hideCurrentState) currentState.Visible = false;
+         if (hideCurrentState) {
+            var children = currentState.GetChildren();
+            foreach (Node child in children) {
+               child.Set("visible", false);
+            }
+         }
       }
 
       newState.Name = newState.GetType().Name;

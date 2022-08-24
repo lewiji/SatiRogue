@@ -479,11 +479,13 @@ font_data = ExtResource( 3 )
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 custom_constants/margin_right = 24
 custom_constants/margin_top = 24
 custom_constants/margin_left = 24
@@ -534,3 +536,12 @@ text = "EXTINGUISHED."
 align = 1
 valign = 1
 percent_visible = 0.0
+
+[node name="OptionsButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -63.0
+margin_top = -20.0
+text = "Options"
