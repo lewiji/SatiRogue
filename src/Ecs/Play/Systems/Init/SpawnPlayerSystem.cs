@@ -1,11 +1,11 @@
 using Godot;
-using SatiRogue.Debug;
 using RelEcs;
+using SatiRogue.Debug;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnPlayerSystem : GdSystem {
-   private readonly PackedScene _playerScene = GD.Load<PackedScene>("res://src/Player/Player3d.tscn");
+   private readonly PackedScene _playerScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Actors/Player3d.tscn");
 
    public override void Run() {
       Logger.Info("Spawning Player entity");

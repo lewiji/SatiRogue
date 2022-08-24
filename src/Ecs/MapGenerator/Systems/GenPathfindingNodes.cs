@@ -4,7 +4,6 @@ using Godot;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Grid;
 using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 

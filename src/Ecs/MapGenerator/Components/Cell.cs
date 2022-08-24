@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.Grid;
+
 namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public enum CellType {
@@ -13,6 +13,19 @@ public enum CellType {
    DoorOpen,
    Stairs,
    Void
+}
+
+public enum CellCondition {
+   Frozen,
+   Aflame,
+   Wet,
+   Destroyed
+}
+
+public enum CellVisibility {
+   Unseen,
+   Seen,
+   CurrentlyVisible
 }
 
 public class Cell : Reference {

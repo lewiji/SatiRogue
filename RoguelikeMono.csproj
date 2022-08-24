@@ -33,6 +33,7 @@
         <Content Include="lib\go_dot_net\GoDotCollections.dll" />
         <Content Include="lib\go_dot_net\GoDotLog.dll" />
         <Content Include="lib\go_dot_net\Newtonsoft.Json.dll" />
+        <Content Include="src\Ecs\Play\Nodes\Actors\Player3d.tscn" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Fasterflect">
@@ -50,5 +51,8 @@
         <Reference Include="Newtonsoft.Json">
           <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
         </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="resources\grid" />
     </ItemGroup>
 </Project>

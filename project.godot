@@ -53,7 +53,6 @@ output_latency=32
 TextTransitionSettings="*res://addons/teeb.text_transitions/TextTransitionSettings.gd"
 Logger="*res://src/Debug/Logger.cs"
 GameScheduler="*res://src/Tools/GameScheduler.cs"
-GameController="*res://src/GameController.cs"
 
 [debug]
 

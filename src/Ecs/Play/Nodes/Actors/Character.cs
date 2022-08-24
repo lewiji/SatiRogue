@@ -1,5 +1,5 @@
 using Godot;
-using SatiRogue.Grid;
+using SatiRogue.Ecs.MapGenerator.Components;
 using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 

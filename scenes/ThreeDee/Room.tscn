@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://resources/props/room_mesh.tres" type="PlaneMesh" id=1]
-
-[node name="Room" type="MeshInstance"]
-cast_shadow = 0
-mesh = ExtResource( 1 )

@@ -4,9 +4,9 @@ using System.Linq;
 using Godot;
 using RelEcs;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.MapGenerator;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.Grid;
 using SatiRogue.Tools;
 using Array = System.Array;
 using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
@@ -24,7 +24,7 @@ public class SpatialMapSystem : GdSystem {
 
    private static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
    private static readonly Material WallShadows = GD.Load<Material>("res://assets/overworld/WallMatShadows.tres");
-   private readonly Array _cellTypes = Enum.GetValues(typeof(Grid.CellType));
+   private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
 
    private MapGenData _mapGenData = null!;
    private MapGeometry _mapGeometry = null!;

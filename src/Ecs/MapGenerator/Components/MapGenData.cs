@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using SatiRogue.Grid;
+
 namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public struct GeneratorParameters {

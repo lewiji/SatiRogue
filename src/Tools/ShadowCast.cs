@@ -17,7 +17,6 @@
 using System;
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Grid.MapGen;
 
 /*
 Field-of-vision calculation for a simple tiled map.
@@ -127,8 +126,8 @@ public static class ShadowCast {
       // of the empty cell.
       float savedRightSlope = -1;
 
-      var xDim = MapGenerator.GetParams()?.Width;
-      var yDim = MapGenerator.GetParams()?.Height;
+      var xDim = grid.GeneratorParameters.Width;
+      var yDim = grid.GeneratorParameters.Height;
 
       // Outer loop: walk across each column, stopping when we reach the visibility limit.
       for (var currentCol = startColumn; currentCol <= viewCeiling; currentCol++) {
