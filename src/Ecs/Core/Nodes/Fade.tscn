@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__32.png" type="Texture" id=1]
 [ext_resource path="res://src/Ecs/Core/Nodes/Fade.cs" type="Script" id=2]
@@ -29,40 +29,10 @@ tracks/1/keys = {
 "update": 0,
 "values": [ false ]
 }
-tracks/2/type = "bezier"
-tracks/2/path = NodePath("MarginContainer/TextureRect:modulate:r")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"points": PoolRealArray( 0.26, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/3/type = "bezier"
-tracks/3/path = NodePath("MarginContainer/TextureRect:modulate:g")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"points": PoolRealArray( 0.26, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/4/type = "bezier"
-tracks/4/path = NodePath("MarginContainer/TextureRect:modulate:b")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"points": PoolRealArray( 0.26, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "fade_from_black"
-length = 0.62
+length = 0.32
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/0/interp = 1
@@ -70,8 +40,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.5, -0.0328632, 0, -0.218, 0.250974, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.618 )
+"points": PoolRealArray( 1, -0.25, 0, 0.3, -0.164276, 0, -0.12, 0.605204, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3 )
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MarginContainer:visible")
@@ -80,7 +50,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.32 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -88,7 +58,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "fade_to_black"
-length = 1.618
+length = 0.4
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/0/interp = 1
@@ -96,8 +66,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.5, 0.325164, 1, -0.62, -0.0196737, 0.25, 0 ),
-"times": PoolRealArray( 0, 1.32 )
+"points": PoolRealArray( 0, -0.25, 0, 0.0682999, 0.768995, 1, -0.125234, -0.315934, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MarginContainer:visible")
@@ -114,7 +84,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "quick_fade"
-length = 0.1
+length = 0.08
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer:visible")
 tracks/0/interp = 1
@@ -134,8 +104,36 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.037752, 0.0033446, 1, -0.0195718, -0.329641, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.1 )
+"points": PoolRealArray( 0, -0.25, 0, 0.0357185, 0.186628, 1, -0.0369673, -0.66778, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.0798896 )
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "fluctuate"
+length = 5.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1.618, -0.25, 0, 0.43, 1.95525, 5, -0.15, -2.05571, 1.62, -0.269476, 1.618, -0.42, -0.636053, 0.25, 0 ),
+"times": PoolRealArray( 0, 2, 5 )
 }
 
 [node name="FadeLayer" type="CanvasLayer"]
@@ -157,11 +155,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
-modulate = Color( 0.26, 0.26, 0.26, 0 )
+modulate = Color( 0.18475, 0.0325, 0.25, 0 )
 material = ExtResource( 3 )
 margin_right = 900.0
 margin_bottom = 900.0
-rect_min_size = Vector2( 60, 60 )
+rect_min_size = Vector2( 720, 720 )
 mouse_filter = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -181,12 +179,18 @@ margin_bottom = 450.0
 
 [node name="Light2D" type="Light2D" parent="MarginContainer/CenterContainer/LightPosition"]
 texture = ExtResource( 4 )
-texture_scale = 7.28
+texture_scale = 4.09
 color = Color( 0.658824, 0.545098, 0.898039, 1 )
-energy = 3.6
+energy = 0.0
+mode = 2
 range_height = 12.0
 range_layer_min = 128
 range_layer_max = 128
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/CenterContainer/LightPosition/Light2D"]
+autoplay = "fluctuate"
+anims/RESET = SubResource( 5 )
+anims/fluctuate = SubResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="MarginContainer/CenterContainer/LightPosition"]
 current = true

@@ -3,7 +3,8 @@
 [ext_resource path="res://fonts/Natural Pro.otf" type="DynamicFontData" id=1]
 
 [resource]
-size = 32
+size = 64
 outline_size = 1
-outline_color = Color( 0.639216, 0.337255, 0.101961, 0.607843 )
+outline_color = Color( 0.368627, 0.101961, 0.639216, 0.647059 )
+extra_spacing_space = -8
 font_data = ExtResource( 1 )

@@ -1,3 +1,4 @@
+using Godot;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
@@ -7,6 +8,7 @@ using CreateRooms = SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies.CreateRo
 namespace SatiRogue.Ecs; 
 
 public class MapGenState : GameState {
+   [Signal] public delegate void FinishedGenerating();
    private ISystem[] _mapGenStrategySystems = {};
 
    public MapGenState() { }
@@ -17,6 +19,8 @@ public class MapGenState : GameState {
    
    public override void Init(GameStateController gameStates)
    {
+      gameStates.World.AddElement(this);
+      
       if (_mapGenStrategySystems.Length > 0) {
          foreach (var mapGenStrategySystem in _mapGenStrategySystems) {
             InitSystems.Add(mapGenStrategySystem);

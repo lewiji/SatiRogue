@@ -143,9 +143,9 @@ diagonal_lock={
 
 [laigter_config]
 
-GENERATE_SPECULAR=true
-GENERATE_OCCLUSION=true
-GENERATE_PARALLAX=true
+GENERATE_SPECULAR=false
+GENERATE_OCCLUSION=false
+GENERATE_PARALLAX=false
 HIDE_LAIGTER_GUI=false
 
 [logging]

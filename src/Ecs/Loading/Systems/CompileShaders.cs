@@ -4,6 +4,7 @@ using SatiRogue.Ecs.Loading.Nodes;
 namespace SatiRogue.Ecs.Loading.Systems; 
 
 public class CompileShaders : GdSystem {
+   [Signal] public delegate void ShadersCompiled();
    private static readonly PackedScene ShaderCompilerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ShaderCompiler.tscn");
    private ShaderCompiler? _shaderCompiler;
    public override void Run() {
@@ -11,9 +12,12 @@ public class CompileShaders : GdSystem {
       _shaderCompiler.Connect("ready", this, nameof(OnShaderCompilerReady));
       GetElement<LoadingState>().AddChild(_shaderCompiler);
       AddElement(_shaderCompiler);
+      AddElement(this);
    }
 
-   void OnShaderCompilerReady() {
-      _shaderCompiler?.ProcessResourcePreloader(GetElement<ResourcePreloader>());
+   async void OnShaderCompilerReady() {
+      var resPreloader = GetElement<ResourcePreloader>();
+      await _shaderCompiler!.ProcessResourcePreloader(resPreloader!);
+      EmitSignal(nameof(ShadersCompiled));
    }
 }

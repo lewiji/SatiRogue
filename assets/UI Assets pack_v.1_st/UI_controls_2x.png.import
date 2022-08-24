@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FNTSY_TX_64__36.png-6dc1ad8786046ef099d41a5032df5735.stex"
+path="res://.import/UI_controls_2x.png-d680723e5161ea4a408f9294781bd697.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__36.png"
-dest_files=[ "res://.import/FNTSY_TX_64__36.png-6dc1ad8786046ef099d41a5032df5735.stex" ]
+source_file="res://assets/UI Assets pack_v.1_st/UI_controls_2x.png"
+dest_files=[ "res://.import/UI_controls_2x.png-d680723e5161ea4a408f9294781bd697.stex" ]
 
 [params]
 
@@ -19,11 +19,11 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=2
+flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

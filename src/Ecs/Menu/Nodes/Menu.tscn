@@ -1,7 +1,7 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__52.png" type="Texture" id=1]
-[ext_resource path="res://src/Ecs/Menu/Nodes/FontLarvae64.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/Ecs/Menu/Nodes/OptionFont64.tres" type="DynamicFont" id=2]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxNormal.tres" type="StyleBox" id=5]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxPressed.tres" type="StyleBox" id=6]
@@ -17,14 +17,8 @@
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShaderMaterial.tres" type="Material" id=16]
 [ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonGroup.tres" type="ButtonGroup" id=17]
 [ext_resource path="res://addons/teeb.text_effects/resources/Rain.tres" type="RichTextEffect" id=18]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Redacted.tres" type="RichTextEffect" id=19]
 [ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=20]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Word.tres" type="RichTextEffect" id=21]
 [ext_resource path="res://addons/teeb.text_transitions/resources/WFC.tres" type="RichTextEffect" id=22]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=23]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Bounce.tres" type="RichTextEffect" id=24]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Embers.tres" type="RichTextEffect" id=25]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Console.tres" type="RichTextEffect" id=26]
 [ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=27]
 
 [sub_resource type="Animation" id=12]
@@ -192,7 +186,7 @@ margin_bottom = 108.0
 rect_min_size = Vector2( 600, 108 )
 rect_clip_content = false
 size_flags_horizontal = 3
-custom_colors/default_color = Color( 0.74, 0.454607, 0.0814, 1 )
+custom_colors/default_color = Color( 0.741176, 0.454902, 0.0823529, 1 )
 custom_colors/font_color_shadow = Color( 0.397973, 0.1872, 0.52, 1 )
 custom_constants/shadow_offset_x = 4
 custom_constants/shadow_offset_y = 2
@@ -202,7 +196,7 @@ bbcode_text = "[center][wfc][rain]SatiRogue[/rain][/wfc][/center]"
 text = "SatiRogue"
 fit_content_height = true
 scroll_active = false
-custom_effects = [ ExtResource( 18 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 19 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 21 ) ]
+custom_effects = [ ExtResource( 18 ), ExtResource( 22 ) ]
 script = ExtResource( 20 )
 length = 32.0
 
@@ -276,9 +270,9 @@ size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer"]
 margin_left = 158.0
-margin_top = 76.0
+margin_top = 42.0
 margin_right = 518.0
-margin_bottom = 428.0
+margin_bottom = 462.0
 size_flags_vertical = 3
 custom_constants/separation = 32
 
@@ -287,7 +281,7 @@ unique_name_in_owner = true
 light_mask = 2
 material = ExtResource( 14 )
 margin_right = 360.0
-margin_bottom = 64.0
+margin_bottom = 81.0
 rect_min_size = Vector2( 360, 39 )
 custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
 custom_fonts/font = ExtResource( 2 )
@@ -316,9 +310,9 @@ light_mask = 4
 unique_name_in_owner = true
 light_mask = 4
 material = ExtResource( 14 )
-margin_top = 96.0
+margin_top = 113.0
 margin_right = 360.0
-margin_bottom = 160.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 360, 0 )
 custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
 custom_fonts/font = ExtResource( 2 )
@@ -348,9 +342,9 @@ light_mask = 4
 unique_name_in_owner = true
 light_mask = 4
 material = ExtResource( 14 )
-margin_top = 192.0
+margin_top = 226.0
 margin_right = 360.0
-margin_bottom = 256.0
+margin_bottom = 307.0
 rect_min_size = Vector2( 360, 0 )
 custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
 custom_fonts/font = ExtResource( 2 )
@@ -379,9 +373,9 @@ light_mask = 4
 unique_name_in_owner = true
 light_mask = 4
 material = ExtResource( 14 )
-margin_top = 288.0
+margin_top = 339.0
 margin_right = 360.0
-margin_bottom = 352.0
+margin_bottom = 420.0
 rect_min_size = Vector2( 360, 0 )
 custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
 custom_fonts/font = ExtResource( 2 )

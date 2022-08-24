@@ -6,9 +6,13 @@
 [resource]
 texture = ExtResource( 1 )
 normal_map = ExtResource( 2 )
-region_rect = Rect2( 288, 16, 48, 47 )
-margin_left = 7.0
-margin_right = 7.0
-margin_top = 41.0
-margin_bottom = 40.0
-modulate_color = Color( 0.0431373, 0.0745098, 0.458824, 0.678431 )
+region_rect = Rect2( 144, 16, 48, 48 )
+margin_left = 23.0
+margin_right = 23.0
+margin_top = 23.0
+margin_bottom = 24.0
+expand_margin_left = 16.0
+expand_margin_right = 16.0
+expand_margin_top = 16.0
+expand_margin_bottom = 16.0
+modulate_color = Color( 1, 1, 1, 0.854902 )

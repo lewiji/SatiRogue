@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
@@ -11,7 +12,7 @@ public partial class ShaderCompiler : CanvasLayer {
    [OnReadyGet("%SpatialShaderRoot/%SpatialWigglers")] private Spatial _spatialWigglers = null!;
    [OnReadyGet("MarginContainer/CanvasItemWigglers")] private Control _canvasItemWigglers = null!;
    
-   public void ProcessResourcePreloader(ResourcePreloader preloader) {
+   public async Task ProcessResourcePreloader(ResourcePreloader preloader) {
       Logger.Info("Processing materials.");
       foreach (var res in preloader.GetResourceList()) {
          if (preloader.GetResource(res) is not Material material) continue;
@@ -32,6 +33,8 @@ public partial class ShaderCompiler : CanvasLayer {
                break;
          }
       }
+
+      await ToSignal(GetTree().CreateTimer(0.618f), "timeout");
    }
    private void InstanceWigglerByShaderMode(ShaderMaterial shaderMaterial, Material material) {
       var mode = shaderMaterial.Shader.GetMode();

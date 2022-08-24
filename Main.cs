@@ -41,9 +41,10 @@ public partial class Main : Node {
       _gsc.PushState(coreState);
    }
    
-   public void AddLoadingState() {
+   public LoadingState AddLoadingState() {
       var loading = new LoadingState();
       _gsc.PushState(loading);
+      return loading;
    }
 
    [OnReady]
@@ -53,9 +54,10 @@ public partial class Main : Node {
       _gsc.PushState(menuState);
    }
 
-   public void ChangeToMapGenState() {
+   public MapGenState ChangeToMapGenState() {
       var mapGenState = new MapGenState();
       _gsc.PushState(mapGenState);
+      return mapGenState;
    }
 
    public void ChangeToPlayState() {

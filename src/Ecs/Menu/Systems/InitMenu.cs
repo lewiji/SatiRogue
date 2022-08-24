@@ -26,11 +26,11 @@ public class InitMenu : GdSystem {
       await fade.FadeToBlack();
       _menu.Visible = false;
       GetElement<Options>().Hide();
-      GetElement<Main>().AddLoadingState();
-      await ToSignal(fade.GetTree().CreateTimer(1.618f), "timeout");
+      var loadingState = GetElement<Main>().AddLoadingState();
+      await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
       GetElement<ShaderCompiler>().QueueFree();
-      GetElement<Main>().ChangeToMapGenState();
-      await ToSignal(fade.GetTree(), "idle_frame");
+      var mapGenState = GetElement<Main>().ChangeToMapGenState();
+      await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       await fade.FadeFromBlack();
    }
 

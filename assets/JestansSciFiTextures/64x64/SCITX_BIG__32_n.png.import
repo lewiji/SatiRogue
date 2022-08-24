@@ -2,21 +2,23 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.stex"
+path.s3tc="res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.s3tc.stex"
+path.etc2="res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__32_n.png"
-dest_files=[ "res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.stex" ]
+dest_files=[ "res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.s3tc.stex", "res://.import/SCITX_BIG__32_n.png-e23c9b9a768d056e447d5de2c8b09879.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.2
-compress/hdr_mode=1
+compress/mode=2
+compress/lossy_quality=0.1
+compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=1
 flags/repeat=1

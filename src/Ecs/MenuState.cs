@@ -6,7 +6,8 @@ public class MenuState : GameState {
    public override void Init(GameStateController gameStates) {
       gameStates.World.AddElement(this);
 
-      InitSystems.Add(new InitMenu())
+      InitSystems
+         .Add(new InitMenu())
          .Add(new InitOptions());
    }
 }
