@@ -16,11 +16,16 @@ public class SpawnEnemySystem : GdSystem {
    private static readonly SpatialMaterial
       RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
    private static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
+   private static readonly SpatialMaterial FireElementalMat
+      = GD.Load<SpatialMaterial>("res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres");
+   private static readonly SpriteFrames FireElementalFrames
+      = GD.Load<SpriteFrames>("res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres");
 
    private static readonly EnemyGraphics[] EnemyGraphicsArray = {
       new(HarpyFrames, HarpyMat),
       new(MawFrames, MawMat),
-      new(RatFrames, RatMat)
+      new(RatFrames, RatMat),
+      new(FireElementalFrames, FireElementalMat)
    };
 
    public override void Run() {
