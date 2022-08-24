@@ -1,15 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resources/particles/blood_mesh.tres" type="QuadMesh" id=1]
 [ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=2]
 [ext_resource path="res://src/Ecs/Play/Nodes/Actors/Character.cs" type="Script" id=3]
+[ext_resource path="res://resources/enemies/maw/maw_purple_spatial_mat.tres" type="Material" id=4]
+[ext_resource path="res://resources/enemies/maw/maw_purple_sprite_Frames.tres" type="SpriteFrames" id=5]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=6]
+[ext_resource path="res://src/Character/CharacterPositionMarkerMaterial.tres" type="Material" id=7]
 
 [node name="Character" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Visual" type="AnimatedSprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
-pixel_size = 0.05
+material_override = ExtResource( 4 )
+pixel_size = 0.04
+frames = ExtResource( 5 )
+animation = "idle"
+frame = 1
+playing = true
 
 [node name="VisualWallPeek" type="AnimatedSprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
@@ -25,3 +34,14 @@ explosiveness = 0.62
 randomness = 0.31
 process_material = ExtResource( 2 )
 draw_pass_1 = ExtResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.02, 0 )
+material_override = ExtResource( 7 )
+pixel_size = 0.05
+transparent = false
+shaded = true
+alpha_cut = 1
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 66, 338, 12, 12 )

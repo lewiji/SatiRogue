@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=2]
+[gd_scene load_steps=117 format=2]
 
 [ext_resource path="res://scenes/res/EnvironmentBase.tres" type="Environment" id=1]
 [ext_resource path="res://scenes/ThreeDee/res_compressed/polySurface8235.mesh" type="ArrayMesh" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scenes/ThreeDee/res_compressed/polySurface7509.mesh" type="ArrayMesh" id=10]
 [ext_resource path="res://assets/overworld/WallMatShadows.tres" type="Material" id=11]
 [ext_resource path="res://src/Ecs/Play/Nodes/Items/Health.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/Character/Enemy.tscn" type="PackedScene" id=13]
 
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
@@ -915,7 +916,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 93.89, -0.043, 93.0343 )
 [node name="Visual" parent="Player" index="0"]
 material_overlay = SubResource( 101 )
 animation = "idle"
-frame = 1
+frame = 2
 
 [node name="Light" parent="Player/Visual/Camera" index="0"]
 light_energy = 0.95
@@ -944,6 +945,10 @@ transform = Transform( 1, 0, 0, 0, 0.913545, 0.406737, 0, -0.406737, 0.913545, 9
 [node name="Visual" parent="Health" index="0"]
 generate_lightmap = false
 pixel_size = 0.015
+frame = 7
+
+[node name="Enemy" parent="." instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 92.1041, 0, 89.5409 )
 
 [editable path="Player"]
 [editable path="Health"]

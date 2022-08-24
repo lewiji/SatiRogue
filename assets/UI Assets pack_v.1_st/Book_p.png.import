@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Overworld256x256_o.png-c6765ccc59f73bbc86ad7892eb9b9e6f.s3tc.stex"
-path.etc2="res://.import/Overworld256x256_o.png-c6765ccc59f73bbc86ad7892eb9b9e6f.etc2.stex"
+path.s3tc="res://.import/Book_p.png-d949f0f80d3263a334035c19ffbb1834.s3tc.stex"
+path.etc2="res://.import/Book_p.png-d949f0f80d3263a334035c19ffbb1834.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/overworld/Overworld256x256_o.png"
-dest_files=[ "res://.import/Overworld256x256_o.png-c6765ccc59f73bbc86ad7892eb9b9e6f.s3tc.stex", "res://.import/Overworld256x256_o.png-c6765ccc59f73bbc86ad7892eb9b9e6f.etc2.stex" ]
+source_file="res://assets/UI Assets pack_v.1_st/Book_p.png"
+dest_files=[ "res://.import/Book_p.png-d949f0f80d3263a334035c19ffbb1834.s3tc.stex", "res://.import/Book_p.png-d949f0f80d3263a334035c19ffbb1834.etc2.stex" ]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/lossy_quality=0.2
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=1
+compress/normal_map=0
 flags/repeat=true
-flags/filter=false
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

@@ -41,7 +41,7 @@ _global_script_class_icons={
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
 boot_splash/show_image=false
-boot_splash/bg_color=Color( 0.0745098, 0.0196078, 0.117647, 1 )
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [audio]
@@ -143,10 +143,11 @@ diagonal_lock={
 
 [laigter_config]
 
-GENERATE_SPECULAR=false
-GENERATE_OCCLUSION=false
-GENERATE_PARALLAX=false
-HIDE_LAIGTER_GUI=false
+GENERATE_SPECULAR=true
+GENERATE_OCCLUSION=true
+GENERATE_PARALLAX=true
+HIDE_LAIGTER_GUI=true
+GENERATE_NORMAL_MAP=false
 
 [memory]
 

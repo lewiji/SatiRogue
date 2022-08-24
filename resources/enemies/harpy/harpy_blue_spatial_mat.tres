@@ -7,18 +7,18 @@
 [ext_resource path="res://assets/elthen/Harpy Sprite Sheet Blue_p.png" type="Texture" id=6]
 
 [resource]
-flags_albedo_tex_force_srgb = true
-params_diffuse_mode = 4
-params_specular_mode = 3
+params_diffuse_mode = 2
+params_billboard_mode = 1
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.1
 albedo_texture = ExtResource( 3 )
-metallic = 0.9
+metallic = 0.62
 metallic_texture = ExtResource( 1 )
+roughness = 0.62
 roughness_texture = ExtResource( 6 )
 emission_enabled = true
 emission = Color( 0, 0, 0, 1 )
-emission_energy = 0.25
+emission_energy = 0.1
 emission_operator = 0
 emission_on_uv2 = false
 emission_texture = ExtResource( 3 )
@@ -26,14 +26,8 @@ normal_enabled = true
 normal_scale = 1.0
 normal_texture = ExtResource( 4 )
 ao_enabled = true
-ao_light_affect = 1.0
+ao_light_affect = 0.62
 ao_texture = ExtResource( 2 )
 ao_on_uv2 = false
 ao_texture_channel = 0
-depth_enabled = true
-depth_scale = 0.005
-depth_deep_parallax = false
-depth_flip_tangent = false
-depth_flip_binormal = true
-depth_texture = ExtResource( 6 )
 uv1_offset = Vector3( 0, 0.048, 0 )

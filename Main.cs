@@ -30,12 +30,13 @@ public partial class Main : Node {
    }
 
    [OnReady]
-   private void AddCoreState() {
+   private async void AddCoreState() {
       var coreState = new CoreState();
       _gsc.PushState(coreState);
+      await ToSignal(GetTree().CreateTimer(0.35f), "timeout");
+      AddMenuState();
    }
 
-   [OnReady]
    private void AddMenuState() {
       var menuState = new MenuState();
       _gsc.PushState(menuState);

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Book_n.png-2b8f7c1cd8dc8e768b013d20512f4c0f.stex"
+path="res://.import/Book_s.png-917bb919601c13c2eb3b04b567f7e176.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/UI Assets pack_v.1_st/Book_n.png"
-dest_files=[ "res://.import/Book_n.png-2b8f7c1cd8dc8e768b013d20512f4c0f.stex" ]
+source_file="res://assets/UI Assets pack_v.1_st/Book_s.png"
+dest_files=[ "res://.import/Book_s.png-917bb919601c13c2eb3b04b567f7e176.stex" ]
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=1
+compress/normal_map=0
 flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
