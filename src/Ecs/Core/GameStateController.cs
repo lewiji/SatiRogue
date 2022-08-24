@@ -71,8 +71,8 @@ public class GameStateController : Node {
       }
    }
 
-   public void PushState(GameState newState) {
-      CallDeferred(nameof(PushStateDeferred), newState);
+   public void PushState(GameState newState, bool hideCurrentState = false) {
+      CallDeferred(nameof(PushStateDeferred), newState, hideCurrentState);
    }
 
    public void PopState() {
@@ -98,7 +98,7 @@ public class GameStateController : Node {
       currentState.ContinueSystems.Run(World);
    }
 
-   private void PushStateDeferred(GameState newState) {
+   private void PushStateDeferred(GameState newState, bool hideCurrentState = false) {
       if (_stack.Count > 0) {
          var currentState = _stack.Peek();
 
@@ -109,7 +109,7 @@ public class GameStateController : Node {
          }
 
          currentState.PauseSystems.Run(World);
-         currentState.Visible = false;
+         if (hideCurrentState) currentState.Visible = false;
       }
 
       newState.Name = newState.GetType().Name;

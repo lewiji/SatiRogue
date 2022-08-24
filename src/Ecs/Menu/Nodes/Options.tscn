@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Ecs/Loading/Nodes/Option.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Ecs/Menu/Nodes/Options.cs" type="Script" id=3]
+
+[node name="Options" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 86
+custom_constants/margin_top = 64
+custom_constants/margin_left = 86
+custom_constants/margin_bottom = 64
+script = ExtResource( 3 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 86.0
+margin_top = 64.0
+margin_right = 814.0
+margin_bottom = 836.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+anchor_right = 1.0
+margin_bottom = 139.0
+
+[node name="Label" type="Label" parent="Panel/MarginContainer"]
+margin_top = 32.0
+margin_right = 728.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 1 )
+text = "OPTIONS"
+align = 1
+valign = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
+margin_left = 164.0
+margin_top = 136.0
+margin_right = 564.0
+margin_bottom = 636.0
+rect_min_size = Vector2( 400, 500 )
+
+[node name="OptionSSAO" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+OptionLabel = "Ambient Occlusion"
+OptionLocation = 1
+OptionKey = "ssao_enabled"
+
+[node name="OptionSSR" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 50.0
+margin_bottom = 96.0
+OptionLabel = "Screen Space Reflections"
+OptionLocation = 1
+OptionKey = "ss_reflections_enabled"
+
+[node name="OptionDOF" parent="Panel/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 100.0
+margin_bottom = 146.0
+OptionLabel = "Depth of Field"
+OptionLocation = 1
+OptionKey = "dof_blur_far_enabled,dof_blur_near_enabled"

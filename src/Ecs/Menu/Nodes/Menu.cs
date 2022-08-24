@@ -1,5 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Debug;
 
 namespace SatiRogue.Ecs.Menu.Nodes;
 
@@ -15,10 +16,16 @@ public partial class Menu : Control {
 
    [OnReady] private void ConnectButtons() {
       _newGame.Connect("pressed", this, nameof(OnNewGamePressed));
+      _quit.Connect("pressed", this, nameof(OnQuitPressed));
    }
 
    private void OnNewGamePressed() {
       EmitSignal(nameof(NewGameRequested));
+   }
+
+   private void OnQuitPressed() {
+      Logger.Info("Goodbye.");
+      GetTree().Notification(NotificationWmQuitRequest);
    }
 
    [OnReady] private void SetLightSize() {

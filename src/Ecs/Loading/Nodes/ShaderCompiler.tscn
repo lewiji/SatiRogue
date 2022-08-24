@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/Ecs/Loading/Nodes/ShaderCompiler.cs" type="Script" id=1]
+[ext_resource path="res://src/Ecs/Loading/Nodes/SpatialShaderRoot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Ecs/Loading/Nodes/ShaderCompilerWorld.tres" type="World" id=3]
+
+[node name="ShaderCompiler" type="CanvasLayer"]
+layer = -1
+script = ExtResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="ViewportContainer" parent="MarginContainer"]
+margin_right = 900.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Viewport" type="Viewport" parent="MarginContainer/ViewportContainer"]
+size = Vector2( 900, 900 )
+own_world = true
+world = ExtResource( 3 )
+handle_input_locally = false
+render_target_update_mode = 3
+shadow_atlas_size = 1024
+
+[node name="SpatialShaderRoot" parent="MarginContainer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera" parent="MarginContainer/ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30 )
+projection = 1
+current = true
+fov = 90.0
+size = 24.0
+near = 0.01
+
+[node name="CanvasItemWigglers" type="HFlowContainer" parent="MarginContainer"]
+margin_right = 900.0
+margin_bottom = 900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 8
+custom_constants/hseparation = 8

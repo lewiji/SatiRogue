@@ -410,3 +410,5 @@ shadow_color = Color( 0, 0, 0, 0.921569 )
 autoplay = "scroll_light"
 anims/RESET = SubResource( 10 )
 anims/scroll_light = SubResource( 11 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]

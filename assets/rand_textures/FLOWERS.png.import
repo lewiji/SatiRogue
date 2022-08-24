@@ -2,28 +2,30 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.stex"
+path.s3tc="res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.s3tc.stex"
+path.etc2="res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/rand_textures/FLOWERS.png"
-dest_files=[ "res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.stex" ]
+dest_files=[ "res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.s3tc.stex", "res://.import/FLOWERS.png-d92bdafe155cf9f92e8a82a2c3c7fa22.etc2.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
+flags/repeat=true
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
@@ -31,5 +33,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
