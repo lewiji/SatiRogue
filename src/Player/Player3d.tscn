@@ -76,22 +76,22 @@ animation = "endwalk"
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]
-transform = Transform( 1, 0, 0, 0, 0.906307, 0.422618, 0, -0.422618, 0.906307, 0, 4.23206, 11.0949 )
+transform = Transform( 1, 0, 0, 0, 0.78801, 0.615661, 0, -0.615661, 0.78801, 0, 4.23, 8 )
 projection = 1
 current = true
 fov = 50.0
-size = 12.0
+size = 14.0
 far = 22.0
 script = ExtResource( 5 )
 
 [node name="Light" type="SpotLight" parent="Visual/Camera"]
-transform = Transform( 0.966016, 0.0537413, 0.252833, 2.08616e-07, 0.978148, -0.207912, -0.258482, 0.200846, 0.944906, 3.27, -1.61802, 4.00543e-05 )
+transform = Transform( 0.966016, -0.0180308, 0.257852, 0, 0.997564, 0.0697564, -0.258482, -0.0673859, 0.963663, 3.27, -1.61802, 4.00543e-05 )
 shadow_enabled = true
 shadow_color = Color( 0.505882, 0.454902, 0.603922, 1 )
-shadow_bias = 0.07
-spot_range = 21.5
+shadow_bias = 0.015
+spot_range = 18.0
 spot_attenuation = 0.618
-spot_angle = 50.0
+spot_angle = 60.0
 spot_angle_attenuation = 0.787678
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Visual"]
