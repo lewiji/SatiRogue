@@ -5,7 +5,7 @@ extends RichTextEffect
 # Syntax: [heart scale=1.0 freq=8.0][/heart]
 var bbcode = "heart"
 
-const HEART = ord("♡")
+const HEART = ord("!")
 const TO_CHANGE = [ord("o"), ord("O"), ord("a"), ord("A")]
 
 func _process_custom_fx(char_fx):

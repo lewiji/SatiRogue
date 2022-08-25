@@ -12,12 +12,12 @@ export(float, 0.1, 2.0) var animation_time:float = 1.0
 
 func _enter_tree():
 	TextTransitionSettings.register(self)
-	$AnimationPlayer.connect("animation_finished", self, "on_animation_finish")
+	#$AnimationPlayer.connect("animation_finished", self, "on_animation_finish")
 
 
 func _exit_tree():
 	TextTransitionSettings.unregister(self)
-	$AnimationPlayer.disconnect("animation_finished", self, "on_animation_finish")
+	#$AnimationPlayer.disconnect("animation_finished", self, "on_animation_finish")
 
 
 # Mostly needed for editor testing.

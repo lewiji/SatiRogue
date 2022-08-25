@@ -5,3 +5,4 @@
 [resource]
 resource_name = "Bounce"
 script = ExtResource( 1 )
+wave = 3.0

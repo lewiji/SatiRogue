@@ -48,8 +48,7 @@ public partial class Main : Node {
    }
 
    [OnReady]
-   private async void AddMenuState() {
-      await ToSignal(GetTree().CreateTimer(0.32f), "timeout");
+   private void AddMenuState() {
       var menuState = new MenuState();
       _gsc.PushState(menuState);
    }

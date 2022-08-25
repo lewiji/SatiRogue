@@ -17,8 +17,6 @@ public class InitMenu : GdSystem {
       _menu.Connect(nameof(Nodes.Menu.OptionsRequested), this, nameof(OnOptionsRequested));
       menuState.AddChild(_menu);
       AddElement(_menu);
-      await ToSignal(menuState.GetTree(), "idle_frame");
-      await GetElement<Fade>().FadeFromBlack();
    }
 
    private async void OnNewGameRequested() {
