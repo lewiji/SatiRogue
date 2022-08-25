@@ -170,7 +170,5 @@ quality/shadows/filter_mode=0
 quality/filters/anisotropic_filter_level=16
 quality/spatial_partitioning/render_tree_balance=1.0
 2d/options/ninepatch_mode=0
-gles3/shaders/shader_compilation_mode=2
-gles3/shaders/max_simultaneous_compiles=6
 gles3/shaders/shader_cache_size_mb=1024
 environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )

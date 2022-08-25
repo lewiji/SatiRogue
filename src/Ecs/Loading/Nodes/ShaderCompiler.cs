@@ -34,7 +34,7 @@ public partial class ShaderCompiler : CanvasLayer {
          }
       }
 
-      await ToSignal(GetTree().CreateTimer(0.618f), "timeout");
+      await ToSignal(GetTree().CreateTimer(1.618f), "timeout");
    }
    private void InstanceWigglerByShaderMode(ShaderMaterial shaderMaterial, Material material) {
       var mode = shaderMaterial.Shader.GetMode();
