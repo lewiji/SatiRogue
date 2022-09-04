@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Pure Energy Release Dark.ogg-8c002119a3fe87ce774d2fd
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=1]
 [ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=2]
 [ext_resource path="res://fonts/SufferingExtended.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://addons/teeb.text_transitions/resources/Bounce.tres" type="RichTextEffect" id=4]
+[ext_resource path="res://Pure Energy Release Dark.ogg" type="AudioStream" id=5]
+[ext_resource path="res://audio/UI Select Dark.wav" type="AudioStream" id=6]
+[ext_resource path="res://audio/Object Impact Thud.wav" type="AudioStream" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "/*
@@ -316,6 +319,52 @@ tracks/26/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/27/type = "value"
+tracks/27/path = NodePath("LogoAudio:playing")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/28/type = "bezier"
+tracks/28/path = NodePath("LogoAudio:volume_db")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("WhopAudio:playing")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("PhwoompAudio:playing")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "intro"
@@ -437,8 +486,8 @@ tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
-"points": PoolRealArray( 0.618, -0.25, 0, 1.22225, 3.22712, 16.18, -1.64019, 13.5733, 0.25, 0 ),
-"times": PoolRealArray( 0, 2.2 )
+"points": PoolRealArray( 0.618, -0.25, 0, 1.84737, 22.0127, 16.18, -0.809689, 31.289, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.85 )
 }
 tracks/12/type = "bezier"
 tracks/12/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:r")
@@ -582,6 +631,52 @@ tracks/25/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+tracks/26/type = "value"
+tracks/26/path = NodePath("LogoAudio:playing")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0, 1.7, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/27/type = "bezier"
+tracks/27/path = NodePath("LogoAudio:volume_db")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.469683, -0.254009, -3, -0.130316, -0.0397861, 0.25, 0, -3, -0.25, 0, 0.569684, -1.16662, -25, -0.830317, 1.29476, 0.25, 0 ),
+"times": PoolRealArray( 1.7, 2.3, 3.4, 5 )
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("WhopAudio:playing")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("PhwoompAudio:playing")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/keys = {
+"times": PoolRealArray( 4.75371, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="DynamicFont" id=5]
 size = 128
@@ -625,3 +720,17 @@ script = ExtResource( 1 )
 length = 32.0
 all_at_once = true
 animation_time = 2.0
+
+[node name="LogoAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "ambience"
+
+[node name="WhopAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -6.0
+pitch_scale = 0.13
+
+[node name="PhwoompAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -6.0
+bus = "ambience"

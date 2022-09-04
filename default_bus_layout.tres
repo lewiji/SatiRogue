@@ -7,14 +7,14 @@ threshold_db = -3.4
 
 [sub_resource type="AudioEffectReverb" id=1]
 resource_name = "Reverb"
-predelay_msec = 161.0
-predelay_feedback = 0.31
+predelay_msec = 78.0
+predelay_feedback = 0.45
 room_size = 0.62
-damping = 0.62
-spread = 0.62
-hipass = 0.06
-dry = 0.31
-wet = 0.62
+damping = 0.2
+spread = 0.25
+hipass = 0.3
+dry = 0.81
+wet = 0.25
 
 [sub_resource type="AudioEffectCompressor" id=2]
 resource_name = "Compressor"
