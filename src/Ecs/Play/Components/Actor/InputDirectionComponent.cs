@@ -2,7 +2,7 @@ using Godot;
 namespace SatiRogue.Ecs.Play.Components.Actor;
 
 public class InputDirectionComponent {
-   private Vector2 _direction;
+   Vector2 _direction;
    public Vector2 Direction {
       get => _direction;
       set {

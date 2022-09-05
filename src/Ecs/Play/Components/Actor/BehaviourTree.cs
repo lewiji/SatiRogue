@@ -22,7 +22,7 @@ public class BehaviourTree {
       TreeInstance = treeInstance;
    }
 
-   private BaseBt? TreeInstance { get; }
+   BaseBt? TreeInstance { get; }
 
    public void Step(World world,
       Enemy enemy,
@@ -37,8 +37,8 @@ public class BehaviourTree {
 }
 
 public class BaseBt : Gig {
-   private int _lastSawPlayer = -1;
-   private int _rangeToPlayer = -1;
+   int _lastSawPlayer = -1;
+   int _rangeToPlayer = -1;
 
    public status Step(World world,
       Enemy enemy,
@@ -70,7 +70,7 @@ public class BaseBt : Gig {
       return MoveRandomly(inputDir);
    }
 
-   private status MoveTowardsGridPos(PathfindingHelper pathfindingHelper,
+   status MoveTowardsGridPos(PathfindingHelper pathfindingHelper,
       GridPositionComponent pos1,
       GridPositionComponent pos2,
       InputDirectionComponent inputDir) {
@@ -86,7 +86,7 @@ public class BaseBt : Gig {
       return fail();
    }
 
-   private status Attack(HealthComponent playerHealth,
+   status Attack(HealthComponent playerHealth,
       GridPositionComponent gridPos,
       GridPositionComponent playerGridPos,
       InputDirectionComponent inputDir,
@@ -96,7 +96,7 @@ public class BaseBt : Gig {
       Logger.Info("ATTACKING!!!");
       playerHealth.Value -= 1;
       inputDir.Direction = Vector2.Zero;
-      var player = world.GetElement<Nodes.Actors.Player>();
+      var player = world.GetElement<Player>();
       world.Send(new CharacterAnimationTrigger(enemy, "attack"));
       world.Send(new CharacterAnimationTrigger(player, "hit"));
 
@@ -112,23 +112,23 @@ public class BaseBt : Gig {
       throw new NotImplementedException("Call Step(World, Enemy...) instead");
    }
 
-   private bool PlayerInRange(Stats enemyStats, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
+   bool PlayerInRange(Stats enemyStats, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
       return DistanceBetween(gridPos, playerGridPos) <= enemyStats.SightRange;
    }
 
-   private status MoveRandomly(InputDirectionComponent inputDir) {
+   status MoveRandomly(InputDirectionComponent inputDir) {
       inputDir.Direction = new Vector2(Mathf.Round((float) GD.RandRange(-1, 1)), Mathf.Round((float) GD.RandRange(-1, 1)));
 
       return done();
    }
 
-   private float DistanceBetween(GridPositionComponent pos1, GridPositionComponent pos2) {
+   float DistanceBetween(GridPositionComponent pos1, GridPositionComponent pos2) {
       _rangeToPlayer = Mathf.FloorToInt((pos1.Position - pos2.Position).Length());
 
       return _rangeToPlayer;
    }
 
-   private bool CheckLineOfSight(World world, GridPositionComponent pos1, GridPositionComponent pos2) {
+   bool CheckLineOfSight(World world, GridPositionComponent pos1, GridPositionComponent pos2) {
       var mapData = world.GetElement<MapGenData>();
       var los = BresenhamsLine.Line(pos1.Position, pos2.Position, pos => !mapData.IsWall(pos));
 

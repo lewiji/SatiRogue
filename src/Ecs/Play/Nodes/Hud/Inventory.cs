@@ -6,11 +6,11 @@ namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
 public partial class Inventory : Control {
    [Signal] public delegate void OpenChanged(bool isOpen);
-   private static readonly PackedScene ItemSlotScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Item.tscn");
-   [OnReadyGet("AnimationPlayer")] private AnimationPlayer? _animationPlayer;
-   [OnReadyGet("CenterContainer/MarginContainer/ItemGrid/GridContainer")] private GridContainer? _gridContainer;
-   private bool _isOpen;
-   private int _numItemSlots;
+   static readonly PackedScene ItemSlotScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Item.tscn");
+   [OnReadyGet("AnimationPlayer")] AnimationPlayer? _animationPlayer;
+   [OnReadyGet("CenterContainer/MarginContainer/ItemGrid/GridContainer")] GridContainer? _gridContainer;
+   bool _isOpen;
+   int _numItemSlots;
    [Export] public int NumItemSlots {
       get => _numItemSlots;
       set {
@@ -27,7 +27,7 @@ public partial class Inventory : Control {
       }
    }
 
-   private void InitialiseItemSlots() {
+   void InitialiseItemSlots() {
       if (_gridContainer != null && _numItemSlots != _gridContainer.GetChildCount()) {
          CreateItemSlots();
       } else {
@@ -35,7 +35,7 @@ public partial class Inventory : Control {
       }
    }
 
-   private void CreateItemSlots() {
+   void CreateItemSlots() {
       if (_gridContainer == null) {
          Logger.Error("gridContainer not initialised for inventory");
          return;

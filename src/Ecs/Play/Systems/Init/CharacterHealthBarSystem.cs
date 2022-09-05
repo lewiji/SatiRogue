@@ -6,7 +6,7 @@ using SatiRogue.scenes.Hud;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class CharacterHealthBarSystem : GdSystem {
-   private static readonly PackedScene HealthBarScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
+   static readonly PackedScene HealthBarScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
 
    public override void Run() {
       var query = Query<Entity, Character, HealthComponent>();
@@ -17,7 +17,7 @@ public class CharacterHealthBarSystem : GdSystem {
          On(entity).Add(healthBarNode);
          healthBarNode.Percent = health.Percent;
 
-         if (character is Nodes.Actors.Player) {
+         if (character is Player) {
             healthBarNode.Hidden = true;
          }
       }

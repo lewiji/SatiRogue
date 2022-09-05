@@ -5,11 +5,11 @@ using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Core.Nodes;
 
 public partial class Fade : CanvasLayer {
-   [OnReadyGet("AnimationPlayer")] private AnimationPlayer _animationPlayer = null!;
-   [OnReadyGet("%Light2D")] private Light2D _light2D = null!;
-   [OnReadyGet("%LightAnimationTimer")] private Timer _lightTimer = null!;
+   [OnReadyGet("AnimationPlayer")] AnimationPlayer _animationPlayer = null!;
+   [OnReadyGet("%Light2D")] Light2D _light2D = null!;
+   [OnReadyGet("%LightAnimationTimer")] Timer _lightTimer = null!;
    float _dt;
-   
+
    bool _animatingDown = true;
 
    [OnReady] void ConnectLightTimer() {
@@ -43,20 +43,22 @@ public partial class Fade : CanvasLayer {
 
    void OnLightTimer() {
       _dt += _lightTimer.WaitTime;
+
       if (_animatingDown) {
          _light2D.Offset += new Vector2(0, 1);
+
          if (_light2D.Offset.y >= 72) {
             _animatingDown = false;
          }
-      }
-      else {
+      } else {
          _light2D.Offset -= new Vector2(0, 1);
+
          if (_light2D.Offset.y <= -16) {
             _animatingDown = true;
          }
       }
 
-      var xoff = Mathf.Round(Mathf.Sin(_dt)*5f);
+      var xoff = Mathf.Round(Mathf.Sin(_dt) * 5f);
       _light2D.Offset = new Vector2(xoff, _light2D.Offset.y);
    }
 }

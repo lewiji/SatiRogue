@@ -7,11 +7,11 @@ using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class TurnHandlerSystem : GdSystem {
-   private readonly float _minTurnTime = 0.1f;
+   readonly float _minTurnTime = 0.1f;
    public int TurnNumber { get; private set; }
 
-   private void SetCurrentTurn(TurnType turnType) {
-      var turn = GetElement<Components.Turn>();
+   void SetCurrentTurn(TurnType turnType) {
+      var turn = GetElement<Turn>();
       turn.CurrentTurn = turnType;
       Send(new TurnChangedTrigger(turn.CurrentTurn));
 
@@ -21,7 +21,7 @@ public class TurnHandlerSystem : GdSystem {
       TurnNumber += 1;
    }
 
-   private void TickWorld() {
+   void TickWorld() {
       GetElement<PlayState>().OnTurnSystems.Run(World);
    }
 
@@ -30,9 +30,9 @@ public class TurnHandlerSystem : GdSystem {
       HandlePlayerInputTrigger();
    }
 
-   private void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
+   void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
       foreach (var _ in Receive<PlayerHasMadeInputTrigger>()) {
-         var turn = GetElement<Components.Turn>();
+         var turn = GetElement<Turn>();
 
          if (turn.CurrentTurn == TurnType.PlayerTurn) {
             SetCurrentTurn(TurnType.EnemyTurn);
@@ -43,7 +43,7 @@ public class TurnHandlerSystem : GdSystem {
       }
    }
 
-   private void ProcessTurnChanges() { // Progress turn phases on changed
+   void ProcessTurnChanges() { // Progress turn phases on changed
       foreach (var turnTrigger in Receive<TurnChangedTrigger>()) {
          switch (turnTrigger.Turn) {
             case TurnType.Processing:
@@ -63,7 +63,7 @@ public class TurnHandlerSystem : GdSystem {
       }
    }
 
-   private async void ResetTurn() {
+   async void ResetTurn() {
       await ToSignal(GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
       SetCurrentTurn(TurnType.PlayerTurn);
 

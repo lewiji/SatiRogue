@@ -6,14 +6,17 @@ namespace SatiRogue.MathUtils;
 public static class BresenhamsLine {
    public delegate bool PlotFunction(Vector3 gridPos);
 
-   private static void Swap<T>(ref T lhs, ref T rhs) {
+   static void Swap<T>(ref T lhs, ref T rhs) {
       (lhs, rhs) = (rhs, lhs);
    }
 
-   public static bool Line(Vector3i from, Vector3i to, PlotFunction plot) => Line(from.ToVector3(), to.ToVector3(), plot);
+   public static bool Line(Vector3i from, Vector3i to, PlotFunction plot) {
+      return Line(from.ToVector3(), to.ToVector3(), plot);
+   }
 
    public static bool Line(Vector3 from, Vector3 to, PlotFunction plot) {
       var steep = Math.Abs(to.z - from.z) > Math.Abs(to.x - from.x);
+
       if (steep) {
          Swap(ref from.x, ref from.z);
          Swap(ref to.x, ref to.z);
@@ -29,6 +32,7 @@ public static class BresenhamsLine {
       for (var x = from.x; x <= to.x; ++x) {
          if (!(steep ? plot(new Vector3(y, 0, x)) : plot(new Vector3(x, 0, y)))) return false;
          err = err - dY;
+
          if (err < 0) {
             y += ystep;
             err += dX;

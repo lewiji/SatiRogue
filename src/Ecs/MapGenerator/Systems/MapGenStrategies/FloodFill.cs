@@ -15,7 +15,7 @@ public class FloodFill : GdSystem {
    }
 
    /** Flood fill from centre of voids, convert voids to floor, and set edges (nulls) as walls **/
-   private void FloodFillWalls(MapGenData mapGenData, int posX, int posY) {
+   void FloodFillWalls(MapGenData mapGenData, int posX, int posY) {
       var tiles = new Stack<Vector3>();
       tiles.Push(new Vector3(posX, 0, posY));
 

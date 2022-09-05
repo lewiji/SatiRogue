@@ -6,13 +6,13 @@ namespace SatiRogue.Ecs;
 
 public class PlayState : GameState {
    public readonly SystemGroup OnTurnSystems = new();
-   private GameStateController? _gsc;
+   GameStateController? _gsc;
 
    public override void Init(GameStateController gameStates) {
       CreateSystems(gameStates);
    }
 
-   private void CreateSystems(GameStateController gameStates) {
+   void CreateSystems(GameStateController gameStates) {
       _gsc = gameStates;
       _gsc.World.AddElement(this);
 

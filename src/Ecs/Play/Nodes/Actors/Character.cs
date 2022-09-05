@@ -4,8 +4,8 @@ using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Character : GameObject {
-   private bool _alive = true;
-   private Particles? _particles;
+   bool _alive = true;
+   Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
    public bool Behaving { get => Alive && Enabled; }
    public bool Alive {
@@ -34,7 +34,7 @@ public class Character : GameObject {
       AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAnimationFinished));
    }
 
-   private void OnAnimationFinished() {
+   void OnAnimationFinished() {
       if (Enabled) AnimatedSprite3D?.Play("idle");
    }
 
@@ -69,7 +69,7 @@ public class Character : GameObject {
       AnimatedSprite3D?.MaterialOverlay.Dispose();
    }
 
-   private bool GetIsVisible() {
+   bool GetIsVisible() {
       return CurrentCell?.Visibility == CellVisibility.CurrentlyVisible;
    }
 }

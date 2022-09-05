@@ -64,11 +64,11 @@ public class MapGenData {
       return InitialiseOrGetCell(position);
    }
 
-   private Cell InitialiseOrGetCell(Vector3 position) {
+   Cell InitialiseOrGetCell(Vector3 position) {
       return InitialiseOrGetCell(IdCalculator.IdFromVec3(position));
    }
 
-   private Cell InitialiseOrGetCell(long id) {
+   Cell InitialiseOrGetCell(long id) {
       // Try to add id to collection, if already exists, return matching cell struct
       if (IndexedCells.ContainsKey(id)) return IndexedCells[id];
       // create and add new cell otherwise

@@ -4,7 +4,7 @@ using SatiRogue.Ecs.Play.Nodes;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SetupAudioSystem : GdSystem {
-   private static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
+   static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
 
    public override void Run() {
       var audioNodes = GetElement<AudioNodes>();
@@ -21,7 +21,7 @@ public class SetupAudioSystem : GdSystem {
       AddSfx(audioNodes, "SwordWoosh1", "res://audio/Sword Woosh 1.wav", "sfx");
    }
 
-   private void AddSfx(AudioNodes audioNodes, string name, string streamPath, string bus) {
+   void AddSfx(AudioNodes audioNodes, string name, string streamPath, string bus) {
       var footstepAudio = new AudioStreamPlayer3D {
          Name = name,
          Stream = GD.Load<AudioStream>(streamPath),

@@ -12,10 +12,10 @@ public class CharacterDeathSystem : GdSystem {
       foreach (var charDiedTrigger in Receive<CharacterDiedTrigger>()) {
          charDiedTrigger.Character.Alive = false;
 
-         if (charDiedTrigger.Character is Nodes.Actors.Player player) {
+         if (charDiedTrigger.Character is Player player) {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
             timer.Connect("timeout", this, nameof(HandlePlayerDeath));
-            GetElement<Nodes.Actors.Player>().AnimationPlayer.Play("on_death");
+            GetElement<Player>().AnimationPlayer.Play("on_death");
          } else {
             var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
             timer.Connect("timeout", this, nameof(FreeEntity), new Array {charDiedTrigger.Character});
@@ -23,7 +23,7 @@ public class CharacterDeathSystem : GdSystem {
       }
    }
 
-   private void FreeEntity(Character character) {
+   void FreeEntity(Character character) {
       var mapData = GetElement<MapGenData>();
 
       var entity = character.GetMeta("Entity") as Entity;
@@ -33,7 +33,7 @@ public class CharacterDeathSystem : GdSystem {
       DespawnAndFree(entity);
    }
 
-   private void HandlePlayerDeath() {
+   void HandlePlayerDeath() {
       GetElement<DeathScreen>().FadeToDeath();
    }
 }

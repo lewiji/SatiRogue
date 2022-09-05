@@ -8,8 +8,8 @@ using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
 public class PathfindingHelper {
-   private readonly AStar _aStar;
-   private readonly Dictionary<long, int> _cellIdToAStarId;
+   readonly AStar _aStar;
+   readonly Dictionary<long, int> _cellIdToAStarId;
 
    public PathfindingHelper(AStar aStar, Dictionary<long, int> cellIdToAStarId) {
       _aStar = aStar;
@@ -50,7 +50,7 @@ public class PathfindingHelper {
 }
 
 public class GenPathfindingNodes : GdSystem {
-   private static readonly Vector3[] Offsets = {
+   static readonly Vector3[] Offsets = {
       Vector3.Back, Vector3.Forward, Vector3.Left, Vector3.Right, Vector3.Back + Vector3.Left,
       Vector3.Back + Vector3.Right, Vector3.Forward + Vector3.Left, Vector3.Forward + Vector3.Right
    };

@@ -3,7 +3,6 @@ using RelEcs;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-using Object = Godot.Object;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class CharacterAnimationSystem : GdSystem {
@@ -12,7 +11,7 @@ public class CharacterAnimationSystem : GdSystem {
       RevertToIdleAnimation();
    }
 
-   private void PlayRequestedAnimation() {
+   void PlayRequestedAnimation() {
       foreach (var (character, name) in Receive<CharacterAnimationTrigger>()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite) continue;
 
@@ -26,13 +25,13 @@ public class CharacterAnimationSystem : GdSystem {
       }
    }
 
-   private void RevertToIdleAnimation() {
-      foreach (var newTurn in Receive<NewTurnTrigger>()) {
+   void RevertToIdleAnimation() {
+      foreach (var _ in Receive<NewTurnTrigger>()) {
          var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
 
          foreach (var input in query) {
             if (input.Direction != Vector2.Zero) continue;
-            var player = GetElement<Nodes.Actors.Player>();
+            var player = GetElement<Player>();
 
             if (player.AnimatedSprite3D?.Animation == "walk") {
                player.AnimatedSprite3D.Animation = "idle";

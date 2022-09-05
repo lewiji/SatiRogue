@@ -13,12 +13,12 @@ public class FogSystem : GdSystem {
       var mapGenData = GetElement<MapGenData>();
       var fogMultiMeshes = GetElement<FogMultiMeshes>();
 
-      foreach (var (player, gridPosition) in Query<Nodes.Actors.Player, GridPositionComponent>()) {
+      foreach (var (_, gridPosition) in Query<Nodes.Actors.Player, GridPositionComponent>()) {
          CalculateFov(gridPosition, mapGenData, fogMultiMeshes);
       }
    }
 
-   public static void CalculateFov(GridPositionComponent gridPositionComponent, MapGenData mapGenData, FogMultiMeshes fogMultiMeshes) {
+   static void CalculateFov(GridPositionComponent gridPositionComponent, MapGenData mapGenData, FogMultiMeshes fogMultiMeshes) {
       var offScreenCoords = new Vector3(-1000f, 1000f, -1000f);
 
       ShadowCast.ComputeVisibility(mapGenData, gridPositionComponent.Position, 11.0f);
@@ -35,7 +35,7 @@ public class FogSystem : GdSystem {
       }
    }
 
-   private static int GetChunkIdForPosition(Vector3i position, int chunkWidth, int maxWidth) {
+   static int GetChunkIdForPosition(Vector3i position, int chunkWidth, int maxWidth) {
       return position.x / chunkWidth + position.z / chunkWidth * ((maxWidth + chunkWidth) / chunkWidth);
    }
 }

@@ -48,7 +48,7 @@ External dependencies:
 namespace SatiRogue.Tools;
 
 public static class ShadowCast {
-   private static readonly OctantTransform[] s_octantTransform = {
+   static readonly OctantTransform[] s_octantTransform = {
       new(1, 0, 0, 1), // 0 E-NE
       new(0, 1, 1, 0), // 1 NE-N
       new(0, -1, 1, 0), // 2 N-NW
@@ -103,7 +103,7 @@ public static class ShadowCast {
    /// </param>
    /// <param name="txfrm">Coordinate multipliers for the octant transform.</param>
    /// Maximum recursion depth is (Ceiling(viewRadius)).
-   private static void CastLight(MapGenData grid,
+   static void CastLight(MapGenData grid,
       Vector3 gridPosn,
       float viewRadius,
       int startColumn,
@@ -230,7 +230,7 @@ public static class ShadowCast {
    ///    Immutable class for holding coordinate transform constants.  Bulkier than a 2D
    ///    array of ints, but it's self-formatting if you want to log it while debugging.
    /// </summary>
-   private class OctantTransform {
+   class OctantTransform {
       public OctantTransform(int xx, int xy, int yx, int yy) {
          Xx = xx;
          Xy = xy;

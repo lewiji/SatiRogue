@@ -31,12 +31,12 @@ public enum CellVisibility {
 public class Cell : Reference {
    [Signal] public delegate void VisibilityChanged();
 
-   private long _id;
+   long _id;
 
-   private float? _luminosity;
-   private Vector3? _position;
+   float? _luminosity;
+   Vector3? _position;
 
-   private CellVisibility _visibility = CellVisibility.Unseen;
+   CellVisibility _visibility = CellVisibility.Unseen;
    public HashSet<CellCondition> Conditions = new();
    public HashSet<ulong> Occupants = new();
    public CellType? Type;
@@ -72,7 +72,7 @@ public class Cell : Reference {
          });
    }
 
-   private void SetOccupantVisibility() {
+   void SetOccupantVisibility() {
       foreach (var occupant in Occupants) {
          if (GD.InstanceFromId(occupant) is not Character character || !IsInstanceValid(character)) continue;
 

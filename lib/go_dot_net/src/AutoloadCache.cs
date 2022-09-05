@@ -8,24 +8,32 @@ using GoDotNet;
 /// root node children on every invocation.
 /// </summary>
 public class AutoloadCache {
-  private static readonly Dictionary<Type, object> _cache = new();
+   static readonly Dictionary<Type, object> _cache = new();
 
-  /// <summary>
-  /// Save a value to the cache.
-  /// </summary>
-  /// <param name="type">Type of the node.</param>
-  /// <param name="value">Node to save.</param>
-  public static void Write(Type type, object value) => _cache.Add(type, value);
-  /// <summary>
-  /// Read a value from the cache.
-  /// </summary>
-  /// <param name="type">Type of the node.</param>
-  /// <returns>Node in the cache.</returns>
-  public static object Read(Type type) => _cache[type];
-  /// <summary>
-  /// Check if a value is in the cache.
-  /// </summary>
-  /// <param name="type">Type of the node.</param>
-  /// <returns>True if the value is saved in the cache.</returns>
-  public static bool Has(Type type) => _cache.ContainsKey(type);
+   /// <summary>
+   /// Save a value to the cache.
+   /// </summary>
+   /// <param name="type">Type of the node.</param>
+   /// <param name="value">Node to save.</param>
+   public static void Write(Type type, object value) {
+      _cache.Add(type, value);
+   }
+
+   /// <summary>
+   /// Read a value from the cache.
+   /// </summary>
+   /// <param name="type">Type of the node.</param>
+   /// <returns>Node in the cache.</returns>
+   public static object Read(Type type) {
+      return _cache[type];
+   }
+
+   /// <summary>
+   /// Check if a value is in the cache.
+   /// </summary>
+   /// <param name="type">Type of the node.</param>
+   /// <returns>True if the value is saved in the cache.</returns>
+   public static bool Has(Type type) {
+      return _cache.ContainsKey(type);
+   }
 }

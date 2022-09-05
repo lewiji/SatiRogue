@@ -24,7 +24,7 @@ public class InputSystem : GdSystem {
       }
    }
 
-   private void HandleUnlockedInput(bool aim, InputDirectionComponent input, bool shoot) {
+   void HandleUnlockedInput(bool aim, InputDirectionComponent input, bool shoot) {
       foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<DiagonalLock>().Build()) {
          On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;
@@ -50,7 +50,7 @@ public class InputSystem : GdSystem {
       }
    }
 
-   private void HandleDiagonalLockedInput(InputDirectionComponent input) {
+   void HandleDiagonalLockedInput(InputDirectionComponent input) {
       RemoveAim();
 
       foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Not<DiagonalLock>().Build()) {
@@ -64,12 +64,12 @@ public class InputSystem : GdSystem {
       }
    }
 
-   private bool InputIsDiagonal(Vector2 inputDirection) {
+   bool InputIsDiagonal(Vector2 inputDirection) {
       if (inputDirection == Vector2.Zero) return false;
       return inputDirection.y != 0 && inputDirection.x != 0;
    }
 
-   private void RemoveAim() {
+   void RemoveAim() {
       foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<Aiming>().Build()) {
          On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;

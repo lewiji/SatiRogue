@@ -7,21 +7,21 @@ namespace SatiRogue.Ecs.Play.Nodes.Hud;
 public partial class ItemSlot : CenterContainer {
    [Signal] public delegate void OnPressed(int itemIndex);
 
-   private AtlasTexture _normalFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Play/Nodes/Hud/ItemFrameNormal.tres");
-   private AtlasTexture _focusFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Play/Nodes/Hud/ItemFrameSelected.tres");
+   AtlasTexture _normalFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Play/Nodes/Hud/ItemFrameNormal.tres");
+   AtlasTexture _focusFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Play/Nodes/Hud/ItemFrameSelected.tres");
 
-   [OnReadyGet("%ClickTarget")] private Control _clickTarget = null!;
-   [OnReadyGet("%Equipped")] private Control _equippedIndicator = null!;
-   [OnReadyGet("%ItemTexture")] private TextureRect _itemTextureRect = null!;
-   [OnReadyGet("%Frame")] private TextureRect _frameTextureRect = null!;
-   [OnReadyGet("%LabelName")] private Label _labelName = null!;
-   [OnReadyGet("%PopupMenu")] private PopupMenu _popupMenu = null!;
+   [OnReadyGet("%ClickTarget")] Control _clickTarget = null!;
+   [OnReadyGet("%Equipped")] Control _equippedIndicator = null!;
+   [OnReadyGet("%ItemTexture")] TextureRect _itemTextureRect = null!;
+   [OnReadyGet("%Frame")] TextureRect _frameTextureRect = null!;
+   [OnReadyGet("%LabelName")] Label _labelName = null!;
+   [OnReadyGet("%PopupMenu")] PopupMenu _popupMenu = null!;
 
    public bool IsEmpty {
       get => _itemTexture == null;
    }
 
-   private bool _isSelected = false;
+   bool _isSelected = false;
    public bool IsSelected {
       get => !IsEmpty && _isSelected;
       set {
@@ -36,7 +36,7 @@ public partial class ItemSlot : CenterContainer {
       }
    }
 
-   private Texture? _itemTexture;
+   Texture? _itemTexture;
    [Export] public Texture? ItemTexture {
       get => _itemTexture;
       set {
@@ -46,7 +46,7 @@ public partial class ItemSlot : CenterContainer {
       }
    }
 
-   private string _itemName = "";
+   string _itemName = "";
    [Export] public string ItemName {
       get => _itemName;
       set {
@@ -55,7 +55,7 @@ public partial class ItemSlot : CenterContainer {
       }
    }
 
-   private bool _equipped;
+   bool _equipped;
    [Export] public bool Equipped {
       get => _equipped;
       set {
@@ -67,7 +67,7 @@ public partial class ItemSlot : CenterContainer {
    [Export] public string Description { get; set; } = "";
    [Export] public int Quantity { get; set; }
 
-   [OnReady] private void SetInitial() {
+   [OnReady] void SetInitial() {
       _itemTextureRect.Texture = _itemTexture;
       _labelName.Text = _itemName;
       _clickTarget.Connect("gui_input", this, nameof(OnGuiInput));
@@ -76,19 +76,19 @@ public partial class ItemSlot : CenterContainer {
       SetEmptyModulation();
    }
 
-   private void SetEmptyModulation() {
+   void SetEmptyModulation() {
       _frameTextureRect.Modulate = IsEmpty ? new Color("7f9e9e9e") : new Color("ffffff");
    }
 
-   private void OnSelected() {
+   void OnSelected() {
       IsSelected = true;
    }
 
-   private void OnDeselected() {
+   void OnDeselected() {
       IsSelected = false;
    }
 
-   private void OnGuiInput(InputEvent @event) {
+   void OnGuiInput(InputEvent @event) {
       if (@event is InputEventMouseButton {Pressed: false} inputEventMouseButton) {
          if (IsEmpty) return;
 

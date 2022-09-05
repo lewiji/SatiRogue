@@ -15,7 +15,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       var mapData = GetElement<MapGenData>();
       var pathfindingHelper = GetElement<PathfindingHelper>();
 
-      foreach (var (player, gridPos, input) in Query<Nodes.Actors.Player, GridPositionComponent, InputDirectionComponent>()) {
+      foreach (var (player, gridPos, input) in Query<Player, GridPositionComponent, InputDirectionComponent>()) {
          if (input.Direction == Vector2.Zero) continue;
 
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);
@@ -31,7 +31,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       }
    }
 
-   private void HandleOccupants(Cell targetCell, Nodes.Actors.Player player, InputDirectionComponent inputDirectionComponent) {
+   void HandleOccupants(Cell targetCell, Player player, InputDirectionComponent inputDirectionComponent) {
       foreach (var targetId in targetCell.Occupants) {
          var target = GD.InstanceFromId(targetId);
          var entity = target?.GetMeta("Entity") as Entity;

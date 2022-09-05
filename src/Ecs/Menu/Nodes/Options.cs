@@ -3,13 +3,13 @@ using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Loading.Nodes;
 
-namespace SatiRogue.Ecs.Menu.Nodes; 
+namespace SatiRogue.Ecs.Menu.Nodes;
 
 public partial class Options : Control {
    [Signal] public delegate void OptionChanged(Option.OptionType optionLocation, Dictionary keyValue);
-   [OnReadyGet("%CloseButton")] private Button _closeButton = null!;
+   [OnReadyGet("%CloseButton")] Button _closeButton = null!;
 
-   [OnReady] private void ConnectCloseButton() {
+   [OnReady] void ConnectCloseButton() {
       _closeButton.Connect("pressed", this, nameof(OnClosePressed));
    }
 

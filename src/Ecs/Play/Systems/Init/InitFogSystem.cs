@@ -11,9 +11,9 @@ namespace SatiRogue.Ecs.Play.Systems.Init;
 public class FogMultiMeshes : List<MultiMeshInstance> { }
 
 public class InitFogSystem : GdSystem {
-   private readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
-   private readonly FogMultiMeshes _fogMultiMeshes = new();
-   private MapGeometry? _mapGeometry;
+   readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
+   readonly FogMultiMeshes _fogMultiMeshes = new();
+   MapGeometry? _mapGeometry;
 
    public override void Run() {
       AddElement(_fogMultiMeshes);
@@ -52,7 +52,7 @@ public class InitFogSystem : GdSystem {
       }
    }
 
-   private void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells, int chunkWidth) {
+   void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells, int chunkWidth) {
       // Create Fog MultiMesh
       var fogMultiMeshInstance = new MultiMeshInstance {
          Multimesh = new MultiMesh {
@@ -75,7 +75,7 @@ public class InitFogSystem : GdSystem {
       _fogMultiMeshes.Add(fogMultiMeshInstance);
    }
 
-   private bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
+   bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
       return c.Position.x >= chunkCoords[0].x && c.Position.x <= chunkCoords[1].x && c.Position.z >= chunkCoords[0].z
              && c.Position.z <= chunkCoords[1].z;
    }

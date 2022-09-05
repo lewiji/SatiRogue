@@ -8,7 +8,7 @@ namespace SatiRogue.addons.scene_reloader;
 
 [Tool]
 public class SceneReloaderPlugin : EditorPlugin {
-   private ToolButton _buttonScene = GD.Load<PackedScene>("res://addons/scene_reloader/SceneReloaderButton.tscn").Instance<ToolButton>();
+   ToolButton _buttonScene = GD.Load<PackedScene>("res://addons/scene_reloader/SceneReloaderButton.tscn").Instance<ToolButton>();
 
    public override void _Ready() {
       AddControlToContainer(CustomControlContainer.Toolbar, _buttonScene);
@@ -23,7 +23,7 @@ public class SceneReloaderPlugin : EditorPlugin {
    // alternatives
    //.FindNode("@@640", true,false);
    //.GetNode("@@605/@@607/@@611/@@615/@@616/@@617/@@633/@@634/@@639/@@640");
-   private async void ReloadOpenScene() {
+   async void ReloadOpenScene() {
       var baseControl = GetEditorInterface().GetBaseControl();
       var editedSceneRoot = GetEditorInterface().GetEditedSceneRoot();
 

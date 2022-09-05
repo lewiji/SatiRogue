@@ -7,10 +7,10 @@ using SatiRogue.Ecs.Play.Nodes.Hud;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnHudSystem : GdSystem {
-   private static readonly PackedScene HudScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/HUD.tscn");
-   private static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Health.tscn");
-   private static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");
-   private static readonly PackedScene InvUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Inventory.tscn");
+   static readonly PackedScene HudScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/HUD.tscn");
+   static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Health.tscn");
+   static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");
+   static readonly PackedScene InvUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Inventory.tscn");
 
    public override void Run() {
       var gsc = GetElement<GameStateController>();
@@ -38,7 +38,7 @@ public class SpawnHudSystem : GdSystem {
       hud.GetNode<Button>("OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
    }
 
-   private void OnOptionsPressed() {
+   void OnOptionsPressed() {
       GetElement<Options>().Show();
    }
 }

@@ -3,20 +3,19 @@ using GodotOnReady.Attributes;
 
 namespace SatiRogue.Ecs.Play.Nodes;
 
-public partial class SpatialCamera : Godot.Camera {
-   private static SpatialCamera? _instance;
-   private OpenSimplexNoise _noise = new OpenSimplexNoise();
-   private int _noiseY = 0;
-   [Export] private float ShakeDecay { get; set; } = 2f;
-   [Export] private Vector2 ShakeMaxOffset { get; set; } = new Vector2(0.309f, 0.23175f);
-   [Export] private float ShakeMaxRoll { get; set; } = 0.1f;
-   private float _currentShakeIntensity = 0f;
-   private float _shakePowerExponent = 3f;
-   [OnReadyGet("../../")] private Spatial Target { get; set; }
+public partial class SpatialCamera : Camera {
+   static SpatialCamera? _instance;
+   OpenSimplexNoise _noise = new();
+   int _noiseY = 0;
+   [Export] float ShakeDecay { get; set; } = 2f;
+   [Export] Vector2 ShakeMaxOffset { get; set; } = new(0.309f, 0.23175f);
+   [Export] float ShakeMaxRoll { get; set; } = 0.1f;
+   float _currentShakeIntensity = 0f;
+   float _shakePowerExponent = 3f;
+   [OnReadyGet("../../")] Spatial Target { get; set; }
 
-   [OnReady]
-   private void InitNoise() {
-      _noise.Seed = (int)GD.Randi();
+   [OnReady] void InitNoise() {
+      _noise.Seed = (int) GD.Randi();
       _noise.Period = 4;
       _noise.Octaves = 2;
    }
@@ -33,7 +32,7 @@ public partial class SpatialCamera : Godot.Camera {
       _instance = null;
    }
 
-   private void DoShake(float intensity) {
+   void DoShake(float intensity) {
       _currentShakeIntensity = Mathf.Min(_currentShakeIntensity + intensity, 1.0f);
    }
 
@@ -44,8 +43,7 @@ public partial class SpatialCamera : Godot.Camera {
       }
    }
 
-
-   private void ProcessShake() {
+   void ProcessShake() {
       _noiseY += 1;
       var amount = Mathf.Pow(_currentShakeIntensity, _shakePowerExponent);
       Rotation = new Vector3(Rotation.x, Rotation.y, ShakeMaxRoll * amount * _noise.GetNoise2d(_noise.Seed, _noiseY));
@@ -55,6 +53,7 @@ public partial class SpatialCamera : Godot.Camera {
 
    public override void _Input(InputEvent @event) {
       if (@event is not InputEventMouseButton {Pressed: true} inputEventMouseButton) return;
+
       switch (inputEventMouseButton.ButtonIndex) {
          case (int) ButtonList.WheelUp:
             Fov -= 1f;

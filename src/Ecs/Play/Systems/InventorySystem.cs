@@ -7,7 +7,7 @@ using SatiRogue.Ecs.Play.Nodes.Items;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class InventorySystem : GdSystem {
-   private Inventory? _inventoryUi;
+   Inventory? _inventoryUi;
 
    public override void Run() {
       var invUi = GetElement<Inventory>();
@@ -21,7 +21,7 @@ public class InventorySystem : GdSystem {
       invUi.Connect(nameof(Inventory.OpenChanged), this, nameof(OnInventoryOpenChanged));
    }
 
-   private void OnInventoryOpenChanged(bool isOpen) {
+   void OnInventoryOpenChanged(bool isOpen) {
       if (_inventoryUi == null) return;
 
       if (isOpen) {
@@ -38,7 +38,7 @@ public class InventorySystem : GdSystem {
       }
    }
 
-   private void OnItemSlotPressed(int index) {
+   void OnItemSlotPressed(int index) {
       var invUi = GetElement<Inventory>();
       var itemSlot = invUi.GetItemSlot(index);
       Logger.Info($"Inventory item {itemSlot?.ItemName} clicked at index {index}.");

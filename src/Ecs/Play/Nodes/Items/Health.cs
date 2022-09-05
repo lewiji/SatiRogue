@@ -6,9 +6,9 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Health : Item {
-   private Entity? _entity;
-   private bool _taken;
-   private World? _world;
+   Entity? _entity;
+   bool _taken;
+   World? _world;
    [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;
    [OnReadyGet("AnimationPlayer")] public AnimationPlayer? AnimationPlayer;
    [OnReadyGet("Particles")] public Particles? Particles;
@@ -27,7 +27,7 @@ public partial class Health : Item {
       }
    }
 
-   private void OnAnimationFinished(string name) {
+   void OnAnimationFinished(string name) {
       _world?.Despawn(_entity!.Identity);
       QueueFree();
    }

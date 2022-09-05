@@ -14,7 +14,7 @@ public class PhysicsDeltaTime {
 }
 
 public class GameStateController : Node {
-   private readonly Stack<GameState> _stack = new();
+   readonly Stack<GameState> _stack = new();
    public readonly World World = new();
 
    public GameStateController() {
@@ -83,7 +83,7 @@ public class GameStateController : Node {
       CallDeferred(nameof(ChangeStateDeferred), newState);
    }
 
-   private void PopStateDeferred() {
+   void PopStateDeferred() {
       if (_stack.Count == 0) return;
 
       var currentState = _stack.Pop();
@@ -98,7 +98,7 @@ public class GameStateController : Node {
       currentState.ContinueSystems.Run(World);
    }
 
-   private void PushStateDeferred(GameState newState, bool hideCurrentState = false) {
+   void PushStateDeferred(GameState newState, bool hideCurrentState = false) {
       if (_stack.Count > 0) {
          var currentState = _stack.Peek();
 
@@ -109,8 +109,10 @@ public class GameStateController : Node {
          }
 
          currentState.PauseSystems.Run(World);
+
          if (hideCurrentState) {
             var children = currentState.GetChildren();
+
             foreach (Node child in children) {
                child.Set("visible", false);
             }
@@ -128,7 +130,7 @@ public class GameStateController : Node {
       newState.InitSystems.Run(World);
    }
 
-   private void ChangeStateDeferred(GameState newState) {
+   void ChangeStateDeferred(GameState newState) {
       if (_stack.Count > 0) {
          var currentState = _stack.Pop();
          currentState.ExitSystems.Run(World);

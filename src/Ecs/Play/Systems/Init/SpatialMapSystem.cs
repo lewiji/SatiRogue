@@ -14,7 +14,7 @@ using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class SpatialMapSystem : GdSystem {
-   private static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
+   static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
       {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
       {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
       {CellType.Wall, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")},
@@ -22,12 +22,12 @@ public class SpatialMapSystem : GdSystem {
       {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
    };
 
-   private static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
-   private static readonly Material WallShadows = GD.Load<Material>("res://assets/overworld/WallMatShadows.tres");
-   private readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
+   static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
+   static readonly Material WallShadows = GD.Load<Material>("res://assets/overworld/WallMatShadows.tres");
+   readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
 
-   private MapGenData _mapGenData = null!;
-   private MapGeometry _mapGeometry = null!;
+   MapGenData _mapGenData = null!;
+   MapGeometry _mapGeometry = null!;
 
    public override void Run() {
       _mapGenData = GetElement<MapGenData>();
@@ -45,7 +45,7 @@ public class SpatialMapSystem : GdSystem {
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
 
-   private void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
+   void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
       var cells = _mapGenData.IndexedCells.Values.ToArray();
 
       var chunkCells = new Cell[chunkWidth * chunkWidth];
@@ -73,7 +73,7 @@ public class SpatialMapSystem : GdSystem {
       }
    }
 
-   private void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells) {
+   void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells) {
       var chunkRoom = new Spatial {
          Name = $"Chunk{chunkId}"
       };
@@ -114,12 +114,12 @@ public class SpatialMapSystem : GdSystem {
       }
    }
 
-   private static Mesh? GetMeshResourceForCellType(CellType? cellType) {
+   static Mesh? GetMeshResourceForCellType(CellType? cellType) {
       CellMeshResources.TryGetValue(cellType.GetValueOrDefault(), out var mesh);
       return mesh;
    }
 
-   private Vector3[] GetChunkMinMaxCoords(int chunkId, int chunkWidth, int maxWidth) {
+   Vector3[] GetChunkMinMaxCoords(int chunkId, int chunkWidth, int maxWidth) {
       var start = new Vector3(chunkId * chunkWidth % maxWidth, 0, Mathf.FloorToInt(chunkId * (float) chunkWidth / maxWidth) * chunkWidth);
 
       var end = start + new Vector3(chunkWidth, 0, chunkWidth);
@@ -127,7 +127,7 @@ public class SpatialMapSystem : GdSystem {
       return coords;
    }
 
-   private bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
+   bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
       var position = c.Position;
 
       return position.x >= chunkCoords[0].x && position.x <= chunkCoords[1].x && position.z >= chunkCoords[0].z

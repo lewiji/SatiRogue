@@ -5,8 +5,8 @@ using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Arrow : GameObject {
-   [OnReadyGet("AnimatedSprite3D")] private AnimatedSprite3D? _animatedSprite3D;
-   private Vector2 _direction;
+   [OnReadyGet("AnimatedSprite3D")] AnimatedSprite3D? _animatedSprite3D;
+   Vector2 _direction;
 
    public Vector3 Destination;
    public int Range = 6;

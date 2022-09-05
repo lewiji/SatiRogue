@@ -1,4 +1,4 @@
-namespace SatiRogue.Ecs.Play.Components; 
+namespace SatiRogue.Ecs.Play.Components;
 
 public enum TurnType {
    PlayerTurn,
@@ -7,7 +7,7 @@ public enum TurnType {
 }
 
 public class Turn {
-   private TurnType _currentTurn = TurnType.PlayerTurn;
+   TurnType _currentTurn = TurnType.PlayerTurn;
 
    public TurnType CurrentTurn {
       get => _currentTurn;

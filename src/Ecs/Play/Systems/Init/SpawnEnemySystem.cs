@@ -7,21 +7,20 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnEnemySystem : GdSystem {
-   private static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
+   static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
 
-   private static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");
-   private static readonly SpriteFrames HarpyFrames = GD.Load<SpriteFrames>("res://resources/enemies/harpy/harpy_blue_spriteframes.tres");
-   private static readonly SpatialMaterial MawMat = GD.Load<SpatialMaterial>("res://resources/enemies/maw/maw_purple_spatial_mat.tres");
-   private static readonly SpriteFrames MawFrames = GD.Load<SpriteFrames>("res://resources/enemies/maw/maw_purple_sprite_Frames.tres");
-   private static readonly SpatialMaterial
-      RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
-   private static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
-   private static readonly SpatialMaterial FireElementalMat
+   static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");
+   static readonly SpriteFrames HarpyFrames = GD.Load<SpriteFrames>("res://resources/enemies/harpy/harpy_blue_spriteframes.tres");
+   static readonly SpatialMaterial MawMat = GD.Load<SpatialMaterial>("res://resources/enemies/maw/maw_purple_spatial_mat.tres");
+   static readonly SpriteFrames MawFrames = GD.Load<SpriteFrames>("res://resources/enemies/maw/maw_purple_sprite_Frames.tres");
+   static readonly SpatialMaterial RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
+   static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
+   static readonly SpatialMaterial FireElementalMat
       = GD.Load<SpatialMaterial>("res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres");
-   private static readonly SpriteFrames FireElementalFrames
+   static readonly SpriteFrames FireElementalFrames
       = GD.Load<SpriteFrames>("res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres");
 
-   private static readonly EnemyGraphics[] EnemyGraphicsArray = {
+   static readonly EnemyGraphics[] EnemyGraphicsArray = {
       new(HarpyFrames, HarpyMat),
       new(MawFrames, MawMat),
       new(RatFrames, RatMat),

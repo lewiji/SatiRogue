@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Play.Components;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Chest : Item {
-   private bool _open;
+   bool _open;
    [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;
    [OnReadyGet("Particles")] public Particles? Particles;
    public bool Locked { get; set; }
@@ -31,11 +31,11 @@ public partial class Chest : Item {
       entityBuilder.Add(this).Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
    }
 
-   [OnReady] private void ConnectAnimationFinished() {
+   [OnReady] void ConnectAnimationFinished() {
       AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAniFinished));
    }
 
-   private void OnAniFinished() {
+   void OnAniFinished() {
       if (AnimatedSprite3D?.Animation == "closing")
          AnimatedSprite3D.Animation = "closed";
       else if (AnimatedSprite3D?.Animation == "opening")

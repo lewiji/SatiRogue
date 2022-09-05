@@ -8,10 +8,10 @@ using SatiRogue.Ecs.Core;
 namespace SatiRogue;
 
 public partial class Main : Node {
-   private Logger.LogLevel _logLevel;
-   private GameStateController _gsc = null!;
-   private float _totalObjects = 0;
-   private float _lastObjects = 0;
+   Logger.LogLevel _logLevel;
+   GameStateController _gsc = null!;
+   float _totalObjects = 0;
+   float _lastObjects = 0;
 
    [Export]
    public Logger.LogLevel LogLevel {
@@ -22,33 +22,28 @@ public partial class Main : Node {
       }
    }
 
-   [OnReady]
-   private void CreateGameStateController() {
+   [OnReady] void CreateGameStateController() {
       _gsc = new GameStateController();
       AddChild(_gsc);
       _gsc.World.AddElement(this);
    }
-   
-   
-   [OnReady]
-   private void AddWorldEnvironmentElement() {
+
+   [OnReady] void AddWorldEnvironmentElement() {
       _gsc.World.AddElement(GetNode<WorldEnvironment>("WorldEnvironment"));
    }
 
-   [OnReady]
-   private void AddCoreState() {
+   [OnReady] void AddCoreState() {
       var coreState = new CoreState();
       _gsc.PushState(coreState);
    }
-   
+
    public LoadingState AddLoadingState() {
       var loading = new LoadingState();
       _gsc.PushState(loading);
       return loading;
    }
 
-   [OnReady]
-   private void AddMenuState() {
+   [OnReady] void AddMenuState() {
       var menuState = new MenuState();
       _gsc.PushState(menuState);
    }
@@ -64,8 +59,7 @@ public partial class Main : Node {
       _gsc.PushState(playState);
    }
 
-   [OnReady]
-   private void CreateMonitorTimer() {
+   [OnReady] void CreateMonitorTimer() {
       if (LogLevel > Logger.LogLevel.Debug) return;
 
       var timer = new Timer {WaitTime = 1f, Autostart = true};
@@ -75,7 +69,7 @@ public partial class Main : Node {
       Logger.Warn("ObjectCount Monitor logging is switched on.");
    }
 
-   private void CheckMonitors() {
+   void CheckMonitors() {
       _lastObjects = _totalObjects;
       _totalObjects = Performance.GetMonitor(Performance.Monitor.ObjectCount);
 
@@ -84,8 +78,7 @@ public partial class Main : Node {
       Logger.Debug($"{_totalObjects}, {delta}");
    }
 
-   [OnReady]
-   private void CreateManualGcTimer() {
+   [OnReady] void CreateManualGcTimer() {
       if (LogLevel > Logger.LogLevel.Debug) return;
 
       var timer = new Timer {WaitTime = 3f, Autostart = true};
@@ -95,7 +88,7 @@ public partial class Main : Node {
       Logger.Warn("Manual GC is switched on.");
    }
 
-   private void ClearGc() {
+   void ClearGc() {
       GC.Collect();
       GC.WaitForPendingFinalizers();
    }

@@ -15,14 +15,14 @@ public class Logger : Node {
       All
    }
 
-   private const int MaxLogsPerFrame = 10;
-   private static readonly Queue<KeyValuePair<LogLevel, object>> QueuedLogs = new();
+   const int MaxLogsPerFrame = 10;
+   static readonly Queue<KeyValuePair<LogLevel, object>> QueuedLogs = new();
 
-   private readonly ILog _log = new GDLog(nameof(Logger));
+   readonly ILog _log = new GDLog(nameof(Logger));
 
-   public static LogLevel Level { get; set; } =  LogLevel.Error;
+   public static LogLevel Level { get; set; } = LogLevel.Error;
 
-   private static void Print(object what, LogLevel logLevel = LogLevel.Info) {
+   static void Print(object what, LogLevel logLevel = LogLevel.Info) {
       if (logLevel == LogLevel.All || Level >= logLevel)
          QueuedLogs.Enqueue(new KeyValuePair<LogLevel, object>(logLevel, what));
    }
@@ -46,9 +46,11 @@ public class Logger : Node {
    public override void _Process(float delta) {
       if (QueuedLogs.Count <= 0) return;
       var numToLog = Mathf.Min(MaxLogsPerFrame, QueuedLogs.Count);
+
       for (var i = 0; i < numToLog; i++) {
          var logKeyPair = QueuedLogs.Dequeue();
          var logString = logKeyPair.Value.ToString();
+
          switch (logKeyPair.Key) {
             case LogLevel.Error:
                _log.Error(logString);
