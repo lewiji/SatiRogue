@@ -1,20 +1,21 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class PlayerShootSystem : GdSystem {
    readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Arrow.tscn");
 
    public override void Run() {
-      foreach (var shot in Receive<PlayerHasShotTrigger>()) {
-         foreach (var (player, gridPos, input) in Query<Player, GridPositionComponent, InputDirectionComponent>()) {
+      foreach (var _ in Receive<PlayerHasShotTrigger>()) {
+         foreach (var (_, gridPos, input) in Query<Player, GridPositionComponent, InputDirectionComponent>()) {
             var direction = new Vector2(1, 0);
 
             if (input.LastDirection != Vector2.Zero) {
@@ -22,7 +23,7 @@ public class PlayerShootSystem : GdSystem {
             }
             Logger.Debug($"Firing {direction}");
             var arrow = _arrowScene.Instance<Arrow>();
-            var entitiesNode = World.GetElement<Core.Entities>();
+            var entitiesNode = World.GetElement<Entities>();
             entitiesNode.AddChild(arrow);
             var arrowEntity = Spawn(arrow).Id();
 

@@ -1,7 +1,8 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
-
+using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Play.Nodes.Actors;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnPlayerSystem : GdSystem {
@@ -9,9 +10,9 @@ public class SpawnPlayerSystem : GdSystem {
 
    public override void Run() {
       Logger.Info("Spawning Player entity");
-      var playerNode = _playerScene.Instance<Nodes.Actors.Player>();
-      World.GetElement<Core.Entities>().AddChild(playerNode);
-      var playerEntity = Spawn(playerNode).Id();
+      var playerNode = _playerScene.Instance<Player>();
+      World.GetElement<Entities>().AddChild(playerNode);
+      Spawn(playerNode).Id();
       World.AddElement(playerNode);
    }
 }

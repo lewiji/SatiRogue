@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes;
-using World = RelEcs.World;
+using World = SatiRogue.lib.RelEcsGodot.src.World;
 namespace SatiRogue.Ecs.Core;
 
 public class DeltaTime {

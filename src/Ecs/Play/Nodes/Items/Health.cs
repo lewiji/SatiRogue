@@ -1,8 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
-using RelEcs;
 using SatiRogue.Ecs.Play.Components;
-using World = RelEcs.World;
+using SatiRogue.lib.RelEcsGodot.src;
+using World = SatiRogue.lib.RelEcsGodot.src.World;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Health : Item {
@@ -27,7 +27,7 @@ public partial class Health : Item {
       }
    }
 
-   void OnAnimationFinished(string name) {
+   void OnAnimationFinished(string _) {
       _world?.Despawn(_entity!.Identity);
       QueueFree();
    }

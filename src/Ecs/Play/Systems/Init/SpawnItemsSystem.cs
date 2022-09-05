@@ -1,8 +1,9 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnItemsSystem : GdSystem {
@@ -13,7 +14,7 @@ public class SpawnItemsSystem : GdSystem {
    public override void Run() {
       var numChests = Mathf.CeilToInt(GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
       Logger.Info($"Spawning {numChests} chests");
-      var entitiesNode = World.GetElement<Core.Entities>();
+      var entitiesNode = World.GetElement<Entities>();
 
       for (var chestIndex = 0; chestIndex < numChests; chestIndex++) {
          var chestNode = ChestScene.Instance<Chest>();

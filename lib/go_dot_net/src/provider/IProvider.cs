@@ -1,7 +1,6 @@
-namespace GoDotNet;
-
 using System;
 using System.Runtime.CompilerServices;
+namespace SatiRogue.lib.go_dot_net.src.provider;
 
 /// <summary>
 /// Provider state.
@@ -10,7 +9,7 @@ public class ProviderState {
    /// <summary>
    /// True if the provider has provided all of its values.
    /// </summary>
-   public bool HasProvided { get; set; } = false;
+   public bool HasProvided { get; set; }
 
    /// <summary>
    /// Underlying event delegate used to inform dependent nodes that the

@@ -1,9 +1,8 @@
 using System;
 using Godot;
-using RelEcs;
-using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class TurnHandlerSystem : GdSystem {

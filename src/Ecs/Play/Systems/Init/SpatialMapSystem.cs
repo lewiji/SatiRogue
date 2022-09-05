@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
+using SatiRogue.lib.RelEcsGodot.src;
 using SatiRogue.Tools;
 using Array = System.Array;
-using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
-using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpatialMapSystem : GdSystem {
    static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
@@ -125,12 +123,5 @@ public class SpatialMapSystem : GdSystem {
       var end = start + new Vector3(chunkWidth, 0, chunkWidth);
       var coords = new[] {start, end};
       return coords;
-   }
-
-   bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {
-      var position = c.Position;
-
-      return position.x >= chunkCoords[0].x && position.x <= chunkCoords[1].x && position.z >= chunkCoords[0].z
-             && position.z <= chunkCoords[1].z;
    }
 }

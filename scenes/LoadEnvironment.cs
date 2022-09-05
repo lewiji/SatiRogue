@@ -1,6 +1,5 @@
 using Godot;
 using GodotOnReady.Attributes;
-
 namespace SatiRogue.scenes;
 
 public partial class LoadEnvironment : WorldEnvironment {

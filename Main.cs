@@ -4,17 +4,15 @@ using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Ecs;
 using SatiRogue.Ecs.Core;
-
 namespace SatiRogue;
 
 public partial class Main : Node {
    Logger.LogLevel _logLevel;
    GameStateController _gsc = null!;
-   float _totalObjects = 0;
-   float _lastObjects = 0;
+   float _totalObjects;
+   float _lastObjects;
 
-   [Export]
-   public Logger.LogLevel LogLevel {
+   [Export] public Logger.LogLevel LogLevel {
       get => _logLevel;
       set {
          _logLevel = value;

@@ -1,8 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
-using RelEcs;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public partial class Player : Character {

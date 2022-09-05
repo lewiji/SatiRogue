@@ -1,10 +1,9 @@
 using Godot;
-using RelEcs;
-using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Components;
+using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Systems.Init;
-using SatiRogue.MathUtils;
+using SatiRogue.lib.RelEcsGodot.src;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Play.Systems;
 
@@ -13,7 +12,7 @@ public class FogSystem : GdSystem {
       var mapGenData = GetElement<MapGenData>();
       var fogMultiMeshes = GetElement<FogMultiMeshes>();
 
-      foreach (var (_, gridPosition) in Query<Nodes.Actors.Player, GridPositionComponent>()) {
+      foreach (var (_, gridPosition) in Query<Player, GridPositionComponent>()) {
          CalculateFov(gridPosition, mapGenData, fogMultiMeshes);
       }
    }
@@ -28,14 +27,14 @@ public class FogSystem : GdSystem {
 
       while (mapGenData.CellsVisibilityChanged.Count > 0) {
          var position = mapGenData.CellsVisibilityChanged.Pop();
-         var chunkId = GetChunkIdForPosition(new Vector3i(position), chunkWidth, maxWidth);
+         var chunkId = GetChunkIdForPosition(position, chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
          fogMultiMeshes[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, offScreenCoords));
       }
    }
 
-   static int GetChunkIdForPosition(Vector3i position, int chunkWidth, int maxWidth) {
-      return position.x / chunkWidth + position.z / chunkWidth * ((maxWidth + chunkWidth) / chunkWidth);
+   static int GetChunkIdForPosition(Vector3 position, int chunkWidth, int maxWidth) {
+      return (int) position.x / chunkWidth + (int) position.z / chunkWidth * ((maxWidth + chunkWidth) / chunkWidth);
    }
 }

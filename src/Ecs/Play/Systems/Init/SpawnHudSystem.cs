@@ -1,9 +1,8 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Ecs.Core;
-using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Hud;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnHudSystem : GdSystem {
@@ -17,7 +16,7 @@ public class SpawnHudSystem : GdSystem {
       var hud = HudScene.Instance();
       gsc.AddChild(hud);
 
-      var healthUi = HealthUiScene.Instance<HealthUI>();
+      var healthUi = HealthUiScene.Instance<HealthUi>();
       hud.AddChild(healthUi);
       Spawn(healthUi);
       AddElement(healthUi);

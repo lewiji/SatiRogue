@@ -1,14 +1,11 @@
-using Godot;
-using SatiRogue.Debug;
-
-namespace SatiRogue.Ecs.Play.Components.Actor; 
+namespace SatiRogue.Ecs.Play.Components.Actor;
 
 public class HealthComponent {
    public int Value { get; set; }
 
    public int Max;
-   public bool IsAlive => Value > 0;
-   public float Percent => (float)Value / (float)Max;
+   public bool IsAlive { get => Value > 0; }
+   public float Percent { get => Value / (float) Max; }
 
    public HealthComponent() { }
 
@@ -16,5 +13,4 @@ public class HealthComponent {
       Max = value;
       Value = Max;
    }
-
 }

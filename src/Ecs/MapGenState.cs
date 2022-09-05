@@ -2,9 +2,7 @@ using Godot;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
-using RelEcs;
-using CreateRooms = SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies.CreateRooms;
-
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs;
 
 public class MapGenState : GameState {

@@ -1,6 +1,5 @@
 using Godot;
-using RelEcs;
-
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Core;
 
 public class GameState : Control {

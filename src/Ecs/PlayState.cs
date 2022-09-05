@@ -1,7 +1,7 @@
-using RelEcs;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Systems;
 using SatiRogue.Ecs.Play.Systems.Init;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs;
 
 public class PlayState : GameState {

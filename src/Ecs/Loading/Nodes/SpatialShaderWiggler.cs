@@ -1,6 +1,5 @@
 using Godot;
 using GodotOnReady.Attributes;
-
 namespace SatiRogue.Ecs.Loading.Nodes;
 
 public partial class SpatialShaderWiggler : Spatial {

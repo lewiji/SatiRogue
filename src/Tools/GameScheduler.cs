@@ -1,7 +1,4 @@
-using GoDotNet;
+using SatiRogue.lib.go_dot_net.src.nodes;
+namespace SatiRogue.Tools;
 
-namespace SatiRogue.Tools; 
-
-public class GameScheduler : Scheduler {
-   
-}
+public class GameScheduler : Scheduler { }

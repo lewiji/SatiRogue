@@ -1,9 +1,7 @@
 using System.Linq;
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using RelEcs;
-using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
-
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
 public class CreateCorridors : GdSystem {

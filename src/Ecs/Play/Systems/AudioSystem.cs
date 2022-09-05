@@ -1,7 +1,7 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Nodes;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class AudioSystem : GdSystem {

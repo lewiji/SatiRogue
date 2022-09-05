@@ -1,5 +1,3 @@
-namespace GoDotNet;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Fasterflect;
 using Godot;
+namespace SatiRogue.lib.go_dot_net.src.provider;
 
 /// <summary>
 /// Essentially a typedef for a with specific values dictionary.
@@ -70,7 +69,7 @@ public static class DependentX {
       var currentType = dependent.GetType();
 
       // Clear dependency cache.
-      dependent.SetDeps(new());
+      dependent.SetDeps(new Dependencies());
 
       if (dependent is Node node) {
          var properties = new List<PropertyInfo>();
@@ -116,7 +115,7 @@ public static class DependentX {
             // Use the fasterflect library to quickly invoke the static, generic
             // GetProvider method declared below. This is a lot faster than
             // invoking the method through the typical C# reflection layer.
-            var providerObj = classType.CallMethod(new Type[] {type}, nameof(GetProvider), new object[] {node});
+            var providerObj = classType.CallMethod(new[] {type}, nameof(GetProvider), node);
 
             if (providerObj is IProviderNode provider) {
                if (provider.HasProvided()) {
@@ -138,9 +137,8 @@ public static class DependentX {
          if (dependent.GetDeps().ContainsKey(typeof(T))) {
             if (dependent.GetDeps()[typeof(T)] is Dependency<T> dependency) {
                return dependency.ResolveProvider(node);
-            } else {
-               throw new Exception("Unexpected dependency provider type.");
             }
+            throw new Exception("Unexpected dependency provider type.");
          } else {
             var dependency = new Dependency<T>();
             dependent.GetDeps().Add(typeof(T), dependency);

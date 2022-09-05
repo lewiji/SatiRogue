@@ -1,5 +1,5 @@
 using Godot;
-using RelEcs;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Nodes;
 
 public abstract class GameObject : Spatial, ISpawnable {

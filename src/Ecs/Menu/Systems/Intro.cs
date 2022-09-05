@@ -1,10 +1,8 @@
 using Godot;
-using Godot.Collections;
-using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Intro.Nodes;
-
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Menu.Systems;
 
 public class Intro : GdSystem {
@@ -21,14 +19,15 @@ public class Intro : GdSystem {
 
    void OnIntroReady() {
       Logger.Info("Playing intro");
-      var player = _intro.GetNode<AnimationPlayer>("AnimationPlayer");
-      player.Play("intro");
-      player.Connect("animation_finished", this, nameof(OnIntroFinished));
+      var player = _intro?.GetNode<AnimationPlayer>("AnimationPlayer");
+      player?.Play("intro");
+      player?.Connect("animation_finished", this, nameof(OnIntroFinished));
    }
 
+   // ReSharper disable once UnusedParameter.Local
    async void OnIntroFinished(string _) {
       await GetElement<Fade>().QuickFade();
-      _intro.QueueFree();
+      _intro?.QueueFree();
       EmitSignal(nameof(IntroFinished));
    }
 }

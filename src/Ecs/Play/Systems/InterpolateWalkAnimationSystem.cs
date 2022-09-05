@@ -1,10 +1,9 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class InterpolateWalkAnimationSystem : GdSystem {

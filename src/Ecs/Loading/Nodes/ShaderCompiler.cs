@@ -3,7 +3,6 @@ using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-
 namespace SatiRogue.Ecs.Loading.Nodes;
 
 public partial class ShaderCompiler : CanvasLayer {

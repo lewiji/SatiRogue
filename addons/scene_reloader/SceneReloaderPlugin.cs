@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
-
 namespace SatiRogue.addons.scene_reloader;
 
 [Tool]
@@ -20,16 +18,9 @@ public class SceneReloaderPlugin : EditorPlugin {
       RemoveControlFromContainer(CustomControlContainer.Toolbar, _buttonScene);
    }
 
-   // alternatives
-   //.FindNode("@@640", true,false);
-   //.GetNode("@@605/@@607/@@611/@@615/@@616/@@617/@@633/@@634/@@639/@@640");
    async void ReloadOpenScene() {
       var baseControl = GetEditorInterface().GetBaseControl();
-      var editedSceneRoot = GetEditorInterface().GetEditedSceneRoot();
-
       var fileMenu = baseControl.FindNodeByType<PopupMenu>(t => t.HasNode("Export"));
-
-      GD.Print(fileMenu);
 
       if (fileMenu != null) {
          var itemCount = fileMenu.GetItemCount();

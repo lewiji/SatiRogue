@@ -1,7 +1,7 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Enemy : Character {

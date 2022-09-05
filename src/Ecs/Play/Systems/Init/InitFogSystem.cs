@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
+using SatiRogue.lib.RelEcsGodot.src;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
@@ -48,11 +48,11 @@ public class InitFogSystem : GdSystem {
          Logger.Debug($"{cells.Length} cells remaining in map data");
          Logger.Debug($"Building chunk {chunkId}.");
 
-         BuildChunk(chunkId, chunkCoords, chunkCells, chunkWidth);
+         BuildChunk(chunkCoords, chunkWidth);
       }
    }
 
-   void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells, int chunkWidth) {
+   void BuildChunk(Vector3[] chunkCoords, int chunkWidth) {
       // Create Fog MultiMesh
       var fogMultiMeshInstance = new MultiMeshInstance {
          Multimesh = new MultiMesh {
@@ -68,7 +68,7 @@ public class InitFogSystem : GdSystem {
       fogMultiMeshInstance.Owner = _mapGeometry;
 
       for (var i = 0; i < fogMultiMeshInstance.Multimesh.InstanceCount; i++) {
-         var fogPosition = new Vector3(i % chunkWidth, 0.618f, Mathf.FloorToInt(i / chunkWidth));
+         var fogPosition = new Vector3(i % chunkWidth, 0.618f, Mathf.FloorToInt(i / (float) chunkWidth));
          fogMultiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform(Basis.Identity, fogPosition));
       }
 

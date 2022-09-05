@@ -1,3 +1,3 @@
-namespace System.Runtime.CompilerServices {
-  internal static class IsExternalInit { }
-}
+namespace SatiRogue.lib.go_dot_net.src.extensions;
+
+internal static class IsExternalInit { }

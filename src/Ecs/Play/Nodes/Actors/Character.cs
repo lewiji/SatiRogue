@@ -1,6 +1,5 @@
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using Cell = SatiRogue.Ecs.MapGenerator.Components.Cell;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Character : GameObject {
@@ -67,9 +66,5 @@ public class Character : GameObject {
 
    public override void _ExitTree() {
       AnimatedSprite3D?.MaterialOverlay.Dispose();
-   }
-
-   bool GetIsVisible() {
-      return CurrentCell?.Visibility == CellVisibility.CurrentlyVisible;
    }
 }

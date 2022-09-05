@@ -1,5 +1,7 @@
 using Godot;
 
+namespace SatiRogue.Ecs.Play.Nodes;
+
 public class DirectionIndicator : AnimatedSprite3D {
    Vector2 _direction;
    public Vector2 Direction {

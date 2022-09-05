@@ -1,7 +1,4 @@
 using Godot;
+namespace SatiRogue.Ecs.Loading.Nodes;
 
-namespace SatiRogue.Ecs.Loading.Nodes; 
-
-public class CanvasItemWiggler : Control
-{
-}
+public class CanvasItemWiggler : Control { }

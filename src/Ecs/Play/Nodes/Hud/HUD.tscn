@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/rand_textures/blackgrus.png" type="Texture" id=1]
-[ext_resource path="res://src/Ecs/Play/Nodes/Hud/HUD.cs" type="Script" id=2]
+[ext_resource path="res://src/Ecs/Play/Nodes/Hud/Hud.cs" type="Script" id=2]
 [ext_resource path="res://fonts/InexpugnableExtended.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://src/Ecs/Play/Nodes/Hud/DeathScreen.cs" type="Script" id=4]
 

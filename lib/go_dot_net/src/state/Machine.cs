@@ -1,7 +1,6 @@
-namespace GoDotNet;
-
 using System;
 using System.Collections.Generic;
+namespace SatiRogue.lib.go_dot_net.src.state;
 
 /// <summary>
 /// Exception thrown when attempting to transition between states

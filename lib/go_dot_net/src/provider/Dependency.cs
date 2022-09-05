@@ -1,8 +1,6 @@
-namespace GoDotNet;
-
 using System;
-using System.Diagnostics;
 using Godot;
+namespace SatiRogue.lib.go_dot_net.src.provider;
 
 /// <summary>
 /// Dependency interface.
@@ -34,7 +32,9 @@ public class Dependency<TValue> : IDependency {
    public object? Get(Node node) {
       if (_provider is IProvider<TValue> foundProvider) {
          return foundProvider.Get();
-      } else if (_provider is Dependency<TValue> foundDependency) {
+      }
+
+      if (_provider is Dependency<TValue> foundDependency) {
          return foundDependency.Get(node);
       }
 
@@ -72,10 +72,14 @@ public class Dependency<TValue> : IDependency {
 
          if (parent is IProvider<TValue> provider) {
             return provider;
-         } else if (currDepth >= 10) {
+         }
+
+         if (currDepth >= 10) {
             parent = null;
             break;
-         } else if (!ReferenceEquals(parent, node) && parent is IDependent dependent && dependent.GetDeps().ContainsKey(typeof(TValue))) {
+         }
+
+         if (!ReferenceEquals(parent, node) && parent is IDependent dependent && dependent.GetDeps().ContainsKey(typeof(TValue))) {
             // Parent is a dependent which depends on the same type of value.
             // Instead of walking all the way back up to the provider, we can
             // just borrow the dependency from the parent.
@@ -96,6 +100,6 @@ public class Dependency<TValue> : IDependency {
       if (autoloadProvider != null) {
          return autoloadProvider;
       }
-      throw new Exception($"No {typeof(TValue)} provider found for {node.GetType().ToString()}.");
+      throw new Exception($"No {typeof(TValue)} provider found for {node.GetType()}.");
    }
 }

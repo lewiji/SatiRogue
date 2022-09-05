@@ -1,6 +1,4 @@
-namespace GoDotNet;
-
-using System;
+namespace SatiRogue.lib.go_dot_net.src.state;
 
 /// <summary>
 /// An object which stores a value and emits an event whenever the value

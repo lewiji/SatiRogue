@@ -9,7 +9,7 @@ using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 using static Active.Status;
-using World = RelEcs.World;
+using World = SatiRogue.lib.RelEcsGodot.src.World;
 
 namespace SatiRogue.Ecs.Play.Components.Actor;
 

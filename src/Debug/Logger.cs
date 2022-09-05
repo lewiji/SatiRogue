@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Godot;
 using GoDotLog;
-
 namespace SatiRogue.Debug;
 
 public class Logger : Node {

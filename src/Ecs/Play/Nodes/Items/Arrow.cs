@@ -1,7 +1,7 @@
 using Godot;
 using GodotOnReady.Attributes;
-using RelEcs;
 using SatiRogue.Ecs.Play.Components;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Arrow : GameObject {

@@ -1,8 +1,6 @@
 using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Loading.Nodes;
-
 namespace SatiRogue.Ecs.Menu.Nodes;
 
 public partial class Options : Control {

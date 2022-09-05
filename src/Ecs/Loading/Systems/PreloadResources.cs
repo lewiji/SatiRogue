@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
-
-namespace SatiRogue.Ecs.Loading.Systems; 
+using SatiRogue.lib.RelEcsGodot.src;
+namespace SatiRogue.Ecs.Loading.Systems;
 
 public class PreloadResources : GdSystem {
    [Signal] public delegate void LoadingResource(string resourcePath, ResourceInteractiveLoader loader);
    [Signal] public delegate void AllResourcesLoaded();
-   
+
    static readonly string[] ResourcePaths = {
       "res://assets/overworld/WallShaderShadows.tres",
       "res://src/Ecs/Menu/Nodes/MenuBgShader.gdshader",
@@ -46,12 +45,15 @@ public class PreloadResources : GdSystem {
       "res://resources/enemies/harpy/harpy_blue_spriteframes.tres",
       "res://scenes/res/SpriteFramesPlayer.tres",
       "res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres",
-      "res://src/Ecs/Play/Nodes/Items/ChestSpriteFrames.tres",
+      "res://src/Ecs/Play/Nodes/Items/ChestSpriteFrames.tres"
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
 
    public override void Run() {
-      if (_resourcesToLoad.Count <= 0) { Logger.Info("Resources already loaded."); return; }
+      if (_resourcesToLoad.Count <= 0) {
+         Logger.Info("Resources already loaded.");
+         return;
+      }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
       GetElement<LoadingState>().Connect(nameof(LoadingState.RequestNextResourceLoad), this, nameof(LoadNextResource));
       LoadNextResource();
@@ -61,10 +63,8 @@ public class PreloadResources : GdSystem {
       if (_resourcesToLoad.Count > 0) {
          var resourcePath = _resourcesToLoad.Pop();
          EmitSignal(nameof(LoadingResource), resourcePath, ResourceLoader.LoadInteractive(resourcePath));
-      }
-      else {
+      } else {
          EmitSignal(nameof(AllResourcesLoaded));
       }
    }
-
 }

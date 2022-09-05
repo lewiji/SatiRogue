@@ -1,9 +1,9 @@
 using System;
 using Godot;
 using Godot.Collections;
-using RelEcs;
-using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
+using SatiRogue.lib.RelEcsGodot.src;
+using Option = SatiRogue.Ecs.Menu.Nodes.Option;
 namespace SatiRogue.Ecs.Menu.Systems;
 
 public class InitOptions : GdSystem {

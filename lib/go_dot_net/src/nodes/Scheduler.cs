@@ -1,10 +1,9 @@
-namespace GoDotNet;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Godot;
 using GoDotLog;
+namespace SatiRogue.lib.go_dot_net.src.nodes;
 
 /// <summary>
 /// The scheduler helps queue up callbacks and run them at the desired time.
@@ -13,7 +12,7 @@ public class Scheduler : Node {
    readonly Queue<Action> _actions = new();
    readonly Dictionary<Action, StackTrace> _stackTraces = new();
    readonly Dictionary<Action, object> _callers = new();
-   bool _isDebugging = false;
+   bool _isDebugging;
 
    readonly ILog _log = new GDLog(nameof(Scheduler));
 
@@ -30,13 +29,13 @@ public class Scheduler : Node {
 
       do {
          var action = _actions.Dequeue();
-         _log.Run(action, _isDebugging ? HandleScheduledActionError(action) : (Exception e) => { });
+         _log.Run(action, _isDebugging ? HandleScheduledActionError(action) : e => { });
       }
       while (_actions.Count > 0);
    }
 
    Action<Exception> HandleScheduledActionError(Action action) {
-      return (Exception e) => {
+      return e => {
          var stackTrace = _stackTraces[action];
          _stackTraces.Remove(action);
          _log.Print("The error was scheduled from the following stack " + "trace in a previous frame.");

@@ -1,9 +1,9 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class InventorySystem : GdSystem {

@@ -1,18 +1,17 @@
 using Godot;
 using GodotOnReady.Attributes;
-
 namespace SatiRogue.Ecs.Play.Nodes;
 
 public partial class SpatialCamera : Camera {
    static SpatialCamera? _instance;
    OpenSimplexNoise _noise = new();
-   int _noiseY = 0;
+   int _noiseY;
    [Export] float ShakeDecay { get; set; } = 2f;
    [Export] Vector2 ShakeMaxOffset { get; set; } = new(0.309f, 0.23175f);
    [Export] float ShakeMaxRoll { get; set; } = 0.1f;
-   float _currentShakeIntensity = 0f;
+   float _currentShakeIntensity;
    float _shakePowerExponent = 3f;
-   [OnReadyGet("../../")] Spatial Target { get; set; }
+   [OnReadyGet("../../")] Spatial Target { get; set; } = null!;
 
    [OnReady] void InitNoise() {
       _noise.Seed = (int) GD.Randi();

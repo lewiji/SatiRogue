@@ -7,4 +7,5 @@
 shader = ExtResource( 2 )
 shader_param/time_scale_x = 0.198
 shader_param/time_scale_y = -0.127
+shader_param/shadow_color = Color( 0.05, 0.05, 0.05, 0.5 )
 shader_param/normal_map = ExtResource( 1 )

@@ -1,11 +1,7 @@
-using System;
 using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Menu.Nodes;
-using World = RelEcs.World;
-
-namespace SatiRogue.Ecs.Loading.Nodes;
+namespace SatiRogue.Ecs.Menu.Nodes;
 
 [Tool]
 public partial class Option : Control {

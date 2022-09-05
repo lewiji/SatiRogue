@@ -1,7 +1,6 @@
 using Godot;
-using GodotOnReady.Attributes;
-using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Core.Systems;
 
 public partial class InitFade : GdSystem {

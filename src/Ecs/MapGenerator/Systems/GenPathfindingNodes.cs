@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Godot;
-using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
-using CellType = SatiRogue.Ecs.MapGenerator.Components.CellType;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
 public class PathfindingHelper {

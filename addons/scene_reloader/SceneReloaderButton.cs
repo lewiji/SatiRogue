@@ -1,6 +1,5 @@
 using Godot;
-
-namespace SatiStream;
+namespace SatiRogue.addons.scene_reloader;
 
 [Tool]
 public partial class SceneReloaderButton : ToolButton {

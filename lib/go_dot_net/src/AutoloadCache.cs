@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
-using GoDotNet;
+using SatiRogue.lib.go_dot_net.src.extensions;
+
+namespace SatiRogue.lib.go_dot_net.src;
 
 /// <summary>
 /// A static class used to cache autoloads whenever they are fetched. This
-/// prevents <see cref="NodeX.Autoload{T}(Godot.Node)"/> from having to fetch the
+/// prevents <see cref="NodeX.Autoload{T}"/> from having to fetch the
 /// root node children on every invocation.
 /// </summary>
 public class AutoloadCache {

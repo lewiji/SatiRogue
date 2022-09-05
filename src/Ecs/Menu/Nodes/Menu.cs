@@ -2,7 +2,6 @@ using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-
 namespace SatiRogue.Ecs.Menu.Nodes;
 
 [Tool]

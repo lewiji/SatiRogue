@@ -48,7 +48,7 @@ External dependencies:
 namespace SatiRogue.Tools;
 
 public static class ShadowCast {
-   static readonly OctantTransform[] s_octantTransform = {
+   static readonly OctantTransform[] SOctantTransform = {
       new(1, 0, 0, 1), // 0 E-NE
       new(0, 1, 1, 0), // 1 NE-N
       new(0, -1, 1, 0), // 2 N-NW
@@ -82,8 +82,8 @@ public static class ShadowCast {
       // NOTE: depending on the compiler, it's possible that passing the octant transform
       // values as four integers rather than an object reference would speed things up.
       // It's much tidier this way though.
-      for (var txidx = 0; txidx < s_octantTransform.Length; txidx++)
-         CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, s_octantTransform[txidx]);
+      for (var txidx = 0; txidx < SOctantTransform.Length; txidx++)
+         CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, SOctantTransform[txidx]);
    }
 
    /// <summary>

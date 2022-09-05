@@ -21,7 +21,7 @@ public partial class ItemSlot : CenterContainer {
       get => _itemTexture == null;
    }
 
-   bool _isSelected = false;
+   bool _isSelected;
    public bool IsSelected {
       get => !IsEmpty && _isSelected;
       set {

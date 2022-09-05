@@ -2,7 +2,7 @@ using Godot;
 using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
-public partial class HealthUI : Control {
+public partial class HealthUi : Control {
    [OnReadyGet("Scale/TextureProgress")] TextureProgress _textureProgress = null!;
    [OnReadyGet("Label")] RichTextLabel _label = null!;
    [OnReadyGet("Timer")] Timer _timer = null!;

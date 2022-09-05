@@ -1,8 +1,9 @@
 using Godot;
-using RelEcs;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
+using SatiRogue.Ecs.Play.Nodes.Actors;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class InputSystem : GdSystem {
@@ -25,7 +26,7 @@ public class InputSystem : GdSystem {
    }
 
    void HandleUnlockedInput(bool aim, InputDirectionComponent input, bool shoot) {
-      foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<DiagonalLock>().Build()) {
+      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Has<DiagonalLock>().Build()) {
          On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;
       }
@@ -41,7 +42,7 @@ public class InputSystem : GdSystem {
       }
 
       if (aim) {
-         foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Not<Aiming>().Build()) {
+         foreach (var (entity, player) in QueryBuilder<Entity, Player>().Not<Aiming>().Build()) {
             On(entity).Add<Aiming>();
             player.DirectionIndicator.Visible = true;
          }
@@ -53,7 +54,7 @@ public class InputSystem : GdSystem {
    void HandleDiagonalLockedInput(InputDirectionComponent input) {
       RemoveAim();
 
-      foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Not<DiagonalLock>().Build()) {
+      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Not<DiagonalLock>().Build()) {
          On(entity).Add<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = true;
       }
@@ -70,7 +71,7 @@ public class InputSystem : GdSystem {
    }
 
    void RemoveAim() {
-      foreach (var (entity, player) in QueryBuilder<Entity, Nodes.Actors.Player>().Has<Aiming>().Build()) {
+      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Has<Aiming>().Build()) {
          On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;
       }
