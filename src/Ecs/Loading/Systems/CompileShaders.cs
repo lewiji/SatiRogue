@@ -1,23 +1,25 @@
 using Godot;
+using Godot.Collections;
 using RelEcs;
 using SatiRogue.Ecs.Loading.Nodes;
 namespace SatiRogue.Ecs.Loading.Systems; 
 
 public class CompileShaders : GdSystem {
    [Signal] public delegate void ShadersCompiled();
-   private static readonly PackedScene ShaderCompilerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ShaderCompiler.tscn");
-   private ShaderCompiler? _shaderCompiler;
+   
+   static readonly PackedScene ShaderCompilerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ShaderCompiler.tscn");
+   ShaderCompiler? _shaderCompiler;
+   
    public override void Run() {
       _shaderCompiler = ShaderCompilerScene.Instance<ShaderCompiler>();
-      _shaderCompiler.Connect("ready", this, nameof(OnShaderCompilerReady));
       GetElement<LoadingState>().AddChild(_shaderCompiler);
+      GetElement<LoadingState>().Connect(nameof(LoadingState.LoadedResources), this, nameof(OnResourcesReceived));
       AddElement(_shaderCompiler);
       AddElement(this);
    }
 
-   async void OnShaderCompilerReady() {
-      var resPreloader = GetElement<ResourcePreloader>();
-      await _shaderCompiler!.ProcessResourcePreloader(resPreloader!);
+   async void OnResourcesReceived(Array<Resource> resources) {
+      await _shaderCompiler!.ProcessResourcePreloader(resources);
       EmitSignal(nameof(ShadersCompiled));
    }
 }

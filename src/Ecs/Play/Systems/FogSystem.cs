@@ -26,8 +26,6 @@ public class FogSystem : GdSystem {
       var maxWidth = mapGenData.GeneratorParameters.Width;
       var chunkWidth = mapGenData.GeneratorParameters.Width.Factors().GetMedian();
 
-      Logger.Info("Fog visibility updating");
-
       while (mapGenData.CellsVisibilityChanged.Count > 0) {
          var position = mapGenData.CellsVisibilityChanged.Pop();
          var chunkId = GetChunkIdForPosition(new Vector3i(position), chunkWidth, maxWidth);

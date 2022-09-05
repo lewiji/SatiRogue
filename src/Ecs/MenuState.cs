@@ -5,21 +5,22 @@ using SatiRogue.Ecs.Menu.Systems;
 namespace SatiRogue.Ecs; 
 
 public class MenuState : GameState {
-   private GameStateController _gsc;
+   GameStateController _gsc = null!;
+   
    public override void Init(GameStateController gameStates) {
       _gsc = gameStates;
       gameStates.World.AddElement(this);
 
-      Intro intro;
+      Menu.Systems.Intro introScene;
       InitSystems
          .Add(new InitMenu())
          .Add(new InitOptions())
-         .Add(intro = new Intro());
+         .Add(introScene = new Menu.Systems.Intro());
 
-      intro.Connect(nameof(Intro.IntroFinished), this, nameof(OnIntroFinished));
+      introScene.Connect(nameof(Menu.Systems.Intro.IntroFinished), this, nameof(OnIntroFinished));
    }
 
    void OnIntroFinished() {
-       _gsc.World.GetElement<Fade>().FadeFromBlack();
+       _gsc.World.GetElement<Fade>()?.FadeFromBlack();
    }
 }

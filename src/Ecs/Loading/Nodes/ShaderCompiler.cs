@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 
@@ -12,10 +13,10 @@ public partial class ShaderCompiler : CanvasLayer {
    [OnReadyGet("%SpatialShaderRoot/%SpatialWigglers")] private Spatial _spatialWigglers = null!;
    [OnReadyGet("MarginContainer/CanvasItemWigglers")] private Control _canvasItemWigglers = null!;
    
-   public async Task ProcessResourcePreloader(ResourcePreloader preloader) {
+   public async Task ProcessResourcePreloader(Array<Resource> resources) {
       Logger.Info("Processing materials.");
-      foreach (var res in preloader.GetResourceList()) {
-         if (preloader.GetResource(res) is not Material material) continue;
+      foreach (var res in resources) {
+         if (res is not Material material) continue;
          Logger.Debug(material.ResourcePath);
          
          switch (material) {

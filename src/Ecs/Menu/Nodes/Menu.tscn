@@ -72,7 +72,7 @@ region = Rect2( 792, 128, 30, 30 )
 margin = Rect2( 8, 12, 16, 24 )
 
 [sub_resource type="OccluderPolygon2D" id=3]
-polygon = PoolVector2Array( 270, 0, 0, 0, 1, 2, 269, 2 )
+polygon = PoolVector2Array( 447, 0, 3, 0, 5, 2, 445, 2 )
 
 [sub_resource type="AtlasTexture" id=16]
 flags = 9
@@ -111,7 +111,17 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 768, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 64, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Light2D:texture_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 3.75, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
 }
 
@@ -126,8 +136,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1.62, -0.25, 0, 1.3, 0.512553, 1, -1.9, -0.564922, 1.5, -0.108544, 1.62, -3.9, 0.22878, 0.25, 0 ),
-"times": PoolRealArray( 0, 5, 10 )
+"points": PoolRealArray( 1.62, -0.25, 0, 1.3, 0.512553, 1.32, -1.9, -0.564922, 1.5, -0.108544, 1.618, -0.25, 0, 0.25, 0, 1.32, -0.25, 0, 0.25, 0, 1.62, -3.9, 0.22878, 0.25, 0 ),
+"times": PoolRealArray( 0, 2, 4.8, 8.1, 10 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath("Light2D:range_height")
@@ -136,8 +146,18 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 600, -0.25, 0, 3, -1.06738, 1024, -0.25, 0, 2.1, -19.4673, 600, -0.8, 1.33264, 0.25, 0 ),
+"points": PoolRealArray( 128, -0.25, 0, 3, -1.06738, 768, -0.25, 0, 2.1, -19.4673, 128, -0.8, 1.33264, 0.25, 0 ),
 "times": PoolRealArray( 0, 5, 10 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Light2D:texture_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 3.5, -0.25, 0, 0.25, 0, 4, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0, 3.5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.4, 6.7, 10 )
 }
 
 [node name="Menu" type="Control"]
@@ -157,6 +177,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 1 )
 stretch_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.866667, 0.866667, 0.866667, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -247,7 +273,7 @@ custom_constants/margin_right = 20
 custom_constants/margin_left = 20
 
 [node name="Bg" type="Panel" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/MarginContainer"]
-modulate = Color( 0.741176, 0.741176, 0.741176, 0.729412 )
+self_modulate = Color( 0.552941, 0.203922, 0.878431, 1 )
 light_mask = 6
 material = ExtResource( 16 )
 margin_left = 20.0
@@ -303,10 +329,14 @@ icon = SubResource( 1 )
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/NewGame"]
-anchor_left = -0.12
-anchor_top = 1.2
-anchor_right = 1.12
-anchor_bottom = 1.225
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -225.0
+margin_top = -4.0
+margin_right = 225.0
+margin_bottom = -2.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/NewGame/Control"]
 light_mask = 4
@@ -335,10 +365,16 @@ icon = SubResource( 16 )
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/ContinueGame"]
-anchor_left = -0.12
-anchor_top = 1.2
-anchor_right = 1.12
-anchor_bottom = 1.225
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -225.0
+margin_top = -2.0
+margin_right = 225.0
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/ContinueGame/Control"]
 light_mask = 4
@@ -366,10 +402,16 @@ icon = SubResource( 17 )
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Options"]
-anchor_left = -0.12
-anchor_top = 1.2
-anchor_right = 1.12
-anchor_bottom = 1.225
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -225.0
+margin_top = -2.0
+margin_right = 225.0
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Options/Control"]
 light_mask = 4
@@ -397,10 +439,16 @@ icon = SubResource( 18 )
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Quit"]
-anchor_left = -0.12
-anchor_top = 1.2
-anchor_right = 1.12
-anchor_bottom = 1.225
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -225.0
+margin_top = -2.0
+margin_right = 225.0
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Quit/Control"]
 light_mask = 4
@@ -420,11 +468,13 @@ texture = ExtResource( 12 )
 offset = Vector2( 450, 450 )
 texture_scale = 3.75
 energy = 1.62
-range_height = 768.0
+range_height = 64.0
 range_item_cull_mask = 6
 shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 0.921569 )
-shadow_item_cull_mask = 4
+shadow_color = Color( 0, 0, 0, 0.729412 )
+shadow_filter = 2
+shadow_filter_smooth = 3.0
+shadow_item_cull_mask = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "scroll_light"

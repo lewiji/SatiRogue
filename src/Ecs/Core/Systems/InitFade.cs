@@ -1,10 +1,11 @@
 using Godot;
+using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
 namespace SatiRogue.Ecs.Core.Systems;
 
-public class InitFade : GdSystem {
-   private static readonly PackedScene FadeScene = GD.Load<PackedScene>("res://src/Ecs/Core/Nodes/Fade.tscn");
+public partial class InitFade : GdSystem {
+   static readonly PackedScene FadeScene = GD.Load<PackedScene>("res://src/Ecs/Core/Nodes/Fade.tscn");
 
    public override void Run() {
       var fade = FadeScene.Instance<Fade>();

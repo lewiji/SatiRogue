@@ -73,7 +73,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/laigter_tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-better-animated-texture/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/laigter_tools/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
 
 [importer_defaults]
 
@@ -171,4 +171,4 @@ quality/filters/anisotropic_filter_level=16
 quality/spatial_partitioning/render_tree_balance=1.0
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_cache_size_mb=1024
-environment/default_clear_color=Color( 0.301961, 0.247059, 0.392157, 1 )
+environment/default_clear_color=Color( 0, 0, 0, 1 )

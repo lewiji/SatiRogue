@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=1]
 [ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Pure Energy Release Dark.ogg" type="AudioStream" id=5]
 [ext_resource path="res://audio/UI Select Dark.wav" type="AudioStream" id=6]
 [ext_resource path="res://audio/Object Impact Thud.wav" type="AudioStream" id=7]
+[ext_resource path="res://src/Ecs/Intro/Nodes/IntroScene.cs" type="Script" id=8]
 
 [sub_resource type="Shader" id=1]
 code = "/*
@@ -685,6 +686,7 @@ font_data = ExtResource( 3 )
 [node name="Intro" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 8 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource( 2 )

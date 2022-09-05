@@ -1,0 +1,457 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/kanban_tasks/board.gd" type="Script" id=1]
+[ext_resource path="res://addons/kanban_tasks/documentation.gd" type="Script" id=2]
+[ext_resource path="res://addons/kanban_tasks/details_dialog.gd" type="Script" id=3]
+[ext_resource path="res://addons/kanban_tasks/settings.gd" type="Script" id=5]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+script = ExtResource( 1 )
+
+[node name="Header" type="MarginContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 31.0
+mouse_filter = 2
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 31.0
+custom_constants/separation = 5
+
+[node name="Search" type="LineEdit" parent="Header/HBoxContainer"]
+margin_right = 958.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+clear_button_enabled = true
+placeholder_text = "Search"
+
+[node name="SearchDetails" type="Button" parent="Header/HBoxContainer"]
+margin_left = 963.0
+margin_right = 975.0
+margin_bottom = 26.0
+hint_tooltip = "Search in details."
+toggle_mode = true
+
+[node name="VSeparator" type="VSeparator" parent="Header/HBoxContainer"]
+margin_left = 980.0
+margin_right = 980.0
+margin_bottom = 26.0
+custom_constants/separation = 0
+
+[node name="Help" type="Button" parent="Header/HBoxContainer"]
+margin_left = 985.0
+margin_right = 997.0
+margin_bottom = 26.0
+hint_tooltip = "Open documentation."
+flat = true
+
+[node name="Settings" type="Button" parent="Header/HBoxContainer"]
+margin_left = 1002.0
+margin_right = 1014.0
+margin_bottom = 26.0
+hint_tooltip = "Manage board settings."
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_top = 31.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 564.0
+scroll_vertical_enabled = false
+
+[node name="Columns" type="HBoxContainer" parent="MarginContainer/ScrollContainer"]
+margin_right = 1014.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Dialogs" type="Control" parent="."]
+margin_top = 600.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Details" type="AcceptDialog" parent="Dialogs"]
+margin_right = 552.0
+margin_bottom = 450.0
+window_title = "Task"
+resizable = true
+script = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/Details"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Dialogs/Details/VBoxContainer"]
+margin_right = 536.0
+margin_bottom = 20.0
+
+[node name="OptionButton" type="OptionButton" parent="Dialogs/Details/VBoxContainer/HBoxContainer"]
+margin_right = 536.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="PopupMenu" type="PopupMenu" parent="Dialogs/Details/VBoxContainer/HBoxContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="TextEdit" type="TextEdit" parent="Dialogs/Details/VBoxContainer"]
+margin_top = 24.0
+margin_right = 536.0
+margin_bottom = 406.0
+rect_min_size = Vector2( 0, 50 )
+size_flags_vertical = 3
+wrap_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Documentation" type="AcceptDialog" parent="Dialogs"]
+margin_right = 650.0
+margin_bottom = 450.0
+window_title = "Documentation"
+resizable = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/Documentation"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Dialogs/Documentation/VBoxContainer"]
+margin_right = 634.0
+margin_bottom = 406.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[u]How to use[/u]
+
+- Double click on names to change them (works on stages, tasks and categories). Using F2 will also work.
+- Drag and drop the tasks to move them between stages or reorder them.
+- Click the pencil icon of a task to view its details. You can also press Enter while it has focus.
+
+[u]Features[/u]
+
+- Renamable stages
+- Tasks with detailed description and titles
+- Search in tasks and task details
+- Intuitive drag and drop usage utilising the godot build in drag and drop
+- Support for shortcuts *
+- Categories
+- Different stage layouts with multiple stages per column
+- Supports all editor themes including light ones
+
+* uses godot defaults because the custom shortcuts cannot be accessed
+
+[u]Where is the data stored?[/u]
+
+The data is stored inside of the addon folder (res://addons/kanban_tasks/data.json).
+Currently some features require editing the file to use. Do this before adding tasks to prevent save file corruption. You can have a look at the examples folder on github for some example data configurations.
+
+
+[center]Leave a star on [url=https://github.com/HolonProduction/godot_kanban_tasks]Github[/url][/center]
+"
+text = "How to use
+
+- Double click on names to change them (works on stages, tasks and categories). Using F2 will also work.
+- Drag and drop the tasks to move them between stages or reorder them.
+- Click the pencil icon of a task to view its details. You can also press Enter while it has focus.
+
+Features
+
+- Renamable stages
+- Tasks with detailed description and titles
+- Search in tasks and task details
+- Intuitive drag and drop usage utilising the godot build in drag and drop
+- Support for shortcuts *
+- Categories
+- Different stage layouts with multiple stages per column
+- Supports all editor themes including light ones
+
+* uses godot defaults because the custom shortcuts cannot be accessed
+
+Where is the data stored?
+
+The data is stored inside of the addon folder (res://addons/kanban_tasks/data.json).
+Currently some features require editing the file to use. Do this before adding tasks to prevent save file corruption. You can have a look at the examples folder on github for some example data configurations.
+
+
+Leave a star on Github
+"
+
+[node name="Settings" type="AcceptDialog" parent="Dialogs"]
+margin_right = 975.0
+margin_bottom = 675.0
+theme_type_variation = "EditorSettingsDialog"
+window_title = "Settings"
+resizable = true
+script = ExtResource( 5 )
+
+[node name="TabContainer" type="TabContainer" parent="Dialogs/Settings"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+tab_align = 0
+
+[node name="General" type="VBoxContainer" parent="Dialogs/Settings/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Label" type="Label" parent="Dialogs/Settings/TabContainer/General"]
+margin_right = 951.0
+margin_bottom = 14.0
+text = "Settings:"
+
+[node name="PanelContainer" type="PanelContainer" parent="Dialogs/Settings/TabContainer/General"]
+margin_top = 18.0
+margin_right = 951.0
+margin_bottom = 595.0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Dialogs/Settings/TabContainer/General/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 944.0
+margin_bottom = 570.0
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/Settings/TabContainer/General/PanelContainer/ScrollContainer"]
+margin_right = 937.0
+margin_bottom = 563.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ShowDetails" type="CheckBox" parent="Dialogs/Settings/TabContainer/General/PanelContainer/ScrollContainer/VBoxContainer"]
+margin_right = 937.0
+margin_bottom = 24.0
+focus_mode = 0
+text = "Show description preview."
+
+[node name="Categories" type="VBoxContainer" parent="Dialogs/Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="Header" type="HBoxContainer" parent="Dialogs/Settings/TabContainer/Categories"]
+margin_right = 951.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Dialogs/Settings/TabContainer/Categories/Header"]
+margin_top = 3.0
+margin_right = 935.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Available Categories:"
+
+[node name="Add" type="Button" parent="Dialogs/Settings/TabContainer/Categories/Header"]
+margin_left = 939.0
+margin_right = 951.0
+margin_bottom = 20.0
+
+[node name="Categories" type="PanelContainer" parent="Dialogs/Settings/TabContainer/Categories"]
+margin_top = 24.0
+margin_right = 951.0
+margin_bottom = 595.0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Dialogs/Settings/TabContainer/Categories/Categories"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 944.0
+margin_bottom = 564.0
+size_flags_vertical = 3
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/Settings/TabContainer/Categories/Categories/ScrollContainer"]
+margin_right = 937.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+
+[node name="Stages" type="VBoxContainer" parent="Dialogs/Settings/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Header" type="HBoxContainer" parent="Dialogs/Settings/TabContainer/Stages"]
+margin_right = 951.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Dialogs/Settings/TabContainer/Stages/Header"]
+margin_top = 5.0
+margin_right = 740.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Edit Stage Layout:"
+
+[node name="CheckBox" type="CheckBox" parent="Dialogs/Settings/TabContainer/Stages/Header"]
+margin_left = 744.0
+margin_right = 951.0
+margin_bottom = 24.0
+focus_mode = 0
+text = "Warn about empty deletion."
+
+[node name="PanelContainer" type="PanelContainer" parent="Dialogs/Settings/TabContainer/Stages"]
+margin_top = 28.0
+margin_right = 951.0
+margin_bottom = 595.0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 944.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/ScrollContainer"]
+margin_right = 937.0
+margin_bottom = 553.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColumnHolder" type="HBoxContainer" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/ScrollContainer/CenterContainer"]
+margin_left = 337.0
+margin_top = 202.0
+margin_right = 599.0
+margin_bottom = 350.0
+
+[node name="AddColumn" type="VBoxContainer" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/ScrollContainer/CenterContainer/ColumnHolder"]
+margin_left = 222.0
+margin_right = 262.0
+margin_bottom = 148.0
+
+[node name="Add" type="Button" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/ScrollContainer/CenterContainer/ColumnHolder/AddColumn"]
+margin_right = 40.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 40, 100 )
+focus_mode = 0
+size_flags_vertical = 3
+
+[node name="Empty" type="Button" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/ScrollContainer/CenterContainer/ColumnHolder/AddColumn"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 108.0
+margin_right = 40.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 40, 40 )
+text = "+"
+
+[node name="Warning" type="Control" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 944.0
+margin_bottom = 560.0
+mouse_filter = 2
+
+[node name="WarningSign" type="Button" parent="Dialogs/Settings/TabContainer/Stages/PanelContainer/Warning"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -12.0
+margin_bottom = 20.0
+grow_horizontal = 0
+hint_tooltip = "Adding to much stages can overflow the editor.
+
+Recommended maximum: 4*3"
+focus_mode = 0
+flat = true
+
+[node name="ConfirmNotEmpty" type="ConfirmationDialog" parent="Dialogs"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 337.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 250, 87.5 )
+window_title = "Delete Stage"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/ConfirmNotEmpty"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+
+[node name="Label" type="Label" parent="Dialogs/ConfirmNotEmpty/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 48.0
+text = "You are deleting a stage which has tasks assigned.
+
+The tasks will be assigned to the following stage:"
+align = 1
+
+[node name="OptionButton" type="OptionButton" parent="Dialogs/ConfirmNotEmpty/VBoxContainer"]
+margin_top = 52.0
+margin_right = 320.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+
+[node name="ConfirmEmpty" type="ConfirmationDialog" parent="Dialogs"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 276.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 250, 87.5 )
+window_title = "Delete Stage"
+dialog_text = "Do you really want to delete this stage?
+You can not undo this."

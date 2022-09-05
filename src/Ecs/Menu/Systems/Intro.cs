@@ -3,15 +3,17 @@ using Godot.Collections;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Intro.Nodes;
+
 namespace SatiRogue.Ecs.Menu.Systems; 
 
 public class Intro : GdSystem {
    [Signal] public delegate void IntroFinished();
    
-   private PackedScene IntroScene = GD.Load<PackedScene>("res://src/Ecs/Intro/Nodes/Intro.tscn");
+   private readonly PackedScene _introScene = GD.Load<PackedScene>("res://src/Ecs/Intro/Nodes/Intro.tscn");
    private Control? _intro;
    public override void Run() {
-      _intro = IntroScene.Instance<Control>();
+      _intro = _introScene.Instance<IntroScene>();
       _intro.Connect("ready", this, nameof(OnIntroReady));
       GetElement<MenuState>().AddChild(_intro);
    }
