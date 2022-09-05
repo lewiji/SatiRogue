@@ -469,11 +469,10 @@ offset = Vector2( 450, 450 )
 texture_scale = 3.75
 energy = 1.62
 range_height = 64.0
-range_item_cull_mask = 6
+range_item_cull_mask = 7
 shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 0.729412 )
-shadow_filter = 2
-shadow_filter_smooth = 3.0
+shadow_color = Color( 0, 0, 0, 0.498039 )
+shadow_buffer_size = 1024
 shadow_item_cull_mask = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
