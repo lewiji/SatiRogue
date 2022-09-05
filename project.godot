@@ -73,7 +73,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-better-animated-texture/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/laigter_tools/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/laigter_tools/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
 
 [importer_defaults]
 

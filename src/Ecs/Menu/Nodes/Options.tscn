@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__36.png" type="Texture" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 27
+flags = 9
 atlas = ExtResource( 4 )
 region = Rect2( 308, 34, 72, 10 )
 
@@ -50,7 +50,7 @@ size_flags_vertical = 3
 script = ExtResource( 3 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 0.311305, 0.0759, 0.69, 0.968627 )
+modulate = Color( 0.137255, 0, 0.360784, 0.968627 )
 margin_right = 900.0
 margin_bottom = 900.0
 rect_min_size = Vector2( 900, 900 )
