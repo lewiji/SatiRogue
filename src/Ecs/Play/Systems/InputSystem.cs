@@ -8,8 +8,11 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class InputSystem : GdSystem {
    public static bool HandlingInput = true;
+   public static bool Paused = false;
 
    public override void Run() {
+      if (Paused) return;
+
       foreach (var input in QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
          var aim = Input.IsActionPressed("aim");
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
@@ -26,6 +29,8 @@ public class InputSystem : GdSystem {
    }
 
    void HandleUnlockedInput(bool aim, InputDirectionComponent input, bool shoot) {
+      if (Paused) return;
+
       foreach (var (entity, player) in QueryBuilder<Entity, Player>().Has<DiagonalLock>().Build()) {
          On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;

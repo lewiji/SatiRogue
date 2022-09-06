@@ -27,7 +27,13 @@ public partial class Main : Node {
    }
 
    [OnReady] void AddWorldEnvironmentElement() {
-      _gsc.World.AddElement(GetNode<WorldEnvironment>("WorldEnvironment"));
+      var worldEnvironment = GetNode<WorldEnvironment>("WorldEnvironment");
+      _gsc.World.AddElement(worldEnvironment);
+
+      var environment = GD.Load<Godot.Environment>(OS.GetName() == "Android"
+         ? "res://scenes/res/EnvironmentAndroid.tres"
+         : "res://scenes/res/EnvironmentBase.tres");
+      worldEnvironment.Environment = environment;
    }
 
    [OnReady] void AddCoreState() {

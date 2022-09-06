@@ -3,17 +3,22 @@ using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Triggers;
 using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class LevelChangeSystem : GdSystem {
+   public static int FloorNumber { get; set; }
+   bool _firstRun = true;
+
    public override void Run() {
       foreach (var stairsDown in Receive<StairsDownTrigger>()) {
          Logger.Info("Stairs down system activating.");
          var gsc = GetElement<GameStateController>();
 
          if (gsc.CurrentState is not PlayState) continue;
+         FloorNumber -= 1;
          ChangeLevel(gsc);
          break;
       }
@@ -22,6 +27,7 @@ public class LevelChangeSystem : GdSystem {
          Logger.Info("Restart game requested.");
          var gsc = GetElement<GameStateController>();
          if (gsc.CurrentState is not PlayState) continue;
+         FloorNumber = 0;
          ChangeLevel(gsc);
          break;
       }
@@ -30,9 +36,15 @@ public class LevelChangeSystem : GdSystem {
          Logger.Info("Exit to menu requested.");
          var gsc = GetElement<GameStateController>();
          if (gsc.CurrentState is not PlayState) continue;
+         FloorNumber = 0;
          ExitToMainMenu(gsc);
          break;
       }
+
+      if (!_firstRun) return;
+      AddElement(this);
+      GetElement<FloorCounter>().FloorNumber = FloorNumber;
+      _firstRun = false;
    }
 
    async void ExitToMainMenu(GameStateController gsc) {
@@ -61,5 +73,6 @@ public class LevelChangeSystem : GdSystem {
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       var fade = GetElement<Fade>();
       await fade.FadeFromBlack();
+      InputSystem.Paused = false;
    }
 }

@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/res/EnvironmentBase.tres" type="Environment" id=1]
 [ext_resource path="res://Main.cs" type="Script" id=4]
 
 [node name="Main" type="Node"]
@@ -8,4 +7,3 @@ script = ExtResource( 4 )
 LogLevel = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 1 )

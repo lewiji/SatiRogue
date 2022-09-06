@@ -45,7 +45,9 @@ public class CharacterMovementSystem : GdSystem {
       pathfindingHelper.SetCellWeight(currentCell.Id, currentCell.Occupants.Count);
       pathfindingHelper.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
-      SendWalkAnimation(character);
+      if (character.Visible) {
+         SendWalkAnimation(character);
+      }
 
       if (character.AnimatedSprite3D != null) {
          character.AnimatedSprite3D.FlipH = inputDirectionComponent.Direction.x switch {

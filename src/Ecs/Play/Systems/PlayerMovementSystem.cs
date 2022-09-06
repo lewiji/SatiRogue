@@ -42,6 +42,10 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       GridPositionComponent gridPos) {
       foreach (var targetId in targetCell.Occupants) {
          var target = GD.InstanceFromId(targetId);
+
+         if (target is GameObject {Enabled: false}) {
+            continue;
+         }
          var entity = target?.GetMeta("Entity") as Entity;
 
          switch (target) {
@@ -63,6 +67,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                chest.Open = true;
                chest.BlocksCell = false;
                On(entity!).Remove<Closed>().Add<Open>();
+               chest.Enabled = false;
                GetElement<Loot>().NumLoots += 1;
                break;
             case Health health when !health.Taken:
@@ -79,7 +84,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
                Send(new CharacterAudioTrigger(player, "walk"));
                GetElement<StairsConfirmation>().Popup();
-               InputSystem.HandlingInput = false;
+               InputSystem.Paused = true;
                return;
             default:
                MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);

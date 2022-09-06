@@ -48,6 +48,7 @@ public class InitOptions : GdSystem {
    }
 
    static void SetInitialEnvironmentSetting(Option option, ConfigFile cfg, WorldEnvironment worldEnv) {
+      if (option.CheckBox.Disabled) return;
       var splitKeys = option.OptionKey.Split(",");
       var initialVal = GetInitialConfigVal(cfg, option, worldEnv, splitKeys);
       option.GetNode<CheckBox>("%CheckBox").Pressed = (bool) initialVal;

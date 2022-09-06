@@ -56,8 +56,5 @@ public partial class Fade : CanvasLayer {
             _animatingDown = true;
          }
       }
-
-      var xoff = Mathf.Round(Mathf.Sin(_dt) * 5f);
-      _light2D.Offset = new Vector2(xoff, _light2D.Offset.y);
    }
 }

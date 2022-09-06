@@ -23,13 +23,11 @@ public class GameStateController : Node {
       World.AddElement(this);
       World.AddElement(new DeltaTime());
       World.AddElement(new PhysicsDeltaTime());
-      World.AddElement(new AudioNodes());
    }
 
    public override void _Ready() {
       Name = "GameStateController";
       World.AddElement(GetTree());
-      AddChild(World.GetElement<AudioNodes>());
    }
 
    /*public override void _UnhandledInput(InputEvent e) {

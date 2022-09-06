@@ -13,6 +13,8 @@ public class SpawnHudSystem : GdSystem {
    static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");
    static readonly PackedScene InvUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Inventory.tscn");
    static readonly PackedScene StairsConfirmationScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/StairsConfirmation.tscn");
+   static readonly PackedScene FloorCounterScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/FloorCounter.tscn");
+   static readonly PackedScene TouchControlsScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/TouchControls/TouchControls.tscn");
 
    public override void Run() {
       var playState = GetElement<PlayState>();
@@ -22,6 +24,15 @@ public class SpawnHudSystem : GdSystem {
       var healthUi = HealthUiScene.Instance<HealthUi>();
       hud.AddChild(healthUi);
       AddElement(healthUi);
+
+      var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
+      hud.AddChild(floorCounterUi);
+      AddElement(floorCounterUi);
+
+      //if (OS.GetName() == "Android") {
+      var touchControls = TouchControlsScene.Instance();
+      hud.AddChild(touchControls);
+      //}
 
       var lootUi = LootUiScene.Instance<Loot>();
       hud.AddChild(lootUi);

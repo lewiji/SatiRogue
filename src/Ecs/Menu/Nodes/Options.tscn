@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__36.png" type="Texture" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 9
+flags = 27
 atlas = ExtResource( 4 )
 region = Rect2( 308, 34, 72, 10 )
 

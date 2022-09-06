@@ -17,6 +17,6 @@ public class MenuState : GameState {
    }
 
    async void OnIntroFinished() {
-      await _gsc.World.GetElement<Fade>().FadeFromBlack();
+      //await _gsc.World.GetElement<Fade>().FadeFromBlack();
    }
 }

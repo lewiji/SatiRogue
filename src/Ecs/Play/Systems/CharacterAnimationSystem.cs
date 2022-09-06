@@ -1,4 +1,5 @@
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Triggers;
@@ -12,6 +13,8 @@ public class CharacterAnimationSystem : GdSystem {
    }
 
    void PlayRequestedAnimation() {
+      var counter = 0;
+
       foreach (var (character, name) in Receive<CharacterAnimationTrigger>()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite) continue;
 
@@ -22,7 +25,9 @@ public class CharacterAnimationSystem : GdSystem {
          if (name == "die") {
             character.OnDeathAnimation();
          }
+         counter++;
       }
+      if (counter > 0) Logger.Info($"{counter} animations received");
    }
 
    void RevertToIdleAnimation() {

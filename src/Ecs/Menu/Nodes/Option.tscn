@@ -12,58 +12,14 @@
 [ext_resource path="res://src/Ecs/Menu/Nodes/OptionUncheckedDisabled.tres" type="Texture" id=10]
 [ext_resource path="res://src/Ecs/Menu/Nodes/OptionCheckedDisabled.tres" type="Texture" id=11]
 [ext_resource path="res://src/Ecs/Menu/Nodes/OptionUnderStyleboxDisabled.tres" type="StyleBox" id=12]
-
-[sub_resource type="CSharpScript" id=5]
-script/source = "using System;
-using Godot;
-using Godot.Collections;
-using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Menu.Nodes;
-using World = RelEcs.World;
-
-namespace SatiRogue.Ecs.Loading.Nodes; 
-
-[Tool]
-public partial class Option : Control {
-   public enum OptionType { ProjectSetting, EnvironmentSetting }
-   
-   [OnReadyGet(\"%CheckBox\")] private CheckBox _checkBox = null!;
-   private string _label = \"\";
-   
-   [Export] public string OptionLabel {
-      get => _label;
-      set {
-         _label = value;
-         if (IsInsideTree()) {
-            _checkBox.Text = _label;
-         }
-      }
-   }
-   
-   [Export] public OptionType OptionLocation { get; set; }
-   
-   [Export] public string OptionKey { get; set; } = \"\";
-
-   [OnReady] private void SetLabelState() {
-      _checkBox.Text = _label;
-   }
-
-   [OnReady] private void ConnectCheckbox() {
-      _checkBox.Connect(\"toggled\", this, nameof(OnCheckboxToggled));
-   }
-
-   private void OnCheckboxToggled(bool pressed) {
-      Owner.EmitSignal(nameof(Options.OptionChanged), (int)OptionLocation, new Dictionary{{OptionKey, pressed}});
-   }
-}"
+[ext_resource path="res://src/Ecs/Menu/Nodes/Option.cs" type="Script" id=13]
 
 [node name="Option" type="PanelContainer"]
 margin_right = 328.0
 margin_bottom = 49.0
 rect_min_size = Vector2( 300, 36 )
 custom_styles/panel = ExtResource( 3 )
-script = SubResource( 5 )
-OptionLabel = "?????"
+script = ExtResource( 13 )
 
 [node name="CheckBox" type="CheckBox" parent="."]
 unique_name_in_owner = true
@@ -91,4 +47,3 @@ custom_styles/focus = ExtResource( 9 )
 custom_styles/disabled = ExtResource( 12 )
 custom_styles/hover_pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
-text = "?????"

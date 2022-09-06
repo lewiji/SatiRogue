@@ -1,6 +1,7 @@
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Play.Systems;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
 public partial class StairsConfirmation : Control {
@@ -26,6 +27,7 @@ public partial class StairsConfirmation : Control {
       Logger.Info("NO TO STEPS!");
       _popupPanel.Hide();
       EmitSignal(nameof(StairsCancelled));
+      InputSystem.Paused = false;
    }
 
    public void Popup() {

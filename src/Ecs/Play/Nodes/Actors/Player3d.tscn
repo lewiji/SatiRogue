@@ -80,7 +80,6 @@ projection = 1
 current = true
 fov = 50.0
 size = 14.0
-far = 22.0
 script = ExtResource( 5 )
 
 [node name="Light" type="SpotLight" parent="Visual/Camera"]

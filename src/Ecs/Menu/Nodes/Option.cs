@@ -7,7 +7,7 @@ namespace SatiRogue.Ecs.Menu.Nodes;
 public partial class Option : Control {
    public enum OptionType { ProjectSetting, EnvironmentSetting }
 
-   [OnReadyGet("%CheckBox")] CheckBox _checkBox = null!;
+   [OnReadyGet("%CheckBox")] public CheckBox CheckBox = null!;
    string _label = "";
 
    [Export] public string OptionLabel {
@@ -16,7 +16,7 @@ public partial class Option : Control {
          _label = value;
 
          if (IsInsideTree()) {
-            _checkBox.Text = _label;
+            CheckBox.Text = _label;
          }
       }
    }
@@ -26,11 +26,24 @@ public partial class Option : Control {
    [Export] public string OptionKey { get; set; } = "";
 
    [OnReady] void SetLabelState() {
-      _checkBox.Text = _label;
+      CheckBox.Text = _label;
+   }
+
+   [OnReady] void DisableAndroidOptions() {
+      if (OS.GetName() != "Android") return;
+
+      switch (OptionKey) {
+         case "ssao_enabled":
+         case "dof_blur_far_enabled,dof_blur_near_enabled":
+         case "ss_reflections_enabled":
+            CheckBox.Pressed = false;
+            CheckBox.Disabled = true;
+            break;
+      }
    }
 
    [OnReady] void ConnectCheckbox() {
-      _checkBox.Connect("toggled", this, nameof(OnCheckboxToggled));
+      CheckBox.Connect("toggled", this, nameof(OnCheckboxToggled));
    }
 
    void OnCheckboxToggled(bool pressed) {
