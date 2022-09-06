@@ -1,7 +1,7 @@
 using System;
 using Godot;
-using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
+using SatiRogue.Ecs.Play.Triggers;
 using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 

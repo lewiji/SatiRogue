@@ -1,5 +1,7 @@
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Play.Nodes;
 using SatiRogue.Ecs.Play.Systems;
+using SatiRogue.Ecs.Play.Systems.Exit;
 using SatiRogue.Ecs.Play.Systems.Init;
 using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs;
@@ -15,6 +17,14 @@ public class PlayState : GameState {
    void CreateSystems(GameStateController gameStates) {
       _gsc = gameStates;
       _gsc.World.AddElement(this);
+
+      var entitiesNode = new Entities();
+      _gsc.World.AddElement(entitiesNode);
+      AddChild(entitiesNode);
+
+      var mapGeomNode = new MapGeometry();
+      _gsc.World.AddElement(mapGeomNode);
+      AddChild(mapGeomNode);
 
       InitSystems.Add(new SpatialMapSystem())
          .Add(new SetupAudioSystem())
@@ -40,6 +50,8 @@ public class PlayState : GameState {
 
       var turnHandlerSystem = new TurnHandlerSystem();
       var inputSystem = new InputSystem();
+      _gsc.World.AddElement(turnHandlerSystem);
+      _gsc.World.AddElement(inputSystem);
 
       PhysicsSystems.Add(new InterpolateWalkAnimationSystem())
          .Add(inputSystem)
@@ -48,9 +60,9 @@ public class PlayState : GameState {
          .Add(new CharacterAnimationSystem())
          .Add(new PlayerIndicatorSystem())
          .Add(new AudioSystem())
-         .Add(new CharacterDeathSystem());
+         .Add(new CharacterDeathSystem())
+         .Add(new LevelChangeSystem());
 
-      _gsc.World.AddElement(turnHandlerSystem);
-      _gsc.World.AddElement(inputSystem);
+      ExitSystems.Add(new CleanupDungeonSystem());
    }
 }

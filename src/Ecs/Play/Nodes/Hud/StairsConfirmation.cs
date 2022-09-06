@@ -4,8 +4,8 @@ using SatiRogue.Debug;
 namespace SatiRogue.Ecs.Play.Nodes.Hud;
 
 public partial class StairsConfirmation : Control {
-   [Signal] delegate void OnStairsConfirmed();
-   [Signal] delegate void OnStairsCancelled();
+   [Signal] public delegate void StairsConfirmed();
+   [Signal] public delegate void StairsCancelled();
 
    [OnReadyGet("%PopupPanel")] PopupPanel _popupPanel = null!;
    [OnReadyGet("%YesButton")] Button _yesButton = null!;
@@ -19,13 +19,13 @@ public partial class StairsConfirmation : Control {
    void OnYesPressed() {
       Logger.Info("YES TO STEPS!");
       _popupPanel.Hide();
-      EmitSignal(nameof(OnStairsConfirmed));
+      EmitSignal(nameof(StairsConfirmed));
    }
 
    void OnNoPressed() {
       Logger.Info("NO TO STEPS!");
       _popupPanel.Hide();
-      EmitSignal(nameof(OnStairsCancelled));
+      EmitSignal(nameof(StairsCancelled));
    }
 
    public void Popup() {

@@ -1,9 +1,9 @@
 using Godot.Collections;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Hud;
+using SatiRogue.Ecs.Play.Triggers;
 using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Systems;
 

@@ -1,5 +1,5 @@
 using SatiRogue.Ecs.Play.Components;
-namespace SatiRogue.Ecs.MapGenerator.Triggers;
+namespace SatiRogue.Ecs.Play.Triggers;
 
 public class TurnChangedTrigger {
    public readonly TurnType Turn;

@@ -14,6 +14,7 @@ public class Intro : GdSystem {
    public override void Run() {
       _intro = _introScene.Instance<IntroScene>();
       _intro.Connect("ready", this, nameof(OnIntroReady));
+      _intro.Connect(nameof(IntroScene.DebugSkipToNewGame), this, nameof(OnSkipToNewGame));
       GetElement<MenuState>().AddChild(_intro);
    }
 
@@ -22,6 +23,11 @@ public class Intro : GdSystem {
       var player = _intro?.GetNode<AnimationPlayer>("AnimationPlayer");
       player?.Play("intro");
       player?.Connect("animation_finished", this, nameof(OnIntroFinished));
+   }
+
+   void OnSkipToNewGame() {
+      OnIntroFinished("");
+      GetElement<InitMenu>().OnNewGameRequested();
    }
 
    // ReSharper disable once UnusedParameter.Local

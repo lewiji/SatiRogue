@@ -11,7 +11,7 @@ public partial class Stairs : GameObject {
       BlocksCell = false;
    }
 
-   public override void Spawn(EntityBuilder entityBuilder) {
+   public override void OnSpawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this).Add(new GridPositionComponent());
    }
 }

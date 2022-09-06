@@ -27,7 +27,7 @@ public partial class Chest : Item {
       }
    }
 
-   public override void Spawn(EntityBuilder entityBuilder) {
+   public override void OnSpawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this).Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
    }
 

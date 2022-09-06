@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes;
@@ -22,16 +23,12 @@ public class GameStateController : Node {
       World.AddElement(this);
       World.AddElement(new DeltaTime());
       World.AddElement(new PhysicsDeltaTime());
-      World.AddElement(new Entities());
-      World.AddElement(new MapGeometry());
       World.AddElement(new AudioNodes());
    }
 
    public override void _Ready() {
       Name = "GameStateController";
       World.AddElement(GetTree());
-      AddChild(World.GetElement<Entities>());
-      AddChild(World.GetElement<MapGeometry>());
       AddChild(World.GetElement<AudioNodes>());
    }
 
@@ -63,6 +60,12 @@ public class GameStateController : Node {
       World.GetElement<PhysicsDeltaTime>().Value = delta;
       currentState.PhysicsSystems.Run(World);
       World.Tick();
+   }
+
+   public GameState? CurrentState { get => _stack.Count > 0 ? _stack.Peek() : null; }
+
+   public bool HasState<T>() where T : GameState {
+      return _stack.Any(gs => gs is T);
    }
 
    public override void _ExitTree() {

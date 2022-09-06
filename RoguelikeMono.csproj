@@ -41,13 +41,16 @@
           <HintPath>lib\go_dot_net\GoDotCollections.dll</HintPath>
         </Reference>
         <Reference Include="GoDotLog">
-          <HintPath>lib\go_dot_net\GoDotLog.dll</HintPath>
+            <HintPath>lib\go_dot_net\GoDotLog.dll</HintPath>
         </Reference>
         <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\activelogic\Debug\netstandard2.1\main.dll</HintPath>
         </Reference>
         <Reference Include="Newtonsoft.Json">
-          <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
+            <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
         </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="src\Ecs\MapGenerator\Triggers"/>
     </ItemGroup>
 </Project>

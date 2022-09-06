@@ -1,5 +1,6 @@
 using Godot;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
@@ -17,23 +18,30 @@ public class InitMenu : GdSystem {
       _menu.Connect(nameof(Nodes.Menu.OptionsRequested), this, nameof(OnOptionsRequested));
       menuState.AddChild(_menu);
       AddElement(_menu);
+      AddElement(this);
    }
 
-   async void OnNewGameRequested() {
+   public async void OnNewGameRequested() {
+      var gsc = GetElement<GameStateController>();
       var fade = GetElement<Fade>();
       await fade.FadeToBlack();
+
       if (_menu != null) _menu.Visible = false;
       GetElement<Options>().Hide();
-      var loadingState = GetElement<Main>().AddLoadingState();
-      await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
-      Logger.Info("Freeing shader compiler & loading state");
-      var shaderCompiler = GetElement<ShaderCompiler>();
-      shaderCompiler.QueueFree();
-      loadingState.QueueFree();
-      await ToSignal(loadingState, "tree_exited");
-      await ToSignal(fade.GetTree(), "idle_frame");
-      Logger.Info("Freed.");
-      Logger.Info("Changin to mapgen state.");
+
+      if (!gsc.HasState<LoadingState>()) {
+         var loadingState = GetElement<Main>().AddLoadingState();
+         await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
+         Logger.Info("Freeing shader compiler & loading state");
+         var shaderCompiler = GetElement<ShaderCompiler>();
+         shaderCompiler.QueueFree();
+         loadingState.QueueFree();
+         await ToSignal(loadingState, "tree_exited");
+         await ToSignal(fade.GetTree(), "idle_frame");
+         Logger.Info("Freed.");
+      }
+
+      Logger.Info("Changing to mapgen state.");
       var mapGenState = GetElement<Main>().ChangeToMapGenState();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       await fade.FadeFromBlack();

@@ -32,8 +32,9 @@ public partial class Health : Item {
       QueueFree();
    }
 
-   public override void Spawn(EntityBuilder entityBuilder) {
-      var eb = entityBuilder.Add(this).Add(this as Item).Add(new GridPositionComponent());
+   public override void OnSpawn(EntityBuilder entityBuilder) {
+      base.OnSpawn(entityBuilder);
+      var eb = entityBuilder.Add(this).Add(new GridPositionComponent());
       _world = eb.World;
       _entity = eb.Id();
    }

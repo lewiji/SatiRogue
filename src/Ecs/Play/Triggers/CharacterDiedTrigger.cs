@@ -1,6 +1,6 @@
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.lib.RelEcsGodot.src;
-namespace SatiRogue.Ecs.MapGenerator.Triggers;
+namespace SatiRogue.Ecs.Play.Triggers;
 
 public class CharacterDiedTrigger {
    public Character Character;

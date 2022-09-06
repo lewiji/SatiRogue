@@ -1,18 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Ecs/Menu/Nodes/OptionFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=2]
 [ext_resource path="res://src/Ecs/Play/Nodes/Hud/StairsConfirmation.cs" type="Script" id=3]
-
-[sub_resource type="AtlasTexture" id=1]
-flags = 9
-atlas = ExtResource( 2 )
-region = Rect2( 560, 584, 8, 8 )
+[ext_resource path="res://fonts/beggars_32.tres" type="DynamicFont" id=4]
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 9
 atlas = ExtResource( 2 )
 region = Rect2( 552, 584, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 9
+atlas = ExtResource( 2 )
+region = Rect2( 560, 584, 8, 8 )
 
 [node name="StairsConfirmation" type="MarginContainer"]
 anchor_right = 1.0
@@ -53,7 +54,7 @@ margin_top = 18.0
 margin_right = 368.0
 margin_bottom = 224.0
 
-[node name="HFlowContainer" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+[node name="HFlowContainer" type="HBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
 margin_top = 16.0
 margin_right = 344.0
 margin_bottom = 50.0
@@ -65,43 +66,45 @@ margin_bottom = 34.0
 custom_fonts/font = ExtResource( 1 )
 text = "STAIRS?"
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+[node name="HFlowContainer2" type="HBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
 margin_top = 70.0
 margin_right = 344.0
 margin_bottom = 136.0
 size_flags_vertical = 3
 
-[node name="HFlowContainer3" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
-margin_top = 163.0
+[node name="HFlowContainer3" type="HBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+margin_top = 158.0
 margin_right = 344.0
-margin_bottom = 183.0
+margin_bottom = 188.0
 size_flags_vertical = 6
-custom_constants/hseparation = 32
+custom_constants/separation = 32
 
 [node name="Control2" type="Control" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
-margin_bottom = 20.0
+margin_bottom = 30.0
+
+[node name="NoButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
+unique_name_in_owner = true
+margin_left = 32.0
+margin_right = 156.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
+text = "NAY"
+icon = SubResource( 2 )
+expand_icon = true
 
 [node name="YesButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
 unique_name_in_owner = true
-margin_left = 32.0
-margin_right = 152.0
-margin_bottom = 20.0
+margin_left = 188.0
+margin_right = 312.0
+margin_bottom = 30.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
 text = "YE"
 icon = SubResource( 1 )
 expand_icon = true
 
-[node name="NoButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
-unique_name_in_owner = true
-margin_left = 184.0
-margin_right = 311.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "NO"
-icon = SubResource( 2 )
-expand_icon = true
-
 [node name="Control" type="Control" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
-margin_left = 343.0
-margin_right = 343.0
-margin_bottom = 20.0
+margin_left = 344.0
+margin_right = 344.0
+margin_bottom = 30.0

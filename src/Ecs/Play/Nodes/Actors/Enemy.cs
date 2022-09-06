@@ -9,9 +9,10 @@ public class Enemy : Character {
    public Material? Material;
    public Stats Stats = new(1, 10, 1, 1, 0);
 
-   public override void Spawn(EntityBuilder entityBuilder) {
+   public override void OnSpawn(EntityBuilder entityBuilder) {
+      base.OnSpawn(entityBuilder);
+
       entityBuilder.Add(this)
-         .Add(this as Character)
          .Add(Stats)
          .Add(new HealthComponent(Stats.Health))
          .Add(new GridPositionComponent())

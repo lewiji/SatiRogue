@@ -29,7 +29,7 @@ public partial class Arrow : GameObject {
       }
    }
 
-   public override void Spawn(EntityBuilder entityBuilder) {
+   public override void OnSpawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this).Add<Firing>();
    }
 }

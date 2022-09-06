@@ -1,5 +1,6 @@
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
+using SatiRogue.lib.RelEcsGodot.src;
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Character : GameObject {
@@ -31,6 +32,10 @@ public class Character : GameObject {
       // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
       AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAnimationFinished));
+   }
+
+   public override void OnSpawn(EntityBuilder entityBuilder) {
+      entityBuilder.Add(this);
    }
 
    void OnAnimationFinished() {

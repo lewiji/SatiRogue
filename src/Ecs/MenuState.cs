@@ -10,10 +10,10 @@ public class MenuState : GameState {
       _gsc = gameStates;
       gameStates.World.AddElement(this);
 
-      Menu.Systems.Intro introScene;
-      InitSystems.Add(new InitMenu()).Add(new InitOptions()).Add(introScene = new Menu.Systems.Intro());
+      Menu.Systems.Intro introSystem;
+      InitSystems.Add(new InitMenu()).Add(new InitOptions()).Add(introSystem = new Menu.Systems.Intro());
 
-      introScene.Connect(nameof(Menu.Systems.Intro.IntroFinished), this, nameof(OnIntroFinished));
+      introSystem.Connect(nameof(Menu.Systems.Intro.IntroFinished), this, nameof(OnIntroFinished));
    }
 
    async void OnIntroFinished() {
