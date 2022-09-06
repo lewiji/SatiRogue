@@ -1,4 +1,5 @@
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
@@ -25,7 +26,14 @@ public class InitMenu : GdSystem {
       GetElement<Options>().Hide();
       var loadingState = GetElement<Main>().AddLoadingState();
       await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
-      GetElement<ShaderCompiler>().QueueFree();
+      Logger.Info("Freeing shader compiler & loading state");
+      var shaderCompiler = GetElement<ShaderCompiler>();
+      shaderCompiler.QueueFree();
+      loadingState.QueueFree();
+      await ToSignal(loadingState, "tree_exited");
+      await ToSignal(fade.GetTree(), "idle_frame");
+      Logger.Info("Freed.");
+      Logger.Info("Changin to mapgen state.");
       var mapGenState = GetElement<Main>().ChangeToMapGenState();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       await fade.FadeFromBlack();

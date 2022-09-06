@@ -27,14 +27,10 @@ public class FogSystem : GdSystem {
 
       while (mapGenData.CellsVisibilityChanged.Count > 0) {
          var position = mapGenData.CellsVisibilityChanged.Pop();
-         var chunkId = GetChunkIdForPosition(position, chunkWidth, maxWidth);
+         var chunkId = SpatialMapSystem.GetChunkIdForPosition(position, chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
          fogMultiMeshes[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, offScreenCoords));
       }
-   }
-
-   static int GetChunkIdForPosition(Vector3 position, int chunkWidth, int maxWidth) {
-      return (int) position.x / chunkWidth + (int) position.z / chunkWidth * ((maxWidth + chunkWidth) / chunkWidth);
    }
 }

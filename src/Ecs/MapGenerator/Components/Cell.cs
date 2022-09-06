@@ -68,7 +68,15 @@ public class Cell : Reference {
    public bool Blocked {
       get => Conditions.Contains(CellCondition.Destroyed) || Type is CellType.Wall or CellType.DoorClosed || Occupants.Any(x =>
          GD.InstanceFromId(x) is GameObject {
-            BlocksCell: true
+            BlocksCell: true,
+            Enabled: true
+         });
+   }
+
+   public bool Occupied {
+      get => Conditions.Contains(CellCondition.Destroyed) || Type is CellType.Wall or CellType.DoorClosed || Occupants.Any(x =>
+         GD.InstanceFromId(x) is GameObject {
+            Enabled: true
          });
    }
 

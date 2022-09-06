@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.s3tc.stex"
-path.etc2="res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.etc2.stex"
+path.s3tc="res://.import/wallStoneB_n.png-2601fb5844658275b6a824e90e14e96c.s3tc.stex"
+path.etc2="res://.import/wallStoneB_n.png-2601fb5844658275b6a824e90e14e96c.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__77_n.png"
-dest_files=[ "res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.s3tc.stex", "res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.etc2.stex" ]
+source_file="res://assets/devils-workshop-3d-rpg/wallStoneB_n.png"
+dest_files=[ "res://.import/wallStoneB_n.png-2601fb5844658275b6a824e90e14e96c.s3tc.stex", "res://.import/wallStoneB_n.png-2601fb5844658275b6a824e90e14e96c.etc2.stex" ]
 
 [params]
 
@@ -25,7 +25,7 @@ flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

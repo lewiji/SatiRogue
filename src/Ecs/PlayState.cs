@@ -19,6 +19,7 @@ public class PlayState : GameState {
       InitSystems.Add(new SpatialMapSystem())
          .Add(new SetupAudioSystem())
          .Add(new TurnHandlerInitSystem())
+         .Add(new PlaceStairs())
          .Add(new SpawnPlayerSystem())
          .Add(new SpawnEnemySystem())
          .Add(new SpawnItemsSystem())

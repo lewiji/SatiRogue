@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
@@ -17,6 +18,7 @@ public partial class ShaderCompiler : CanvasLayer {
 
       foreach (var res in resources) {
          if (res is not Material material) continue;
+
          Logger.Debug(material.ResourcePath);
 
          switch (material) {
@@ -35,8 +37,10 @@ public partial class ShaderCompiler : CanvasLayer {
          }
       }
 
-      await ToSignal(GetTree().CreateTimer(1.618f), "timeout");
+      await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
    }
+
+   public override void _ExitTree() { }
 
    void InstanceWigglerByShaderMode(ShaderMaterial shaderMaterial, Material material) {
       var mode = shaderMaterial.Shader.GetMode();

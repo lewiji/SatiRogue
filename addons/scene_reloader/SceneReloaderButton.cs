@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 namespace SatiRogue.addons.scene_reloader;
 
@@ -7,3 +8,4 @@ public partial class SceneReloaderButton : ToolButton {
       Icon = GetIcon("Refresh", "EditorIcons");
    }
 }
+#endif

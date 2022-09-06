@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FNTSY_TX_64__17_s.png-003e22aaa78c982d74a50f18ac2c2a35.stex"
+path="res://.import/wallStoneA.png-f25eca25525ddcf0b8294d37c3becea0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__17_s.png"
-dest_files=[ "res://.import/FNTSY_TX_64__17_s.png-003e22aaa78c982d74a50f18ac2c2a35.stex" ]
+source_file="res://assets/devils-workshop-3d-rpg/wallStoneA.png"
+dest_files=[ "res://.import/wallStoneA.png-f25eca25525ddcf0b8294d37c3becea0.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true

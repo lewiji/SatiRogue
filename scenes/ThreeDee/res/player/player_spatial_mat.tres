@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/player/Squire Sprite Sheet 3.png" type="Texture" id=6]
 
 [resource]
+render_priority = 1
 flags_do_not_receive_shadows = true
 params_diffuse_mode = 2
 params_billboard_mode = 1

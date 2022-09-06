@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/Ecs/Menu/Nodes/OptionFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=2]
+[ext_resource path="res://src/Ecs/Play/Nodes/Hud/StairsConfirmation.cs" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 9
+atlas = ExtResource( 2 )
+region = Rect2( 560, 584, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 9
+atlas = ExtResource( 2 )
+region = Rect2( 552, 584, 8, 8 )
+
+[node name="StairsConfirmation" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 250
+custom_constants/margin_bottom = 250
+script = ExtResource( 3 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_top = 250.0
+margin_right = 900.0
+margin_bottom = 650.0
+
+[node name="PopupPanel" type="PopupPanel" parent="CenterContainer"]
+unique_name_in_owner = true
+visible = true
+margin_left = 250.0
+margin_top = 75.0
+margin_right = 650.0
+margin_bottom = 325.0
+rect_min_size = Vector2( 400, 250 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PopupPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_constants/margin_right = 24
+custom_constants/margin_top = 18
+custom_constants/margin_left = 24
+custom_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer"]
+margin_left = 24.0
+margin_top = 18.0
+margin_right = 368.0
+margin_bottom = 224.0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+margin_top = 16.0
+margin_right = 344.0
+margin_bottom = 50.0
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer"]
+margin_right = 112.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 1 )
+text = "STAIRS?"
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+margin_top = 70.0
+margin_right = 344.0
+margin_bottom = 136.0
+size_flags_vertical = 3
+
+[node name="HFlowContainer3" type="HFlowContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer"]
+margin_top = 163.0
+margin_right = 344.0
+margin_bottom = 183.0
+size_flags_vertical = 6
+custom_constants/hseparation = 32
+
+[node name="Control2" type="Control" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
+margin_bottom = 20.0
+
+[node name="YesButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
+unique_name_in_owner = true
+margin_left = 32.0
+margin_right = 152.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "YE"
+icon = SubResource( 1 )
+expand_icon = true
+
+[node name="NoButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
+unique_name_in_owner = true
+margin_left = 184.0
+margin_right = 311.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "NO"
+icon = SubResource( 2 )
+expand_icon = true
+
+[node name="Control" type="Control" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/HFlowContainer3"]
+margin_left = 343.0
+margin_right = 343.0
+margin_bottom = 20.0

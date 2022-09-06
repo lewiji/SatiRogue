@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.lib.RelEcsGodot.src;
+using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Loading.Systems;
 
 public class PreloadResources : GdSystem {
-   [Signal] public delegate void LoadingResource(string resourcePath, ResourceInteractiveLoader loader);
+   [Signal] public delegate void ResourceLoaded(Resource res);
    [Signal] public delegate void AllResourcesLoaded();
 
    static readonly string[] ResourcePaths = {
@@ -59,10 +61,19 @@ public class PreloadResources : GdSystem {
       LoadNextResource();
    }
 
-   void LoadNextResource() {
+   async void LoadNextResource() {
       if (_resourcesToLoad.Count > 0) {
          var resourcePath = _resourcesToLoad.Pop();
-         EmitSignal(nameof(LoadingResource), resourcePath, ResourceLoader.LoadInteractive(resourcePath));
+
+         try {
+            var state = GetElement<LoadingState>();
+            var resource = await state.LoadAsync<Resource>(resourcePath);
+            EmitSignal(nameof(ResourceLoaded), resource);
+         }
+         catch (AsyncResourceLoader.ResourceInteractiveLoaderException loaderException) {
+            Logger.Error(loaderException.Message);
+            GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
+         }
       } else {
          EmitSignal(nameof(AllResourcesLoaded));
       }

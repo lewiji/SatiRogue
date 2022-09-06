@@ -25,9 +25,8 @@ public class Intro : GdSystem {
    }
 
    // ReSharper disable once UnusedParameter.Local
-   async void OnIntroFinished(string _) {
-      await GetElement<Fade>().QuickFade();
-      _intro?.QueueFree();
+   void OnIntroFinished(string _) {
       EmitSignal(nameof(IntroFinished));
+      _intro?.QueueFree();
    }
 }

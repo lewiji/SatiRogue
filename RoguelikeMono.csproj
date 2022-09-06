@@ -11,8 +11,8 @@
         <Product>SatiRogue</Product>
         <TargetFramework>netstandard2.1</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <Configurations>ExportDebug;ExportRelease;Debug</Configurations>
-        <Platforms>x64</Platforms>
+        <Configurations>ExportDebug;Debug;Release;ExportRelease</Configurations>
+        <Platforms>x64;AnyCPU</Platforms>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|x64' ">
       <DebugSymbols>true</DebugSymbols>

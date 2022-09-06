@@ -54,7 +54,6 @@ public class CharacterMovementSystem : GdSystem {
             _ => character.AnimatedSprite3D.FlipH
          };
       }
-      Logger.Debug($"Moved {character} to: {gridPos.Position}");
    }
 
    protected virtual void SendWalkAnimation(Character character) {

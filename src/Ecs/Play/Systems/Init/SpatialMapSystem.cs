@@ -124,4 +124,8 @@ public class SpatialMapSystem : GdSystem {
       var coords = new[] {start, end};
       return coords;
    }
+
+   public static int GetChunkIdForPosition(Vector3 position, int chunkWidth, int maxWidth) {
+      return (int) position.x / chunkWidth + (int) position.z / chunkWidth * ((maxWidth + chunkWidth) / chunkWidth);
+   }
 }

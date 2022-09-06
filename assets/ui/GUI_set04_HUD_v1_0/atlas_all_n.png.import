@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.s3tc.stex"
-path.etc2="res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.etc2.stex"
+path.s3tc="res://.import/atlas_all_n.png-1687ec6edcfccd0e57cc9ceb341b7a04.s3tc.stex"
+path.etc2="res://.import/atlas_all_n.png-1687ec6edcfccd0e57cc9ceb341b7a04.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,21 +11,21 @@ metadata={
 
 [deps]
 
-source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__77_n.png"
-dest_files=[ "res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.s3tc.stex", "res://.import/FNTSY_TX_64__77_n.png-547fa885603148afa23df02640032a4e.etc2.stex" ]
+source_file="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all_n.png"
+dest_files=[ "res://.import/atlas_all_n.png-1687ec6edcfccd0e57cc9ceb341b7a04.s3tc.stex", "res://.import/atlas_all_n.png-1687ec6edcfccd0e57cc9ceb341b7a04.etc2.stex" ]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.2
-compress/hdr_mode=0
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=1
 flags/repeat=true
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
-flags/srgb=2
+flags/srgb=1
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

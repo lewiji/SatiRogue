@@ -1,9 +1,11 @@
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.MapGenerator.Triggers;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
+using SatiRogue.Ecs.Play.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
@@ -21,17 +23,23 @@ public class PlayerMovementSystem : CharacterMovementSystem {
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);
          var targetCell = mapData.GetCellAt(targetPos);
 
-         if (!targetCell.Blocked) {
+         if (!targetCell.Blocked && !targetCell.Occupied) {
             MoveToCell(mapData, gridPos, player, pathfindingHelper, input, targetCell);
+            Logger.Info($"Moved player to: {gridPos.Position}");
             Send(new CharacterAudioTrigger(player, "walk"));
          } else {
-            HandleOccupants(targetCell, player, input);
+            HandleOccupants(targetCell, player, input, mapData, pathfindingHelper, gridPos);
             Send(new CharacterAudioTrigger(player, "sword"));
          }
       }
    }
 
-   void HandleOccupants(Cell targetCell, Player player, InputDirectionComponent inputDirectionComponent) {
+   void HandleOccupants(Cell targetCell,
+      Player player,
+      InputDirectionComponent inputDirectionComponent,
+      MapGenData mapData,
+      PathfindingHelper pathfindingHelper,
+      GridPositionComponent gridPos) {
       foreach (var targetId in targetCell.Occupants) {
          var target = GD.InstanceFromId(targetId);
          var entity = target?.GetMeta("Entity") as Entity;
@@ -66,6 +74,17 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                spatialItem.BlocksCell = false;
                spatialItem.Visible = false;
                break;
+            case Stairs stairs:
+               Logger.Info("Stairs!");
+               MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
+               Send(new CharacterAudioTrigger(player, "walk"));
+               GetElement<StairsConfirmation>().Popup();
+               InputSystem.HandlingInput = false;
+               return;
+            default:
+               MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
+               Send(new CharacterAudioTrigger(player, "walk"));
+               return;
          }
       }
    }

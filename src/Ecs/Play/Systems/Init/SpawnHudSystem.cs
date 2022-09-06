@@ -10,6 +10,7 @@ public class SpawnHudSystem : GdSystem {
    static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Health.tscn");
    static readonly PackedScene LootUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Loot.tscn");
    static readonly PackedScene InvUiScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/Inventory.tscn");
+   static readonly PackedScene StairsConfirmationScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Hud/StairsConfirmation.tscn");
 
    public override void Run() {
       var gsc = GetElement<GameStateController>();
@@ -30,6 +31,11 @@ public class SpawnHudSystem : GdSystem {
       hud.AddChild(invUi);
       Spawn(invUi);
       AddElement(invUi);
+
+      var stairsConfirm = StairsConfirmationScene.Instance<StairsConfirmation>();
+      hud.AddChild(stairsConfirm);
+      Spawn(stairsConfirm);
+      AddElement(stairsConfirm);
 
       var fade = hud.GetNode<DeathScreen>("FadeCanvasLayer/Fade");
       AddElement(fade);
