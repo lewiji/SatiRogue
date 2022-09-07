@@ -646,7 +646,7 @@ material = SubResource( 41 )
 scale = Vector2( 6, 6 )
 z_index = 128
 frames = SubResource( 40 )
-frame = 21
+frame = 26
 playing = true
 centered = false
 

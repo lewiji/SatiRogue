@@ -2,24 +2,26 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.stex"
+path.s3tc="res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.s3tc.stex"
+path.etc2="res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__62_n.png"
-dest_files=[ "res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.stex" ]
+dest_files=[ "res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.s3tc.stex", "res://.import/FNTSY_TX_64__62_n.png-af8313f571bd4e086129be2d6223cdf7.etc2.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.1
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=true
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true

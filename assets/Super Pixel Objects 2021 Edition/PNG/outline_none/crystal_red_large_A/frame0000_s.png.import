@@ -2,21 +2,23 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.stex"
+path.s3tc="res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.s3tc.stex"
+path.etc2="res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/crystal_red_large_A/frame0000_s.png"
-dest_files=[ "res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.stex" ]
+dest_files=[ "res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.s3tc.stex", "res://.import/frame0000_s.png-ea30243f42880dfd468833bf3b42e0e1.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/mode=2
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0

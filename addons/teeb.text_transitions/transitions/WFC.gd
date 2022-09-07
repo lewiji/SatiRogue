@@ -11,7 +11,10 @@ const ZERO = ord("0")
 
 
 func _process_custom_fx(char_fx):
-	var t = 1.0 - get_t(char_fx)
+	var got_t = get_t(char_fx)
+	if got_t == -1:
+		return false
+	var t = 1.0 - got_t
 	var r = get_rand(char_fx)
 	var a = clamp(t * 2.0 - r * t, 0.0, 1.0)
 	if a != 1.0 and char_fx.character != SPACE:

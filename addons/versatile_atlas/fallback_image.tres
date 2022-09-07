@@ -1,0 +1,10 @@
+[gd_resource type="Image" format=2]
+
+[resource]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 1
+}

@@ -714,11 +714,12 @@ custom_constants/shadow_offset_y = 3
 custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center][bounce][prickle pow=5]sati.stream[/prickle][/bounce][/center]"
-text = "sati.stream"
+text = "[center][bounce][prickle pow=5]sati.stream[/prickle][/bounce][/center]"
 fit_content_height = true
 scroll_active = false
 custom_effects = [ ExtResource( 2 ), ExtResource( 4 ) ]
 script = ExtResource( 1 )
+id = "intro"
 length = 32.0
 all_at_once = true
 animation_time = 2.0

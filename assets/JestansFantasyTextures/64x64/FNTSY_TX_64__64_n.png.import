@@ -17,12 +17,12 @@ dest_files=[ "res://.import/FNTSY_TX_64__64_n.png-adbbeb9756c771242e388b07be64e6
 [params]
 
 compress/mode=2
-compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=true
-flags/filter=true
+flags/repeat=2
+flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
 flags/srgb=2

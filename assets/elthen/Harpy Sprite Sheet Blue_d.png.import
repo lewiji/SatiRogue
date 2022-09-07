@@ -17,8 +17,8 @@ dest_files=[ "res://.import/Harpy Sprite Sheet Blue_d.png-93bca56da911bf74d328d7
 [params]
 
 compress/mode=2
-compress/lossy_quality=0.3
-compress/hdr_mode=0
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0

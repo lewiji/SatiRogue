@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.s3tc.stex"
-path.etc2="res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.etc2.stex"
+path="res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/elthen/Maw Demon Sprite Sheet Green_d.png"
-dest_files=[ "res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.s3tc.stex", "res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.etc2.stex" ]
+dest_files=[ "res://.import/Maw Demon Sprite Sheet Green_d.png-ef51b7c30c22f7181d9c29988216a8cd.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.1
 compress/hdr_mode=0
 compress/bptc_ldr=0

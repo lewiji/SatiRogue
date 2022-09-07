@@ -8,11 +8,13 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 900, 900 )
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 900, 900 )
+mouse_filter = 2
 custom_constants/margin_right = 150
 custom_constants/margin_top = 150
 custom_constants/margin_left = 150

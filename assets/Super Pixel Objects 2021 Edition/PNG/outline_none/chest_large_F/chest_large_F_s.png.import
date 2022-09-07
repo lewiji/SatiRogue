@@ -2,21 +2,23 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.stex"
+path.s3tc="res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.s3tc.stex"
+path.etc2="res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/chest_large_F/chest_large_F_s.png"
-dest_files=[ "res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.stex" ]
+dest_files=[ "res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.s3tc.stex", "res://.import/chest_large_F_s.png-fd2010da6cf930bf3bf95e2c3e0ca05e.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/mode=2
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0

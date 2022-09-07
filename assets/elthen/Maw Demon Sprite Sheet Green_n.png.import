@@ -18,7 +18,7 @@ dest_files=[ "res://.import/Maw Demon Sprite Sheet Green_n.png-dad79c85c97d6596f
 
 compress/mode=2
 compress/lossy_quality=0.1
-compress/hdr_mode=0
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=1
 flags/repeat=0

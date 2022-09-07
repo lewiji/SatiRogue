@@ -9,21 +9,24 @@ export(bool) var reverse:bool = false
 export(bool) var all_at_once:bool = false
 export(float, 0.1, 2.0) var animation_time:float = 1.0 
 
-
-func _enter_tree():
+func _ready() -> void:
+	print("Registering text transition")
 	TextTransitionSettings.register(self)
+
+#func _enter_tree():
+#	TextTransitionSettings.register(self)
 	#$AnimationPlayer.connect("animation_finished", self, "on_animation_finish")
 
 
-func _exit_tree():
-	TextTransitionSettings.unregister(self)
+#func _exit_tree():
+	#TextTransitionSettings.unregister(self)
 	#$AnimationPlayer.disconnect("animation_finished", self, "on_animation_finish")
 
 
 # Mostly needed for editor testing.
-func _process(delta):
-	if not id in TextTransitionSettings.transitions:
-		TextTransitionSettings.register(self)
+#func _process(delta):
+	#if not id in TextTransitionSettings.transitions:
+	#	TextTransitionSettings.register(self)
 
 
 func on_animation_finish(anim_name:String):

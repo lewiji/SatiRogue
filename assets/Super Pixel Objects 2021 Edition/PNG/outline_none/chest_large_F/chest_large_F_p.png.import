@@ -17,12 +17,12 @@ dest_files=[ "res://.import/chest_large_F_p.png-ec65b09996de5dc0b87d5f9a59c32f64
 [params]
 
 compress/mode=2
-compress/lossy_quality=0.2
-compress/hdr_mode=0
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true
 flags/srgb=1

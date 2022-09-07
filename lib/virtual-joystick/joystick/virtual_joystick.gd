@@ -124,24 +124,35 @@ func _update_joystick(touch_position: Vector2) -> void:
 	
 	if use_input_actions:
 		_update_input_actions()
+		
+func parse_input(action, strength):
+	var a = InputEventAction.new()
+	a.action = action
+	a.pressed = true
+	a.strength = strength
+	Input.parse_input_event(a)
 
 func _update_input_actions():
 	if _output.x < 0:
-		Input.action_press(action_left, -_output.x)
-	elif Input.is_action_pressed(action_left):
-		Input.action_release(action_left)
-	if _output.x > 0:
-		Input.action_press(action_right, _output.x)
-	elif Input.is_action_pressed(action_right):
-		Input.action_release(action_right)
+		parse_input(action_left, -_output.x)
+		#Input.action_press(action_left, -_output.x)
+	#elif Input.is_action_pressed(action_left):
+		#Input.action_release(action_left)
+	if _output.x > 0:		
+		parse_input(action_right, _output.x)
+		#Input.action_press(action_right, _output.x)
+	#elif Input.is_action_pressed(action_right):
+	#	Input.action_release(action_right)
 	if _output.y < 0:
-		Input.action_press(action_up, -_output.y)
-	elif Input.is_action_pressed(action_up):
-		Input.action_release(action_up)
+		parse_input(action_up, -_output.y)
+		#Input.action_press(action_up, -_output.y)
+	#elif Input.is_action_pressed(action_up):
+	#	Input.action_release(action_up)
 	if _output.y > 0:
-		Input.action_press(action_down, _output.y)
-	elif Input.is_action_pressed(action_down):
-		Input.action_release(action_down)
+		parse_input(action_down, _output.y)
+		#Input.action_press(action_down, _output.y)
+	#elif Input.is_action_pressed(action_down):
+	#	Input.action_release(action_down)
 
 func _reset():
 	_pressed = false

@@ -1,7 +1,6 @@
 [gd_resource type="PanoramaSky" load_steps=2 format=2]
 
-[ext_resource path="res://assets/splash/Dusk.png" type="Texture" id=1]
+[ext_resource path="res://assets/splash/weird03-Sheet.png" type="Texture" id=1]
 
 [resource]
-radiance_size = 1
 panorama = ExtResource( 1 )

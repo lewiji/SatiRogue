@@ -13,9 +13,10 @@ margin_top = -250.0
 margin_right = 250.0
 margin_bottom = -50.0
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+action_left = "move_left"
+action_right = "move_right"
+action_up = "move_up"
+action_down = "move_down"
 
 [node name="Base" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -50,6 +51,3 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource( 2 )
 stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}

@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://lib/touch_input_manager/RawGesture.gd"
 }, {
+"base": "ImageTexture",
+"class": "VersatileAtlasTexture",
+"language": "GDScript",
+"path": "res://addons/versatile_atlas/resource.gd"
+}, {
 "base": "Control",
 "class": "VirtualJoystick",
 "language": "GDScript",
@@ -111,6 +116,7 @@ _global_script_class_icons={
 "LaigterCli": "",
 "LaigterCliResult": "",
 "RawGesture": "",
+"VersatileAtlasTexture": "res://addons/versatile_atlas/icon_x.svg",
 "VirtualJoystick": ""
 }
 
@@ -121,7 +127,7 @@ run/main_scene="res://Main.tscn"
 run/delta_sync_after_draw=true
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
-config/icon="res://icon.png"
+config/icon="res://satirogue_logo.png"
 
 [audio]
 
@@ -142,7 +148,6 @@ settings/physics_interpolation/enable_warnings=false
 window/size/width=900
 window/size/height=900
 window/size/always_on_top=true
-window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
@@ -152,7 +157,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/float_step_adjuster/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/versatile_atlas/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
 
 [importer_defaults]
 
@@ -273,5 +278,6 @@ gles3/shaders/max_simultaneous_compiles.mobile=2
 gles3/shaders/shader_cache_size_mb=1024
 gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256
+quality/voxel_cone_tracing/high_quality=true
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

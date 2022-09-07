@@ -31,7 +31,12 @@ func get_tween_data(char_fx):
 		prints("(TransitionBase) No RichTextTransition with id", id, "is registered.")
 	else:
 		return TextTransitionSettings.transitions[id]
+	return null
 
 
 func get_t(char_fx):
-	return get_tween_data(char_fx).get_t(char_fx.absolute_index)
+	var tdata = get_tween_data(char_fx)
+	if tdata != null:
+		return tdata.get_t(char_fx.absolute_index)
+	else:
+		return -1

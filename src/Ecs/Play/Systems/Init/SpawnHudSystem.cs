@@ -19,31 +19,30 @@ public class SpawnHudSystem : GdSystem {
    public override void Run() {
       var playState = GetElement<PlayState>();
       var hud = HudScene.Instance();
+      var uiParent = hud.GetNode("%HudItems");
       playState.AddChild(hud);
 
       var healthUi = HealthUiScene.Instance<HealthUi>();
-      hud.AddChild(healthUi);
+      uiParent.AddChild(healthUi);
       AddElement(healthUi);
 
       var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
-      hud.AddChild(floorCounterUi);
+      uiParent.AddChild(floorCounterUi);
       AddElement(floorCounterUi);
 
-      //if (OS.GetName() == "Android") {
       var touchControls = TouchControlsScene.Instance();
-      hud.AddChild(touchControls);
-      //}
+      uiParent.AddChild(touchControls);
 
       var lootUi = LootUiScene.Instance<Loot>();
-      hud.AddChild(lootUi);
+      uiParent.AddChild(lootUi);
       AddElement(lootUi);
 
       var invUi = InvUiScene.Instance<Inventory>();
-      hud.AddChild(invUi);
+      uiParent.AddChild(invUi);
       AddElement(invUi);
 
       var stairsConfirm = StairsConfirmationScene.Instance<StairsConfirmation>();
-      hud.AddChild(stairsConfirm);
+      uiParent.AddChild(stairsConfirm);
       AddElement(stairsConfirm);
       stairsConfirm.Connect(nameof(StairsConfirmation.StairsConfirmed), this, nameof(OnStairsDown));
 
@@ -52,7 +51,7 @@ public class SpawnHudSystem : GdSystem {
       fade.Connect(nameof(DeathScreen.Continue), this, nameof(OnContinueFromDeath));
       fade.Connect(nameof(DeathScreen.Exit), this, nameof(OnExitFromDeath));
 
-      hud.GetNode<Button>("OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
+      hud.GetNode<Button>("%OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
    }
 
    void OnOptionsPressed() {

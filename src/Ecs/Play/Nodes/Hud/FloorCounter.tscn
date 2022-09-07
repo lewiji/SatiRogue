@@ -7,16 +7,17 @@
 [node name="FloorCounter" type="Control"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -125.0
-margin_right = 125.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 250, 72 )
+margin_left = -50.0
+margin_top = 12.0
+margin_right = 50.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 100, 36 )
 script = ExtResource( 3 )
 
 [node name="Bg" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 250, 76 )
+rect_min_size = Vector2( 100, 32 )
 texture = ExtResource( 1 )
 region_rect = Rect2( 193, 15, 30, 18 )
 patch_margin_left = 12
@@ -27,27 +28,26 @@ patch_margin_bottom = 8
 [node name="MarginContainer" type="MarginContainer" parent="Bg"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 200, 68 )
+rect_min_size = Vector2( 50, 32 )
 custom_constants/margin_right = 8
-custom_constants/margin_top = 4
 custom_constants/margin_left = 8
-custom_constants/margin_bottom = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bg/MarginContainer"]
 margin_left = 8.0
-margin_top = 4.0
-margin_right = 242.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 100, 68 )
+margin_top = 1.0
+margin_right = 92.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 50, 32 )
 size_flags_vertical = 4
 alignment = 1
 
 [node name="FloorLabel" type="Label" parent="Bg/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 85.0
-margin_right = 149.0
-margin_bottom = 68.0
-rect_min_size = Vector2( 64, 68 )
+margin_left = 10.0
+margin_right = 74.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 1
 custom_colors/font_color = Color( 0.996078, 0.796078, 0.45098, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0.521569, 0.196078, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )

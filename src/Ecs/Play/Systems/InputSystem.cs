@@ -1,4 +1,5 @@
 using Godot;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
@@ -18,6 +19,7 @@ public class InputSystem : GdSystem {
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
          var shoot = Input.IsActionJustPressed("shoot");
          var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+
          input.Direction = direction.Round();
 
          if (diagonalLock) {

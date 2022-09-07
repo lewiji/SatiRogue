@@ -490,15 +490,21 @@ tracks/12/keys = {
 "values": [ 1 ]
 }
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+custom_constants/margin_right = 36
+custom_constants/margin_top = 36
+custom_constants/margin_left = 36
+custom_constants/margin_bottom = 36
 script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_left = 36.0
+margin_top = 36.0
+margin_right = 864.0
+margin_bottom = 864.0
 mouse_filter = 2
 custom_constants/margin_right = 24
 custom_constants/margin_top = 24
@@ -598,7 +604,15 @@ margin_bottom = 21.0
 custom_fonts/font = ExtResource( 6 )
 text = "REBIRTH"
 
-[node name="OptionsButton" type="Button" parent="."]
+[node name="HudItems" type="Control" parent="."]
+unique_name_in_owner = true
+margin_left = 36.0
+margin_top = 36.0
+margin_right = 864.0
+margin_bottom = 864.0
+
+[node name="OptionsButton" type="Button" parent="HudItems"]
+unique_name_in_owner = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

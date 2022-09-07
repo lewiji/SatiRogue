@@ -2,21 +2,23 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.stex"
+path.s3tc="res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.s3tc.stex"
+path.etc2="res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/elthen/Harpy Sprite Sheet Blue_n.png"
-dest_files=[ "res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.stex" ]
+dest_files=[ "res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.s3tc.stex", "res://.import/Harpy Sprite Sheet Blue_n.png-f1f12c02ea9cb4961e15b37ffb87c4fb.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/mode=2
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
 compress/normal_map=1
 flags/repeat=true
