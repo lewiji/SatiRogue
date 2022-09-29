@@ -4,24 +4,31 @@ using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Tools;
+
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class FogMultiMeshes : List<MultiMeshInstance> { }
+public class FogMultiMeshes {
+   public List<MultiMeshInstance> Instances = new();
+}
 
-public class InitFogSystem : GdSystem {
+public class InitFogSystem : ISystem {
+   public World World { get; set; } = null!;
    readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    readonly FogMultiMeshes _fogMultiMeshes = new();
    MapGeometry? _mapGeometry;
 
-   public override void Run() {
-      AddElement(_fogMultiMeshes);
-      var mapGenData = GetElement<MapGenData>();
+   public void Run() {
+      GD.Print("Fog mutlimeshes");
+      World.AddElement(_fogMultiMeshes);
+      var mapGenData = World.GetElement<MapGenData>();
       var cells = mapGenData.IndexedCells.Values.ToArray();
 
-      foreach (var mmInst in _fogMultiMeshes) mmInst.QueueFree();
-      _fogMultiMeshes.Clear();
+      foreach (var mmInst in _fogMultiMeshes.Instances)
+         mmInst.QueueFree();
+      _fogMultiMeshes.Instances.Clear();
 
       var maxWidth = mapGenData.GeneratorParameters.Width;
       var chunkWidth = mapGenData.GeneratorParameters.Width.Factors().GetMedian();
@@ -30,14 +37,15 @@ public class InitFogSystem : GdSystem {
       var totalChunks = Mathf.CeilToInt((mapGenData.GeneratorParameters.Width + chunkWidth)
          * (mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
-      _mapGeometry = GetElement<MapGeometry>();
+      _mapGeometry = World.GetElement<MapGeometry>();
 
       Logger.Info("Building fog");
 
       for (var chunkId = 0; chunkId < totalChunks; chunkId++) {
          var chunkCoords = GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth);
 
-         if (cells == null) continue;
+         if (cells == null)
+            continue;
 
          var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
          Logger.Debug($"Chunking: Taking {chunkCells.Length} cells");
@@ -72,7 +80,7 @@ public class InitFogSystem : GdSystem {
          fogMultiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform(Basis.Identity, fogPosition));
       }
 
-      _fogMultiMeshes.Add(fogMultiMeshInstance);
+      _fogMultiMeshes.Instances.Add(fogMultiMeshInstance);
    }
 
    bool ChunkPositionCondition(Cell c, IList<Vector3> chunkCoords) {

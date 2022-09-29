@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
 public class PathfindingHelper {
@@ -48,15 +49,16 @@ public class PathfindingHelper {
    }
 }
 
-public class GenPathfindingNodes : GdSystem {
+public class GenPathfindingNodes : ISystem {
+   public World World { get; set; } = null!;
    static readonly Vector3[] Offsets = {
       Vector3.Back, Vector3.Forward, Vector3.Left, Vector3.Right, Vector3.Back + Vector3.Left,
       Vector3.Back + Vector3.Right, Vector3.Forward + Vector3.Left, Vector3.Forward + Vector3.Right
    };
 
-   public override void Run() {
+   public void Run() {
       var cellIdToAStarId = new Dictionary<long, int>();
-      var mapGenData = GetElement<MapGenData>();
+      var mapGenData = World.GetElement<MapGenData>();
       var aStar = new AStar();
       aStar.ReserveSpace(mapGenData.IndexedCells.Count);
 
@@ -78,6 +80,6 @@ public class GenPathfindingNodes : GdSystem {
          }
       }
 
-      AddElement(new PathfindingHelper(aStar, cellIdToAStarId));
+      World.AddElement(new PathfindingHelper(aStar, cellIdToAStarId));
    }
 }

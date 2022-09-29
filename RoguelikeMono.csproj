@@ -15,30 +15,30 @@
         <Platforms>x64;AnyCPU</Platforms>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|x64' ">
-      <DebugSymbols>true</DebugSymbols>
+        <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-      <DebugType>full</DebugType>
+        <DebugType>full</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Chickensoft.GoDotDep" Version="1.0.0" />
-        <PackageReference Include="GDSerializer" Version="2.0.3" />
-        <PackageReference Include="GodotOnReady" Version="1.2.2" />
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <PackageReference Include="Chickensoft.GoDotDep" Version="1.0.0"/>
+        <PackageReference Include="GDSerializer" Version="2.0.3"/>
+        <PackageReference Include="GodotOnReady" Version="1.2.2"/>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="lib\activelogic\Debug\netstandard2.1\main.dll" />
-        <Content Include="lib\go_dot_net\Fasterflect.dll" />
-        <Content Include="lib\go_dot_net\GoDotCollections.dll" />
-        <Content Include="lib\go_dot_net\GoDotLog.dll" />
-        <Content Include="lib\go_dot_net\Newtonsoft.Json.dll" />
+        <Content Include="lib\activelogic\Debug\netstandard2.1\main.dll"/>
+        <Content Include="lib\go_dot_net\Fasterflect.dll"/>
+        <Content Include="lib\go_dot_net\GoDotCollections.dll"/>
+        <Content Include="lib\go_dot_net\GoDotLog.dll"/>
+        <Content Include="lib\go_dot_net\Newtonsoft.Json.dll"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Fasterflect">
-          <HintPath>lib\go_dot_net\Fasterflect.dll</HintPath>
+            <HintPath>lib\go_dot_net\Fasterflect.dll</HintPath>
         </Reference>
         <Reference Include="GoDotCollections">
-          <HintPath>lib\go_dot_net\GoDotCollections.dll</HintPath>
+            <HintPath>lib\go_dot_net\GoDotCollections.dll</HintPath>
         </Reference>
         <Reference Include="GoDotLog">
             <HintPath>lib\go_dot_net\GoDotLog.dll</HintPath>
@@ -49,8 +49,5 @@
         <Reference Include="Newtonsoft.Json">
             <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
         </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="src\Ecs\MapGenerator\Triggers"/>
     </ItemGroup>
 </Project>

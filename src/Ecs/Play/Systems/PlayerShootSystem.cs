@@ -7,15 +7,18 @@ using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Items;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class PlayerShootSystem : GdSystem {
+public class PlayerShootSystem : ISystem {
+   public World World { get; set; } = null!;
    readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Items/Arrow.tscn");
 
-   public override void Run() {
-      foreach (var _ in Receive<PlayerHasShotTrigger>()) {
-         foreach (var (_, gridPos, input) in Query<Player, GridPositionComponent, InputDirectionComponent>()) {
+   public void Run() {
+      foreach (var _ in this.Receive<PlayerHasShotTrigger>()) {
+         foreach (var (_, gridPos, input) in this.Query<Player, GridPositionComponent, InputDirectionComponent>()) {
             var direction = new Vector2(1, 0);
 
             if (input.LastDirection != Vector2.Zero) {
@@ -25,16 +28,17 @@ public class PlayerShootSystem : GdSystem {
             var arrow = _arrowScene.Instance<Arrow>();
             var entitiesNode = World.GetElement<Entities>();
             entitiesNode.AddChild(arrow);
-            var arrowEntity = Spawn(arrow).Id();
+            var arrowEntity = this.Spawn(arrow).Id();
 
-            var arrowGridPos = new GridPositionComponent
-               {Position = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y)};
-            On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
+            var arrowGridPos = new GridPositionComponent {
+               Position = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y)
+            };
+            this.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
 
             arrow.Direction = direction;
             arrow.Translation = arrowGridPos.Position;
 
-            var mapData = GetElement<MapGenData>();
+            var mapData = World.GetElement<MapGenData>();
 
             for (var shootDistance = 0; shootDistance < arrow.Range; shootDistance++) {
                var cell = mapData.GetCellAt(arrowGridPos.Position + new Vector3(direction.x, 0, direction.y) * shootDistance);
@@ -43,9 +47,10 @@ public class PlayerShootSystem : GdSystem {
                   arrow.Destination = arrowGridPos.Position + new Vector3(direction.x, 0, direction.y) * shootDistance;
                } else if (cell.Occupants.Count > 0) {
                   foreach (var cellOccupant in cell.Occupants) {
-                     if (GD.InstanceFromId(cellOccupant) is not Enemy enemy || !enemy.Alive) continue;
-                     var entity = enemy.GetMeta("Entity") as Entity;
-                     GetComponent<HealthComponent>(entity!).Value -= 1;
+                     if (GD.InstanceFromId(cellOccupant) is not Enemy enemy || !enemy.Alive)
+                        continue;
+                     var entity = enemy.GetMeta("Entity") as Marshallable<Entity>;
+                     this.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
 
                      if (arrow.Destination == Vector3.Zero) {
                         arrow.Destination = cell.Position;

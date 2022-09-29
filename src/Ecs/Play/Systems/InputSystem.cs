@@ -4,17 +4,22 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class InputSystem : GdSystem {
+public class InputSystem : ISystem {
+   public World World { get; set; } = null!;
+
    public static bool HandlingInput = true;
    public static bool Paused = false;
 
-   public override void Run() {
-      if (Paused) return;
+   public void Run() {
+      if (Paused)
+         return;
 
-      foreach (var input in QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
+      foreach (var input in this.QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
          var aim = Input.IsActionPressed("aim");
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
          var shoot = Input.IsActionJustPressed("shoot");
@@ -31,26 +36,27 @@ public class InputSystem : GdSystem {
    }
 
    void HandleUnlockedInput(bool aim, InputDirectionComponent input, bool shoot) {
-      if (Paused) return;
+      if (Paused)
+         return;
 
-      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Has<DiagonalLock>().Build()) {
-         On(entity).Remove<DiagonalLock>();
+      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Has<DiagonalLock>().Build()) {
+         this.On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;
       }
 
       if (!aim && HandlingInput && input.Direction != Vector2.Zero) {
          /* It's sending a message to the `PlayerInputSystem` to tell it to run. */
-         Send(new PlayerHasMadeInputTrigger());
+         this.Send(new PlayerHasMadeInputTrigger());
          HandlingInput = false;
       } else if (shoot) {
-         Send(new PlayerHasMadeInputTrigger());
-         Send(new PlayerHasShotTrigger());
+         this.Send(new PlayerHasMadeInputTrigger());
+         this.Send(new PlayerHasShotTrigger());
          HandlingInput = false;
       }
 
       if (aim) {
-         foreach (var (entity, player) in QueryBuilder<Entity, Player>().Not<Aiming>().Build()) {
-            On(entity).Add<Aiming>();
+         foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Not<Aiming>().Build()) {
+            this.On(entity).Add<Aiming>();
             player.DirectionIndicator.Visible = true;
          }
       } else {
@@ -61,25 +67,26 @@ public class InputSystem : GdSystem {
    void HandleDiagonalLockedInput(InputDirectionComponent input) {
       RemoveAim();
 
-      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Not<DiagonalLock>().Build()) {
-         On(entity).Add<DiagonalLock>();
+      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Not<DiagonalLock>().Build()) {
+         this.On(entity).Add<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = true;
       }
 
       if (HandlingInput && InputIsDiagonal(input.Direction)) {
-         Send(new PlayerHasMadeInputTrigger());
+         this.Send(new PlayerHasMadeInputTrigger());
          HandlingInput = false;
       }
    }
 
    bool InputIsDiagonal(Vector2 inputDirection) {
-      if (inputDirection == Vector2.Zero) return false;
+      if (inputDirection == Vector2.Zero)
+         return false;
       return inputDirection.y != 0 && inputDirection.x != 0;
    }
 
    void RemoveAim() {
-      foreach (var (entity, player) in QueryBuilder<Entity, Player>().Has<Aiming>().Build()) {
-         On(entity).Remove<Aiming>();
+      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Has<Aiming>().Build()) {
+         this.On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;
       }
    }

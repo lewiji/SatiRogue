@@ -2,28 +2,33 @@ using System.Collections.Generic;
 using Godot;
 using SatiRogue.Ecs.Play.Nodes;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class AudioSystem : GdSystem {
+public class AudioSystem : ISystem {
+   public World World { get; set; } = null!;
    Dictionary<string, AudioStreamPlayer3D>? _audioStreams;
 
-   public override void Run() {
+   public void Run() {
       _audioStreams ??= new Dictionary<string, AudioStreamPlayer3D> {
-         {"walk", GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("Footsteps4")},
-         {"sword", GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("SwordWoosh1")}
+         {"walk", World.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("Footsteps4")},
+         {"sword", World.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("SwordWoosh1")}
       };
 
-      foreach (var audioTrigger in Receive<CharacterAudioTrigger>()) {
+      foreach (var audioTrigger in this.Receive<CharacterAudioTrigger>()) {
          Play(audioTrigger.Audio, audioTrigger.Character.Translation);
       }
    }
 
    void Play(string name, Vector3? translation = null) {
-      if (!_audioStreams!.TryGetValue(name, out var audioStreamPlayer3D)) return;
+      if (!_audioStreams!.TryGetValue(name, out var audioStreamPlayer3D))
+         return;
 
       if (audioStreamPlayer3D.Playing && audioStreamPlayer3D.HasMeta("Interruptable")
-                                      && audioStreamPlayer3D.GetMeta("Interruptable") is bool and false) return;
+                                      && audioStreamPlayer3D.GetMeta("Interruptable") is bool and false)
+         return;
 
       audioStreamPlayer3D.Translation = translation.GetValueOrDefault();
 

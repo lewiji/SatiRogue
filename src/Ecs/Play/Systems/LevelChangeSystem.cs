@@ -5,52 +5,61 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class LevelChangeSystem : GdSystem {
+public class LevelChangeSystem : Reference, ISystem {
+   public World World { get; set; } = null!;
    public static int FloorNumber { get; set; }
    bool _firstRun = true;
 
-   public override void Run() {
-      foreach (var stairsDown in Receive<StairsDownTrigger>()) {
+   public void Run() {
+      foreach (var stairsDown in this.Receive<StairsDownTrigger>()) {
          Logger.Info("Stairs down system activating.");
-         var gsc = GetElement<GameStateController>();
+         var gsc = World.GetElement<GameStateController>();
 
-         if (gsc.CurrentState is not PlayState) continue;
+         if (gsc.CurrentState is not PlayState)
+            continue;
          FloorNumber -= 1;
          ChangeLevel(gsc);
          break;
       }
 
-      foreach (var restart in Receive<RestartGameTrigger>()) {
+      foreach (var restart in this.Receive<RestartGameTrigger>()) {
          Logger.Info("Restart game requested.");
-         var gsc = GetElement<GameStateController>();
-         if (gsc.CurrentState is not PlayState) continue;
+         var gsc = World.GetElement<GameStateController>();
+
+         if (gsc.CurrentState is not PlayState)
+            continue;
          FloorNumber = 0;
          ChangeLevel(gsc);
          break;
       }
 
-      foreach (var exit in Receive<BackToMainMenuTrigger>()) {
+      foreach (var exit in this.Receive<BackToMainMenuTrigger>()) {
          Logger.Info("Exit to menu requested.");
-         var gsc = GetElement<GameStateController>();
-         if (gsc.CurrentState is not PlayState) continue;
+         var gsc = World.GetElement<GameStateController>();
+
+         if (gsc.CurrentState is not PlayState)
+            continue;
          FloorNumber = 0;
          ExitToMainMenu(gsc);
          break;
       }
 
-      if (!_firstRun) return;
-      AddElement(this);
-      GetElement<FloorCounter>().FloorNumber = FloorNumber;
+      if (!_firstRun)
+         return;
+      World.AddElement(this);
+      World.GetElement<FloorCounter>().FloorNumber = FloorNumber;
       _firstRun = false;
    }
 
    async void ExitToMainMenu(GameStateController gsc) {
-      GetElement<Menu.Nodes.Menu>().Visible = true;
+      World.GetElement<Menu.Nodes.Menu>().Visible = true;
       await DestroyCurrentStates(gsc);
-      var fade = GetElement<Fade>();
+      var fade = World.GetElement<Fade>();
       await fade.FadeFromBlack();
    }
 
@@ -60,18 +69,18 @@ public class LevelChangeSystem : GdSystem {
    }
 
    async Task DestroyCurrentStates(GameStateController gsc) {
-      var fade = GetElement<Fade>();
+      var fade = World.GetElement<Fade>();
       await fade.FadeToBlack();
       gsc.PopState();
       await ToSignal(gsc.GetTree(), "idle_frame");
       gsc.PopState();
-      await ToSignal(gsc.GetTree(), "idle_frame");
    }
 
    async Task CreateNewMapGenState() {
-      var mapGenState = GetElement<Main>().ChangeToMapGenState();
+      GD.Print("Awaiting new mapgen");
+      var mapGenState = World.GetElement<MapGenState>();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
-      var fade = GetElement<Fade>();
+      var fade = World.GetElement<Fade>();
       await fade.FadeFromBlack();
       InputSystem.Paused = false;
    }

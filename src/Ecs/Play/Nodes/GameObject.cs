@@ -1,6 +1,7 @@
 using Godot;
 using SatiRogue.Ecs.Play.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Nodes;
 
 public abstract class GameObject : Spatial, ISpawnable {

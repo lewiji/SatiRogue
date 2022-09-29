@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_lambert,specular_disabled,async_visible;
+render_mode blend_mix,depth_draw_always,cull_disabled,diffuse_lambert,specular_schlick_ggx,async_visible;
 uniform vec4 albedo : hint_color;
 uniform sampler2D texture_albedo : hint_albedo;
 uniform float alpha_scissor_threshold;
@@ -37,7 +37,7 @@ void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
 	
-	if (is_progress_bar > 0.f && albedo_tex.a > 0.f) {
+	if (is_progress_bar > 0.1f && albedo_tex.a > 0.1f) {
 		vec2 coords = base_uv;
 		vec2 pointOnLineSegment = vec2(clamp(coords.x, 0.5f, 1.f - 0.5f), 0.5f);
 		float sdf = distance(pointOnLineSegment, coords) * 2.f - 1.f;

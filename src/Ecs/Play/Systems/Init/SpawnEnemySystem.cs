@@ -3,10 +3,12 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SpawnEnemySystem : GdSystem {
+public class SpawnEnemySystem : ISystem {
+   public World World { get; set; } = null!;
    static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
 
    static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");
@@ -27,8 +29,8 @@ public class SpawnEnemySystem : GdSystem {
       new(FireElementalFrames, FireElementalMat)
    };
 
-   public override void Run() {
-      var numEnemies = GetElement<MapGenData>().GeneratorParameters.NumEnemies;
+   public void Run() {
+      var numEnemies = World.GetElement<MapGenData>().GeneratorParameters.NumEnemies;
       Logger.Info($"Spawning {numEnemies} enemies");
       var entitiesNode = World.GetElement<Entities>();
 
@@ -40,7 +42,7 @@ public class SpawnEnemySystem : GdSystem {
          enemyNode.Frames = EnemyGraphicsArray[monsterId].Frames;
          entitiesNode.AddChild(enemyNode);
          enemyNode.Stats.Health = health;
-         Spawn(enemyNode);
+         this.Spawn(enemyNode);
       }
    }
 }

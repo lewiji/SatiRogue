@@ -2,17 +2,19 @@ using Godot;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class PlaceStairs : GdSystem {
+public class PlaceStairs : ISystem {
+   public World World { get; set; } = null!;
    static readonly PackedScene StairsScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/Stairs.tscn");
 
-   public override void Run() {
-      var mapGenData = GetElement<MapGenData>();
+   public void Run() {
+      var mapGenData = World.GetElement<MapGenData>();
       var entitiesNode = World.GetElement<Entities>();
       var stairsNode = StairsScene.Instance<Stairs>();
       entitiesNode.AddChild(stairsNode);
-      Spawn(stairsNode);
+      this.Spawn(stairsNode);
    }
 }

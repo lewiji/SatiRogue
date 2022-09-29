@@ -1,9 +1,11 @@
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Nodes;
 using SatiRogue.Ecs.Play.Systems;
 using SatiRogue.Ecs.Play.Systems.Exit;
 using SatiRogue.Ecs.Play.Systems.Init;
-using SatiRogue.lib.RelEcsGodot.src;
+
 namespace SatiRogue.Ecs;
 
 public class PlayState : GameState {
@@ -12,6 +14,8 @@ public class PlayState : GameState {
 
    public override void Init(GameStateController gameStates) {
       CreateSystems(gameStates);
+      var timer = GetTree().CreateTimer(1f);
+      timer.Connect("timeout", this, nameof(PrintOrphans));
    }
 
    void CreateSystems(GameStateController gameStates) {
@@ -64,5 +68,9 @@ public class PlayState : GameState {
          .Add(new LevelChangeSystem());
 
       ExitSystems.Add(new CleanupDungeonSystem());
+   }
+
+   void PrintOrphans() {
+      PrintStrayNodes();
    }
 }

@@ -2,20 +2,25 @@ using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Intro.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class Intro : GdSystem {
-   [Signal] public delegate void IntroFinished();
+public class Intro : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   [Signal]
+   public delegate void IntroFinished();
 
    readonly PackedScene _introScene = GD.Load<PackedScene>("res://src/Ecs/Intro/Nodes/Intro.tscn");
    Control? _intro;
 
-   public override void Run() {
+   public void Run() {
       _intro = _introScene.Instance<IntroScene>();
       _intro.Connect("ready", this, nameof(OnIntroReady));
       _intro.Connect(nameof(IntroScene.DebugSkipToNewGame), this, nameof(OnSkipToNewGame));
-      GetElement<MenuState>().AddChild(_intro);
+      World.GetElement<MenuState>().AddChild(_intro);
    }
 
    void OnIntroReady() {
@@ -27,7 +32,7 @@ public class Intro : GdSystem {
 
    void OnSkipToNewGame() {
       OnIntroFinished("");
-      GetElement<InitMenu>().OnNewGameRequested();
+      World.GetElement<InitMenu>().OnNewGameRequested();
    }
 
    // ReSharper disable once UnusedParameter.Local

@@ -1,7 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Play.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Arrow : GameObject {
@@ -30,6 +31,6 @@ public partial class Arrow : GameObject {
    }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
-      entityBuilder.Add(this).Add<Firing>();
+      entityBuilder.Add<Firing>();
    }
 }

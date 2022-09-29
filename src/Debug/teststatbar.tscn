@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/Hud/StatBar3D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Ecs/Play/Nodes/Actors/Player3d.tscn" type="PackedScene" id=6]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Player" parent="." instance=ExtResource( 6 )]
+
+[node name="StatBar3D" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.25 )

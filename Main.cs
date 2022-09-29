@@ -4,6 +4,7 @@ using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Ecs;
 using SatiRogue.Ecs.Core;
+
 namespace SatiRogue;
 
 public partial class Main : Node {
@@ -12,7 +13,8 @@ public partial class Main : Node {
    float _totalObjects;
    float _lastObjects;
 
-   [Export] public Logger.LogLevel LogLevel {
+   [Export]
+   public Logger.LogLevel LogLevel {
       get => _logLevel;
       set {
          _logLevel = value;
@@ -20,13 +22,15 @@ public partial class Main : Node {
       }
    }
 
-   [OnReady] void CreateGameStateController() {
+   [OnReady]
+   void CreateGameStateController() {
       _gsc = new GameStateController();
       AddChild(_gsc);
       _gsc.World.AddElement(this);
    }
 
-   [OnReady] void AddWorldEnvironmentElement() {
+   [OnReady]
+   void AddWorldEnvironmentElement() {
       var worldEnvironment = GetNode<WorldEnvironment>("WorldEnvironment");
       _gsc.World.AddElement(worldEnvironment);
 
@@ -36,7 +40,8 @@ public partial class Main : Node {
       worldEnvironment.Environment = environment;
    }
 
-   [OnReady] void AddCoreState() {
+   [OnReady]
+   void AddCoreState() {
       var coreState = new CoreState();
       _gsc.PushState(coreState);
    }
@@ -47,7 +52,8 @@ public partial class Main : Node {
       return loading;
    }
 
-   [OnReady] void AddMenuState() {
+   [OnReady]
+   void AddMenuState() {
       var menuState = new MenuState();
       _gsc.PushState(menuState);
    }
@@ -63,8 +69,9 @@ public partial class Main : Node {
       _gsc.PushState(playState);
    }
 
-   [OnReady] void CreateMonitorTimer() {
-      if (LogLevel > Logger.LogLevel.Debug) return;
+   void CreateMonitorTimer() {
+      if (LogLevel > Logger.LogLevel.Debug)
+         return;
 
       var timer = new Timer {WaitTime = 1f, Autostart = true};
       timer.Connect("timeout", this, nameof(CheckMonitors));
@@ -82,8 +89,9 @@ public partial class Main : Node {
       Logger.Debug($"{_totalObjects}, {delta}");
    }
 
-   [OnReady] void CreateManualGcTimer() {
-      if (LogLevel > Logger.LogLevel.Debug) return;
+   void CreateManualGcTimer() {
+      if (LogLevel > Logger.LogLevel.Debug)
+         return;
 
       var timer = new Timer {WaitTime = 3f, Autostart = true};
       timer.Connect("timeout", this, nameof(ClearGc));

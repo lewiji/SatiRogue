@@ -6,18 +6,33 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Tools;
 using Array = System.Array;
+
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SpatialMapSystem : GdSystem {
+public class SpatialMapSystem : ISystem {
+   public World World { get; set; } = null!;
+
    static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
-      {CellType.Floor, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")},
-      {CellType.Stairs, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")},
-      {CellType.Wall, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")},
-      {CellType.DoorClosed, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")},
-      {CellType.DoorOpen, GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")}
+      {
+         CellType.Floor,
+         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")
+      }, {
+         CellType.Stairs,
+         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")
+      }, {
+         CellType.Wall,
+         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")
+      }, {
+         CellType.DoorClosed,
+         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")
+      }, {
+         CellType.DoorOpen,
+         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")
+      }
    };
 
    static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
@@ -27,9 +42,9 @@ public class SpatialMapSystem : GdSystem {
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
 
-   public override void Run() {
-      _mapGenData = GetElement<MapGenData>();
-      _mapGeometry = GetElement<MapGeometry>();
+   public void Run() {
+      _mapGenData = World.GetElement<MapGenData>();
+      _mapGeometry = World.GetElement<MapGeometry>();
 
       var maxWidth = _mapGenData.GeneratorParameters.Width;
       var chunkWidth = _mapGenData.GeneratorParameters.Width.Factors().GetMedian();
@@ -50,7 +65,9 @@ public class SpatialMapSystem : GdSystem {
 
       for (var chunkId = 0; chunkId < totalChunks; chunkId++) {
          var chunkCoords = GetChunkMinMaxCoords(chunkId, chunkWidth, maxWidth + chunkWidth);
-         if (cells == null) continue;
+
+         if (cells == null)
+            continue;
          var cellCount = 0;
 
          // Remove these cells from the enumeration
@@ -72,9 +89,7 @@ public class SpatialMapSystem : GdSystem {
    }
 
    void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells) {
-      var chunkRoom = new Spatial {
-         Name = $"Chunk{chunkId}"
-      };
+      var chunkRoom = new Spatial {Name = $"Chunk{chunkId}"};
       _mapGeometry.AddChild(chunkRoom);
       chunkRoom.Owner = _mapGeometry;
       chunkRoom.Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
@@ -83,7 +98,9 @@ public class SpatialMapSystem : GdSystem {
       foreach (CellType cellType in _cellTypes) {
          var cellsOfThisTypeInChunk = chunkCells.Where(cell => cell != null && cell.Type == cellType).ToArray();
          var meshForCellType = GetMeshResourceForCellType(cellType);
-         if (meshForCellType == null) continue;
+
+         if (meshForCellType == null)
+            continue;
 
          var mmInst = new MultiMeshInstance {
             Multimesh = new MultiMesh {

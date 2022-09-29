@@ -3,7 +3,8 @@ namespace SatiRogue.Ecs.Play.Components;
 public enum TurnType {
    PlayerTurn,
    EnemyTurn,
-   Processing
+   Processing,
+   Idle
 }
 
 public class Turn {

@@ -1,15 +1,20 @@
+using Godot;
 using Godot.Collections;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterDeathSystem : GdSystem {
-   public override void Run() {
-      foreach (var charDiedTrigger in Receive<CharacterDiedTrigger>()) {
+public class CharacterDeathSystem : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      foreach (var charDiedTrigger in this.Receive<CharacterDiedTrigger>()) {
          charDiedTrigger.Character.Alive = false;
 
          if (charDiedTrigger.Character is Player player) {
@@ -24,18 +29,19 @@ public class CharacterDeathSystem : GdSystem {
    }
 
    void FreeEntity(Character character) {
-      var mapData = GetElement<MapGenData>();
+      var mapData = World.GetElement<MapGenData>();
 
-      var entity = character.GetMeta("Entity") as Entity;
+      var entity = character.GetMeta("Entity") as Marshallable<Entity>;
 
-      if (entity!.IsNone) return;
-      var gridPos = GetComponent<GridPositionComponent>(entity);
+      if (entity!.Value.IsNone)
+         return;
+      var gridPos = this.GetComponent<GridPositionComponent>(entity.Value);
       var currentCell = mapData.GetCellAt(gridPos.Position);
       currentCell.Occupants.Remove(character.GetInstanceId());
-      DespawnAndFree(entity);
+      this.DespawnAndFree(entity.Value);
    }
 
    void HandlePlayerDeath() {
-      GetElement<DeathScreen>().FadeToDeath();
+      World.GetElement<DeathScreen>().FadeToDeath();
    }
 }

@@ -1,9 +1,12 @@
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class InitMapGen : GdSystem {
-   public override void Run() {
+public class InitMapGen : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
       World.AddElement(new MapGenData());
    }
 }

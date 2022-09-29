@@ -1,7 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Play.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Nodes.Items;
 
 public partial class Chest : Item {
@@ -28,7 +29,7 @@ public partial class Chest : Item {
    }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
-      entityBuilder.Add(this).Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
+      entityBuilder.Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
    }
 
    [OnReady] void ConnectAnimationFinished() {

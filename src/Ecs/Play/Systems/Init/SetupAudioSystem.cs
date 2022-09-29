@@ -1,15 +1,17 @@
 using Godot;
 using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SetupAudioSystem : GdSystem {
+public class SetupAudioSystem : ISystem {
+   public World World { get; set; } = null!;
    static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
 
-   public override void Run() {
+   public void Run() {
       var audioNodes = new AudioNodes();
-      GetElement<PlayState>().AddChild(audioNodes);
-      AddElement(audioNodes);
+      World.GetElement<PlayState>().AddChild(audioNodes);
+      World.AddElement(audioNodes);
 
       var ambienceAudio = new AudioStreamPlayer {
          Stream = Ambience,
@@ -17,7 +19,7 @@ public class SetupAudioSystem : GdSystem {
          Autoplay = true
       };
       audioNodes.AddChild(ambienceAudio);
-      Spawn(ambienceAudio).Add<AmbientAudio>();
+      this.Spawn(ambienceAudio).Add<AmbientAudio>();
 
       AddSfx(audioNodes, "Footsteps4", "res://audio/Barefoot Dirt footsteps 4.wav", "footsteps", true, 0.5f, false);
       AddSfx(audioNodes, "SwordWoosh1", "res://audio/Sword Woosh 1.wav", "sfx");

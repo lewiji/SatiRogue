@@ -1,12 +1,15 @@
 using System.Linq;
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class CreateCorridors : GdSystem {
-   public override void Run() {
-      var mapGenData = GetElement<MapGenData>();
+public class CreateCorridors : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      var mapGenData = World.GetElement<MapGenData>();
       var arr = mapGenData.GeneratorSpaces.ToArray();
 
       for (var i = 1; i < arr.Length; i++) {

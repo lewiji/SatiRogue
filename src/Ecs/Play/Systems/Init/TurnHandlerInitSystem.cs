@@ -1,10 +1,14 @@
 using SatiRogue.Ecs.Play.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class TurnHandlerInitSystem : GdSystem {
-   public override void Run() {
-      var turnHandlerEntity = Spawn().Add(new Turn()).Id();
-      AddElement(GetComponent<Turn>(turnHandlerEntity));
+public class TurnHandlerInitSystem : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      var turnHandlerEntity = this.Spawn().Add(new Turn()).Id();
+      World.AddElement(this.GetComponent<Turn>(turnHandlerEntity));
    }
 }

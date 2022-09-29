@@ -4,36 +4,40 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class InitMenu : GdSystem {
+public class InitMenu : Reference, ISystem {
+   public World World { get; set; } = null!;
    static readonly PackedScene MenuScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Menu.tscn");
    Nodes.Menu? _menu;
 
-   public override void Run() {
-      var menuState = GetElement<MenuState>();
+   public void Run() {
+      var menuState = World.GetElement<MenuState>();
       _menu = MenuScene.Instance<Nodes.Menu>();
       _menu.Connect(nameof(Nodes.Menu.NewGameRequested), this, nameof(OnNewGameRequested));
       _menu.Connect(nameof(Nodes.Menu.OptionsRequested), this, nameof(OnOptionsRequested));
       menuState.AddChild(_menu);
-      AddElement(_menu);
-      AddElement(this);
+      World.AddElement(_menu);
+      World.AddElement(this);
    }
 
    public async void OnNewGameRequested() {
-      var gsc = GetElement<GameStateController>();
-      var fade = GetElement<Fade>();
+      var gsc = World.GetElement<GameStateController>();
+      var fade = World.GetElement<Fade>();
       await fade.FadeToBlack();
 
-      if (_menu != null) _menu.Visible = false;
-      GetElement<Options>().Hide();
+      if (_menu != null)
+         _menu.Visible = false;
+      World.GetElement<Options>().Hide();
 
       if (!gsc.HasState<LoadingState>()) {
-         var loadingState = GetElement<Main>().AddLoadingState();
+         var loadingState = World.GetElement<Main>().AddLoadingState();
          await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
          Logger.Info("Freeing shader compiler & loading state");
-         var shaderCompiler = GetElement<ShaderCompiler>();
+         var shaderCompiler = World.GetElement<ShaderCompiler>();
          shaderCompiler.QueueFree();
          loadingState.QueueFree();
          await ToSignal(loadingState, "tree_exited");
@@ -42,12 +46,12 @@ public class InitMenu : GdSystem {
       }
 
       Logger.Info("Changing to mapgen state.");
-      var mapGenState = GetElement<Main>().ChangeToMapGenState();
+      var mapGenState = World.GetElement<Main>().ChangeToMapGenState();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       await fade.FadeFromBlack();
    }
 
    void OnOptionsRequested() {
-      GetElement<Options>().Show();
+      World.GetElement<Options>().Show();
    }
 }

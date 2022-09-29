@@ -2,27 +2,32 @@ using System;
 using Godot;
 using Godot.Collections;
 using SatiRogue.Ecs.Menu.Nodes;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using Option = SatiRogue.Ecs.Menu.Nodes.Option;
+
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class InitOptions : GdSystem {
+public class InitOptions : Reference, ISystem {
+   public World World { get; set; } = null!;
    static readonly PackedScene OptionsScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Options.tscn");
    Options? _options;
    readonly string _configPath = "user://satirogue.cfg";
 
-   public override void Run() {
-      var menuState = GetElement<MenuState>();
+   public void Run() {
+      var menuState = World.GetElement<MenuState>();
       _options = OptionsScene.Instance<Options>();
       _options.Connect(nameof(Options.OptionChanged), this, nameof(OnOptionChanged));
       _options.Connect("ready", this, nameof(OnOptionsReady));
       menuState.AddChild(_options);
-      AddElement(_options);
+      World.AddElement(_options);
    }
 
    ConfigFile GetOrCreateConfigFile() {
       var config = new ConfigFile();
-      if (config.Load(_configPath) == Error.Ok) return config;
+
+      if (config.Load(_configPath) == Error.Ok)
+         return config;
       config.Save(_configPath);
       return config;
    }
@@ -30,10 +35,11 @@ public class InitOptions : GdSystem {
    void OnOptionsReady() {
       var optionsChildren = _options!.GetNode<Control>("%OptionsContainer").GetChildren();
       var cfg = GetOrCreateConfigFile();
-      var worldEnv = GetElement<WorldEnvironment>();
+      var worldEnv = World.GetElement<WorldEnvironment>();
 
       foreach (Node optionsChild in optionsChildren) {
-         if (optionsChild is not Option option) return;
+         if (optionsChild is not Option option)
+            return;
 
          switch (option.OptionLocation) {
             case Option.OptionType.ProjectSetting:
@@ -48,7 +54,8 @@ public class InitOptions : GdSystem {
    }
 
    static void SetInitialEnvironmentSetting(Option option, ConfigFile cfg, WorldEnvironment worldEnv) {
-      if (option.CheckBox.Disabled) return;
+      if (option.CheckBox.Disabled)
+         return;
       var splitKeys = option.OptionKey.Split(",");
       var initialVal = GetInitialConfigVal(cfg, option, worldEnv, splitKeys);
       option.GetNode<CheckBox>("%CheckBox").Pressed = (bool) initialVal;
@@ -81,7 +88,7 @@ public class InitOptions : GdSystem {
                case Option.OptionType.ProjectSetting:
                   break;
                case Option.OptionType.EnvironmentSetting:
-                  GetElement<WorldEnvironment>().Environment.Set(splitKey, keyValue[optionKey]);
+                  World.GetElement<WorldEnvironment>().Environment.Set(splitKey, keyValue[optionKey]);
                   break;
                default:
                   throw new ArgumentOutOfRangeException(nameof(optionLocation), optionLocation, null);

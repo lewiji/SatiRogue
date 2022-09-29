@@ -1,12 +1,15 @@
 using Godot.Serialization;
 using SatiRogue.Debug;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Core.Systems;
 
-public class InitGdSerializer : GdSystem {
-   public override void Run() {
+public class InitGdSerializer : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
       Logger.Info("Initialising GDSerializer.");
       var serializer = new Serializer();
-      AddElement(serializer);
+      World.AddElement(serializer);
    }
 }

@@ -6,22 +6,28 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterMovementSystem : GdSystem {
-   public override void Run() {
-      var mapData = GetElement<MapGenData>();
-      var pathfindingHelper = GetElement<PathfindingHelper>();
-      var query = QueryBuilder<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>().Build();
+public class CharacterMovementSystem : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   public virtual void Run() {
+      var mapData = World.GetElement<MapGenData>();
+      var pathfindingHelper = World.GetElement<PathfindingHelper>();
+      var query = this.QueryBuilder<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>().Build();
 
       foreach (var (character, gridPos, input) in query) {
-         if (input.Direction == Vector2.Zero) continue;
+         if (input.Direction == Vector2.Zero)
+            continue;
 
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);
          var targetCell = mapData.GetCellAt(targetPos);
 
-         if (targetCell.Blocked) continue;
+         if (targetCell.Blocked)
+            continue;
 
          MoveToCell(mapData, gridPos, character, pathfindingHelper, input, targetCell);
       }
@@ -59,6 +65,6 @@ public class CharacterMovementSystem : GdSystem {
    }
 
    protected virtual void SendWalkAnimation(Character character) {
-      Send(new CharacterAnimationTrigger(character, "walk"));
+      this.Send(new CharacterAnimationTrigger(character, "walk"));
    }
 }

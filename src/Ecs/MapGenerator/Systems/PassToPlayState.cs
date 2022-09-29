@@ -1,10 +1,15 @@
-using SatiRogue.lib.RelEcsGodot.src;
+using Godot;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class PassToPlayState : GdSystem {
-   public override async void Run() {
-      await ToSignal(GetElement<MapGenState>().GetTree().CreateTimer(0.618f), "timeout");
-      GetElement<Main>().ChangeToPlayState();
-      GetElement<MapGenState>().EmitSignal(nameof(MapGenState.FinishedGenerating));
+public class PassToPlayState : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   public async void Run() {
+      //await ToSignal(this.GetElement<MapGenState>().GetTree().CreateTimer(0.618f), "timeout");
+      World.GetElement<Main>().ChangeToPlayState();
+      World.GetElement<MapGenState>().EmitSignal(nameof(MapGenState.FinishedGenerating));
    }
 }

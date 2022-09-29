@@ -3,7 +3,8 @@ using System.Linq;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Nodes;
-using World = SatiRogue.lib.RelEcsGodot.src.World;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Core;
 
 public class DeltaTime {
@@ -60,7 +61,9 @@ public class GameStateController : Node {
       World.Tick();
    }
 
-   public GameState? CurrentState { get => _stack.Count > 0 ? _stack.Peek() : null; }
+   public GameState? CurrentState {
+      get => _stack.Count > 0 ? _stack.Peek() : null;
+   }
 
    public bool HasState<T>() where T : GameState {
       return _stack.Any(gs => gs is T);
@@ -85,14 +88,16 @@ public class GameStateController : Node {
    }
 
    void PopStateDeferred() {
-      if (_stack.Count == 0) return;
+      if (_stack.Count == 0)
+         return;
 
       var currentState = _stack.Pop();
       currentState.ExitSystems.Run(World);
       RemoveChild(currentState);
       currentState.QueueFree();
 
-      if (_stack.Count <= 0) return;
+      if (_stack.Count <= 0)
+         return;
 
       currentState = _stack.Peek();
       World.ReplaceElement(currentState);
@@ -124,8 +129,10 @@ public class GameStateController : Node {
       _stack.Push(newState);
       AddChild(newState);
 
-      if (World.HasElement<GameState>()) World.ReplaceElement(newState);
-      else World.AddElement(newState);
+      if (World.HasElement<GameState>())
+         World.ReplaceElement(newState);
+      else
+         World.AddElement(newState);
 
       newState.SetupSystems(this);
       newState.InitSystems.Run(World);

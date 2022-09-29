@@ -1,6 +1,8 @@
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class EnemyAnimationSystem : GdSystem {
-   public override void Run() { }
+public class EnemyAnimationSystem : ISystem {
+   public World World { get; set; } = null!;
+   public void Run() { }
 }

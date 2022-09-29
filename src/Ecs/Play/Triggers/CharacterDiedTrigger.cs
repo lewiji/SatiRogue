@@ -1,5 +1,6 @@
 using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Triggers;
 
 public class CharacterDiedTrigger {

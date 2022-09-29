@@ -3,11 +3,15 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Triggers;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class CharacterAnimationSystem : GdSystem {
-   public override void Run() {
+public class CharacterAnimationSystem : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
       PlayRequestedAnimation();
       RevertToIdleAnimation();
    }
@@ -15,8 +19,9 @@ public class CharacterAnimationSystem : GdSystem {
    void PlayRequestedAnimation() {
       var counter = 0;
 
-      foreach (var (character, name) in Receive<CharacterAnimationTrigger>()) {
-         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite) continue;
+      foreach (var (character, name) in this.Receive<CharacterAnimationTrigger>()) {
+         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite)
+            continue;
 
          if (sprite.Frames.HasAnimation(name)) {
             sprite.Play(name);
@@ -27,16 +32,19 @@ public class CharacterAnimationSystem : GdSystem {
          }
          counter++;
       }
-      if (counter > 0) Logger.Info($"{counter} animations received");
+
+      if (counter > 0)
+         Logger.Info($"{counter} animations received");
    }
 
    void RevertToIdleAnimation() {
-      foreach (var _ in Receive<NewTurnTrigger>()) {
-         var query = QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
+      foreach (var _ in this.Receive<NewTurnTrigger>()) {
+         var query = this.QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
 
          foreach (var input in query) {
-            if (input.Direction != Vector2.Zero) continue;
-            var player = GetElement<Player>();
+            if (input.Direction != Vector2.Zero)
+               continue;
+            var player = World.GetElement<Player>();
 
             if (player.AnimatedSprite3D?.Animation == "walk") {
                player.AnimatedSprite3D.Animation = "idle";

@@ -1,5 +1,6 @@
 using Godot;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Nodes;
 
 public class Map : Spatial, ISpawnable {

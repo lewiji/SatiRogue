@@ -7,18 +7,21 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Nodes.Items;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
-public class SetInitialPositionSystem : GdSystem {
-   public override void Run() {
-      var mapData = GetElement<MapGenData>();
-      var pathfindingHelper = GetElement<PathfindingHelper>();
+public class SetInitialPositionSystem : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      var mapData = World.GetElement<MapGenData>();
+      var pathfindingHelper = World.GetElement<PathfindingHelper>();
 
       var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
 
-      var stairsQuery = Query<Stairs, GridPositionComponent>();
+      var stairsQuery = this.Query<Stairs, GridPositionComponent>();
 
       foreach (var (stairs, gridPos) in stairsQuery) {
          var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
@@ -43,7 +46,7 @@ public class SetInitialPositionSystem : GdSystem {
          var maxWidth = mapData.GeneratorParameters.Width;
          var chunkWidth = mapData.GeneratorParameters.Width.Factors().GetMedian();
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(gridPos.Position, chunkWidth, maxWidth);
-         var mapGeometry = GetElement<MapGeometry>();
+         var mapGeometry = World.GetElement<MapGeometry>();
          var chunkSpatial = mapGeometry.GetNode<Spatial>($"Chunk{chunkId}");
          var floorMultiMesh = chunkSpatial.GetChild<MultiMeshInstance>(0);
          var instanceId = -1;
@@ -69,7 +72,7 @@ public class SetInitialPositionSystem : GdSystem {
          }
       }
 
-      var query = Query<Character, GridPositionComponent>();
+      var query = this.Query<Character, GridPositionComponent>();
 
       foreach (var (character, gridPos) in query) {
          if (!availableCells.Any()) break;
@@ -90,7 +93,7 @@ public class SetInitialPositionSystem : GdSystem {
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
       }
 
-      var itemQuery = Query<Item, GridPositionComponent>();
+      var itemQuery = this.Query<Item, GridPositionComponent>();
 
       foreach (var (item, gridPos) in itemQuery) {
          if (!availableCells.Any()) break;

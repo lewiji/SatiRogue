@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+
 namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public struct GeneratorParameters {
@@ -39,6 +40,15 @@ public class MapGenData {
    public HashSet<Rect2> GeneratorSpaces;
 
    public MapGenData(GeneratorParameters? mapParams = null) {
+      InitGeneratorParamsAndSpaces(mapParams);
+   }
+
+   public void Reset(GeneratorParameters? mapParams = null) {
+      InitGeneratorParamsAndSpaces(mapParams);
+      IndexedCells.Clear();
+   }
+
+   void InitGeneratorParamsAndSpaces(GeneratorParameters? mapParams = null) {
       GeneratorSpaces = new HashSet<Rect2>();
       GeneratorParameters = mapParams ?? new GeneratorParameters();
    }
@@ -69,7 +79,8 @@ public class MapGenData {
 
    Cell InitialiseOrGetCell(long id) {
       // Try to add id to collection, if already exists, return matching cell struct
-      if (IndexedCells.ContainsKey(id)) return IndexedCells[id];
+      if (IndexedCells.ContainsKey(id))
+         return IndexedCells[id];
       // create and add new cell otherwise
       var cell = new Cell {Id = id};
       IndexedCells[id] = cell;

@@ -3,16 +3,21 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using SatiRogue.Ecs.Play.Systems.Init;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Tools;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class FogSystem : GdSystem {
-   public override void Run() {
-      var mapGenData = GetElement<MapGenData>();
-      var fogMultiMeshes = GetElement<FogMultiMeshes>();
+public class FogSystem : ISystem {
+   public World World { get; set; } = null!;
 
-      foreach (var (_, gridPosition) in Query<Player, GridPositionComponent>()) {
+   public void Run() {
+      var mapGenData = World.GetElement<MapGenData>();
+      GD.Print("Fog mutlimeshes 2");
+      var fogMultiMeshes = World.GetElement<FogMultiMeshes>();
+
+      foreach (var (_, gridPosition) in this.Query<Player, GridPositionComponent>()) {
          CalculateFov(gridPosition, mapGenData, fogMultiMeshes);
       }
    }
@@ -30,7 +35,7 @@ public class FogSystem : GdSystem {
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(position, chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
-         fogMultiMeshes[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, offScreenCoords));
+         fogMultiMeshes.Instances[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, offScreenCoords));
       }
    }
 }

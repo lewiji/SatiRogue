@@ -3,14 +3,17 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class InventorySystem : GdSystem {
+public class InventorySystem : Reference, ISystem {
+   public World World { get; set; } = null!;
    Inventory? _inventoryUi;
 
-   public override void Run() {
-      var invUi = GetElement<Inventory>();
+   public void Run() {
+      var invUi = World.GetElement<Inventory>();
       _inventoryUi = invUi;
       var itemSlots = invUi.GetItemSlots();
 
@@ -22,11 +25,12 @@ public class InventorySystem : GdSystem {
    }
 
    void OnInventoryOpenChanged(bool isOpen) {
-      if (_inventoryUi == null) return;
+      if (_inventoryUi == null)
+         return;
 
       if (isOpen) {
          _inventoryUi.ClearSlots();
-         var query = QueryBuilder<Item>().Has<InInventory>().Build();
+         var query = this.QueryBuilder<Item>().Has<InInventory>().Build();
 
          foreach (var item in query) {
             var texture = item.GetNode<AnimatedSprite3D>("AnimatedSprite3D").Frames.GetFrame("default", 0);
@@ -39,7 +43,7 @@ public class InventorySystem : GdSystem {
    }
 
    void OnItemSlotPressed(int index) {
-      var invUi = GetElement<Inventory>();
+      var invUi = World.GetElement<Inventory>();
       var itemSlot = invUi.GetItemSlot(index);
       Logger.Info($"Inventory item {itemSlot?.ItemName} clicked at index {index}.");
    }

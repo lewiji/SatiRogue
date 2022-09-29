@@ -232,9 +232,7 @@ debug_skip_to_game={
 
 [input_devices]
 
-buffering/agile_event_flushing=true
 pointing/emulate_touch_from_mouse=true
-pointing/emulate_mouse_from_touch=false
 
 [laigter_config]
 
@@ -257,6 +255,7 @@ project/assembly_name="RoguelikeMono"
 
 [physics]
 
+common/physics_fps=72
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 common/enable_object_picking=false

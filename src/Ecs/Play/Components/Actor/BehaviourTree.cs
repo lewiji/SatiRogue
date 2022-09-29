@@ -9,7 +9,7 @@ using SatiRogue.Ecs.Play.Triggers;
 using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 using static Active.Status;
-using World = SatiRogue.lib.RelEcsGodot.src.World;
+using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Components.Actor;
 
@@ -74,7 +74,8 @@ public class BaseBt : Gig {
       GridPositionComponent pos1,
       GridPositionComponent pos2,
       InputDirectionComponent inputDir) {
-      if (_rangeToPlayer is not (-1 or > 1)) return fail();
+      if (_rangeToPlayer is not (-1 or > 1))
+         return fail();
       var path = pathfindingHelper.FindPath(pos1.Position, pos2.Position);
 
       if (path.Length > 1) {
@@ -92,7 +93,8 @@ public class BaseBt : Gig {
       InputDirectionComponent inputDir,
       Enemy enemy,
       World world) {
-      if (_rangeToPlayer is (-1 or > 1)) return fail();
+      if (_rangeToPlayer is (-1 or > 1))
+         return fail();
       Logger.Info("ATTACKING!!!");
       playerHealth.Value -= 1;
       inputDir.Direction = Vector2.Zero;

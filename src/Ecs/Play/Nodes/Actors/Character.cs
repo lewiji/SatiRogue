@@ -1,13 +1,17 @@
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
 public class Character : GameObject {
    bool _alive = true;
    Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
-   public bool Behaving { get => Alive && Enabled; }
+   public bool Behaving {
+      get => Alive && Enabled;
+   }
    public bool Alive {
       get => _alive;
       set {
@@ -35,11 +39,12 @@ public class Character : GameObject {
    }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
-      entityBuilder.Add(this);
+      entityBuilder.Add(this as Character);
    }
 
    void OnAnimationFinished() {
-      if (Enabled) AnimatedSprite3D?.Play("idle");
+      if (Enabled)
+         AnimatedSprite3D?.Play("idle");
    }
 
    public void OnDeathAnimation() {
@@ -48,7 +53,8 @@ public class Character : GameObject {
          _particles.Emitting = true;
       }
 
-      if (AnimatedSprite3D == null) return;
+      if (AnimatedSprite3D == null)
+         return;
       var colorBlank = new Color(1f, 0f, 0f, 0f);
       var colorRed = new Color(1f, 0f, 0f);
       var mat = AnimatedSprite3D.MaterialOverlay;

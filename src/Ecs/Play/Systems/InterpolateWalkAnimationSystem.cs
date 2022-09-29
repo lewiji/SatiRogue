@@ -3,32 +3,40 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class InterpolateWalkAnimationSystem : GdSystem {
+public class InterpolateWalkAnimationSystem : ISystem {
+   public World World { get; set; } = null!;
    float _lerpWeight = 14f;
    PhysicsDeltaTime? _delta;
 
-   public override void Run() {
-      _delta ??= GetElement<PhysicsDeltaTime>();
+   public void Run() {
+      _delta ??= World.GetElement<PhysicsDeltaTime>();
 
-      foreach (var (spatial, gridPos, walkable) in Query<Character, GridPositionComponent, Walkable>()) {
+      foreach (var (spatial, gridPos, walkable) in this.Query<Character, GridPositionComponent, Walkable>()) {
          if (walkable.Teleporting) {
             TeleportSpatial(spatial, gridPos);
          } else {
             InterpolateSpatial(spatial, gridPos);
          }
 
-         if (walkable.Teleporting) walkable.Teleporting = false;
+         if (walkable.Teleporting)
+            walkable.Teleporting = false;
       }
    }
 
    void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      var currentTranslation = spatial.Translation;
-      if (currentTranslation.DistanceSquaredTo(gridPos.Position) < 0.005f) return;
+      if (spatial.Translation.DistanceSquaredTo(gridPos.Position) < 0.003f) {
+         spatial.Translation = gridPos.Position;
+         return;
+      }
 
-      spatial.Translation = currentTranslation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
+      spatial.Translation = spatial.Translation.CubicInterpolate(gridPos.Position,
+         gridPos.LastPosition + gridPos.LastPosition.DirectionTo(gridPos.Position) * 0.1f,
+         gridPos.Position - gridPos.Position.DirectionTo(gridPos.LastPosition) * 0.1f, _lerpWeight * _delta!.Value);
    }
 
    static void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {

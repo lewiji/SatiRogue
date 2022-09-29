@@ -82,8 +82,13 @@ fov = 50.0
 size = 14.0
 script = ExtResource( 5 )
 
-[node name="Light" type="SpotLight" parent="Visual/Camera"]
-transform = Transform( 0.966016, -0.0180308, 0.257852, 0, 0.997564, 0.0697564, -0.258482, -0.0673859, 0.963663, 3.27, -1.61802, 4.00543e-05 )
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Visual"]
+stream = ExtResource( 8 )
+unit_size = 5.0
+attenuation_filter_cutoff_hz = 7000.0
+
+[node name="Light" type="SpotLight" parent="Visual"]
+transform = Transform( 0.966016, -0.0180308, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
 shadow_enabled = true
 shadow_color = Color( 0.505882, 0.454902, 0.603922, 1 )
 shadow_bias = 0.015
@@ -91,11 +96,6 @@ spot_range = 18.0
 spot_attenuation = 0.618
 spot_angle = 60.0
 spot_angle_attenuation = 0.787678
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Visual"]
-stream = ExtResource( 8 )
-unit_size = 5.0
-attenuation_filter_cutoff_hz = 7000.0
 
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )

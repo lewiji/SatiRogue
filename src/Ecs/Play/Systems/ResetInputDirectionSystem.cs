@@ -1,11 +1,14 @@
 using Godot;
 using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.Play.Systems;
 
-public class ResetInputDirectionSystem : GdSystem {
-   public override void Run() {
-      foreach (var input in Query<InputDirectionComponent>()) {
+public class ResetInputDirectionSystem : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      foreach (var input in this.Query<InputDirectionComponent>()) {
          input.Direction = Vector2.Zero;
       }
    }

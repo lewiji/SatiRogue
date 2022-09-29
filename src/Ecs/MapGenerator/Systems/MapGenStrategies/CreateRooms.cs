@@ -1,11 +1,14 @@
 using Godot;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class CreateRooms : GdSystem {
-   public override void Run() {
-      var mapGenData = GetElement<MapGenData>();
+public class CreateRooms : ISystem {
+   public World World { get; set; } = null!;
+
+   public void Run() {
+      var mapGenData = World.GetElement<MapGenData>();
       var mapParams = mapGenData.GeneratorParameters;
 
       for (var roomIndex = 0; roomIndex < mapParams.NumRooms; roomIndex++) {

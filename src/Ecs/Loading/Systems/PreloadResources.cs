@@ -2,13 +2,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 using SatiRogue.Debug;
-using SatiRogue.lib.RelEcsGodot.src;
+using RelEcs;
+using World = RelEcs.World;
 using SatiRogue.Tools;
+
 namespace SatiRogue.Ecs.Loading.Systems;
 
-public class PreloadResources : GdSystem {
-   [Signal] public delegate void ResourceLoaded(Resource res);
-   [Signal] public delegate void AllResourcesLoaded();
+public class PreloadResources : Reference, ISystem {
+   public World World { get; set; } = null!;
+
+   [Signal]
+   public delegate void ResourceLoaded(Resource res);
+
+   [Signal]
+   public delegate void AllResourcesLoaded();
 
    static readonly string[] ResourcePaths = {
       "res://assets/overworld/WallShaderShadows.tres",
@@ -51,13 +58,13 @@ public class PreloadResources : GdSystem {
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
 
-   public override void Run() {
+   public void Run() {
       if (_resourcesToLoad.Count <= 0) {
          Logger.Info("Resources already loaded.");
          return;
       }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
-      GetElement<LoadingState>().Connect(nameof(LoadingState.RequestNextResourceLoad), this, nameof(LoadNextResource));
+      World.GetElement<LoadingState>().Connect(nameof(LoadingState.RequestNextResourceLoad), this, nameof(LoadNextResource));
       LoadNextResource();
    }
 
@@ -66,13 +73,13 @@ public class PreloadResources : GdSystem {
          var resourcePath = _resourcesToLoad.Pop();
 
          try {
-            var state = GetElement<LoadingState>();
+            var state = World.GetElement<LoadingState>();
             var resource = await state.LoadAsync<Resource>(resourcePath);
             EmitSignal(nameof(ResourceLoaded), resource);
          }
          catch (AsyncResourceLoader.ResourceInteractiveLoaderException loaderException) {
             Logger.Error(loaderException.Message);
-            GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
+            World.GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
          }
       } else {
          EmitSignal(nameof(AllResourcesLoaded));
