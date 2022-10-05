@@ -40,6 +40,7 @@ margin_right = 600.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 1 )
+deadzone_size = 3.0
 action_left = "move_left"
 action_right = "move_right"
 action_up = "move_up"

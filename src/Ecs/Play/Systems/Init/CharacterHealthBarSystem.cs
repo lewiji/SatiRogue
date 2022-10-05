@@ -17,11 +17,12 @@ public class CharacterHealthBarSystem : ISystem {
       foreach (var (entity, character, health) in query) {
          var healthBarNode = HealthBarScene.Instance<StatBar3D>();
          character.AddChild(healthBarNode);
-         this.On(entity).Add(healthBarNode);
+         //this.On(entity).Add(healthBarNode);
+         GodotExtensions.AddNodeComponent(World, entity, healthBarNode);
          healthBarNode.Percent = health.Percent;
 
          if (character is Player) {
-            //healthBarNode.Hidden = true;
+            healthBarNode.Hidden = false;
          }
       }
    }

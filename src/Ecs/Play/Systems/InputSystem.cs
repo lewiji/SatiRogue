@@ -23,8 +23,23 @@ public class InputSystem : ISystem {
          var aim = Input.IsActionPressed("aim");
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
          var shoot = Input.IsActionJustPressed("shoot");
-         var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+         var direction = new Vector2(0, 0); //, "move_right", "move_up", "move_down"
 
+         if (Input.IsActionPressed("move_left")) {
+            direction.x = -1;
+         } else if (Input.IsActionPressed("move_right")) {
+            direction.x = 1;
+         }
+
+         if (Input.IsActionPressed("move_up")) {
+            direction.y = -1;
+         } else if (Input.IsActionPressed("move_down")) {
+            direction.y = 1;
+         }
+
+         if (direction != Vector2.Zero) {
+            GD.Print(direction);
+         }
          input.Direction = direction.Round();
 
          if (diagonalLock) {

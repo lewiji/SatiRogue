@@ -165,6 +165,7 @@ tracks/1/keys = {
 [node name="Menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 13 )
@@ -183,6 +184,7 @@ stretch_mode = 2
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 16
@@ -253,6 +255,7 @@ anims/fade_out = SubResource( 14 )
 margin_top = 112.0
 margin_right = 868.0
 margin_bottom = 736.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.62
@@ -268,6 +271,7 @@ margin_top = 72.0
 margin_right = 772.0
 margin_bottom = 576.0
 rect_min_size = Vector2( 300, 216 )
+mouse_filter = 1
 size_flags_vertical = 3
 custom_styles/panel = ExtResource( 10 )
 
@@ -306,6 +310,7 @@ light_mask = 4
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer"]
@@ -333,6 +338,7 @@ custom_styles/pressed = ExtResource( 6 )
 custom_styles/focus = ExtResource( 9 )
 custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 5 )
+action_mode = 0
 group = ExtResource( 17 )
 text = "NEW GAME"
 icon = SubResource( 1 )
@@ -347,6 +353,7 @@ margin_left = -225.0
 margin_top = -8.0
 margin_right = 225.0
 margin_bottom = -6.0
+mouse_filter = 2
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/NewGame/Control"]
 visible = false
@@ -384,6 +391,7 @@ margin_left = -225.0
 margin_top = -8.0
 margin_right = 225.0
 margin_bottom = -6.0
+mouse_filter = 2
 __meta__ = {
 "_editor_description_": ""
 }
@@ -423,6 +431,7 @@ margin_left = -225.0
 margin_top = -8.0
 margin_right = 225.0
 margin_bottom = -6.0
+mouse_filter = 2
 __meta__ = {
 "_editor_description_": ""
 }
@@ -462,6 +471,7 @@ margin_left = -225.0
 margin_top = -8.0
 margin_right = 225.0
 margin_bottom = -6.0
+mouse_filter = 2
 __meta__ = {
 "_editor_description_": ""
 }
@@ -482,8 +492,8 @@ size_flags_stretch_ratio = 0.32
 [node name="Light2D" type="Light2D" parent="."]
 unique_name_in_owner = true
 texture = ExtResource( 12 )
-offset = Vector2( 237, 0 )
-texture_scale = 4.38889
+offset = Vector2( 1692, 732 )
+texture_scale = 31.3333
 energy = 1.62
 range_height = 64.0
 range_item_cull_mask = 7
