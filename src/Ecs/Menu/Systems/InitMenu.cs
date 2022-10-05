@@ -33,22 +33,26 @@ public class InitMenu : Reference, ISystem {
          _menu.Visible = false;
       World.GetElement<Options>().Hide();
 
+      LoadingState? loadingState = null;
+
       if (!gsc.HasState<LoadingState>()) {
-         var loadingState = World.GetElement<Main>().AddLoadingState();
+         loadingState = World.GetElement<Main>().AddLoadingState();
          await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
-         Logger.Info("Freeing shader compiler & loading state");
-         var shaderCompiler = World.GetElement<ShaderCompiler>();
-         shaderCompiler.QueueFree();
-         loadingState.QueueFree();
-         await ToSignal(loadingState, "tree_exited");
-         await ToSignal(fade.GetTree(), "idle_frame");
-         Logger.Info("Freed.");
       }
 
       Logger.Info("Changing to mapgen state.");
       var mapGenState = World.GetElement<Main>().ChangeToMapGenState();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
+      var shaderCompiler = World.GetElement<ShaderCompiler>();
+      shaderCompiler.Visible = false;
       await fade.FadeFromBlack();
+
+      Logger.Info("Freeing shader compiler & loading state");
+      shaderCompiler.QueueFree();
+      loadingState?.QueueFree();
+      await ToSignal(loadingState, "tree_exited");
+      await ToSignal(fade.GetTree(), "idle_frame");
+      Logger.Info("Freed.");
    }
 
    void OnOptionsRequested() {

@@ -4,19 +4,24 @@ using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
+
 namespace SatiRogue.Ecs.Loading.Nodes;
 
 public partial class ShaderCompiler : CanvasLayer {
    static readonly PackedScene SpatialWigglerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/SpatialShaderWiggler.tscn");
    static readonly PackedScene CanvasItemWigglerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/CanvasItemWiggler.tscn");
 
-   [OnReadyGet("%SpatialShaderRoot/%SpatialWigglers")] Spatial _spatialWigglers = null!;
-   [OnReadyGet("MarginContainer/CanvasItemWigglers")] Control _canvasItemWigglers = null!;
+   [OnReadyGet("%SpatialShaderRoot/%SpatialWigglers")]
+   Spatial _spatialWigglers = null!;
+
+   [OnReadyGet("MarginContainer/CanvasItemWigglers")]
+   Control _canvasItemWigglers = null!;
 
    public bool ProcessResourcePreloader(Resource res) {
-      if (res is not Material material) return false;
+      if (res is not Material material)
+         return false;
 
-      Logger.Debug($"Material compiling: {material.ResourcePath}");
+      Logger.Info($"Material compiling: {material.ResourcePath}");
 
       switch (material) {
          case SpatialMaterial spatialMaterial:

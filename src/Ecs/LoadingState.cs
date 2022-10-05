@@ -3,10 +3,12 @@ using Godot.Collections;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Loading.Systems;
+
 namespace SatiRogue.Ecs;
 
 public class LoadingState : GameState {
-   [Signal] public delegate void FinishedLoading();
+   [Signal]
+   public delegate void FinishedLoading();
 
    PreloadResources? _preloadResources;
 
@@ -15,7 +17,6 @@ public class LoadingState : GameState {
 
       CompileShaders compileShaders;
       InitSystems.Add(_preloadResources = new PreloadResources()).Add(compileShaders = new CompileShaders());
-      _preloadResources.Connect(nameof(PreloadResources.ResourceLoaded), compileShaders, nameof(CompileShaders.OnResourceReceived));
       _preloadResources.Connect(nameof(PreloadResources.AllResourcesLoaded), compileShaders, nameof(CompileShaders.OnAllResourcesLoaded));
       compileShaders.Connect(nameof(CompileShaders.ShadersCompiled), this, nameof(OnShadersCompiled));
    }

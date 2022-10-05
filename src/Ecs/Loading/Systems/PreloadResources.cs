@@ -14,6 +14,7 @@ public class PreloadResources : Reference, ISystem {
 
    [Signal]
    public delegate void ResourceLoaded(Resource res);
+
    [Signal]
    public delegate void ResourceFailed(string path);
 
@@ -30,6 +31,9 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Play/Nodes/Items/HealthMaterial.tres",
       "res://resources/particles/blood_particle_material.tres",
       "res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres",
+      "res://resources/enemies/harpy/harpy_blue_spatial_mat.tres",
+      "res://resources/enemies/maw/maw_purple_spatial_mat.tres",
+      "res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres",
       "res://resources/props/room_spatialmaterial.tres",
       "res://src/Character/CharacterPositionMarkerMaterial.tres",
       "res://src/Ecs/Play/Nodes/Items/ChestMaterial.tres",
@@ -47,10 +51,11 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Play/Nodes/Items/ChestSpriteFrames.tres"
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
-   private int _resourcesLoaded = 0;
-   private int _resourcesFailed = 0;
-   private int _resourceCount = 0;
-   private System.Threading.Thread? _loadingThread;
+   int _resourcesLoaded = 0;
+   int _resourcesFailed = 0;
+   int _resourceCount = 0;
+   Thread? _loadingThread;
+   CompileShaders? _compileShaders;
 
    public void Run() {
       if (_resourcesToLoad.Count <= 0) {
@@ -59,15 +64,15 @@ public class PreloadResources : Reference, ISystem {
       }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
       _resourceCount = _resourcesToLoad.Count;
-      
-      _loadingThread = new System.Threading.Thread(LoadAllResources);
+
+      _loadingThread = new Thread(LoadAllResources);
       _loadingThread.Start();
-      
    }
 
    async void LoadAllResources() {
       Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
       Connect(nameof(ResourceFailed), this, nameof(OnResourceFailed));
+
       while (_resourcesToLoad.Count > 0) {
          await LoadNextResource();
       }
@@ -93,6 +98,8 @@ public class PreloadResources : Reference, ISystem {
 
    void OnResourceLoaded(Resource res) {
       _resourcesLoaded += 1;
+      _compileShaders ??= World.GetElement<CompileShaders>();
+      _compileShaders.OnResourceReceived(res);
       CheckResourcesFinished();
    }
 
@@ -102,10 +109,9 @@ public class PreloadResources : Reference, ISystem {
    }
 
    void CheckResourcesFinished() {
-      if (_resourcesFailed + _resourcesLoaded < _resourceCount) return;
+      if (_resourcesFailed + _resourcesLoaded < _resourceCount)
+         return;
       Logger.Info("All resources loaded");
       EmitSignal(nameof(AllResourcesLoaded));
-      _loadingThread?.Join();
-      _loadingThread = null;
    }
 }
