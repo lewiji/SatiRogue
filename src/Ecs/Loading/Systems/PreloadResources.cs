@@ -113,5 +113,7 @@ public class PreloadResources : Reference, ISystem {
          return;
       Logger.Info("All resources loaded");
       EmitSignal(nameof(AllResourcesLoaded));
+      _loadingThread?.Join();
+      _loadingThread = null;
    }
 }
