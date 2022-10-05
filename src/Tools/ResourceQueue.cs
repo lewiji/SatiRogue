@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Godot;
     using SatiRogue.Debug;
+    using Thread = System.Threading.Thread;
     namespace SatiRogue.Tools; 
 
     public static class ResourceQueue
@@ -29,6 +30,7 @@
                 }
 
                 reportProgress?.Invoke(path, progress.Progress);
+                Thread.Sleep(5);
             }
 
             throw new InvalidOperationException("We should never be here.");

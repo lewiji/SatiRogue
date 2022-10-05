@@ -5,6 +5,7 @@ using SatiRogue.Debug;
 using RelEcs;
 using World = RelEcs.World;
 using SatiRogue.Tools;
+using Thread = System.Threading.Thread;
 
 namespace SatiRogue.Ecs.Loading.Systems;
 
@@ -49,6 +50,7 @@ public class PreloadResources : Reference, ISystem {
    private int _resourcesLoaded = 0;
    private int _resourcesFailed = 0;
    private int _resourceCount = 0;
+   private System.Threading.Thread? _loadingThread;
 
    public void Run() {
       if (_resourcesToLoad.Count <= 0) {
@@ -56,12 +58,18 @@ public class PreloadResources : Reference, ISystem {
          return;
       }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
-      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
-      Connect(nameof(ResourceFailed), this, nameof(OnResourceFailed));
       _resourceCount = _resourcesToLoad.Count;
       
+      _loadingThread = new System.Threading.Thread(LoadAllResources);
+      _loadingThread.Start();
+      
+   }
+
+   async void LoadAllResources() {
+      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
+      Connect(nameof(ResourceFailed), this, nameof(OnResourceFailed));
       while (_resourcesToLoad.Count > 0) {
-         LoadNextResource();
+         await LoadNextResource();
       }
    }
 
@@ -97,5 +105,7 @@ public class PreloadResources : Reference, ISystem {
       if (_resourcesFailed + _resourcesLoaded < _resourceCount) return;
       Logger.Info("All resources loaded");
       EmitSignal(nameof(AllResourcesLoaded));
+      _loadingThread?.Join();
+      _loadingThread = null;
    }
 }
