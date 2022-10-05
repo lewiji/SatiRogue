@@ -3,6 +3,7 @@ using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Components.Actor;
 using RelEcs;
+using SatiRogue.Ecs.Core.Nodes;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
@@ -16,15 +17,15 @@ public partial class Player : Character {
 
    [OnReadyGet("DirectionIndicator")]
    public DirectionIndicator DirectionIndicator = null!;
-   Stats _stats = new(10, 10, 1, 1, 0);
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       base.OnSpawn(entityBuilder);
+      var playerStore = entityBuilder.World.GetElement<PersistentPlayerData>();
 
       entityBuilder
          //.Add(this as Player)
-         .Add(_stats)
-         .Add(new HealthComponent(_stats.Health))
+         .Add(playerStore.Stats)
+         .Add(new HealthComponent(playerStore.Stats.Health, playerStore.Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add(new Walkable())

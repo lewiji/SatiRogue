@@ -50,7 +50,8 @@ public class PlayState : GameState {
          .Add(new CharacterMovementSystem())
          .Add(new FogSystem())
          .Add(new ResetInputDirectionSystem())
-         .Add(new HealthSystem());
+         .Add(new HealthSystem())
+         .Add(new PersistInventorySystem());
 
       var turnHandlerSystem = new TurnHandlerSystem();
       var inputSystem = new InputSystem();

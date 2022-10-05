@@ -4,6 +4,7 @@ using SatiRogue.Ecs.Play.Components;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
 using RelEcs;
+using SatiRogue.Ecs.Core.Nodes;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Systems;
@@ -13,6 +14,16 @@ public class InventorySystem : Reference, ISystem {
    Inventory? _inventoryUi;
 
    public void Run() {
+      var persistentStore = World.GetElement<PersistentPlayerData>();
+      GD.Print($"===> persistent items: {persistentStore.GetItems().Count}");
+
+      foreach (var item in persistentStore.GetItems()) {
+         GD.Print(item);
+         GD.Print(IsInstanceValid(item));
+      }
+
+      GD.Print($"<=== persistent items");
+
       var invUi = World.GetElement<Inventory>();
       _inventoryUi = invUi;
       var itemSlots = invUi.GetItemSlots();
@@ -29,10 +40,10 @@ public class InventorySystem : Reference, ISystem {
          return;
 
       if (isOpen) {
+         var persistentStore = World.GetElement<PersistentPlayerData>();
          _inventoryUi.ClearSlots();
-         var query = this.QueryBuilder<Item>().Has<InInventory>().Build();
 
-         foreach (var item in query) {
+         foreach (var item in persistentStore.GetItems()) {
             var texture = item.GetNode<AnimatedSprite3D>("AnimatedSprite3D").Frames.GetFrame("default", 0);
 
             if (_inventoryUi.GetFirstUnusedSlot() is { } itemSlot) {

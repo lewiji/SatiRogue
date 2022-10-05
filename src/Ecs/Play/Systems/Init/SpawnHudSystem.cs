@@ -5,6 +5,7 @@ using SatiRogue.Ecs.Menu.Nodes;
 using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
+using SatiRogue.Ecs.Core.Nodes;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Systems.Init;
@@ -20,6 +21,8 @@ public class SpawnHudSystem : Reference, ISystem {
    static readonly PackedScene TouchControlsScene = GD.Load<PackedScene>("res://src/Ecs/Play/Nodes/TouchControls/TouchControls.tscn");
 
    public void Run() {
+      var playerStore = World.GetElement<PersistentPlayerData>();
+
       var playState = World.GetElement<PlayState>();
       var hud = HudScene.Instance();
       var uiParent = hud.GetNode("%HudItems");
@@ -27,6 +30,7 @@ public class SpawnHudSystem : Reference, ISystem {
 
       var healthUi = HealthUiScene.Instance<HealthUi>();
       uiParent.AddChild(healthUi);
+      healthUi.Percent = playerStore.Health / (float) playerStore.Stats.Health;
       World.AddElement(healthUi);
 
       var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
@@ -38,6 +42,7 @@ public class SpawnHudSystem : Reference, ISystem {
 
       var lootUi = LootUiScene.Instance<Loot>();
       uiParent.AddChild(lootUi);
+      lootUi.NumLoots = playerStore.Gold;
       World.AddElement(lootUi);
 
       var invUi = InvUiScene.Instance<Inventory>();

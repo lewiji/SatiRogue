@@ -10,6 +10,7 @@ using SatiRogue.Ecs.Play.Nodes.Hud;
 using SatiRogue.Ecs.Play.Nodes.Items;
 using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
+using SatiRogue.Ecs.Core.Nodes;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Systems;
@@ -75,14 +76,14 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                chest.BlocksCell = false;
                this.On(entity!.Value).Remove<Closed>().Add<Open>();
                chest.Enabled = false;
-               World.GetElement<Loot>().NumLoots += 1;
+               World.GetElement<PersistentPlayerData>().Gold += 1;
                break;
             case Health health when !health.Taken:
                health.Taken = true;
                this.GetComponent<HealthComponent>(((Marshallable<Entity>) player.GetMeta("Entity")).Value).Value += 1;
                break;
             case SpatialItem spatialItem when World.HasComponent<Collectable>(identity.Value):
-               this.On(entity!.Value).Remove<Collectable>().Remove<GridPositionComponent>().Add<InInventory>();
+               this.On(entity!.Value).Remove<Collectable>().Remove<GridPositionComponent>().Add<InInventory>().Add<JustPickedUp>();
                spatialItem.BlocksCell = false;
                spatialItem.Visible = false;
                break;

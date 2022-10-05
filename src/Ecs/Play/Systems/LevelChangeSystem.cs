@@ -12,17 +12,18 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class LevelChangeSystem : Reference, ISystem {
    public World World { get; set; } = null!;
-   public static int FloorNumber { get; set; }
    bool _firstRun = true;
 
    public void Run() {
+      var playerStore = World.GetElement<PersistentPlayerData>();
+
       foreach (var stairsDown in this.Receive<StairsDownTrigger>()) {
          Logger.Info("Stairs down system activating.");
          var gsc = World.GetElement<GameStateController>();
 
          if (gsc.CurrentState is not PlayState)
             continue;
-         FloorNumber -= 1;
+         playerStore.Floor -= 1;
          ChangeLevel(gsc);
          break;
       }
@@ -33,7 +34,7 @@ public class LevelChangeSystem : Reference, ISystem {
 
          if (gsc.CurrentState is not PlayState)
             continue;
-         FloorNumber = 0;
+         playerStore.Reset();
          ChangeLevel(gsc);
          break;
       }
@@ -44,7 +45,7 @@ public class LevelChangeSystem : Reference, ISystem {
 
          if (gsc.CurrentState is not PlayState)
             continue;
-         FloorNumber = 0;
+         playerStore.Floor = 0;
          ExitToMainMenu(gsc);
          break;
       }
@@ -52,7 +53,7 @@ public class LevelChangeSystem : Reference, ISystem {
       if (!_firstRun)
          return;
       World.AddElement(this);
-      World.GetElement<FloorCounter>().FloorNumber = FloorNumber;
+      World.GetElement<FloorCounter>().FloorNumber = playerStore.Floor;
       _firstRun = false;
    }
 

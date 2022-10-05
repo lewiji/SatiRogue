@@ -37,9 +37,6 @@ public class InputSystem : ISystem {
             direction.y = 1;
          }
 
-         if (direction != Vector2.Zero) {
-            GD.Print(direction);
-         }
          input.Direction = direction.Round();
 
          if (diagonalLock) {

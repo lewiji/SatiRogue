@@ -13,6 +13,8 @@ public partial class Loot : Control {
       }
    }
 
+   [OnReady] void SetInitial() { }
+
    [OnReady] void ConnectGuiInput() {
       Connect("gui_input", this, nameof(OnGuiInput));
    }
