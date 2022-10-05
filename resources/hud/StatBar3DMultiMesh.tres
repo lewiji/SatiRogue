@@ -6,6 +6,7 @@
 transform_format = 1
 custom_data_format = 2
 instance_count = 2
+visible_instance_count = 2
 mesh = ExtResource( 1 )
 transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0.015 )
 custom_data_array = PoolColorArray( 0.464286, 0, 0, 1, 0.4892, 0.5504, 1, 1 )

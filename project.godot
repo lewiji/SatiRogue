@@ -89,11 +89,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://lib/touch_input_manager/RawGesture.gd"
 }, {
-"base": "ImageTexture",
-"class": "VersatileAtlasTexture",
-"language": "GDScript",
-"path": "res://addons/versatile_atlas/resource.gd"
-}, {
 "base": "Control",
 "class": "VirtualJoystick",
 "language": "GDScript",
@@ -116,7 +111,6 @@ _global_script_class_icons={
 "LaigterCli": "",
 "LaigterCliResult": "",
 "RawGesture": "",
-"VersatileAtlasTexture": "res://addons/versatile_atlas/icon_x.svg",
 "VirtualJoystick": ""
 }
 
@@ -157,7 +151,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/versatile_atlas/plugin.cfg", "res://addons/zoomy/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
 
 [importer_defaults]
 
@@ -263,12 +257,11 @@ common/enable_object_picking=false
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
-threads/thread_model=2
 quality/directional_shadow/size.mobile=1024
 quality/shadow_atlas/size.mobile=1024
-quality/shadows/filter_mode=0
 quality/shading/force_vertex_shading.mobile=false
 quality/filters/anisotropic_filter_level=16
+quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2
 gles3/shaders/shader_compilation_mode.mobile=2
@@ -277,6 +270,4 @@ gles3/shaders/max_simultaneous_compiles.mobile=2
 gles3/shaders/shader_cache_size_mb=1024
 gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256
-quality/voxel_cone_tracing/high_quality=true
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"

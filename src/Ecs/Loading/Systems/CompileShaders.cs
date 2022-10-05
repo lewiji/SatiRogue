@@ -15,17 +15,30 @@ public class CompileShaders : Reference, ISystem {
 
    static readonly PackedScene ShaderCompilerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ShaderCompiler.tscn");
    ShaderCompiler? _shaderCompiler;
+   private int _shadersToCompile = 0;
 
    public void Run() {
       _shaderCompiler = ShaderCompilerScene.Instance<ShaderCompiler>();
       World.GetElement<LoadingState>().AddChild(_shaderCompiler);
-      World.GetElement<LoadingState>().Connect(nameof(LoadingState.LoadedResources), this, nameof(OnResourcesReceived));
       World.AddElement(_shaderCompiler);
       World.AddElement(this);
    }
+   
+   public void OnResourceReceived(Resource resource) {
+      if (_shaderCompiler!.ProcessResourcePreloader(resource)) {
+         _shadersToCompile += 1;
+      }
+   }
 
-   async void OnResourcesReceived(Array<Resource> resources) {
-      await _shaderCompiler!.ProcessResourcePreloader(resources);
+   public async void OnAllResourcesLoaded() {
+      if (_shadersToCompile > 0) {
+         await ToSignal(_shaderCompiler!.GetTree().CreateTimer(0.35f), "timeout");
+      }
+      
+      OnFinished();
+   }
+
+   async void OnFinished() {
       EmitSignal(nameof(ShadersCompiled));
    }
 }
