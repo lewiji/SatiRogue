@@ -13,29 +13,20 @@ public class PreloadResources : Reference, ISystem {
 
    [Signal]
    public delegate void ResourceLoaded(Resource res);
+   [Signal]
+   public delegate void ResourceFailed(string path);
 
    [Signal]
    public delegate void AllResourcesLoaded();
 
    static readonly string[] ResourcePaths = {
       "res://assets/overworld/WallShaderShadows.tres",
-      "res://src/Ecs/Menu/Nodes/MenuBgShader.gdshader",
-      "res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShader.gdshader",
-      "res://resources/enemies/flash_overlay_shader.gdshader",
       "res://assets/overworld/WallShader.tres",
-      "res://src/Ecs/Menu/Nodes/MenuButtonShaderMaterial.tres",
-      "res://src/Ecs/Core/Nodes/FadeShaderMaterial.tres",
-      "res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShaderMaterial.tres",
-      "res://assets/overworld/PolySurfaceShader.tres",
-      "res://resources/hud/StatBar3DShader.gdshader",
       "res://scenes/ThreeDee/res/FogTileShaderMaterial.tres",
       "res://resources/enemies/flash_overlay_shadermaterial.tres",
-      "res://src/Ecs/Menu/Nodes/MenuBgShaderMaterial.tres",
       "res://resources/hud/StatBar3DShaderMat.tres",
-      "res://src/Ecs/Menu/Nodes/MenuButtonShader.gdshader",
       "res://assets/overworld/OverworldMatShader.material",
       "res://src/Ecs/Play/Nodes/Items/HealthMaterial.tres",
-      "res://assets/overworld/OverworldMat.material",
       "res://resources/particles/blood_particle_material.tres",
       "res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres",
       "res://resources/props/room_spatialmaterial.tres",
@@ -46,9 +37,7 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Play/Nodes/Items/CoinsSpatialMaterial.tres",
       "res://src/Ecs/Play/Nodes/Items/ChestSpatialMaterial.tres",
       "res://src/Ecs/Play/Nodes/Items/CoinsParticlesMaterial.tres",
-      "res://scenes/res/debug/DebugPortalMeshMaterial.tres",
       "res://src/Ecs/Play/Nodes/Items/ArrowMaterial.tres",
-      "res://assets/heroic_items/ArrowOrigin/ArrowOrigin3_spatial_material.tres",
       "res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres",
       "res://resources/props/stairs_spriteframes.tres",
       "res://resources/enemies/harpy/harpy_blue_spriteframes.tres",
@@ -57,6 +46,9 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Play/Nodes/Items/ChestSpriteFrames.tres"
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
+   private int _resourcesLoaded = 0;
+   private int _resourcesFailed = 0;
+   private int _resourceCount = 0;
 
    public void Run() {
       if (_resourcesToLoad.Count <= 0) {
@@ -64,25 +56,46 @@ public class PreloadResources : Reference, ISystem {
          return;
       }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
-      World.GetElement<LoadingState>().Connect(nameof(LoadingState.RequestNextResourceLoad), this, nameof(LoadNextResource));
-      LoadNextResource();
+      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
+      Connect(nameof(ResourceFailed), this, nameof(OnResourceFailed));
+      _resourceCount = _resourcesToLoad.Count;
+      
+      while (_resourcesToLoad.Count > 0) {
+         LoadNextResource();
+      }
    }
 
-   async void LoadNextResource() {
+   async Task<Resource?> LoadNextResource() {
       if (_resourcesToLoad.Count > 0) {
          var resourcePath = _resourcesToLoad.Pop();
 
          try {
-            var state = World.GetElement<LoadingState>();
-            var resource = await state.LoadAsync<Resource>(resourcePath);
+            var resource = await ResourceQueue.Load<Resource>(resourcePath);
             EmitSignal(nameof(ResourceLoaded), resource);
+            return resource;
          }
          catch (AsyncResourceLoader.ResourceInteractiveLoaderException loaderException) {
             Logger.Error(loaderException.Message);
-            World.GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
+            EmitSignal(nameof(ResourceFailed), resourcePath);
+            //World.GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
          }
-      } else {
-         EmitSignal(nameof(AllResourcesLoaded));
       }
+      return null;
+   }
+
+   void OnResourceLoaded(Resource res) {
+      _resourcesLoaded += 1;
+      CheckResourcesFinished();
+   }
+
+   void OnResourceFailed(string path) {
+      _resourcesFailed += 1;
+      CheckResourcesFinished();
+   }
+
+   void CheckResourcesFinished() {
+      if (_resourcesFailed + _resourcesLoaded < _resourceCount) return;
+      Logger.Info("All resources loaded");
+      EmitSignal(nameof(AllResourcesLoaded));
    }
 }

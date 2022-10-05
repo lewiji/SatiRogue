@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=2]
 [ext_resource path="res://fonts/SufferingExtended.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://addons/teeb.text_transitions/resources/Bounce.tres" type="RichTextEffect" id=4]
-[ext_resource path="res://Pure Energy Release Dark.ogg" type="AudioStream" id=5]
+[ext_resource path="res://audio/Pure Energy Release Dark.ogg" type="AudioStream" id=5]
 [ext_resource path="res://audio/UI Select Dark.wav" type="AudioStream" id=6]
 [ext_resource path="res://audio/Object Impact Thud.wav" type="AudioStream" id=7]
 [ext_resource path="res://src/Ecs/Intro/Nodes/IntroScene.cs" type="Script" id=8]

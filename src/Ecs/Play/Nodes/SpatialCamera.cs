@@ -85,26 +85,11 @@ public partial class SpatialCamera : Camera {
 
       var distanceSquared = Translation.DistanceSquaredTo(targetTranslation);
 
-      if (distanceSquared < 0.0025f) {
+      if (distanceSquared < 0.003f) {
          Translation = targetTranslation;
          return;
       }
-
-      var smoothSpeed = SmoothSpeed;
-
-      switch (distanceSquared) {
-         case >= 1f:
-            smoothSpeed *= 4.854f;
-            break;
-         case <= 0.01f:
-            smoothSpeed *= 2.617924f;
-            break;
-         case <= 0.03f:
-            smoothSpeed *= 1.618f;
-            break;
-      }
-
-      Translation = Translation.LinearInterpolate(targetTranslation, delta * smoothSpeed);
+      Translation = Translation.LinearInterpolate(targetTranslation, delta * SmoothSpeed);
    }
 
    void ProcessShake() {

@@ -13,31 +13,26 @@ public partial class ShaderCompiler : CanvasLayer {
    [OnReadyGet("%SpatialShaderRoot/%SpatialWigglers")] Spatial _spatialWigglers = null!;
    [OnReadyGet("MarginContainer/CanvasItemWigglers")] Control _canvasItemWigglers = null!;
 
-   public async Task ProcessResourcePreloader(Array<Resource> resources) {
-      Logger.Info("Processing materials.");
+   public bool ProcessResourcePreloader(Resource res) {
+      if (res is not Material material) return false;
 
-      foreach (var res in resources) {
-         if (res is not Material material) continue;
+      Logger.Debug($"Material compiling: {material.ResourcePath}");
 
-         Logger.Debug(material.ResourcePath);
-
-         switch (material) {
-            case SpatialMaterial spatialMaterial:
-               InstanceSpatialWiggler(spatialMaterial);
-               break;
-            case ShaderMaterial shaderMaterial:
-               InstanceWigglerByShaderMode(shaderMaterial, material);
-               break;
-            case CanvasItemMaterial canvasItemMaterial:
-               InstanceCanvasItemWiggler(canvasItemMaterial);
-               break;
-            case ParticlesMaterial particlesMaterial:
-               InstanceParticlesWiggler(particlesMaterial);
-               break;
-         }
+      switch (material) {
+         case SpatialMaterial spatialMaterial:
+            InstanceSpatialWiggler(spatialMaterial);
+            break;
+         case ShaderMaterial shaderMaterial:
+            InstanceWigglerByShaderMode(shaderMaterial, material);
+            break;
+         case CanvasItemMaterial canvasItemMaterial:
+            InstanceCanvasItemWiggler(canvasItemMaterial);
+            break;
+         case ParticlesMaterial particlesMaterial:
+            InstanceParticlesWiggler(particlesMaterial);
+            break;
       }
-
-      await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
+      return true;
    }
 
    public override void _ExitTree() { }
