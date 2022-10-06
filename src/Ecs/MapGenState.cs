@@ -36,8 +36,8 @@ public class MapGenState : GameState {
          AddDefaultGeneratorStrategies(ContinueSystems);
       }
 
-      InitSystems.Add(new PassToPlayState());
-      ContinueSystems.Add(new PassToPlayState());
+      InitSystems.Add(new PassToDungeonState());
+      ContinueSystems.Add(new PassToDungeonState());
    }
 
    void AddDefaultGeneratorStrategies(SystemGroup systemGroup) {

@@ -58,16 +58,11 @@ public partial class Main : Node {
 	  _gsc.PushState(menuState);
    }
 
-   public MapGenState ChangeToMapGenState() {
-	  var mapGenState = new MapGenState();
-	  _gsc.PushState(mapGenState);
-	  return mapGenState;
+   public void AddSessionState() {
+	   var sessionState = new SessionState();
+	   _gsc.PushState(sessionState);
    }
 
-   public void ChangeToPlayState() {
-	  var playState = new PlayState();
-	  _gsc.PushState(playState);
-   }
 
    void CreateMonitorTimer() {
 	  if (LogLevel > Logger.LogLevel.Debug)

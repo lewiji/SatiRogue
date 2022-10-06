@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://src/Ecs/Play/Nodes/Actors/Player3d.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Actors/Player3d.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/devils-workshop-3d-rpg/wallStepsMesh.tres" type="ArrayMesh" id=2]
 [ext_resource path="res://resources/enemies/flash_overlay_shader.gdshader" type="Shader" id=3]
 [ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__77_n.png" type="Texture" id=4]

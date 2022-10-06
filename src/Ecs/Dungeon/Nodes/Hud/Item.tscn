@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/ItemFrameNormal.tres" type="Texture" id=2]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/ItemSlot.cs" type="Script" id=3]
+
+[node name="Item" type="CenterContainer"]
+margin_right = 100.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+
+[node name="Frame" type="TextureRect" parent="."]
+unique_name_in_owner = true
+margin_left = 18.0
+margin_top = 18.0
+margin_right = 82.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+
+[node name="ClickTarget" type="CenterContainer" parent="Frame"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ItemTexture" type="TextureRect" parent="Frame/ClickTarget"]
+unique_name_in_owner = true
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 55.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 46, 46 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Frame/ClickTarget/ItemTexture"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+
+[node name="Equipped" type="Label" parent="Frame/ClickTarget/ItemTexture/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+margin_right = 46.0
+margin_bottom = 46.0
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 1 )
+text = "E"
+align = 2
+valign = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 34.0
+margin_top = 17.0
+margin_right = 66.0
+margin_bottom = 83.0
+rect_min_size = Vector2( 32, 32 )
+mouse_filter = 2
+custom_constants/margin_top = 40
+
+[node name="LabelName" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+margin_top = 40.0
+margin_right = 32.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 1 )
+align = 1
+valign = 2
+
+[node name="Menu" type="Control" parent="."]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 50.0
+margin_bottom = 50.0
+mouse_filter = 1
+
+[node name="PopupMenu" type="PopupMenu" parent="Menu"]
+unique_name_in_owner = true
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 63.0
+margin_bottom = 82.0
+items = [ "Use", null, 0, false, false, 0, 0, null, "", false, "Equip", null, 0, false, false, 1, 0, null, "", false, "Drop", null, 0, false, false, 2, 0, null, "", false ]

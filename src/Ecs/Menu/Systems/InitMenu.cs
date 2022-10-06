@@ -40,19 +40,8 @@ public class InitMenu : Reference, ISystem {
          await ToSignal(loadingState, nameof(LoadingState.FinishedLoading));
       }
 
-      Logger.Info("Changing to mapgen state.");
-      var mapGenState = World.GetElement<Main>().ChangeToMapGenState();
-      await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
-      var shaderCompiler = World.GetElement<ShaderCompiler>();
-      shaderCompiler.Visible = false;
-      await fade.FadeFromBlack();
-
-      Logger.Info("Freeing shader compiler & loading state");
-      shaderCompiler.QueueFree();
-      loadingState?.QueueFree();
-      await ToSignal(loadingState, "tree_exited");
-      await ToSignal(fade.GetTree(), "idle_frame");
-      Logger.Info("Freed.");
+      Logger.Info("Creating new session state.");
+      World.GetElement<Main>().AddSessionState();
    }
 
    void OnOptionsRequested() {

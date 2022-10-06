@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/light/Lighting_Kit_White_1.png" type="Texture" id=4]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey.png" type="Texture" id=5]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey_n.png" type="Texture" id=6]
-[ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro32.tres" type="DynamicFont" id=7]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro32.tres" type="DynamicFont" id=7]
 
 [sub_resource type="Animation" id=1]
 length = 0.001

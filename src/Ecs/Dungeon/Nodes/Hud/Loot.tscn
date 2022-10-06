@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/coin_pile_large_A/frame0000.png" type="Texture" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/Loot.cs" type="Script" id=3]
+
+[node name="Loot" type="MarginContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -220.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 220, 64 )
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 0
+script = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 8.0
+margin_right = 212.0
+margin_bottom = 83.0
+rect_min_size = Vector2( 110, 64 )
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+margin_right = 104.0
+margin_bottom = 75.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 212.0
+margin_bottom = 75.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = " 0"
+text = " 0"
+fit_content_height = true
+scroll_active = false

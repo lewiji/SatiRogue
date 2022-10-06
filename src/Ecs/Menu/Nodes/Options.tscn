@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://src/Ecs/Play/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro64.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/Ecs/Menu/Nodes/Option.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Ecs/Menu/Nodes/Options.cs" type="Script" id=3]
 [ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=4]
