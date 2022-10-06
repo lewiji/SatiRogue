@@ -47,13 +47,13 @@ public partial class ShaderCompiler : CanvasLayer {
 
       switch (mode) {
          case Shader.Mode.Spatial:
-            InstanceSpatialWiggler(material);
+            CallDeferred(nameof(InstanceSpatialWiggler), material);
             break;
          case Shader.Mode.CanvasItem:
-            InstanceCanvasItemWiggler(material);
+            CallDeferred(nameof(InstanceCanvasItemWiggler), material);
             break;
          case Shader.Mode.Particles:
-            InstanceParticlesWiggler(material);
+            CallDeferred(nameof(InstanceParticlesWiggler), material);
             break;
       }
    }

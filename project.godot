@@ -151,7 +151,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/MultiMeshBatcher/plugin.cfg", "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
 
 [importer_defaults]
 
@@ -249,7 +249,7 @@ project/assembly_name="RoguelikeMono"
 
 [physics]
 
-common/physics_fps=72
+common/physics_fps=45
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 common/enable_object_picking=false

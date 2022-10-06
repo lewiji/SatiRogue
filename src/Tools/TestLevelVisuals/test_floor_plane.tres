@@ -1,0 +1,9 @@
+[gd_resource type="PlaneMesh" load_steps=2 format=2]
+
+[ext_resource path="res://src/Tools/TestLevelVisuals/test_floor_plane_mat.tres" type="Material" id=1]
+
+[resource]
+material = ExtResource( 1 )
+size = Vector2( 256, 256 )
+subdivide_width = 16
+subdivide_depth = 16

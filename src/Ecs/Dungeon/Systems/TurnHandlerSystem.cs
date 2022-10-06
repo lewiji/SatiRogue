@@ -80,10 +80,9 @@ public class TurnHandlerSystem : Reference, ISystem {
 
    async void ResetTurn() {
       SetCurrentTurn(TurnType.Idle);
-      await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime / 2f), "timeout");
+      await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
       SetCurrentTurn(TurnType.PlayerTurn);
 
-      await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime / 2f), "timeout");
       this.Send(new NewTurnTrigger());
    }
 }
