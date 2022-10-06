@@ -18,4 +18,5 @@ public class SpawnPlayerSystem : ISystem {
       var playerEntity = this.Spawn(playerNode).Id();
       World.AddElement(playerNode);
    }
+   
 }

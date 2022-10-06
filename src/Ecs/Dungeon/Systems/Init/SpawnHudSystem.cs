@@ -5,6 +5,7 @@ using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.Menu.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
@@ -18,6 +19,7 @@ public class SpawnHudSystem : Reference, ISystem {
    static readonly PackedScene StairsConfirmationScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/StairsConfirmation.tscn");
    static readonly PackedScene FloorCounterScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/FloorCounter.tscn");
    static readonly PackedScene TouchControlsScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/TouchControls/TouchControls.tscn");
+   private static readonly PackedScene MessageLogScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/MessageLog.tscn");
 
    public void Run() {
       var playerStore = World.GetElement<PersistentPlayerData>();
@@ -46,6 +48,11 @@ public class SpawnHudSystem : Reference, ISystem {
       lootUi.NumLoots = playerStore.Gold;
       World.AddElement(lootUi);
 
+      var messageLog = MessageLogScene.Instance<MessageLog>();
+      uiParent.AddChild(messageLog);
+      World.AddElement(messageLog);
+      AddInitialSpawnMessageLog();
+
       var invUi = InvUiScene.Instance<Inventory>();
       uiParent.AddChild(invUi);
       World.AddElement(invUi);
@@ -61,6 +68,12 @@ public class SpawnHudSystem : Reference, ISystem {
       fade.Connect(nameof(DeathScreen.Exit), this, nameof(OnExitFromDeath));
 
       hud.GetNode<Button>("%OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
+   }
+   
+   async void AddInitialSpawnMessageLog() {
+      var msgLog = World.GetElement<MessageLog>();
+      await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
+      msgLog.AddMessage("Worldling entered the dungeon realm.");
    }
 
    void OnOptionsPressed() {
