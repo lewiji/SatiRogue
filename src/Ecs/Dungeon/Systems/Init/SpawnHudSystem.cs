@@ -2,6 +2,7 @@ using Godot;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.Menu.Nodes;
@@ -19,7 +20,8 @@ public class SpawnHudSystem : Reference, ISystem {
    static readonly PackedScene StairsConfirmationScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/StairsConfirmation.tscn");
    static readonly PackedScene FloorCounterScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/FloorCounter.tscn");
    static readonly PackedScene TouchControlsScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/TouchControls/TouchControls.tscn");
-   private static readonly PackedScene MessageLogScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/MessageLog.tscn");
+   static readonly PackedScene MessageLogScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/MessageLog.tscn");
+   static readonly PackedScene DebugUiScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DebugUi.tscn");
 
    public void Run() {
       var playerStore = World.GetElement<PersistentPlayerData>();
@@ -51,7 +53,10 @@ public class SpawnHudSystem : Reference, ISystem {
       var messageLog = MessageLogScene.Instance<MessageLog>();
       uiParent.AddChild(messageLog);
       World.AddElement(messageLog);
-      AddInitialSpawnMessageLog();
+
+      var debugUi = DebugUiScene.Instance<DebugUi>();
+      uiParent.AddChild(debugUi);
+      World.AddElement(debugUi);
 
       var invUi = InvUiScene.Instance<Inventory>();
       uiParent.AddChild(invUi);
@@ -68,12 +73,6 @@ public class SpawnHudSystem : Reference, ISystem {
       fade.Connect(nameof(DeathScreen.Exit), this, nameof(OnExitFromDeath));
 
       hud.GetNode<Button>("%OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
-   }
-   
-   async void AddInitialSpawnMessageLog() {
-      var msgLog = World.GetElement<MessageLog>();
-      await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
-      msgLog.AddMessage("Worldling entered the dungeon realm.");
    }
 
    void OnOptionsPressed() {

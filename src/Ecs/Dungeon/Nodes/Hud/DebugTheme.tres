@@ -1,0 +1,147 @@
+[gd_resource type="Theme" load_steps=17 format=2]
+
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugPanelStylebox.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/GUI_set03_Options_v1_0/atlas_controlset_menugraphics.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=13]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 193, 281, 14, 14 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+modulate_color = Color( 0.494118, 0.494118, 0.494118, 0.72549 )
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxTexture" id=11]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 193, 265, 14, 14 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+expand_margin_top = 1.0
+
+[sub_resource type="StyleBoxTexture" id=8]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 193, 281, 14, 14 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=12]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 193, 313, 14, 14 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+modulate_color = Color( 0.427451, 0.427451, 0.427451, 0.823529 )
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 27
+atlas = ExtResource( 4 )
+region = Rect2( 128, 180, 16, 9 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 27
+atlas = ExtResource( 4 )
+region = Rect2( 144, 180, 16, 9 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 629, 246, 38, 4 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 1.0
+margin_bottom = 1.0
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 4 )
+region_rect = Rect2( 624, 230, 49, 4 )
+margin_left = 18.0
+margin_right = 18.0
+margin_top = 1.0
+margin_bottom = 1.0
+axis_stretch_horizontal = 2
+modulate_color = Color( 0.858824, 0.607843, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 6 )
+region_rect = Rect2( 746, 611, 3, 2 )
+margin_left = 1.0
+margin_right = 1.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+axis_stretch_vertical = 1
+modulate_color = Color( 0.827451, 0.827451, 0.827451, 1 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/colors/font_color = Color( 0.835294, 0.768627, 0.560784, 1 )
+Button/colors/font_color_disabled = Color( 0.13, 0.13, 0.13, 0.545098 )
+Button/colors/font_color_focus = Color( 1, 0.917647, 0.670588, 1 )
+Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
+Button/colors/font_color_pressed = Color( 0.839216, 0.713726, 0.329412, 1 )
+Button/constants/hseparation = 0
+Button/fonts/font = ExtResource( 1 )
+Button/styles/disabled = SubResource( 13 )
+Button/styles/focus = SubResource( 14 )
+Button/styles/hover = SubResource( 11 )
+Button/styles/normal = SubResource( 8 )
+Button/styles/pressed = SubResource( 12 )
+CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color_disabled = Color( 0.133333, 0.133333, 0.133333, 1 )
+CheckButton/colors/font_color_focus = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color_hover = Color( 1, 0.945098, 0.596078, 1 )
+CheckButton/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color_pressed = Color( 0.776471, 1, 0.662745, 1 )
+CheckButton/constants/check_vadjust = 1
+CheckButton/constants/hseparation = 5
+CheckButton/fonts/font = ExtResource( 1 )
+CheckButton/icons/off = SubResource( 1 )
+CheckButton/icons/off_disabled = null
+CheckButton/icons/on = SubResource( 17 )
+CheckButton/icons/on_disabled = null
+CheckButton/styles/disabled = SubResource( 5 )
+CheckButton/styles/focus = SubResource( 6 )
+CheckButton/styles/hover = SubResource( 5 )
+CheckButton/styles/hover_pressed = SubResource( 5 )
+CheckButton/styles/normal = SubResource( 5 )
+CheckButton/styles/pressed = SubResource( 7 )
+HSeparator/constants/separation = 0
+HSeparator/styles/separator = SubResource( 16 )
+Panel/styles/panel = ExtResource( 3 )
+VSeparator/constants/separation = 11
+VSeparator/styles/separator = null

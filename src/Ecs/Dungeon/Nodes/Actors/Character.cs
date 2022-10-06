@@ -9,6 +9,7 @@ public partial class Character : GameObject {
    bool _alive = true;
    Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
+   public string CharacterName = "";
    public bool Behaving {
       get => Alive && Enabled;
    }

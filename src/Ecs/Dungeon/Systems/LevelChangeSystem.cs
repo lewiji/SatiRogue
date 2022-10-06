@@ -55,6 +55,21 @@ public class LevelChangeSystem : Reference, ISystem {
       World.AddElement(this);
       World.GetElement<FloorCounter>().FloorNumber = playerStore.Floor;
       _firstRun = false;
+      AddInitialSpawnMessageLog();
+   }
+
+   async void AddInitialSpawnMessageLog() {
+      var playerStore = World.GetElement<PersistentPlayerData>();
+      var msgLog = World.GetElement<MessageLog>();
+      await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
+      msgLog.AddMessage($"Worldling {playerStore.PlayerName} entered the dungeon realm.");
+   }
+
+   async void AddNewFloorSpawnMessageLog() {
+      var playerStore = World.GetElement<PersistentPlayerData>();
+      var msgLog = World.GetElement<MessageLog>();
+      await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
+      msgLog.AddMessage($"Worldling {playerStore.PlayerName} descended to floor {playerStore.Floor}.");
    }
 
    async void ExitToMainMenu(GameStateController gsc) {
@@ -84,5 +99,6 @@ public class LevelChangeSystem : Reference, ISystem {
       var fade = World.GetElement<Fade>();
       await fade.FadeFromBlack();
       InputSystem.Paused = false;
+      AddNewFloorSpawnMessageLog();
    }
 }

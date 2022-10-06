@@ -11,6 +11,7 @@ public class PersistentPlayerData : Node {
    public int Health = 10;
    public Stats Stats = new(Stats.DefaultPlayerClass);
    public int Floor;
+   public string PlayerName = "Player";
    List<Item> _inventory = new();
 
    public void AddItem(Item item) {

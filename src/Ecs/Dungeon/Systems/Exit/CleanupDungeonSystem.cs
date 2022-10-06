@@ -43,5 +43,7 @@ public class CleanupDungeonSystem : ISystem {
       World.RemoveElement<Turn>();
       World.RemoveElement<LevelChangeSystem>();
       World.RemoveElement<AudioNodes>();
+      World.RemoveElement<MessageLog>();
+      World.RemoveElement<DebugUi>();
    }
 }

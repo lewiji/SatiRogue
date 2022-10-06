@@ -19,7 +19,9 @@ public partial class Player : Character {
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       base.OnSpawn(entityBuilder);
+
       var playerStore = entityBuilder.World.GetElement<PersistentPlayerData>();
+      CharacterName = playerStore.PlayerName;
 
       entityBuilder
          //.Add(this as Player)

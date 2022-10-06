@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Debug;
 using Object = Godot.Object;
 
 namespace SatiRogue.scenes.Hud;
@@ -58,13 +59,16 @@ public partial class StatBar3D : Spatial {
       if (_multiMeshInstance == null)
          return;
 
-      _multiMeshInstance.Multimesh.InstanceCount = 2;
-      // Frame
-      _multiMeshInstance.Multimesh.SetInstanceTransform(0, _bgTransform);
-      _multiMeshInstance.Multimesh.SetInstanceCustomData(0, _bgColor);
-      // Bar
-      _multiMeshInstance.Multimesh.SetInstanceTransform(1, _fgTransform);
-      _multiMeshInstance.Multimesh.SetInstanceCustomData(1, _fgColor);
+      if (_multiMeshInstance.Multimesh.InstanceCount != 2) {
+         Logger.Info("Generating statbar meshes");
+         _multiMeshInstance.Multimesh.InstanceCount = 2;
+         // Frame
+         _multiMeshInstance.Multimesh.SetInstanceTransform(0, _bgTransform);
+         _multiMeshInstance.Multimesh.SetInstanceCustomData(0, _bgColor);
+         // Bar
+         _multiMeshInstance.Multimesh.SetInstanceTransform(1, _fgTransform);
+         _multiMeshInstance.Multimesh.SetInstanceCustomData(1, _fgColor);
+      }
    }
 
    [OnReady]

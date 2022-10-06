@@ -45,6 +45,7 @@ custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/Panel/MarginContainer"]
+unique_name_in_owner = true
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 495.0

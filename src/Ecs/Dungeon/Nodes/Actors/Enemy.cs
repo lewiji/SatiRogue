@@ -3,6 +3,7 @@ using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Systems.Init;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
@@ -18,9 +19,16 @@ public partial class Enemy : Character {
 
    [OnReadyGet("Area")]
    Area _area = null!;
+   public SpawnEnemySystem.EnemyRecord? EnemyRecord;
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       base.OnSpawn(entityBuilder);
+
+      Material = EnemyRecord?.GraphicsSet.Material;
+      Frames = EnemyRecord?.GraphicsSet.Frames;
+
+      if (EnemyRecord?.Name != null)
+         CharacterName = EnemyRecord.Name;
 
       entityBuilder.Add(Stats)
          .Add(new HealthComponent(Stats.Record.Health))
@@ -33,6 +41,10 @@ public partial class Enemy : Character {
 
    [OnReady]
    public void OnEnemyReady() {
+      CallDeferred(nameof(SetupSceneResources));
+   }
+
+   void SetupSceneResources() {
       _playerCamera = GetTree().Root.GetCamera();
       GD.Print("Enemy ready");
 

@@ -1,0 +1,215 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugTheme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/heroic_items/ArtifactOriginal.png" type="Texture" id=2]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/DebugUi.cs" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 25
+atlas = ExtResource( 2 )
+region = Rect2( 3, 113, 10, 14 )
+
+[node name="DebugUi" type="MarginContainer"]
+anchor_right = 1.0
+margin_top = -36.0
+rect_min_size = Vector2( 150, 32 )
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+custom_constants/margin_right = 4
+custom_constants/margin_top = 0
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 0
+script = ExtResource( 3 )
+
+[node name="BgContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+margin_left = 4.0
+margin_right = 896.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 128, 20 )
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BgContainer"]
+margin_right = 892.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 128, 20 )
+alignment = 1
+
+[node name="Control2" type="Control" parent="BgContainer/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Panel" type="Panel" parent="BgContainer/HBoxContainer"]
+margin_left = 44.0
+margin_right = 847.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 128, 16 )
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="BgContainer/HBoxContainer"]
+margin_left = 851.0
+margin_right = 892.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="ControlsContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+margin_left = 4.0
+margin_right = 896.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 128, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_constants/margin_right = 20
+custom_constants/margin_top = 6
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 8
+
+[node name="CenterContainer" type="HBoxContainer" parent="ControlsContainer"]
+margin_left = 20.0
+margin_top = 6.0
+margin_right = 872.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 128, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ControlsContainer/CenterContainer"]
+margin_right = 852.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 128, 4 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_constants/vseparation = 9
+custom_constants/hseparation = 7
+
+[node name="Control2" type="Control" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="HSeparator5" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 133.0
+margin_right = 136.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="PlayerPosLabel" type="Label" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 143.0
+margin_top = 2.0
+margin_right = 209.0
+margin_bottom = 20.0
+text = "Player: "
+
+[node name="PlayerPos" type="Label" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+unique_name_in_owner = true
+margin_left = 216.0
+margin_top = 2.0
+margin_right = 256.0
+margin_bottom = 20.0
+text = "Vec3"
+
+[node name="HSeparator6" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 263.0
+margin_right = 266.0
+margin_bottom = 22.0
+
+[node name="StairsPosLabel" type="Label" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 273.0
+margin_top = 2.0
+margin_right = 333.0
+margin_bottom = 20.0
+text = "Stairs: "
+
+[node name="StairsPos" type="Label" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+unique_name_in_owner = true
+margin_left = 340.0
+margin_top = 2.0
+margin_right = 380.0
+margin_bottom = 20.0
+text = "Vec3"
+
+[node name="HSeparator" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 387.0
+margin_right = 390.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="WarpToStairsButton" type="Button" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+unique_name_in_owner = true
+margin_left = 397.0
+margin_right = 525.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+text = "Warp to stairs"
+
+[node name="HSeparator2" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 532.0
+margin_right = 535.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="ReplenishHealthButton" type="Button" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+unique_name_in_owner = true
+margin_left = 542.0
+margin_right = 584.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+text = "Heal"
+
+[node name="HSeparator3" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 591.0
+margin_right = 594.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="GodModeCheckButton" type="CheckButton" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+unique_name_in_owner = true
+margin_left = 601.0
+margin_right = 708.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 4 )
+text = "God mode"
+
+[node name="HSeparator4" type="HSeparator" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 715.0
+margin_right = 718.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="Control" type="Control" parent="ControlsContainer/CenterContainer/HFlowContainer"]
+margin_left = 725.0
+margin_right = 725.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="Toggle" type="Control" parent="."]
+margin_left = 4.0
+margin_right = 896.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 2
+
+[node name="ToggleDebug" type="Button" parent="Toggle"]
+unique_name_in_owner = true
+modulate = Color( 1, 1, 1, 0.741176 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -38.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 10, 10 )
+toggle_mode = true
+text = "DBG"
+icon = SubResource( 1 )
+icon_align = 1
+expand_icon = true

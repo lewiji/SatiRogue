@@ -10,6 +10,7 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Tools;
 using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SetInitialPositionSystem : ISystem {
@@ -40,6 +41,8 @@ public class SetInitialPositionSystem : ISystem {
          chosenCell.Value.Occupants.Add(stairs.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
          stairs.Translation = gridPos.Position;
+
+         World.GetElement<DebugUi>().SetStairsPos(gridPos.Position);
          Logger.Info($"Spawned stairs at {stairs.Translation}");
 
          // Make hole for stairs to sit in in floor
@@ -75,7 +78,8 @@ public class SetInitialPositionSystem : ISystem {
       var query = this.Query<Character, GridPositionComponent>();
 
       foreach (var (character, gridPos) in query) {
-         if (!availableCells.Any()) break;
+         if (!availableCells.Any())
+            break;
          var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
          var limit = 32;
 
@@ -89,6 +93,10 @@ public class SetInitialPositionSystem : ISystem {
          }
 
          gridPos.Position = chosenCell.Value.Position;
+
+         if (character is Player) {
+            World.GetElement<DebugUi>().SetPlayerPos(gridPos.Position);
+         }
          chosenCell.Value.Occupants.Add(character.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
       }
@@ -96,7 +104,8 @@ public class SetInitialPositionSystem : ISystem {
       var itemQuery = this.Query<Item, GridPositionComponent>();
 
       foreach (var (item, gridPos) in itemQuery) {
-         if (!availableCells.Any()) break;
+         if (!availableCells.Any())
+            break;
          var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
          var limit = 32;
 

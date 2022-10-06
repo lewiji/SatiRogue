@@ -14,7 +14,6 @@ public class FogSystem : ISystem {
 
    public void Run() {
       var mapGenData = World.GetElement<MapGenData>();
-      GD.Print("Fog mutlimeshes 2");
       var fogMultiMeshes = World.GetElement<FogMultiMeshes>();
 
       foreach (var (_, gridPosition) in this.Query<Player, GridPositionComponent>()) {

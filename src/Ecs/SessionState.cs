@@ -5,20 +5,30 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Session;
-namespace SatiRogue.Ecs; 
+namespace SatiRogue.Ecs;
 
 public class SessionState : GameState {
    public override void Init(GameStateController gameStateController) {
       CreateSystems(gameStateController);
       InitMapGen(gameStateController);
    }
-   private async void InitMapGen(GameStateController gameStateController) {
 
+   void CreateSystems(GameStateController gameStateController) {
+      gameStateController?.World.AddElement(this);
+
+      InitSystems.Add(new InitPersistentPlayerData());
+   }
+
+   async void InitMapGen(GameStateController gameStateController) {
       var mapGenState = ChangeToMapGenState(gameStateController);
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
+      await StartShaderCompiler(gameStateController);
+   }
+
+   async Task StartShaderCompiler(GameStateController gameStateController) {
       var shaderCompiler = gameStateController.World.GetElement<ShaderCompiler>();
       shaderCompiler.Visible = false;
-      
+
       var fade = gameStateController.World.GetElement<Fade>();
       await fade.FadeFromBlack();
 
@@ -31,13 +41,7 @@ public class SessionState : GameState {
       Logger.Info("Freed.");
    }
 
-   void CreateSystems(GameStateController gameStateController) {
-      gameStateController?.World.AddElement(this);
-      
-      InitSystems.Add(new InitPersistentPlayerData());
-   }
-
-   private MapGenState ChangeToMapGenState(GameStateController gameStateController) {
+   MapGenState ChangeToMapGenState(GameStateController gameStateController) {
       var mapGenState = new MapGenState();
       gameStateController.PushState(mapGenState);
       return mapGenState;

@@ -18,6 +18,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
    MessageLog? _messageLog;
    MapGenData? _mapGenData;
    PathfindingHelper? _pathfindingHelper;
+
    public override void Run() {
       _mapGenData ??= World.GetElement<MapGenData>();
       _pathfindingHelper ??= World.GetElement<PathfindingHelper>();
@@ -32,10 +33,11 @@ public class PlayerMovementSystem : CharacterMovementSystem {
 
          if (!targetCell.Blocked && !targetCell.Occupied) {
             MoveToCell(_mapGenData, gridPos, player, _pathfindingHelper, input, targetCell);
-            Logger.Info($"Moved player to: {gridPos.Position}");
+            World.GetElement<DebugUi>().SetPlayerPos(targetPos);
             this.Send(new CharacterAudioTrigger(player, "walk"));
          } else {
             HandleOccupants(targetCell, playerEntity, player, input, _mapGenData, _pathfindingHelper, gridPos);
+            World.GetElement<DebugUi>().SetPlayerPos(gridPos.Position);
             this.Send(new CharacterAudioTrigger(player, "sword"));
          }
       }
@@ -76,7 +78,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                      _ => player.AnimatedSprite3D.FlipH
                   };
                }
-               _messageLog?.AddMessage($"Hit {character.Name} for {damage} damage.");
+               _messageLog?.AddMessage($"Hit {character.CharacterName} for {damage} damage.");
                break;
             }
             case Chest chest when World.HasComponent<Closed>(identity.Value):
@@ -85,7 +87,9 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                this.On(entity!.Value).Remove<Closed>().Add<Open>();
                chest.Enabled = false;
                var goldAmount = 1;
-               World.GetElement<PersistentPlayerData>().Gold += goldAmount;
+               var playerStore = World.GetElement<PersistentPlayerData>();
+               playerStore.Gold += goldAmount;
+               World.GetElement<Loot>().NumLoots = playerStore.Gold;
                _messageLog?.AddMessage($"Retrieved {goldAmount} gold from chest.");
                break;
             case Health health when !health.Taken:

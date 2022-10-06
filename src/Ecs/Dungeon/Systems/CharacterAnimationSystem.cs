@@ -32,9 +32,6 @@ public class CharacterAnimationSystem : Reference, ISystem {
          }
          counter++;
       }
-
-      if (counter > 0)
-         Logger.Info($"{counter} animations received");
    }
 
    void RevertToIdleAnimation() {

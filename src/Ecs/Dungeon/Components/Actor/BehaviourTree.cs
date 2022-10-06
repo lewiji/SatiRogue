@@ -3,6 +3,7 @@ using Active.Core;
 using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
@@ -23,6 +24,7 @@ public class BehaviourTree {
    }
 
    BaseBt? TreeInstance { get; }
+   MessageLog? _messageLog;
 
    public void Step(World world,
       Enemy enemy,
@@ -32,7 +34,8 @@ public class BehaviourTree {
       GridPositionComponent playerGridPos,
       Stats enemyStats,
       Stats playerStats) {
-      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos, enemyStats, playerStats);
+      _messageLog ??= world.GetElement<MessageLog>();
+      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos, enemyStats, playerStats, _messageLog);
    }
 }
 
@@ -47,7 +50,8 @@ public class BaseBt : Gig {
       HealthComponent playerHealth,
       GridPositionComponent playerGridPos,
       Stats enemyStats,
-      Stats playerStats) {
+      Stats playerStats,
+      MessageLog messageLog) {
       if (!PlayerInRange(enemyStats, gridPos, playerGridPos)) {
          if (_rangeToPlayer > enemyStats.Record.SightRange * 2f) {
             return done();
@@ -58,7 +62,8 @@ public class BaseBt : Gig {
 
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
          return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir)
-                || Attack(playerHealth, playerGridPos, gridPos, inputDir, enemy, world) || MoveRandomly(inputDir);
+                || Attack(playerHealth, playerGridPos, playerStats, gridPos, inputDir, enemy, enemyStats, world, messageLog)
+                || MoveRandomly(inputDir);
       }
 
       if (_lastSawPlayer is > -1 and < 5) {
@@ -89,16 +94,24 @@ public class BaseBt : Gig {
 
    status Attack(HealthComponent playerHealth,
       GridPositionComponent gridPos,
+      Stats playerStats,
       GridPositionComponent playerGridPos,
       InputDirectionComponent inputDir,
       Enemy enemy,
-      World world) {
+      Stats enemyStats,
+      World world,
+      MessageLog messageLog) {
       if (_rangeToPlayer is (-1 or > 1))
          return fail();
-      Logger.Info("ATTACKING!!!");
-      playerHealth.Value -= 1;
-      inputDir.Direction = Vector2.Zero;
+
+      var damage = Mathf.Max(0, enemyStats.Record.Strength - playerStats.Record.Defence);
+      playerHealth.Value -= damage;
+
       var player = world.GetElement<Player>();
+      messageLog.AddMessage($"[shake]{enemy.CharacterName} hit {player.CharacterName} for {damage} damage![/shake]");
+
+      inputDir.Direction = Vector2.Zero;
+
       world.Send(new CharacterAnimationTrigger(enemy, "attack"));
       world.Send(new CharacterAnimationTrigger(player, "hit"));
 

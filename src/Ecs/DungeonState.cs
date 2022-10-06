@@ -31,6 +31,7 @@ public class DungeonState : GameState {
       AddChild(mapGeomNode);
 
       InitSystems.Add(new SpatialMapSystem())
+         .Add(new SpawnHudSystem())
          .Add(new SetupAudioSystem())
          .Add(new TurnHandlerInitSystem())
          .Add(new PlaceStairs())
@@ -41,7 +42,6 @@ public class DungeonState : GameState {
          .Add(new InitFogSystem())
          .Add(new FogSystem())
          .Add(new CharacterHealthBarSystem())
-         .Add(new SpawnHudSystem())
          .Add(new InventorySystem());
 
       OnTurnSystems.Add(new PlayerMovementSystem())

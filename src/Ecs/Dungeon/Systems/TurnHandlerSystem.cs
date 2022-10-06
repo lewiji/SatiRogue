@@ -53,8 +53,6 @@ public class TurnHandlerSystem : Reference, ISystem {
             SetCurrentTurn(TurnType.EnemyTurn);
          }
       }
-
-      InputSystem.HandlingInput = true;
    }
 
    void ProcessTurnChanges() { // Progress turn phases on changed
@@ -64,14 +62,16 @@ public class TurnHandlerSystem : Reference, ISystem {
          switch (turnTrigger.Turn) {
             case TurnType.Processing:
                ResetTurn();
-               break;
+               return;
             case TurnType.EnemyTurn:
                SetCurrentTurn(TurnType.Processing);
-               break;
+               return;
             case TurnType.PlayerTurn:
+               InputSystem.HandlingInput = true;
+               return;
             case TurnType.Idle:
                // Handled by player input trigger/idle timeouts
-               break;
+               return;
             default:
                throw new ArgumentOutOfRangeException();
          }
