@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/MessageLogTheme.tres" type="Theme" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/MessageLog.cs" type="Script" id=4]
+
+[node name="MessageLog" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_top = 0.722
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.199951
+mouse_filter = 2
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 868.0
+margin_bottom = 218.0
+mouse_filter = 2
+custom_constants/separation = 8
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+margin_right = 511.0
+margin_bottom = 186.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/Panel/MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 495.0
+margin_bottom = 170.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="MessageContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 479.0
+margin_bottom = 154.0
+grow_vertical = 0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+alignment = 2
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
+margin_left = 519.0
+margin_right = 836.0
+margin_bottom = 186.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.62
+
+[node name="FadeTimeout" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="FadeTween" type="Tween" parent="."]

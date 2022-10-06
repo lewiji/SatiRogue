@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/MessageLogStylebox.tres" type="StyleBox" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/Inexpungable_16_messagelog.tres" type="DynamicFont" id=2]
+
+[resource]
+default_font = ExtResource( 2 )
+Panel/styles/panel = ExtResource( 1 )
+RichTextLabel/colors/default_color = Color( 0.984314, 1, 0.909804, 1 )
+RichTextLabel/colors/font_color_selected = Color( 0, 0, 0, 1 )
+RichTextLabel/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+RichTextLabel/colors/selection_color = Color( 0, 0, 0, 1 )
+RichTextLabel/constants/line_separation = 2
+RichTextLabel/constants/shadow_as_outline = 0
+RichTextLabel/constants/shadow_offset_x = 2
+RichTextLabel/constants/shadow_offset_y = 2
+RichTextLabel/constants/table_hseparation = 0
+RichTextLabel/constants/table_vseparation = 0
+RichTextLabel/fonts/bold_font = ExtResource( 2 )
+RichTextLabel/fonts/bold_italics_font = ExtResource( 2 )
+RichTextLabel/fonts/italics_font = ExtResource( 2 )
+RichTextLabel/fonts/mono_font = ExtResource( 2 )
+RichTextLabel/fonts/normal_font = ExtResource( 2 )
+RichTextLabel/styles/focus = null
+RichTextLabel/styles/normal = null

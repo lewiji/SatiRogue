@@ -11,34 +11,40 @@ using SatiRogue.Ecs.Play.Nodes.Items;
 using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Systems;
 
 public class PlayerMovementSystem : CharacterMovementSystem {
+   MessageLog? _messageLog;
+   MapGenData? _mapGenData;
+   PathfindingHelper? _pathfindingHelper;
    public override void Run() {
-      var mapData = World.GetElement<MapGenData>();
-      var pathfindingHelper = World.GetElement<PathfindingHelper>();
+      _mapGenData ??= World.GetElement<MapGenData>();
+      _pathfindingHelper ??= World.GetElement<PathfindingHelper>();
+      _messageLog ??= World.GetElement<MessageLog>();
 
-      foreach (var (player, gridPos, input) in this.Query<Player, GridPositionComponent, InputDirectionComponent>()) {
+      foreach (var (playerEntity, player, gridPos, input) in this.Query<Entity, Player, GridPositionComponent, InputDirectionComponent>()) {
          if (input.Direction == Vector2.Zero)
             continue;
 
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);
-         var targetCell = mapData.GetCellAt(targetPos);
+         var targetCell = _mapGenData.GetCellAt(targetPos);
 
          if (!targetCell.Blocked && !targetCell.Occupied) {
-            MoveToCell(mapData, gridPos, player, pathfindingHelper, input, targetCell);
+            MoveToCell(_mapGenData, gridPos, player, _pathfindingHelper, input, targetCell);
             Logger.Info($"Moved player to: {gridPos.Position}");
             this.Send(new CharacterAudioTrigger(player, "walk"));
          } else {
-            HandleOccupants(targetCell, player, input, mapData, pathfindingHelper, gridPos);
+            HandleOccupants(targetCell, playerEntity, player, input, _mapGenData, _pathfindingHelper, gridPos);
             this.Send(new CharacterAudioTrigger(player, "sword"));
          }
       }
    }
 
    void HandleOccupants(Cell targetCell,
+      Entity playerEntity,
       Player player,
       InputDirectionComponent inputDirectionComponent,
       MapGenData mapData,
@@ -58,7 +64,10 @@ public class PlayerMovementSystem : CharacterMovementSystem {
 
          switch (target) {
             case Character character when World.IsAlive(identity.Value): {
-               this.GetComponent<HealthComponent>(entity!.Value).Value -= 1;
+               var playerStats = World.GetComponent<Stats>(playerEntity.Identity).Record;
+               var enemyStats = World.GetComponent<Stats>(identity.Value).Record;
+               var damage = Mathf.Max(0, playerStats.Strength - enemyStats.Defence);
+               this.GetComponent<HealthComponent>(entity!.Value).Value -= damage;
                this.Send(new CharacterAnimationTrigger(player, "attack"));
                this.Send(new CharacterAnimationTrigger(character, "hit"));
 
@@ -69,6 +78,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                      _ => player.AnimatedSprite3D.FlipH
                   };
                }
+               _messageLog?.AddMessage($"Hit {character.Name} for {damage} damage.");
                break;
             }
             case Chest chest when World.HasComponent<Closed>(identity.Value):
@@ -76,22 +86,28 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                chest.BlocksCell = false;
                this.On(entity!.Value).Remove<Closed>().Add<Open>();
                chest.Enabled = false;
-               World.GetElement<PersistentPlayerData>().Gold += 1;
+               var goldAmount = 1;
+               World.GetElement<PersistentPlayerData>().Gold += goldAmount;
+               _messageLog?.AddMessage($"Retrieved {goldAmount} gold from chest.");
                break;
             case Health health when !health.Taken:
                health.Taken = true;
-               this.GetComponent<HealthComponent>(((Marshallable<Entity>) player.GetMeta("Entity")).Value).Value += 1;
+               var healthAmount = 1;
+               this.GetComponent<HealthComponent>(((Marshallable<Entity>) player.GetMeta("Entity")).Value).Value += healthAmount;
+               _messageLog?.AddMessage($"Relic healed player {healthAmount} HP.");
                break;
             case SpatialItem spatialItem when World.HasComponent<Collectable>(identity.Value):
                this.On(entity!.Value).Remove<Collectable>().Remove<GridPositionComponent>().Add<InInventory>().Add<JustPickedUp>();
                spatialItem.BlocksCell = false;
                spatialItem.Visible = false;
+               _messageLog?.AddMessage($"Picked up {spatialItem.Name} from the ground.");
                break;
             case Stairs stairs:
                Logger.Info("Stairs!");
                MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
                this.Send(new CharacterAudioTrigger(player, "walk"));
                World.GetElement<StairsConfirmation>().Popup();
+               _messageLog?.AddMessage($"Found the stairs down.");
                InputSystem.Paused = true;
                return;
             default:

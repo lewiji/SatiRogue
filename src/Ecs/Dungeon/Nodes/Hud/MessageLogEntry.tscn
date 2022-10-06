@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/MessageLogEntry.cs" type="Script" id=2]
+
+[node name="MessageLogEntry" type="MarginContainer"]
+anchor_top = 0.047
+anchor_bottom = 0.047
+margin_top = -42.3
+margin_right = 604.0
+margin_bottom = -0.300003
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="Background" type="NinePatchRect" parent="."]
+margin_right = 604.0
+margin_bottom = 42.0
+grow_vertical = 0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+region_rect = Rect2( 320, 179, 32, 13 )
+patch_margin_left = 16
+patch_margin_top = 6
+patch_margin_right = 17
+patch_margin_bottom = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 604.0
+margin_bottom = 42.0
+mouse_filter = 2
+custom_constants/margin_right = 7
+custom_constants/margin_top = 3
+custom_constants/margin_left = 7
+custom_constants/margin_bottom = 3
+
+[node name="LogText" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 3.0
+margin_right = 597.0
+margin_bottom = 39.0
+rect_min_size = Vector2( 150, 16 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content_height = true
+scroll_active = false
+
+[node name="Timeout" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[node name="FadeTween" type="Tween" parent="."]
