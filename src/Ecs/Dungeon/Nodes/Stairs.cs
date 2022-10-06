@@ -1,9 +1,7 @@
-using Godot;
-using SatiRogue.Ecs.Play.Components;
 using RelEcs;
-using World = RelEcs.World;
+using SatiRogue.Ecs.Dungeon.Components;
 
-namespace SatiRogue.Ecs.Play.Nodes;
+namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 public partial class Stairs : GameObject {
    public enum StairsDirection {

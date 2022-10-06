@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using SatiRogue.Debug;
-using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.Play.Nodes;
 using RelEcs;
-using World = RelEcs.World;
+using SatiRogue.Debug;
+using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Tools;
+using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class FogMultiMeshes {
    public List<MultiMeshInstance> Instances = new();

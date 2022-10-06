@@ -1,8 +1,8 @@
 using Godot;
-using SatiRogue.Ecs.Play.Nodes;
 using RelEcs;
+using SatiRogue.Ecs.Dungeon.Nodes;
 using World = RelEcs.World;
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SetupAudioSystem : ISystem {
    public World World { get; set; } = null!;

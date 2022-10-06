@@ -1,5 +1,5 @@
-using SatiRogue.Ecs.Play.Nodes.Actors;
-namespace SatiRogue.Ecs.Play.Triggers;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+namespace SatiRogue.Ecs.Dungeon.Triggers;
 
 public class CharacterAudioTrigger {
    public string Audio;

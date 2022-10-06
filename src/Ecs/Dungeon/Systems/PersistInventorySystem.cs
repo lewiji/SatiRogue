@@ -1,11 +1,10 @@
-using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PersistInventorySystem : ISystem {
    public World World { get; set; }

@@ -1,10 +1,10 @@
 using RelEcs;
 using World = RelEcs.World;
 using SatiRogue.Ecs.Core;
-using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.Ecs.Play.Systems;
-using SatiRogue.Ecs.Play.Systems.Exit;
-using SatiRogue.Ecs.Play.Systems.Init;
+using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.Dungeon.Systems;
+using SatiRogue.Ecs.Dungeon.Systems.Exit;
+using SatiRogue.Ecs.Dungeon.Systems.Init;
 
 namespace SatiRogue.Ecs;
 

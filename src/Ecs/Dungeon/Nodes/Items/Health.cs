@@ -1,10 +1,10 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Play.Components;
 using RelEcs;
+using SatiRogue.Ecs.Dungeon.Components;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Nodes.Items;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 public partial class Health : Item {
    Entity? _entity;

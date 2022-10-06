@@ -1,11 +1,11 @@
 using Godot;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Actors;
 using RelEcs;
-using World = RelEcs.World;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.scenes.Hud;
+using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class CharacterHealthBarSystem : ISystem {
    public World World { get; set; } = null!;

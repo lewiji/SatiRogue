@@ -1,5 +1,5 @@
-using SatiRogue.Ecs.Play.Components;
-namespace SatiRogue.Ecs.Play.Triggers;
+using SatiRogue.Ecs.Dungeon.Components;
+namespace SatiRogue.Ecs.Dungeon.Triggers;
 
 public class TurnChangedTrigger {
    public readonly TurnType Turn;

@@ -1,11 +1,11 @@
 using System;
 using Godot;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Triggers;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class TurnHandlerSystem : Reference, ISystem {
    public World World { get; set; } = null!;

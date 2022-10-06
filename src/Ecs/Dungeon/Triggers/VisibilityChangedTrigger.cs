@@ -1,5 +1,5 @@
 using Godot;
-namespace SatiRogue.Ecs.Play.Triggers;
+namespace SatiRogue.Ecs.Dungeon.Triggers;
 
 public class VisibilityChangedTrigger {
    public Vector3[] Positions;

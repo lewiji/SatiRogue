@@ -1,7 +1,7 @@
 using System.Globalization;
 using Godot;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
-using SatiRogue.Ecs.Play.Components.Actor;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
@@ -19,6 +19,7 @@ public class HoverStats : Control {
       AddContentRow("Strength", _statsRecordClass.Strength.ToString());
       AddContentRow("Defence", _statsRecordClass.Defence.ToString());
       AddContentRow("Speed", _statsRecordClass.Speed.ToString());
+      AddContentRow("Sight", _statsRecordClass.SightRange.ToString());
    }
 
    void AddContentRow(string name, string stat) {

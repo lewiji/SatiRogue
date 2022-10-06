@@ -1,14 +1,14 @@
 using Godot;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.Ecs.Play.Nodes.Hud;
-using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
-using World = RelEcs.World;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
+using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.scenes.Hud;
+using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class HealthSystem : ISystem {
    public World World { get; set; } = null!;

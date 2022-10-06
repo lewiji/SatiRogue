@@ -1,3 +1,3 @@
-namespace SatiRogue.Ecs.Play.Triggers;
+namespace SatiRogue.Ecs.Dungeon.Triggers;
 
 public class RestartGameTrigger { }

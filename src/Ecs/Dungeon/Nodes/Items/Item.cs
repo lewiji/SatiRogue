@@ -1,7 +1,6 @@
 using RelEcs;
-using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Nodes.Items;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 public class Item : GameObject {
    public override void OnSpawn(EntityBuilder entityBuilder) {

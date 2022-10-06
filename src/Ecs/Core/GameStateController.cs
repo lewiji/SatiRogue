@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using SatiRogue.Debug;
-using SatiRogue.Ecs.Play.Nodes;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Core;

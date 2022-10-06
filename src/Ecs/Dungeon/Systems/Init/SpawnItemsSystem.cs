@@ -1,12 +1,12 @@
 using Godot;
+using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.Play.Nodes.Items;
-using RelEcs;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SpawnItemsSystem : ISystem {
    public World World { get; set; } = null!;

@@ -1,5 +1,5 @@
 using Godot;
-namespace SatiRogue.Ecs.Play.Nodes;
+namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 public class MapGeometry : Spatial {
    public override void _EnterTree() {

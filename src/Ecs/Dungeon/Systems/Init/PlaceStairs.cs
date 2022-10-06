@@ -1,10 +1,10 @@
 using Godot;
-using SatiRogue.Ecs.Core;
-using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.Play.Nodes;
 using RelEcs;
+using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.MapGenerator.Components;
 using World = RelEcs.World;
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class PlaceStairs : ISystem {
    public World World { get; set; } = null!;

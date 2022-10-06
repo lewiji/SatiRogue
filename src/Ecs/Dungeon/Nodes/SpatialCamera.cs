@@ -1,7 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
-
-namespace SatiRogue.Ecs.Play.Nodes;
+namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 public partial class SpatialCamera : Camera {
    static SpatialCamera? _instance;

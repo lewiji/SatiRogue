@@ -2,16 +2,16 @@ using System;
 using Active.Core;
 using Godot;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
-using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.Ecs.Play.Triggers;
 using SatiRogue.MathUtils;
 using SatiRogue.Tools;
 using static Active.Status;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Components.Actor;
+namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
 public class BehaviourTree {
    public BehaviourTree() {

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Godot;
-using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
+using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.Dungeon.Triggers;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class AudioSystem : ISystem {
    public World World { get; set; } = null!;

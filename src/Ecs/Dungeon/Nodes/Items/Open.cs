@@ -1,5 +1,3 @@
-namespace SatiRogue.Ecs.Play.Nodes.Items; 
+namespace SatiRogue.Ecs.Dungeon.Nodes.Items;
 
-public class Open {
-   
-}
+public class Open { }

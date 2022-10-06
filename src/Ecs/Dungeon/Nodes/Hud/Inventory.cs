@@ -2,7 +2,7 @@ using System.Linq;
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-namespace SatiRogue.Ecs.Play.Nodes.Hud;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class Inventory : Control {
    [Signal] public delegate void OpenChanged(bool isOpen);

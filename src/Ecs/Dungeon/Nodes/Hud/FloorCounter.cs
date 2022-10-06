@@ -1,7 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Play.Systems;
-namespace SatiRogue.Ecs.Play.Nodes.Hud;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class FloorCounter : Control {
    [OnReadyGet("%FloorLabel")] Label _floorLabel = null!;

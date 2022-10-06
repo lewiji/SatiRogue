@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 namespace SatiRogue.Ecs.Core.Nodes;
 

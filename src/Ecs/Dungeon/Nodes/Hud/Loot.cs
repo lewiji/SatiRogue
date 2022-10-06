@@ -1,6 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
-namespace SatiRogue.Ecs.Play.Nodes.Hud;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class Loot : Control {
    int _numLoots;

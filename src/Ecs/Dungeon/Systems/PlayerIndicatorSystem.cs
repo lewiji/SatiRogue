@@ -1,10 +1,10 @@
 using Godot;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Actors;
 using RelEcs;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using World = RelEcs.World;
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PlayerIndicatorSystem : ISystem {
    public World World { get; set; } = null!;

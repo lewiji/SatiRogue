@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using SatiRogue.Debug;
-using SatiRogue.Ecs.Play.Nodes;
-using SatiRogue.Ecs.Play.Nodes.Actors;
+using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 namespace SatiRogue.Ecs.MapGenerator.Components;
 
 public enum CellType {

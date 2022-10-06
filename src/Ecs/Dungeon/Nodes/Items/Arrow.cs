@@ -1,9 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Play.Components;
 using RelEcs;
-using World = RelEcs.World;
-namespace SatiRogue.Ecs.Play.Nodes.Items;
+using SatiRogue.Ecs.Dungeon.Components;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 public partial class Arrow : GameObject {
    [OnReadyGet("AnimatedSprite3D")] AnimatedSprite3D? _animatedSprite3D;

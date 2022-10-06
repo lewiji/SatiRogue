@@ -1,5 +1,5 @@
 using Godot;
-namespace SatiRogue.Ecs.Play.Components;
+namespace SatiRogue.Ecs.Dungeon.Components;
 
 public class GridPositionComponent {
    public Vector3 Position;

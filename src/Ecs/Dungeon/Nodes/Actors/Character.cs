@@ -1,10 +1,9 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
-using World = RelEcs.World;
+using SatiRogue.Ecs.MapGenerator.Components;
 
-namespace SatiRogue.Ecs.Play.Nodes.Actors;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Character : GameObject {
    bool _alive = true;

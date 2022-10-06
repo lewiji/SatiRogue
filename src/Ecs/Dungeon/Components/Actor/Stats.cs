@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using SatiRogue.Debug;
 
-namespace SatiRogue.Ecs.Play.Components.Actor;
+namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
 public class Stats {
    public StatsRecordClass Record;
 
    public record StatsRecordClass {
-      public int Health { get; set; } = default!;
+      public int Health { get; set; }
       public int SightRange { get; set; }
       public int Speed { get; set; }
       public int Strength { get; set; }

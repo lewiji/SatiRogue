@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Godot;
 using GodotOnReady.Attributes;
-namespace SatiRogue.Ecs.Play.Nodes.Hud;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
 public partial class ItemSlot : CenterContainer {

@@ -1,6 +1,3 @@
- 
-namespace SatiRogue.Ecs.Play.Components.Actor; 
+namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class Alive {
-   
-}
+public class Alive { }

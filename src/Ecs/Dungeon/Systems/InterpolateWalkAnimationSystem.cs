@@ -1,12 +1,12 @@
 using Godot;
-using SatiRogue.Ecs.Core;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Actors;
 using RelEcs;
+using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class InterpolateWalkAnimationSystem : ISystem {
    public World World { get; set; } = null!;

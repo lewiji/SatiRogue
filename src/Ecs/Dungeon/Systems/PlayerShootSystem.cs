@@ -1,16 +1,16 @@
 using Godot;
+using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+using SatiRogue.Ecs.Dungeon.Nodes.Items;
+using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Components.Actor;
-using SatiRogue.Ecs.Play.Nodes.Actors;
-using SatiRogue.Ecs.Play.Nodes.Items;
-using SatiRogue.Ecs.Play.Triggers;
-using RelEcs;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PlayerShootSystem : ISystem {
    public World World { get; set; } = null!;

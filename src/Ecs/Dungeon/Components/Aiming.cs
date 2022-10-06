@@ -1,5 +1,3 @@
-namespace SatiRogue.Ecs.Play.Components; 
+namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class Aiming {
-   
-}
+public class Aiming { }

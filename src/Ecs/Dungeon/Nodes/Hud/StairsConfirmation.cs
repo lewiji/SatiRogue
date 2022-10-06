@@ -1,8 +1,8 @@
 using Godot;
 using GodotOnReady.Attributes;
 using SatiRogue.Debug;
-using SatiRogue.Ecs.Play.Systems;
-namespace SatiRogue.Ecs.Play.Nodes.Hud;
+using SatiRogue.Ecs.Dungeon.Systems;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class StairsConfirmation : Control {
    [Signal] public delegate void StairsConfirmed();

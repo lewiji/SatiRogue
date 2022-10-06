@@ -1,12 +1,10 @@
 using Godot;
 using GodotOnReady.Attributes;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Components.Actor;
 using RelEcs;
-using SatiRogue.Ecs.Dungeon.Nodes;
-using World = RelEcs.World;
+using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
 
-namespace SatiRogue.Ecs.Play.Nodes.Actors;
+namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Enemy : Character {
    public SpriteFrames? Frames;

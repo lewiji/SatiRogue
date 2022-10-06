@@ -1,8 +1,7 @@
 using Godot;
-using SatiRogue.Ecs.Play.Components;
 using RelEcs;
-using World = RelEcs.World;
-namespace SatiRogue.Ecs.Play.Nodes;
+using SatiRogue.Ecs.Dungeon.Components;
+namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 public abstract class GameObject : Spatial, ISpawnable {
    [Export] public bool BlocksCell = true;

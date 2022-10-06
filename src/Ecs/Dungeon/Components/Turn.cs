@@ -1,4 +1,4 @@
-namespace SatiRogue.Ecs.Play.Components;
+namespace SatiRogue.Ecs.Dungeon.Components;
 
 public enum TurnType {
    PlayerTurn,

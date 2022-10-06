@@ -1,13 +1,11 @@
 using Godot;
-using SatiRogue.Debug;
-using SatiRogue.Ecs.Play.Components;
-using SatiRogue.Ecs.Play.Nodes.Hud;
-using SatiRogue.Ecs.Play.Nodes.Items;
 using RelEcs;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems;
+namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class InventorySystem : Reference, ISystem {
    public World World { get; set; } = null!;

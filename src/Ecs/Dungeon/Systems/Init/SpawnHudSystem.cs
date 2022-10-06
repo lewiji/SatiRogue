@@ -1,14 +1,13 @@
 using Godot;
-using SatiRogue.Debug;
-using SatiRogue.Ecs.Core;
-using SatiRogue.Ecs.Menu.Nodes;
-using SatiRogue.Ecs.Play.Nodes.Hud;
-using SatiRogue.Ecs.Play.Triggers;
 using RelEcs;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Hud;
+using SatiRogue.Ecs.Dungeon.Triggers;
+using SatiRogue.Ecs.Menu.Nodes;
 using World = RelEcs.World;
 
-namespace SatiRogue.Ecs.Play.Systems.Init;
+namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SpawnHudSystem : Reference, ISystem {
    public World World { get; set; } = null!;
