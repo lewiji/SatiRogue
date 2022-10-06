@@ -1,0 +1,8 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[ext_resource path="res://fonts/Natural Pro.otf" type="DynamicFontData" id=1]
+
+[resource]
+outline_size = 2
+outline_color = Color( 0.545098, 0.34902, 0.721569, 0.607843 )
+font_data = ExtResource( 1 )

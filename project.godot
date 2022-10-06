@@ -151,7 +151,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/MultiMeshBatcher/plugin.cfg", "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
 
 [importer_defaults]
 
@@ -224,10 +224,6 @@ debug_skip_to_game={
  ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-
 [laigter_config]
 
 GENERATE_SPECULAR=false
@@ -252,7 +248,6 @@ project/assembly_name="RoguelikeMono"
 common/physics_fps=45
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
-common/enable_object_picking=false
 
 [rendering]
 
@@ -270,4 +265,4 @@ gles3/shaders/max_simultaneous_compiles.mobile=2
 gles3/shaders/shader_cache_size_mb=1024
 gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256
-environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )

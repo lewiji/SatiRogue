@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Actors/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://src/Character/Character.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres" type="Material" id=3]
 [ext_resource path="res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres" type="SpriteFrames" id=4]
 [ext_resource path="res://resources/enemies/flash_overlay_shadermaterial.tres" type="Material" id=5]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/HoverStats.tscn" type="PackedScene" id=6]
 
 [node name="Enemy" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -13,4 +14,11 @@ script = ExtResource( 1 )
 material_override = ExtResource( 3 )
 material_overlay = ExtResource( 5 )
 frames = ExtResource( 4 )
-frame = 1
+animation = "idle"
+frame = 3
+
+[node name="HoverStats" parent="." index="3" instance=ExtResource( 6 )]
+visible = false
+
+[node name="CollisionShape" parent="Area" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )

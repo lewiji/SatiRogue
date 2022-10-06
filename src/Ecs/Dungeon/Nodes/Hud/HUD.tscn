@@ -610,6 +610,7 @@ margin_left = 36.0
 margin_top = 36.0
 margin_right = 864.0
 margin_bottom = 864.0
+mouse_filter = 2
 
 [node name="OptionsButton" type="Button" parent="HudItems"]
 unique_name_in_owner = true

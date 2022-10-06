@@ -49,7 +49,7 @@ public class BaseBt : Gig {
       Stats enemyStats,
       Stats playerStats) {
       if (!PlayerInRange(enemyStats, gridPos, playerGridPos)) {
-         if (_rangeToPlayer > enemyStats.SightRange * 2f) {
+         if (_rangeToPlayer > enemyStats.Record.SightRange * 2f) {
             return done();
          }
 
@@ -115,7 +115,7 @@ public class BaseBt : Gig {
    }
 
    bool PlayerInRange(Stats enemyStats, GridPositionComponent gridPos, GridPositionComponent playerGridPos) {
-      return DistanceBetween(gridPos, playerGridPos) <= enemyStats.SightRange;
+      return DistanceBetween(gridPos, playerGridPos) <= enemyStats.Record.SightRange;
    }
 
    status MoveRandomly(InputDirectionComponent inputDir) {

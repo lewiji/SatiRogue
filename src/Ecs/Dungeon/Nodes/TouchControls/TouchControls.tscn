@@ -25,12 +25,14 @@ margin_top = 150.0
 margin_right = 750.0
 margin_bottom = 900.0
 rect_min_size = Vector2( 600, 750 )
+mouse_filter = 2
 alignment = 2
 
 [node name="Control3" type="Control" parent="MarginContainer/VBoxContainer"]
 margin_right = 600.0
 margin_bottom = 396.0
 rect_min_size = Vector2( 600, 250 )
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -75,5 +77,5 @@ margin_top = 504.0
 margin_right = 600.0
 margin_bottom = 750.0
 rect_min_size = Vector2( 600, 246 )
-mouse_filter = 1
+mouse_filter = 2
 size_flags_horizontal = 3

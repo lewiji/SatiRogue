@@ -5,6 +5,7 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.Play.Nodes.Actors;
 using RelEcs;
 using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Play.Systems.Init;
 
 public class SpawnEnemySystem : ISystem {
@@ -17,10 +18,10 @@ public class SpawnEnemySystem : ISystem {
    static readonly SpriteFrames MawFrames = GD.Load<SpriteFrames>("res://resources/enemies/maw/maw_purple_sprite_Frames.tres");
    static readonly SpatialMaterial RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
    static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
-   static readonly SpatialMaterial FireElementalMat
-      = GD.Load<SpatialMaterial>("res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres");
-   static readonly SpriteFrames FireElementalFrames
-      = GD.Load<SpriteFrames>("res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres");
+   static readonly SpatialMaterial FireElementalMat = GD.Load<SpatialMaterial>(
+      "res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres");
+   static readonly SpriteFrames FireElementalFrames = GD.Load<SpriteFrames>(
+      "res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres");
 
    static readonly EnemyGraphics[] EnemyGraphicsArray = {
       new(HarpyFrames, HarpyMat),
@@ -41,7 +42,7 @@ public class SpawnEnemySystem : ISystem {
          enemyNode.Material = EnemyGraphicsArray[monsterId].Material;
          enemyNode.Frames = EnemyGraphicsArray[monsterId].Frames;
          entitiesNode.AddChild(enemyNode);
-         enemyNode.Stats.Health = health;
+         enemyNode.Stats.Record.Health = health;
          this.Spawn(enemyNode);
       }
    }

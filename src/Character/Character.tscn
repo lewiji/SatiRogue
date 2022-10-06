@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/particles/blood_mesh.tres" type="QuadMesh" id=1]
 [ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres" type="Material" id=5]
 [ext_resource path="res://assets/UI Assets pack_v.1_st/Book.png" type="Texture" id=6]
 [ext_resource path="res://src/Character/CharacterPositionMarkerMaterial.tres" type="Material" id=7]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.6, 0.7, 0.1 )
 
 [node name="Character" type="Spatial"]
 script = ExtResource( 3 )
@@ -39,3 +42,13 @@ alpha_cut = 1
 texture = ExtResource( 6 )
 region_enabled = true
 region_rect = Rect2( 66, 338, 12, 12 )
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+collision_layer = 256
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 1 )

@@ -1,11 +1,12 @@
 using Godot;
+using GodotOnReady.Attributes;
 using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Play.Nodes.Actors;
 
-public class Character : GameObject {
+public partial class Character : GameObject {
    bool _alive = true;
    Particles? _particles;
    public AnimatedSprite3D? AnimatedSprite3D;
@@ -29,7 +30,8 @@ public class Character : GameObject {
    }
    public Cell? CurrentCell { get; set; }
 
-   public override void _Ready() {
+   [OnReady]
+   public virtual void OnReady() {
       Visible = false;
       _particles = GetNode("Particles") as Particles;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;

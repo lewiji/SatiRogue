@@ -27,6 +27,7 @@ script = ExtResource( 3 )
 margin_top = 250.0
 margin_right = 900.0
 margin_bottom = 650.0
+mouse_filter = 2
 
 [node name="PopupPanel" type="PopupPanel" parent="CenterContainer"]
 unique_name_in_owner = true

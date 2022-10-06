@@ -9,7 +9,7 @@ namespace SatiRogue.Ecs.Play.Systems;
 
 public class TurnHandlerSystem : Reference, ISystem {
    public World World { get; set; } = null!;
-   readonly float _minTurnTime = 0.18f;
+   readonly float _minTurnTime = 0.1f;
    public int TurnNumber { get; private set; }
 
    void SetCurrentTurn(TurnType turnType) {

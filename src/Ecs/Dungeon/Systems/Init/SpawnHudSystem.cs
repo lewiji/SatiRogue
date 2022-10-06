@@ -30,15 +30,17 @@ public class SpawnHudSystem : Reference, ISystem {
 
       var healthUi = HealthUiScene.Instance<HealthUi>();
       uiParent.AddChild(healthUi);
-      healthUi.Percent = playerStore.Health / (float) playerStore.Stats.Health;
+      healthUi.Percent = playerStore.Health / (float) playerStore.Stats.Record.Health;
       World.AddElement(healthUi);
 
       var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
       uiParent.AddChild(floorCounterUi);
       World.AddElement(floorCounterUi);
 
-      var touchControls = TouchControlsScene.Instance();
-      uiParent.AddChild(touchControls);
+      if (OS.HasTouchscreenUiHint()) {
+         var touchControls = TouchControlsScene.Instance();
+         uiParent.AddChild(touchControls);
+      }
 
       var lootUi = LootUiScene.Instance<Loot>();
       uiParent.AddChild(lootUi);

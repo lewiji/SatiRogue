@@ -25,7 +25,7 @@ public partial class Player : Character {
       entityBuilder
          //.Add(this as Player)
          .Add(playerStore.Stats)
-         .Add(new HealthComponent(playerStore.Stats.Health, playerStore.Health))
+         .Add(new HealthComponent(playerStore.Stats.Record.Health, playerStore.Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
          .Add(new Walkable())

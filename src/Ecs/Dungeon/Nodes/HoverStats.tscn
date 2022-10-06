@@ -1,0 +1,91 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all.png" type="Texture" id=1]
+[ext_resource path="res://resources/fonts/natural_pro_16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resources/fonts/natural_pro_32.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/HoverStats.cs" type="Script" id=5]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 2 )
+
+[node name="HoverStats" type="Control"]
+margin_right = 200.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 200, 150 )
+theme = SubResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="BgContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 200, 150 )
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="BgContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 198.0
+margin_bottom = 148.0
+color = Color( 0, 0, 0, 0.980392 )
+
+[node name="ContentContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 9
+custom_constants/margin_top = 9
+custom_constants/margin_left = 9
+custom_constants/margin_bottom = 9
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ContentContainer"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 191.0
+margin_bottom = 141.0
+scroll_horizontal_enabled = false
+
+[node name="ContentCol" type="VBoxContainer" parent="ContentContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 182.0
+margin_bottom = 132.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TitleRow" type="HFlowContainer" parent="ContentContainer/ScrollContainer/ContentCol"]
+margin_right = 182.0
+margin_bottom = 20.0
+
+[node name="TitleLabel" type="RichTextLabel" parent="ContentContainer/ScrollContainer/ContentCol/TitleRow"]
+margin_right = 182.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 64, 20 )
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_colors/default_color = Color( 0.984314, 0.92549, 0.631373, 1 )
+custom_fonts/bold_font = ExtResource( 4 )
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center][b]Enemy[/b][/center]"
+text = "Enemy"
+scroll_active = false
+
+[node name="HSeparator" type="HSeparator" parent="ContentContainer/ScrollContainer/ContentCol"]
+margin_top = 24.0
+margin_right = 182.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="Frame" type="NinePatchRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 648, 1188, 38, 40 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
