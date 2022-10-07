@@ -3,6 +3,7 @@ using Godot.Collections;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Loading.Systems;
+using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs;
 
@@ -13,7 +14,7 @@ public class LoadingState : GameState {
    PreloadResources? _preloadResources;
 
    public override void Init(GameStateController gameStates) {
-      gameStates.World.AddElement(this);
+      gameStates.World.AddOrReplaceElement(this);
 
       CompileShaders compileShaders;
       InitSystems.Add(_preloadResources = new PreloadResources()).Add(compileShaders = new CompileShaders());

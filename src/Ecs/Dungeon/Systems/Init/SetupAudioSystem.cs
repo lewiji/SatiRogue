@@ -1,7 +1,9 @@
 using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Tools;
 using World = RelEcs.World;
+
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SetupAudioSystem : ISystem {
@@ -11,7 +13,7 @@ public class SetupAudioSystem : ISystem {
    public void Run() {
       var audioNodes = new AudioNodes();
       World.GetElement<DungeonState>().AddChild(audioNodes);
-      World.AddElement(audioNodes);
+      World.AddOrReplaceElement(audioNodes);
 
       var ambienceAudio = new AudioStreamPlayer {
          Stream = Ambience,

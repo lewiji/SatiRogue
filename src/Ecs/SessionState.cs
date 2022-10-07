@@ -5,6 +5,7 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Session;
+using SatiRogue.Tools;
 namespace SatiRogue.Ecs;
 
 public class SessionState : GameState {
@@ -14,7 +15,7 @@ public class SessionState : GameState {
    }
 
    void CreateSystems(GameStateController gameStateController) {
-      gameStateController?.World.AddElement(this);
+      gameStateController?.World.AddOrReplaceElement(this);
 
       InitSystems.Add(new InitPersistentPlayerData());
    }

@@ -3,6 +3,7 @@ using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
@@ -16,7 +17,6 @@ public class SpawnPlayerSystem : ISystem {
       var playerNode = _playerScene.Instance<Player>();
       World.GetElement<Entities>().AddChild(playerNode);
       var playerEntity = this.Spawn(playerNode).Id();
-      World.AddElement(playerNode);
+      World.AddOrReplaceElement(playerNode);
    }
-   
 }

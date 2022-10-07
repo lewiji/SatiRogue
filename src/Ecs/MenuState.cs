@@ -1,6 +1,7 @@
 using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Menu.Systems;
+using SatiRogue.Tools;
 namespace SatiRogue.Ecs;
 
 public class MenuState : GameState {
@@ -8,7 +9,7 @@ public class MenuState : GameState {
 
    public override void Init(GameStateController gameStates) {
       _gsc = gameStates;
-      gameStates.World.AddElement(this);
+      gameStates.World.AddOrReplaceElement(this);
 
       Menu.Systems.Intro introSystem;
       InitSystems.Add(new InitMenu()).Add(new InitOptions()).Add(introSystem = new Menu.Systems.Intro());

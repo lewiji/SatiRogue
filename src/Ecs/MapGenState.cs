@@ -3,6 +3,7 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 using RelEcs;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs;
@@ -20,7 +21,7 @@ public class MapGenState : GameState {
    }
 
    public override void Init(GameStateController gameStates) {
-      gameStates.World.AddElement(this);
+      gameStates.World.AddOrReplaceElement(this);
 
       InitSystems.Add(new InitMapGen());
       ContinueSystems.Add(new ResetMapGen());

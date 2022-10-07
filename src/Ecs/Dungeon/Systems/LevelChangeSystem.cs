@@ -6,6 +6,7 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
@@ -52,7 +53,7 @@ public class LevelChangeSystem : Reference, ISystem {
 
       if (!_firstRun)
          return;
-      World.AddElement(this);
+      World.AddOrReplaceElement(this);
       World.GetElement<FloorCounter>().FloorNumber = playerStore.Floor;
       _firstRun = false;
       AddInitialSpawnMessageLog();

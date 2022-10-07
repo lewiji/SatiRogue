@@ -26,24 +26,5 @@ public class CleanupDungeonSystem : ISystem {
       }
 
       Logger.Info($"Despawned {despawnedCount} entities.");
-
-      World.RemoveElement<DungeonState>();
-      World.RemoveElement<Entities>();
-      World.RemoveElement<MapGeometry>();
-      World.RemoveElement<TurnHandlerSystem>();
-      World.RemoveElement<InputSystem>();
-      World.RemoveElement<FogMultiMeshes>();
-      World.RemoveElement<HealthUi>();
-      World.RemoveElement<FloorCounter>();
-      World.RemoveElement<Loot>();
-      World.RemoveElement<Inventory>();
-      World.RemoveElement<StairsConfirmation>();
-      World.RemoveElement<DeathScreen>();
-      World.RemoveElement<Player>();
-      World.RemoveElement<Turn>();
-      World.RemoveElement<LevelChangeSystem>();
-      World.RemoveElement<AudioNodes>();
-      World.RemoveElement<MessageLog>();
-      World.RemoveElement<DebugUi>();
    }
 }

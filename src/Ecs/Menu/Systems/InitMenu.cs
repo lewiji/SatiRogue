@@ -5,6 +5,7 @@ using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Loading.Nodes;
 using SatiRogue.Ecs.Menu.Nodes;
 using RelEcs;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Menu.Systems;
@@ -20,8 +21,8 @@ public class InitMenu : Reference, ISystem {
       _menu.Connect(nameof(Nodes.Menu.NewGameRequested), this, nameof(OnNewGameRequested));
       _menu.Connect(nameof(Nodes.Menu.OptionsRequested), this, nameof(OnOptionsRequested));
       menuState.AddChild(_menu);
-      World.AddElement(_menu);
-      World.AddElement(this);
+      World.AddOrReplaceElement(_menu);
+      World.AddOrReplaceElement(this);
    }
 
    public async void OnNewGameRequested() {

@@ -4,6 +4,7 @@ using Godot;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.MapGenerator.Components;
 using RelEcs;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
@@ -80,6 +81,6 @@ public class GenPathfindingNodes : ISystem {
          }
       }
 
-      World.AddElement(new PathfindingHelper(aStar, cellIdToAStarId));
+      World.AddOrReplaceElement(new PathfindingHelper(aStar, cellIdToAStarId));
    }
 }

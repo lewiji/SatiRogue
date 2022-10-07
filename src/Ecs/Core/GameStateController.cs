@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using SatiRogue.Debug;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Core;
@@ -20,14 +21,14 @@ public class GameStateController : Node {
 
    public GameStateController() {
       GD.Randomize();
-      World.AddElement(this);
-      World.AddElement(new DeltaTime());
-      World.AddElement(new PhysicsDeltaTime());
+      World.AddOrReplaceElement(this);
+      World.AddOrReplaceElement(new DeltaTime());
+      World.AddOrReplaceElement(new PhysicsDeltaTime());
    }
 
    public override void _Ready() {
       Name = "GameStateController";
-      World.AddElement(GetTree());
+      World.AddOrReplaceElement(GetTree());
    }
 
    /*public override void _UnhandledInput(InputEvent e) {
@@ -131,7 +132,7 @@ public class GameStateController : Node {
       if (World.HasElement<GameState>())
          World.ReplaceElement(newState);
       else
-         World.AddElement(newState);
+         World.AddOrReplaceElement(newState);
 
       newState.SetupSystems(this);
       newState.InitSystems.Run(World);

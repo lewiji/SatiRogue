@@ -5,6 +5,7 @@ using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Systems;
 using SatiRogue.Ecs.Dungeon.Systems.Exit;
 using SatiRogue.Ecs.Dungeon.Systems.Init;
+using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs;
 
@@ -20,14 +21,14 @@ public class DungeonState : GameState {
 
    void CreateSystems(GameStateController gameStates) {
       _gsc = gameStates;
-      _gsc.World.AddElement(this);
+      _gsc.World.AddOrReplaceElement(this);
 
       var entitiesNode = new Entities();
-      _gsc.World.AddElement(entitiesNode);
+      _gsc.World.AddOrReplaceElement(entitiesNode);
       AddChild(entitiesNode);
 
       var mapGeomNode = new MapGeometry();
-      _gsc.World.AddElement(mapGeomNode);
+      _gsc.World.AddOrReplaceElement(mapGeomNode);
       AddChild(mapGeomNode);
 
       InitSystems.Add(new SpatialMapSystem())
@@ -55,8 +56,8 @@ public class DungeonState : GameState {
 
       var turnHandlerSystem = new TurnHandlerSystem();
       var inputSystem = new InputSystem();
-      _gsc.World.AddElement(turnHandlerSystem);
-      _gsc.World.AddElement(inputSystem);
+      _gsc.World.AddOrReplaceElement(turnHandlerSystem);
+      _gsc.World.AddOrReplaceElement(inputSystem);
 
       PhysicsSystems.Add(new InterpolateWalkAnimationSystem())
          .Add(inputSystem)

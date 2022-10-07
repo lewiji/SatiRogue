@@ -7,6 +7,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.Menu.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
@@ -34,11 +35,11 @@ public class SpawnHudSystem : Reference, ISystem {
       var healthUi = HealthUiScene.Instance<HealthUi>();
       uiParent.AddChild(healthUi);
       healthUi.Percent = playerStore.Health / (float) playerStore.Stats.Record.Health;
-      World.AddElement(healthUi);
+      World.AddOrReplaceElement(healthUi);
 
       var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
       uiParent.AddChild(floorCounterUi);
-      World.AddElement(floorCounterUi);
+      World.AddOrReplaceElement(floorCounterUi);
 
       if (OS.HasTouchscreenUiHint()) {
          var touchControls = TouchControlsScene.Instance();
@@ -48,27 +49,27 @@ public class SpawnHudSystem : Reference, ISystem {
       var lootUi = LootUiScene.Instance<Loot>();
       uiParent.AddChild(lootUi);
       lootUi.NumLoots = playerStore.Gold;
-      World.AddElement(lootUi);
+      World.AddOrReplaceElement(lootUi);
 
       var messageLog = MessageLogScene.Instance<MessageLog>();
       uiParent.AddChild(messageLog);
-      World.AddElement(messageLog);
+      World.AddOrReplaceElement(messageLog);
 
       var debugUi = DebugUiScene.Instance<DebugUi>();
       uiParent.AddChild(debugUi);
-      World.AddElement(debugUi);
+      World.AddOrReplaceElement(debugUi);
 
       var invUi = InvUiScene.Instance<Inventory>();
       uiParent.AddChild(invUi);
-      World.AddElement(invUi);
+      World.AddOrReplaceElement(invUi);
 
       var stairsConfirm = StairsConfirmationScene.Instance<StairsConfirmation>();
       uiParent.AddChild(stairsConfirm);
-      World.AddElement(stairsConfirm);
+      World.AddOrReplaceElement(stairsConfirm);
       stairsConfirm.Connect(nameof(StairsConfirmation.StairsConfirmed), this, nameof(OnStairsDown));
 
       var fade = hud.GetNode<DeathScreen>("FadeCanvasLayer/Fade");
-      World.AddElement(fade);
+      World.AddOrReplaceElement(fade);
       fade.Connect(nameof(DeathScreen.Continue), this, nameof(OnContinueFromDeath));
       fade.Connect(nameof(DeathScreen.Exit), this, nameof(OnExitFromDeath));
 

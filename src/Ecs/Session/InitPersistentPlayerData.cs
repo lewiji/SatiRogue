@@ -1,5 +1,7 @@
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Tools;
+
 namespace SatiRogue.Ecs.Session;
 
 public class InitPersistentPlayerData : ISystem {
@@ -7,6 +9,6 @@ public class InitPersistentPlayerData : ISystem {
 
    public void Run() {
       var playerStore = new PersistentPlayerData();
-      World.AddElement(playerStore);
+      World.AddOrReplaceElement(playerStore);
    }
 }

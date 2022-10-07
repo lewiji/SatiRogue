@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using SatiRogue.Ecs.Menu.Nodes;
 using RelEcs;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 using Option = SatiRogue.Ecs.Menu.Nodes.Option;
 
@@ -20,7 +21,7 @@ public class InitOptions : Reference, ISystem {
       _options.Connect(nameof(Options.OptionChanged), this, nameof(OnOptionChanged));
       _options.Connect("ready", this, nameof(OnOptionsReady));
       menuState.AddChild(_options);
-      World.AddElement(_options);
+      World.AddOrReplaceElement(_options);
    }
 
    ConfigFile GetOrCreateConfigFile() {

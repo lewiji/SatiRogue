@@ -1,5 +1,6 @@
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
@@ -9,6 +10,6 @@ public class TurnHandlerInitSystem : ISystem {
 
    public void Run() {
       var turnHandlerEntity = this.Spawn().Add(new Turn()).Id();
-      World.AddElement(this.GetComponent<Turn>(turnHandlerEntity));
+      World.AddOrReplaceElement(this.GetComponent<Turn>(turnHandlerEntity));
    }
 }

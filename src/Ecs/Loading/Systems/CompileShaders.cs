@@ -4,6 +4,7 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs.Loading.Nodes;
 using RelEcs;
 using SatiRogue.resources;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Loading.Systems;
@@ -22,8 +23,8 @@ public class CompileShaders : Reference, ISystem {
    public void Run() {
       _shaderCompiler = ShaderCompilerScene.Instance<ShaderCompiler>();
       World.GetElement<LoadingState>().AddChild(_shaderCompiler);
-      World.AddElement(_shaderCompiler);
-      World.AddElement(this);
+      World.AddOrReplaceElement(_shaderCompiler);
+      World.AddOrReplaceElement(this);
       _satiConfig ??= World.GetElement<SatiConfig>();
    }
 

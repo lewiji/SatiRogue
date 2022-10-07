@@ -5,6 +5,7 @@ using SatiRogue.Debug;
 using SatiRogue.Ecs;
 using SatiRogue.Ecs.Core;
 using SatiRogue.resources;
+using SatiRogue.Tools;
 
 namespace SatiRogue;
 
@@ -27,7 +28,7 @@ public partial class Main : Node {
    void CreateGameStateController() {
       _gsc = new GameStateController();
       AddChild(_gsc);
-      _gsc.World.AddElement(this);
+      _gsc.World.AddOrReplaceElement(this);
    }
 
    [OnReady]
@@ -35,14 +36,14 @@ public partial class Main : Node {
       var config = GD.Load<Resource>("res://sati_config.tres");
 
       if (config is SatiConfig satiConfig) {
-         _gsc.World.AddElement(satiConfig);
+         _gsc.World.AddOrReplaceElement(satiConfig);
       }
    }
 
    [OnReady]
    void AddWorldEnvironmentElement() {
       var worldEnvironment = GetNode<WorldEnvironment>("WorldEnvironment");
-      _gsc.World.AddElement(worldEnvironment);
+      _gsc.World.AddOrReplaceElement(worldEnvironment);
 
       var environment = GD.Load<Godot.Environment>(OS.GetName() == "Android"
          ? "res://scenes/res/EnvironmentAndroid.tres"

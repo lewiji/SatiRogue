@@ -21,7 +21,7 @@ public class InitFogSystem : ISystem {
    MapGeometry? _mapGeometry;
 
    public void Run() {
-      World.AddElement(_fogMultiMeshes);
+      World.AddOrReplaceElement(_fogMultiMeshes);
       var mapGenData = World.GetElement<MapGenData>();
       var cells = mapGenData.IndexedCells.Values.ToArray();
 

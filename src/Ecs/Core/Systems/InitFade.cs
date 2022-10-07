@@ -1,6 +1,7 @@
 using Godot;
 using SatiRogue.Ecs.Core.Nodes;
 using RelEcs;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Core.Systems;
 
@@ -11,6 +12,6 @@ public partial class InitFade : ISystem {
    public void Run() {
       var fade = FadeScene.Instance<Fade>();
       World.GetElement<CoreState>().AddChild(fade);
-      World.AddElement(fade);
+      World.AddOrReplaceElement(fade);
    }
 }
