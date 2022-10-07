@@ -81,7 +81,7 @@ instance_count = 25
 mesh = ExtResource( 19 )
 transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 5, 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5 )
 
-[sub_resource type="MultiMesh" id=2]
+[sub_resource type="MultiMesh" id=14]
 transform_format = 1
 instance_count = 23
 mesh = ExtResource( 20 )
@@ -178,7 +178,7 @@ multimesh = SubResource( 6 )
 script = ExtResource( 4 )
 
 [node name="Walls" type="MultiMeshInstance" parent="LevelGeom/Room1"]
-multimesh = SubResource( 2 )
+multimesh = SubResource( 14 )
 script = ExtResource( 4 )
 
 [node name="Room2" type="Spatial" parent="LevelGeom"]
