@@ -31,7 +31,7 @@ public partial class MessageLogEntry : MarginContainer {
 
    void SetText(string text) {
       if (_logText != null)
-         _logText.Text = $"* {text}";
+         _logText.BbcodeText = $"* {text}";
    }
 
    [OnReady]
@@ -41,6 +41,7 @@ public partial class MessageLogEntry : MarginContainer {
          _timeoutTimer.Start(TimeoutToFade);
       }
       _fadeTween?.Connect("tween_all_completed", this, "queue_free");
+      if (_logText != null) _logText.BbcodeEnabled = true;
    }
 
    void OnTimeout() {

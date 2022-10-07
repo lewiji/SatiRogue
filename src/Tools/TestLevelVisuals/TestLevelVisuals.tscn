@@ -1,11 +1,11 @@
 [gd_scene load_steps=28 format=2]
 
+[ext_resource path="res://resources/level_material_sets/dungeon_1.tres" type="Resource" id=1]
 [ext_resource path="res://scenes/res/EnvironmentEditor.tres" type="Environment" id=2]
 [ext_resource path="res://resources/props/FloorPlane.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/MultiMeshBatcher/Batcher_Node.gd" type="Script" id=4]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all_n.png" type="Texture" id=5]
 [ext_resource path="res://src/Tools/TestLevelVisuals/test_floor_plane.tres" type="PlaneMesh" id=7]
-[ext_resource path="res://resources/level_material_sets/dungeon_0.tres" type="Resource" id=8]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Actors/Player.cs" type="Script" id=9]
 [ext_resource path="res://resources/enemies/flash_overlay_shader.gdshader" type="Shader" id=10]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all_s.png" type="Texture" id=11]
@@ -126,7 +126,7 @@ shader_param/uv2_offset = Vector3( 0, 0, 0 )
 
 [node name="TestLevelVisuals" type="Spatial"]
 script = SubResource( 7 )
-LevelSet = ExtResource( 8 )
+LevelSet = ExtResource( 1 )
 FloorTileMesh = ExtResource( 19 )
 WallMesh = ExtResource( 20 )
 StairsMesh = ExtResource( 18 )
@@ -138,7 +138,6 @@ environment = ExtResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="Environment"]
 transform = Transform( 0.862409, -0.0206019, 0.505793, -0.44509, 0.445094, 0.777037, -0.241134, -0.895247, 0.374684, 7.88736, 5.69369, 3.00922 )
-light_energy = 0.618
 shadow_enabled = true
 shadow_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 shadow_bias = 0.02
@@ -205,7 +204,7 @@ script = ExtResource( 4 )
 
 [node name="Player" type="Spatial" parent="."]
 physics_interpolation_mode = 2
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1.1, -3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.91, -1.1, -3.2172 )
 script = ExtResource( 9 )
 
 [node name="Visual" type="AnimatedSprite3D" parent="Player"]
@@ -230,6 +229,7 @@ script = ExtResource( 13 )
 
 [node name="Light" type="SpotLight" parent="Player/Visual"]
 transform = Transform( 0.966016, -0.0180308, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
+light_energy = 1.618
 shadow_enabled = true
 shadow_color = Color( 0.797333, 0.68, 1, 1 )
 shadow_bias = 0.08
