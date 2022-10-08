@@ -118,7 +118,6 @@ _global_script_class_icons={
 
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
-run/delta_sync_after_draw=true
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://satirogue_logo.png"
@@ -245,7 +244,6 @@ project/assembly_name="RoguelikeMono"
 
 [physics]
 
-common/physics_fps=45
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 
@@ -254,15 +252,15 @@ common/physics_interpolation=true
 2d/snapping/use_gpu_pixel_snap=true
 quality/directional_shadow/size.mobile=1024
 quality/shadow_atlas/size.mobile=1024
+quality/shadows/filter_mode=0
 quality/shading/force_vertex_shading.mobile=false
-quality/filters/anisotropic_filter_level=16
+quality/filters/anisotropic_filter_level=8
 quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2
-gles3/shaders/shader_compilation_mode.mobile=2
-gles3/shaders/max_simultaneous_compiles=4
-gles3/shaders/max_simultaneous_compiles.mobile=2
+gles3/shaders/max_simultaneous_compiles=8
 gles3/shaders/shader_cache_size_mb=1024
 gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256
+quality/lightmapping/use_bicubic_sampling=false
 environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )

@@ -63,16 +63,18 @@ pixel_size = 0.05
 transparent = false
 double_sided = false
 frames = SubResource( 10 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.98946, -0.429396 )
+visible = false
 light_color = Color( 1, 0.980392, 0.462745, 1 )
 shadow_enabled = true
 shadow_bias = 0.08
 omni_range = 6.18
 omni_attenuation = 0.618
+omni_shadow_mode = 0
 __meta__ = {
 "_editor_description_": ""
 }

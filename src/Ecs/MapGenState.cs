@@ -3,6 +3,7 @@ using SatiRogue.Ecs.Core;
 using SatiRogue.Ecs.MapGenerator.Systems;
 using SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 using RelEcs;
+using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Tools;
 using World = RelEcs.World;
 
@@ -13,10 +14,10 @@ public class MapGenState : GameState {
    public delegate void FinishedGenerating();
 
    ISystem[] _mapGenStrategySystems = { };
+   
+   public MapGenState(GameStateController gsc) : base(gsc) {}
 
-   public MapGenState() { }
-
-   public MapGenState(ISystem[] mapGenStrategySystems) {
+   public MapGenState(GameStateController gsc, ISystem[] mapGenStrategySystems) : base(gsc) {
       _mapGenStrategySystems = mapGenStrategySystems;
    }
 
@@ -41,7 +42,7 @@ public class MapGenState : GameState {
       ContinueSystems.Add(new PassToDungeonState());
    }
 
-   void AddDefaultGeneratorStrategies(SystemGroup systemGroup) {
+   void AddDefaultGeneratorStrategies(SatiSystemGroup systemGroup) {
       systemGroup.Add(new CreateRooms()).Add(new CreateCorridors()).Add(new FloodFill()).Add(new GenPathfindingNodes());
    }
 }

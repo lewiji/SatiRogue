@@ -3,6 +3,7 @@ using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Triggers;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
@@ -11,45 +12,51 @@ public class TurnHandlerSystem : Reference, ISystem {
    public World World { get; set; } = null!;
    readonly float _minTurnTime = 0.1f;
    public int TurnNumber { get; private set; }
+   Turn? _turn;
+   SatiSystemGroup _onTurnSystems;
 
-   void SetCurrentTurn(TurnType turnType) {
-      var turn = World.GetElement<Turn>();
-
-      if (turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn)
-         return;
-
-      turn.CurrentTurn = turnType;
-
-      CallDeferred(nameof(ProcessOnTurnSystems), turn.CurrentTurn);
+   public TurnHandlerSystem(SatiSystemGroup onTurnSystems) {
+      _onTurnSystems = onTurnSystems;
    }
 
-   void ProcessOnTurnSystems(TurnType currentTurnType) {
-      if (currentTurnType == TurnType.Processing) {
+   void SetCurrentTurn(TurnType turnType) {
+
+      if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn))
+         return;
+
+      _turn.CurrentTurn = turnType;
+      
+      if (turnType == TurnType.Processing) {
          // Process turn by running OnTurnSystems
          TickWorld();
          TurnNumber += 1;
       }
+
+      CallDeferred(nameof(ProcessOnTurnSystems), _turn.CurrentTurn);
+   }
+
+   void ProcessOnTurnSystems(TurnType currentTurnType) {
       this.Send(new TurnChangedTrigger(currentTurnType));
    }
 
    void TickWorld() {
-      World.GetElement<DungeonState>().OnTurnSystems.Run(World);
+     _onTurnSystems.Run(World);
    }
 
    public void Run() {
+      _turn ??= World.GetElement<Turn>();
       ProcessTurnChanges();
       HandlePlayerInputTrigger();
    }
 
    void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
-      var turn = World.GetElement<Turn>();
 
-      if (turn.CurrentTurn == TurnType.Idle) {
+      if (_turn == null || _turn.CurrentTurn == TurnType.Idle) {
          return;
       }
 
       foreach (var _ in this.Receive<PlayerHasMadeInputTrigger>()) {
-         if (turn.CurrentTurn == TurnType.PlayerTurn) {
+         if (_turn.CurrentTurn == TurnType.PlayerTurn) {
             SetCurrentTurn(TurnType.EnemyTurn);
          }
       }

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-DisableManualShaderPrecompiler = true
+DisableManualShaderPrecompiler = false
+DebugTools = true

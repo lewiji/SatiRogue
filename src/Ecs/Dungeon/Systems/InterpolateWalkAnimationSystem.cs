@@ -29,14 +29,16 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      if (spatial.Translation.DistanceSquaredTo(gridPos.Position) < 0.003f) {
+      if (spatial.Translation.DistanceSquaredTo(gridPos.Position) < 0.0005f) {
          spatial.Translation = gridPos.Position;
+         spatial.ResetPhysicsInterpolation();
          return;
       }
 
-      spatial.Translation = spatial.Translation.CubicInterpolate(gridPos.Position,
-         gridPos.LastPosition + gridPos.LastPosition.DirectionTo(gridPos.Position) * 0.1f,
-         gridPos.Position - gridPos.Position.DirectionTo(gridPos.LastPosition) * 0.1f, _lerpWeight * _delta!.Value);
+      spatial.Translation = spatial.Translation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
+      /*spatial.Translation.CubicInterpolate(gridPos.Position,
+      gridPos.Position - gridPos.LastPosition.DirectionTo(gridPos.Position) * 0.1f,
+      gridPos.Position - gridPos.Position.DirectionTo(gridPos.LastPosition) * 0.1f, _lerpWeight * _delta!.Value);*/
    }
 
    static void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {

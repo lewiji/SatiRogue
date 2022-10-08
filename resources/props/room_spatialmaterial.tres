@@ -29,3 +29,4 @@ uv1_triplanar = true
 distance_fade_mode = 2
 distance_fade_min_distance = 32.0
 distance_fade_max_distance = 16.0
+async_mode = 1

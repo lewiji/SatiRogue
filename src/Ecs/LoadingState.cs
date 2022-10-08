@@ -26,4 +26,6 @@ public class LoadingState : GameState {
       Logger.Info("Preloading Finished");
       EmitSignal(nameof(FinishedLoading));
    }
+
+   public LoadingState(GameStateController gameStateController) : base(gameStateController) { }
 }

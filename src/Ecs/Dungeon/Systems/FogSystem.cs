@@ -21,7 +21,7 @@ public class FogSystem : ISystem {
       }
    }
 
-   static void CalculateFov(GridPositionComponent gridPositionComponent, MapGenData mapGenData, FogMultiMeshes fogMultiMeshes) {
+   public static void CalculateFov(GridPositionComponent gridPositionComponent, MapGenData mapGenData, FogMultiMeshes fogMultiMeshes) {
       var offScreenCoords = new Vector3(-1000f, 1000f, -1000f);
 
       ShadowCast.ComputeVisibility(mapGenData, gridPositionComponent.Position, 11.0f);

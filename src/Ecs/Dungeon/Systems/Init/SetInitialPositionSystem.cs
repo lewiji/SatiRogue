@@ -41,8 +41,8 @@ public class SetInitialPositionSystem : ISystem {
          chosenCell.Value.Occupants.Add(stairs.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
          stairs.Translation = gridPos.Position;
-
-         World.GetElement<DebugUi>().SetStairsPos(gridPos.Position);
+         
+         World.TryGetElement<DebugUi>()?.SetStairsPos(gridPos.Position);
          Logger.Info($"Spawned stairs at {stairs.Translation}");
 
          // Make hole for stairs to sit in in floor
@@ -95,7 +95,7 @@ public class SetInitialPositionSystem : ISystem {
          gridPos.Position = chosenCell.Value.Position;
 
          if (character is Player) {
-            World.GetElement<DebugUi>().SetPlayerPos(gridPos.Position);
+            World.TryGetElement<DebugUi>()?.SetPlayerPos(gridPos.Position);
          }
          chosenCell.Value.Occupants.Add(character.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);

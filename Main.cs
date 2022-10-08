@@ -53,24 +53,24 @@ public partial class Main : Node {
 
    [OnReady]
    void AddCoreState() {
-      var coreState = new CoreState();
+      var coreState = new CoreState(_gsc);
       _gsc.PushState(coreState);
    }
 
    public LoadingState AddLoadingState() {
-      var loading = new LoadingState();
+      var loading = new LoadingState(_gsc);
       _gsc.PushState(loading);
       return loading;
    }
 
    [OnReady]
    void AddMenuState() {
-      var menuState = new MenuState();
+      var menuState = new MenuState(_gsc);
       _gsc.PushState(menuState);
    }
 
    public void AddSessionState() {
-      var sessionState = new SessionState();
+      var sessionState = new SessionState(_gsc);
       _gsc.PushState(sessionState);
    }
 

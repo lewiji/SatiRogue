@@ -21,20 +21,18 @@ public partial class ShaderCompiler : CanvasLayer {
       if (res is not Material material)
          return false;
 
-      Logger.Info($"Material compiling: {material.ResourcePath}");
-
       switch (material) {
          case SpatialMaterial spatialMaterial:
-            InstanceSpatialWiggler(spatialMaterial);
+            CallDeferred(nameof(InstanceSpatialWiggler), spatialMaterial);
             break;
          case ShaderMaterial shaderMaterial:
-            InstanceWigglerByShaderMode(shaderMaterial, material);
+            CallDeferred(nameof(InstanceWigglerByShaderMode), shaderMaterial, material);
             break;
          case CanvasItemMaterial canvasItemMaterial:
-            InstanceCanvasItemWiggler(canvasItemMaterial);
+            CallDeferred(nameof(InstanceCanvasItemWiggler), canvasItemMaterial);
             break;
          case ParticlesMaterial particlesMaterial:
-            InstanceParticlesWiggler(particlesMaterial);
+            CallDeferred(nameof(InstanceParticlesWiggler), particlesMaterial);
             break;
       }
       return true;

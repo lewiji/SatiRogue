@@ -20,4 +20,6 @@ public class MenuState : GameState {
    async void OnIntroFinished() {
       //await _gsc.World.GetElement<Fade>().FadeFromBlack();
    }
+
+   public MenuState(GameStateController gameStateController) : base(gameStateController) { }
 }

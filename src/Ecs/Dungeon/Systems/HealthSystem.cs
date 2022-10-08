@@ -19,8 +19,11 @@ public class HealthSystem : ISystem {
       var query = this.QueryBuilder<Entity, Character, HealthComponent, StatBar3D>().Has<Alive>().Build();
 
       foreach (var (entity, character, health, statBar3D) in query) {
+         if (health.Invincible && health.Value < health.Max) health.Value = health.Max;
+         
          if (Mathf.IsEqualApprox(statBar3D.Percent, health.Percent))
             continue;
+         
          statBar3D.Percent = health.Percent;
 
          if (character is Player) {

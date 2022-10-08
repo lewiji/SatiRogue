@@ -75,17 +75,18 @@ public partial class SpatialCamera : Camera {
          ProcessShake();
       }
 
-      var targetTranslation = Target.GetGlobalTransformInterpolated().origin + _offset;
 
       if (!Smoothed) {
-         Translation = targetTranslation;
+         Translation = Target.GlobalTranslation + _offset;
          return;
       }
+      
+      var targetTranslation = Target.GetGlobalTransformInterpolated().origin + _offset;
 
       var distanceSquared = Translation.DistanceSquaredTo(targetTranslation);
 
-      if (distanceSquared < 0.003f) {
-         Translation = targetTranslation;
+      if (distanceSquared < 0.0005f) {
+         Translation = Target.GlobalTranslation + _offset;
          return;
       }
       Translation = Translation.LinearInterpolate(targetTranslation, delta * SmoothSpeed);
@@ -97,19 +98,5 @@ public partial class SpatialCamera : Camera {
       Rotation = new Vector3(Rotation.x, Rotation.y, ShakeMaxRoll * amount * _noise.GetNoise2d(_noise.Seed, _noiseY));
       HOffset = ShakeMaxOffset.x * amount * _noise.GetNoise2d(_noise.Seed, _noiseY);
       VOffset = ShakeMaxOffset.y * amount * _noise.GetNoise2d(_noise.Seed, _noiseY);
-   }
-
-   public override void _Input(InputEvent @event) {
-      if (@event is not InputEventMouseButton {Pressed: true} inputEventMouseButton)
-         return;
-
-      switch (inputEventMouseButton.ButtonIndex) {
-         case (int) ButtonList.WheelUp:
-            Fov -= 1f;
-            break;
-         case (int) ButtonList.WheelDown:
-            Fov += 1f;
-            break;
-      }
    }
 }

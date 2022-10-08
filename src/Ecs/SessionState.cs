@@ -34,22 +34,27 @@ public class SessionState : GameState {
       await fade.FadeFromBlack();
 
       Logger.Info("Freeing shader compiler & loading state");
-      shaderCompiler.QueueFree();
+      
+      await ToSignal(fade.GetTree(), "idle_frame");
+      await ToSignal(fade.GetTree(), "idle_frame");
+      await ToSignal(fade.GetTree(), "idle_frame");
+      await ToSignal(fade.GetTree(), "idle_frame");
+      await ToSignal(fade.GetTree(), "idle_frame");
       var loadingState = gameStateController.World.GetElement<LoadingState>();
       loadingState?.QueueFree();
-      await ToSignal(loadingState, "tree_exited");
-      await ToSignal(fade.GetTree(), "idle_frame");
       Logger.Info("Freed.");
    }
 
    MapGenState ChangeToMapGenState(GameStateController gameStateController) {
-      var mapGenState = new MapGenState();
+      var mapGenState = new MapGenState(gameStateController);
       gameStateController.PushState(mapGenState);
       return mapGenState;
    }
 
    public void ChangeToDungeonState(GameStateController gameStateController) {
-      var playState = new DungeonState();
+      var playState = new DungeonState(gameStateController);
       gameStateController.PushState(playState);
    }
+
+   public SessionState(GameStateController gameStateController) : base(gameStateController) { }
 }

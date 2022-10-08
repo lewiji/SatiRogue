@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=1]
 [ext_resource path="res://scenes/res/SpriteFramesPlayer.tres" type="SpriteFrames" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://resources/particles/blood_mesh.tres" type="QuadMesh" id=4]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/SpatialCamera.cs" type="Script" id=5]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Actors/Player.cs" type="Script" id=6]
-[ext_resource path="res://resources/enemies/flash_overlay_shadermaterial.tres" type="Material" id=7]
 [ext_resource path="res://audio/Barefoot Dirt footsteps 4.wav" type="AudioStream" id=8]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/DirectionIndicator.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/DiagonalLockIndicator.tscn" type="PackedScene" id=10]
@@ -66,7 +65,6 @@ script = ExtResource( 6 )
 transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.75, 0 )
 portal_mode = 2
 material_override = ExtResource( 1 )
-material_overlay = ExtResource( 7 )
 pixel_size = 0.05
 shaded = true
 double_sided = false

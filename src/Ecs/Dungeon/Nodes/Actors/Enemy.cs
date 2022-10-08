@@ -46,7 +46,6 @@ public partial class Enemy : Character {
 
    void SetupSceneResources() {
       _playerCamera = GetTree().Root.GetCamera();
-      GD.Print("Enemy ready");
 
       _hoverStats.Visible = _hovering;
       _hoverStats.SetStatsRecord(Stats.Record);

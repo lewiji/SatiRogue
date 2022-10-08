@@ -9,4 +9,6 @@ public class CoreState : GameState {
       gameStates.World.AddOrReplaceElement(this);
       InitSystems.Add(new InitFade()).Add(new InitGdSerializer());
    }
+
+   public CoreState(GameStateController gameStateController) : base(gameStateController) { }
 }

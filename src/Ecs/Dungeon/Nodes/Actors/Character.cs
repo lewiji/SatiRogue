@@ -54,30 +54,9 @@ public partial class Character : GameObject {
          _particles.Visible = true;
          _particles.Emitting = true;
       }
-
-      if (AnimatedSprite3D == null)
-         return;
-      var colorBlank = new Color(1f, 0f, 0f, 0f);
-      var colorRed = new Color(1f, 0f, 0f);
-      var mat = AnimatedSprite3D.MaterialOverlay;
-      mat.Set("shader_param/texture_albedo", AnimatedSprite3D.MaterialOverride.Get("albedo_texture"));
-      mat.Set("shader_param/uv1_offset", AnimatedSprite3D.MaterialOverride.Get("uv1_offset"));
-
-      var deathTween = GetTree().CreateTween();
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.25f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorRed, 0.048f);
-      deathTween.TweenProperty(mat, "shader_param/albedo", colorBlank, 0.048f).SetDelay(0.032f);
    }
 
    public void CheckVisibility(bool visible) {
       Visible = visible;
-   }
-
-   public override void _ExitTree() {
-      AnimatedSprite3D?.MaterialOverlay.Dispose();
    }
 }

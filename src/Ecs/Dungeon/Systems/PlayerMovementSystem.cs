@@ -8,20 +8,19 @@ using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Nodes.Items;
+using SatiRogue.Ecs.Dungeon.Systems.Init;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Ecs.MapGenerator.Systems;
+using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PlayerMovementSystem : CharacterMovementSystem {
    MessageLog? _messageLog;
-   MapGenData? _mapGenData;
-   PathfindingHelper? _pathfindingHelper;
 
    public override void Run() {
-      _mapGenData ??= World.GetElement<MapGenData>();
-      _pathfindingHelper ??= World.GetElement<PathfindingHelper>();
+      InitialiseSystem();
       _messageLog ??= World.GetElement<MessageLog>();
 
       foreach (var (playerEntity, player, gridPos, input) in this.Query<Entity, Player, GridPositionComponent, InputDirectionComponent>()) {
@@ -29,26 +28,39 @@ public class PlayerMovementSystem : CharacterMovementSystem {
             continue;
 
          var targetPos = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y);
-         var targetCell = _mapGenData.GetCellAt(targetPos);
+         var targetCell = MapData!.GetCellAt(targetPos);
 
          if (!targetCell.Blocked && !targetCell.Occupied) {
-            MoveToCell(_mapGenData, gridPos, player, _pathfindingHelper, input, targetCell);
+            MoveToCell(player, gridPos, input, targetCell);
             World.GetElement<DebugUi>().SetPlayerPos(targetPos);
             this.Send(new CharacterAudioTrigger(player, "walk"));
          } else {
-            HandleOccupants(targetCell, playerEntity, player, input, _mapGenData, _pathfindingHelper, gridPos);
+            HandleOccupants(targetCell, playerEntity, player, input, gridPos);
             World.GetElement<DebugUi>().SetPlayerPos(gridPos.Position);
             this.Send(new CharacterAudioTrigger(player, "sword"));
          }
       }
    }
 
+   public void TeleportToCell(Player player, Vector3 position) {
+      InitialiseSystem();
+      
+      if (!player.HasMeta("Entity") || player.GetMeta("Entity") is not Marshallable<Entity> entity) return;
+      Logger.Info($"Teleporting entity {entity.Value.Identity}");
+      var gridPos = World.GetComponent<GridPositionComponent>(entity.Value.Identity);
+      World.GetComponent<Walkable>(entity.Value.Identity).Teleporting = true;
+      HandleOccupants(MapData!.GetCellAt(position), entity.Value, player, 
+         World.GetComponent<InputDirectionComponent>(entity.Value.Identity), gridPos);
+      World.GetElement<DebugUi>().SetPlayerPos(gridPos.Position);
+      this.Send(new CharacterAudioTrigger(player, "sword"));
+      
+      FogSystem.CalculateFov(gridPos, MapData, World.GetElement<FogMultiMeshes>());
+   }
+
    void HandleOccupants(Cell targetCell,
       Entity playerEntity,
       Player player,
       InputDirectionComponent inputDirectionComponent,
-      MapGenData mapData,
-      PathfindingHelper pathfindingHelper,
       GridPositionComponent gridPos) {
       foreach (var targetId in targetCell.Occupants) {
          var target = GD.InstanceFromId(targetId);
@@ -92,7 +104,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                World.GetElement<Loot>().NumLoots = playerStore.Gold;
                _messageLog?.AddMessage($"Retrieved {goldAmount} gold from chest.");
                break;
-            case Health health when !health.Taken:
+            case Health {Taken: false} health:
                health.Taken = true;
                var healthAmount = 1;
                this.GetComponent<HealthComponent>(((Marshallable<Entity>) player.GetMeta("Entity")).Value).Value += healthAmount;
@@ -106,14 +118,14 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                break;
             case Stairs stairs:
                Logger.Info("Stairs!");
-               MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
+               MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
                this.Send(new CharacterAudioTrigger(player, "walk"));
                World.GetElement<StairsConfirmation>().Popup();
                _messageLog?.AddMessage($"Found the stairs down.");
                InputSystem.Paused = true;
                return;
             default:
-               MoveToCell(mapData, gridPos, player, pathfindingHelper, inputDirectionComponent, targetCell);
+               MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
                this.Send(new CharacterAudioTrigger(player, "walk"));
                return;
          }

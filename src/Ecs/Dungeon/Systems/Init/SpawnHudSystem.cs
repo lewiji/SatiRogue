@@ -22,15 +22,15 @@ public class SpawnHudSystem : Reference, ISystem {
    static readonly PackedScene FloorCounterScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/FloorCounter.tscn");
    static readonly PackedScene TouchControlsScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/TouchControls/TouchControls.tscn");
    static readonly PackedScene MessageLogScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/MessageLog.tscn");
-   static readonly PackedScene DebugUiScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DebugUi.tscn");
 
    public void Run() {
       var playerStore = World.GetElement<PersistentPlayerData>();
 
       var playState = World.GetElement<DungeonState>();
-      var hud = HudScene.Instance();
+      var hud = HudScene.Instance<Hud>();
       var uiParent = hud.GetNode("%HudItems");
       playState.AddChild(hud);
+      World.AddOrReplaceElement(hud);
 
       var healthUi = HealthUiScene.Instance<HealthUi>();
       uiParent.AddChild(healthUi);
@@ -54,10 +54,6 @@ public class SpawnHudSystem : Reference, ISystem {
       var messageLog = MessageLogScene.Instance<MessageLog>();
       uiParent.AddChild(messageLog);
       World.AddOrReplaceElement(messageLog);
-
-      var debugUi = DebugUiScene.Instance<DebugUi>();
-      uiParent.AddChild(debugUi);
-      World.AddOrReplaceElement(debugUi);
 
       var invUi = InvUiScene.Instance<Inventory>();
       uiParent.AddChild(invUi);
