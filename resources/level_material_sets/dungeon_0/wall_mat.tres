@@ -1,0 +1,39 @@
+[gd_resource type="ShaderMaterial" load_steps=8 format=2]
+
+[ext_resource path="res://assets/overworld/Overworld256x256.png" type="Texture" id=1]
+[ext_resource path="res://assets/overworld/WallShader.tres" type="Shader" id=2]
+[ext_resource path="res://assets/overworld/Overworld256x256_s.png" type="Texture" id=3]
+[ext_resource path="res://assets/overworld/Overworld256x256_p.png" type="Texture" id=4]
+[ext_resource path="res://assets/overworld/Overworld256x256_n.png" type="Texture" id=5]
+[ext_resource path="res://assets/overworld/Overworld256x256_o.png" type="Texture" id=6]
+[ext_resource path="res://assets/overworld/Overworld256x256Roughness.png" type="Texture" id=7]
+
+[resource]
+resource_name = "OverworldMat"
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 0.119, 0.0868, 0.28, 1 )
+shader_param/specular = 0.5
+shader_param/metallic = 0.5
+shader_param/roughness = 1.0
+shader_param/point_size = 1.0
+shader_param/metallic_texture_channel = Plane( 0.2, 0, 0, 0.2 )
+shader_param/roughness_texture_channel = Plane( 0.5, 0, 0, 0.5 )
+shader_param/normal_scale = 1.0
+shader_param/ao_texture_channel = Plane( 1, 0, 0, 0.618 )
+shader_param/ao_light_affect = 1.0
+shader_param/depth_scale = 0.05
+shader_param/depth_min_layers = 8
+shader_param/depth_max_layers = 32
+shader_param/depth_flip = Vector2( -1, 1 )
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/emission = null
+shader_param/emission_energy = null
+shader_param/texture_albedo = ExtResource( 1 )
+shader_param/texture_metallic = ExtResource( 3 )
+shader_param/texture_roughness = ExtResource( 7 )
+shader_param/texture_normal = ExtResource( 5 )
+shader_param/texture_ambient_occlusion = ExtResource( 6 )
+shader_param/texture_depth = ExtResource( 4 )

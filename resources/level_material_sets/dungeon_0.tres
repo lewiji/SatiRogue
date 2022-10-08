@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Resources/LevelMaterialSet.cs" type="Script" id=1]
-[ext_resource path="res://src/Tools/TestLevelVisuals/test_floor_tile_mat.tres" type="Material" id=2]
-[ext_resource path="res://src/Tools/TestLevelVisuals/test_walls_mat.tres" type="Material" id=3]
-[ext_resource path="res://src/Tools/TestLevelVisuals/test_stairs_mat.tres" type="Material" id=4]
+[ext_resource path="res://resources/level_material_sets/dungeon_0/floor_mat.tres" type="Material" id=2]
+[ext_resource path="res://resources/level_material_sets/dungeon_0/stairs_mat.tres" type="Material" id=3]
+[ext_resource path="res://resources/level_material_sets/dungeon_0/wall_mat.tres" type="Material" id=4]
 
 [resource]
 script = ExtResource( 1 )
-WallMaterial = ExtResource( 3 )
+WallMaterial = ExtResource( 4 )
 FloorMaterial = ExtResource( 2 )
-StairsMaterial = ExtResource( 4 )
+StairsMaterial = ExtResource( 3 )

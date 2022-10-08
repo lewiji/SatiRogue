@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Dungeon.Nodes;
+using SatiRogue.Ecs.Dungeon.Nodes.Resources;
 using SatiRogue.Ecs.MapGenerator;
 using SatiRogue.Ecs.MapGenerator.Components;
 using SatiRogue.Tools;
@@ -15,17 +17,10 @@ namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 public class SpatialMapSystem : ISystem {
    public World World { get; set; } = null!;
 
-   static readonly Godot.Collections.Dictionary<CellType, Mesh> CellMeshResources = new() {
-      {
-         CellType.Floor,
-         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8235.mesh")
-      }, {
-         CellType.Stairs,
-         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface6972.mesh")
-      }, {
-         CellType.Wall,
-         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7509.mesh")
-      }, {
+   static readonly Dictionary<CellType, Mesh> CellMeshResources = new() {
+      {CellType.Floor, GD.Load<Mesh>("res://resources/level_meshes/floor_tile_mesh.tres")},
+      {CellType.Stairs, GD.Load<Mesh>("res://resources/level_meshes/stairs_mesh.tres")},
+      {CellType.Wall, GD.Load<Mesh>("res://resources/level_meshes/wall_mesh.tres")}, {
          CellType.DoorClosed,
          GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")
       }, {
@@ -34,8 +29,13 @@ public class SpatialMapSystem : ISystem {
       }
    };
 
+   static readonly Array<LevelMaterialSet> LevelMaterialSets = new() {
+      GD.Load<LevelMaterialSet>("res://resources/level_material_sets/dungeon_0.tres"),
+      GD.Load<LevelMaterialSet>("res://resources/level_material_sets/dungeon_1.tres")
+   };
+
+   static readonly PackedScene LightingScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DungeonDirectionalLight.tscn");
    static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
-   static readonly Material WallShadows = GD.Load<Material>("res://assets/overworld/WallMatShadows.tres");
    readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
 
    MapGenData _mapGenData = null!;
@@ -54,7 +54,18 @@ public class SpatialMapSystem : ISystem {
 
       Logger.Info("Building chunks");
       _mapGeometry.AddChild(FloorPlaneScene.Instance());
+      _mapGeometry.AddChild(LightingScene.Instance());
+      ChooseLevelMaterialSet();
       BuildChunks(maxWidth, totalChunks, chunkWidth);
+   }
+
+   void ChooseLevelMaterialSet() {
+      var idx = Mathf.RoundToInt((float) GD.RandRange(0, LevelMaterialSets.Count - 1));
+      var levelMatSet = LevelMaterialSets[idx];
+      Logger.Info($"Chose {levelMatSet} Level Material Set.");
+      CellMeshResources[CellType.Floor].SurfaceSetMaterial(0, levelMatSet.FloorMaterial);
+      CellMeshResources[CellType.Wall].SurfaceSetMaterial(0, levelMatSet.WallMaterial);
+      CellMeshResources[CellType.Stairs].SurfaceSetMaterial(0, levelMatSet.StairsMaterial);
    }
 
    void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
@@ -116,14 +127,6 @@ public class SpatialMapSystem : ISystem {
          for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
             mmInst.Multimesh.SetInstanceTransform(i,
                new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position - chunkRoom.Translation));
-         }
-
-         if (cellType is CellType.Wall) {
-            mmInst.Multimesh.ResourceLocalToScene = true;
-            var wallsShadows = (MultiMeshInstance) mmInst.Duplicate();
-            wallsShadows.MaterialOverride = WallShadows;
-            wallsShadows.CastShadow = GeometryInstance.ShadowCastingSetting.ShadowsOnly;
-            chunkRoom.AddChild(wallsShadows);
          }
       }
    }

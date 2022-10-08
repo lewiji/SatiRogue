@@ -122,5 +122,27 @@ public class SetInitialPositionSystem : ISystem {
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
          item.Translation = gridPos.Position;
       }
+
+      var propQuery = this.Query<Prop, GridPositionComponent>();
+
+      foreach (var (prop, gridPos) in propQuery) {
+         if (!availableCells.Any())
+            break;
+         var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
+         var limit = 32;
+
+         while (chosenCell.Value.Occupied && limit > 0) {
+            chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
+            limit -= 1;
+         }
+
+         if (limit == 0) {
+            break;
+         }
+         gridPos.Position = chosenCell.Value.Position;
+         chosenCell.Value.Occupants.Add(prop.GetInstanceId());
+         pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
+         prop.Translation = gridPos.Position;
+      }
    }
 }

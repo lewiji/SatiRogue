@@ -2,6 +2,7 @@ using Godot;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Core;
+using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using SatiRogue.Ecs.MapGenerator.Components;
 using World = RelEcs.World;
@@ -13,6 +14,7 @@ public class SpawnItemsSystem : ISystem {
    static readonly PackedScene ChestScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Chest.tscn");
    static readonly PackedScene HealthScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Health.tscn");
    static readonly PackedScene SpatialItemScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/SpatialItem.tscn");
+   static readonly PackedScene LampScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Lamp.tscn");
 
    public void Run() {
       var numChests = Mathf.CeilToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
@@ -41,6 +43,15 @@ public class SpawnItemsSystem : ISystem {
          var spatialItem = SpatialItemScene.Instance<SpatialItem>();
          entitiesNode.AddChild(spatialItem);
          this.Spawn(spatialItem);
+      }
+
+      var numLamps = Mathf.RoundToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 8f));
+      Logger.Info($"Spawning {numLamps} lamps");
+
+      for (var lampIndex = 0; lampIndex < numHealth; lampIndex++) {
+         var lamp = LampScene.Instance<Lamp>();
+         entitiesNode.AddChild(lamp);
+         this.Spawn(lamp);
       }
    }
 }
