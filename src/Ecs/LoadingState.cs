@@ -17,7 +17,10 @@ public class LoadingState : GameState {
       gameStates.World.AddOrReplaceElement(this);
 
       CompileShaders compileShaders;
-      InitSystems.Add(_preloadResources = new PreloadResources()).Add(compileShaders = new CompileShaders());
+      InitSystems
+         .Add(new CreateResourceQueue())
+         .Add(_preloadResources = new PreloadResources())
+         .Add(compileShaders = new CompileShaders());
       _preloadResources.Connect(nameof(PreloadResources.AllResourcesLoaded), compileShaders, nameof(CompileShaders.OnAllResourcesLoaded));
       compileShaders.Connect(nameof(CompileShaders.ShadersCompiled), this, nameof(OnShadersCompiled));
    }

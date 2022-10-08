@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Godot;
@@ -7,8 +10,27 @@ using Thread = System.Threading.Thread;
 
 namespace SatiRogue.Tools;
 
-public static class ResourceQueue {
-   public static async Task<TResource?> Load<TResource>(string path, Delegates.ReportProgress? reportProgress = null)
+public class ResourceQueue : Resource {
+   [Signal] public delegate void ResourceLoaded(Resource resource);
+   [Signal] public delegate void AllLoaded();
+   
+   static readonly HashSet<string> _toLoad = new();
+
+   public void QueueResource(string path) {
+      _toLoad.Add(path);
+   }
+
+   public async void LoadQueuedResources() {
+      while (_toLoad.Count > 0) {
+         var path = _toLoad.First();
+         _toLoad.Remove(path);
+         var res = await Load<Resource>(path);
+         EmitSignal(nameof(ResourceLoaded), res);
+      }
+      EmitSignal(nameof(AllLoaded));
+   }
+   
+   static async Task<TResource?> Load<TResource>(string path, Delegates.ReportProgress? reportProgress = null)
       where TResource : Resource {
       if (ResourceLoader.HasCached(path)) {
          GD.Print("Is in cache: " + path);

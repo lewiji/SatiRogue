@@ -51,9 +51,6 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Dungeon/Nodes/Items/ChestSpriteFrames.tres"
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
-   int _resourcesLoaded = 0;
-   int _resourcesFailed = 0;
-   int _resourceCount = 0;
    Thread? _loadingThread;
    CompileShaders? _compileShaders;
 
@@ -63,57 +60,33 @@ public class PreloadResources : Reference, ISystem {
          return;
       }
       Logger.Info($"Preloading {ResourcePaths.Length} resources.");
-      _resourceCount = _resourcesToLoad.Count;
 
       _loadingThread = new Thread(LoadAllResources);
       _loadingThread.Start();
    }
 
-   async void LoadAllResources() {
-      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
-      Connect(nameof(ResourceFailed), this, nameof(OnResourceFailed));
-
-      while (_resourcesToLoad.Count > 0) {
-         await LoadNextResource();
+   void LoadAllResources() {
+      var resQueue = World.GetElement<ResourceQueue>();
+      resQueue.Connect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
+      resQueue.Connect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
+      foreach (var resourcePath in ResourcePaths) {
+         resQueue.QueueResource(resourcePath);
       }
-   }
-
-   async Task<Resource?> LoadNextResource() {
-      if (_resourcesToLoad.Count > 0) {
-         var resourcePath = _resourcesToLoad.Pop();
-
-         try {
-            var resource = await ResourceQueue.Load<Resource>(resourcePath);
-            EmitSignal(nameof(ResourceLoaded), resource);
-            return resource;
-         }
-         catch (AsyncResourceLoader.ResourceInteractiveLoaderException loaderException) {
-            Logger.Error(loaderException.Message);
-            EmitSignal(nameof(ResourceFailed), resourcePath);
-            //World.GetElement<LoadingState>().EmitSignal(nameof(LoadingState.RequestNextResourceLoad));
-         }
-      }
-      return null;
+      resQueue.LoadQueuedResources();
    }
 
    void OnResourceLoaded(Resource res) {
-      _resourcesLoaded += 1;
       _compileShaders ??= World.GetElement<CompileShaders>();
       _compileShaders.OnResourceReceived(res);
-      CheckResourcesFinished();
    }
 
-   void OnResourceFailed(string path) {
-      _resourcesFailed += 1;
-      CheckResourcesFinished();
-   }
-
-   void CheckResourcesFinished() {
-      if (_resourcesFailed + _resourcesLoaded < _resourceCount)
-         return;
+   void OnResourcesFinished() {
       Logger.Info("All resources loaded");
-      EmitSignal(nameof(AllResourcesLoaded));
+      var resQueue = World.GetElement<ResourceQueue>();
+      resQueue.Disconnect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
+      resQueue.Disconnect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
       _loadingThread?.Join();
       _loadingThread = null;
+      EmitSignal(nameof(AllResourcesLoaded));
    }
 }
