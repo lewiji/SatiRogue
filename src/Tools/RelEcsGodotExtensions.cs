@@ -1,6 +1,8 @@
 using System.Runtime.CompilerServices;
+using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Core;
+using World = RelEcs.World;
 
 namespace SatiRogue.Tools;
 
@@ -20,6 +22,13 @@ public static class RelEcsGodotExtensions {
       systemGroup.Add(aSystem);
       aSystem.World = world;
       return systemGroup;
+   }
+
+   public static Entity? GetEntity(this Node node) {
+      if (node.HasMeta("Entity") && node.GetMeta("Entity") is Marshallable<Entity> entity) {
+         return entity.Value;
+      }
+      return null;
    }
 }
 

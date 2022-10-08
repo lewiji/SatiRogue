@@ -3,6 +3,7 @@ using Godot;
 using RelEcs;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Items;
@@ -93,6 +94,7 @@ public class SetInitialPositionSystem : ISystem {
          }
 
          gridPos.Position = chosenCell.Value.Position;
+         if (character.GetEntity() is {} entity) World.AddComponent<Moving>(entity.Identity);
 
          if (character is Player) {
             World.TryGetElement<DebugUi>()?.SetPlayerPos(gridPos.Position);

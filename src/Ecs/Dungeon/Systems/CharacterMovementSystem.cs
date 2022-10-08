@@ -70,6 +70,11 @@ public class CharacterMovementSystem : Reference, ISystem {
       _pathfindingHelper?.SetCellWeight(currentCell.Id, currentCell.Occupants.Count);
       _pathfindingHelper?.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
+      if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity && 
+          !World.HasComponent<Moving>(entity.Value.Identity)) {
+         World.AddComponent<Moving>(entity.Value.Identity);
+      }
+
       if (character.Visible) {
          SendWalkAnimation(character);
       }
