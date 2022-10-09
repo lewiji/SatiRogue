@@ -118,13 +118,10 @@ _global_script_class_icons={
 
 config/name="RoguelikeMono"
 run/main_scene="res://Main.tscn"
+run/delta_sync_after_draw=true
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://satirogue_logo.png"
-
-[audio]
-
-output_latency=64
 
 [autoload]
 
@@ -258,7 +255,9 @@ quality/filters/anisotropic_filter_level=8
 quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2
-gles3/shaders/max_simultaneous_compiles=8
+gles3/shaders/shader_compilation_mode.mobile=2
+gles3/shaders/max_simultaneous_compiles=6
+gles3/shaders/max_simultaneous_compiles.mobile=3
 gles3/shaders/shader_cache_size_mb=1024
 gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256

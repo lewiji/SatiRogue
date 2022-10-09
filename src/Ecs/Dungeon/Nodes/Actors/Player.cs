@@ -33,4 +33,11 @@ public partial class Player : Character {
          .Add<Controllable>()
          .Add<Alive>();
    }
+
+   [OnReady]
+   void SetAndroidPerformance() {
+      if (OS.GetName() == "Android") {
+         GetNode("ReflectionProbe").QueueFree();
+      }
+   }
 }
