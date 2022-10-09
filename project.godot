@@ -247,15 +247,15 @@ common/physics_interpolation=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
-quality/directional_shadow/size.mobile=1024
-quality/shadow_atlas/size.mobile=1024
 quality/shadows/filter_mode=0
 quality/shading/force_vertex_shading.mobile=false
-quality/filters/anisotropic_filter_level=8
+quality/shading/force_lambert_over_burley.mobile=false
+quality/shading/force_blinn_over_ggx.mobile=false
+quality/filters/anisotropic_filter_level=16
 quality/filters/use_nearest_mipmap_filter=true
 2d/options/ninepatch_mode=0
 gles3/shaders/shader_compilation_mode=2
-gles3/shaders/shader_compilation_mode.mobile=2
+gles3/shaders/shader_compilation_mode.mobile=1
 gles3/shaders/max_simultaneous_compiles=6
 gles3/shaders/max_simultaneous_compiles.mobile=3
 gles3/shaders/shader_cache_size_mb=1024
@@ -263,3 +263,4 @@ gles3/shaders/shader_cache_size_mb.mobile=512
 gles3/shaders/shader_cache_size_mb.web=256
 quality/lightmapping/use_bicubic_sampling=false
 environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )
+quality/depth/hdr.mobile=true
