@@ -63,7 +63,6 @@ pixel_size = 0.05
 transparent = false
 double_sided = false
 frames = SubResource( 10 )
-frame = 4
 playing = true
 
 [node name="OmniLight" type="OmniLight" parent="."]

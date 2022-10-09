@@ -143,28 +143,26 @@ func release_input(action):
 	Input.parse_input_event(a)
 
 func _update_input_actions():
-	var output = _output.round()
-	#print(output)
-	if output.x < 0:
+	if _output.x < -0.5:
 		parse_input(action_left, -_output.x)
 		#Input.action_press(action_left, -_output.x)
-	#elif Input.is_action_pressed(action_left):
-		#Input.action_release(action_left)
-	if output.x > 0:		
+	elif Input.is_action_pressed(action_left):
+		release_input(action_left)
+	if _output.x > 0.5:		
 		parse_input(action_right, _output.x)
 		#Input.action_press(action_right, _output.x)
-	#elif Input.is_action_pressed(action_right):
-	#	Input.action_release(action_right)
-	if output.y < 0:
+	elif Input.is_action_pressed(action_right):
+		release_input(action_right)
+	if _output.y < -0.5:
 		parse_input(action_up, -_output.y)
 		#Input.action_press(action_up, -_output.y)
-	#elif Input.is_action_pressed(action_up):
-	#	Input.action_release(action_up)
-	if output.y > 0:
+	elif Input.is_action_pressed(action_up):
+		release_input(action_up)
+	if _output.y > 0.5:
 		parse_input(action_down, _output.y)
 		#Input.action_press(action_down, _output.y)
-	#elif Input.is_action_pressed(action_down):
-	#	Input.action_release(action_down)
+	elif Input.is_action_pressed(action_down):
+		release_input(action_down)
 
 func _reset():
 	_pressed = false
@@ -175,10 +173,10 @@ func _reset():
 	_tip.rect_position = _tip_default_position
 	if use_input_actions:
 		if Input.is_action_pressed(action_left) or Input.is_action_just_pressed(action_left):
-			Input.action_release(action_left)
+			release_input(action_left)
 		if Input.is_action_pressed(action_right) or Input.is_action_just_pressed(action_right):
-			Input.action_release(action_right)
+			release_input(action_right)
 		if Input.is_action_pressed(action_down) or Input.is_action_just_pressed(action_down):
-			Input.action_release(action_down)
+			release_input(action_down)
 		if Input.is_action_pressed(action_up) or Input.is_action_just_pressed(action_up):
-			Input.action_release(action_up)
+			release_input(action_up)
