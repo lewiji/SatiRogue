@@ -21,6 +21,7 @@ public class ResourceQueue : Resource {
    }
 
    public async void LoadQueuedResources() {
+      Logger.Info($"Preloading {_toLoad.Count} resources.");
       while (_toLoad.Count > 0) {
          var path = _toLoad.First();
          _toLoad.Remove(path);
