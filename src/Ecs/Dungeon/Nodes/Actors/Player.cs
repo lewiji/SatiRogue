@@ -30,6 +30,7 @@ public partial class Player : Character {
          .Add(new HealthComponent(playerStore.Stats.Record.Health, playerStore.Health))
          .Add(new GridPositionComponent())
          .Add(new InputDirectionComponent())
+         .Add(new CharacterAnimationComponent())
          .Add(new Walkable())
          .Add<Controllable>()
          .Add<Alive>();

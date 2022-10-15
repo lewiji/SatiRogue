@@ -32,10 +32,12 @@ public class BehaviourTree {
       GridPositionComponent gridPos,
       HealthComponent playerHealthComponent,
       GridPositionComponent playerGridPos,
+      CharacterAnimationComponent enemyAni,
       Stats enemyStats,
-      Stats playerStats) {
+      Stats playerStats, CharacterAnimationComponent playerAni) {
       _messageLog ??= world.GetElement<MessageLog>();
-      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos, enemyStats, playerStats, _messageLog);
+      TreeInstance!.Step(world, enemy, inputDir, gridPos, playerHealthComponent, playerGridPos, enemyAni, enemyStats, playerStats, 
+      playerAni, _messageLog);
    }
 }
 
@@ -49,8 +51,10 @@ public class BaseBt : Gig {
       GridPositionComponent gridPos,
       HealthComponent playerHealth,
       GridPositionComponent playerGridPos,
+      CharacterAnimationComponent enemyAni,
       Stats enemyStats,
       Stats playerStats,
+      CharacterAnimationComponent playerAni,
       MessageLog messageLog) {
       if (!PlayerInRange(enemyStats, gridPos, playerGridPos)) {
          if (_rangeToPlayer > enemyStats.Record.SightRange * 2f) {
@@ -62,7 +66,8 @@ public class BaseBt : Gig {
 
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
          return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir)
-                || Attack(playerHealth, playerGridPos, playerStats, gridPos, inputDir, enemy, enemyStats, world, messageLog)
+                || Attack(playerHealth, playerGridPos, playerStats, gridPos, inputDir, enemyAni, enemy, playerAni, enemyStats, world, 
+                messageLog)
                 || MoveRandomly(inputDir);
       }
 
@@ -97,7 +102,9 @@ public class BaseBt : Gig {
       Stats playerStats,
       GridPositionComponent playerGridPos,
       InputDirectionComponent inputDir,
+      CharacterAnimationComponent playerAniComponent,
       Enemy enemy,
+      CharacterAnimationComponent enemyAniComponent,
       Stats enemyStats,
       World world,
       MessageLog messageLog) {
@@ -112,8 +119,8 @@ public class BaseBt : Gig {
 
       inputDir.Direction = Vector2.Zero;
 
-      world.Send(new CharacterAnimationTrigger(enemy, "attack"));
-      world.Send(new CharacterAnimationTrigger(player, "hit"));
+      enemyAniComponent.Animation = "attack";
+      playerAniComponent.Animation = "hit";
 
       if (enemy.AnimatedSprite3D != null) {
          enemy.AnimatedSprite3D.FlipH = playerGridPos.Position.x > gridPos.Position.x;

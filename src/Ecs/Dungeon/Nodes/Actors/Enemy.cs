@@ -33,6 +33,7 @@ public partial class Enemy : Character {
       entityBuilder.Add(Stats)
          .Add(new HealthComponent(Stats.Record.Health))
          .Add(new GridPositionComponent())
+         .Add(new CharacterAnimationComponent())
          .Add(new InputDirectionComponent())
          .Add(new BehaviourTree())
          .Add(new Walkable())

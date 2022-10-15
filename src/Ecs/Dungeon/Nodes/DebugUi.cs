@@ -1,5 +1,6 @@
 using Godot;
 using GodotOnReady.Attributes;
+using SatiRogue.Ecs.Dungeon.Components;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
@@ -13,13 +14,17 @@ public partial class DebugUi : MarginContainer {
    [OnReadyGet("%ToggleDebug")] Button? _toggleDebugButton;
    [OnReadyGet("%PlayerPos")] Label? _playerPosLabel;
    [OnReadyGet("%StairsPos")] Label? _stairsPosLabel;
+   [OnReadyGet("%Turn")] Label? _turnLabel;
    [OnReadyGet("%WarpToStairsButton")] Button? _warpStairsButton;
    [OnReadyGet("%ReplenishHealthButton")] private Button? _healButton;
    [OnReadyGet("%GodModeCheckButton")] CheckButton? _godModeCheckButton;
+   public bool Enabled { get; set; }
 
    [OnReady] void SetupScene() {
       _bgContainer?.Hide();
       _controlsContainer?.Hide();
+      if (!Enabled) return;
+      
       _toggleDebugButton?.Connect("pressed", this, nameof(OnTogglePanel));
       _warpStairsButton?.Connect("pressed", this, nameof(OnWarpStairsPressed));
       _healButton?.Connect("pressed", this, nameof(OnHealPressed));
@@ -48,5 +53,9 @@ public partial class DebugUi : MarginContainer {
 
    public void SetStairsPos(Vector3 pos) {
       if (_stairsPosLabel != null) _stairsPosLabel.Text = $"({pos.x},{pos.z})";
+   }
+
+   public void SetTurn(TurnType turnType) {
+      if (_turnLabel != null) _turnLabel.Text = turnType.ToString();
    }
 }

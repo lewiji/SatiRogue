@@ -1,6 +1,7 @@
 using Godot;
 using RelEcs;
 using SatiRogue.Debug;
+using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Triggers;
@@ -11,42 +12,28 @@ namespace SatiRogue.Ecs.Dungeon.Systems;
 public class CharacterAnimationSystem : Reference, ISystem {
    public World World { get; set; } = null!;
 
+   Turn? _turn;
+
    public void Run() {
+      _turn ??= World.GetElement<Turn>();
       PlayRequestedAnimation();
-      RevertToIdleAnimation();
    }
 
    void PlayRequestedAnimation() {
-      var counter = 0;
 
-      foreach (var (character, name) in this.Receive<CharacterAnimationTrigger>()) {
-         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite)
+      foreach (var (character, animationComponent) in this.Query<Character, CharacterAnimationComponent>()) {
+         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || animationComponent.Animation == "")
             continue;
 
-         if (sprite.Frames.HasAnimation(name)) {
-            sprite.Play(name);
+         if (sprite.Frames.HasAnimation(animationComponent.Animation)) {
+            sprite.Play(animationComponent.Animation);
          }
 
-         if (name == "die") {
+         if (animationComponent.Animation == "die") {
             character.OnDeathAnimation();
          }
-         counter++;
-      }
-   }
 
-   void RevertToIdleAnimation() {
-      foreach (var _ in this.Receive<NewTurnTrigger>()) {
-         var query = this.QueryBuilder<InputDirectionComponent>().Has<Controllable>().Build();
-
-         foreach (var input in query) {
-            if (input.Direction != Vector2.Zero)
-               continue;
-            var player = World.GetElement<Player>();
-
-            if (player.AnimatedSprite3D?.Animation == "walk") {
-               player.AnimatedSprite3D.Animation = "idle";
-            }
-         }
+         animationComponent.Animation = "";
       }
    }
 }

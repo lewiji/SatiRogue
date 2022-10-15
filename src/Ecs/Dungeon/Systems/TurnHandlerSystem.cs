@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Nodes;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Tools;
 using World = RelEcs.World;
@@ -10,29 +12,25 @@ namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class TurnHandlerSystem : Reference, ISystem {
    public World World { get; set; } = null!;
-   readonly float _minTurnTime = 0.1f;
+   readonly float _minTurnTime = 0.2f;
    public int TurnNumber { get; private set; }
    Turn? _turn;
    SatiSystemGroup _onTurnSystems;
+   DebugUi? _debugUi;
 
    public TurnHandlerSystem(SatiSystemGroup onTurnSystems) {
       _onTurnSystems = onTurnSystems;
    }
 
-   void SetCurrentTurn(TurnType turnType) {
-
-      if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn))
+   async void SetCurrentTurn(TurnType turnType) {
+      if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn)) {
          return;
-
-      _turn.CurrentTurn = turnType;
-      
-      if (turnType == TurnType.Processing) {
-         // Process turn by running OnTurnSystems
-         TickWorld();
-         TurnNumber += 1;
       }
+      _turn.CurrentTurn = turnType;
 
-      CallDeferred(nameof(ProcessOnTurnSystems), _turn.CurrentTurn);
+      _debugUi?.SetTurn(_turn.CurrentTurn);
+
+      ProcessTurnChanges();
    }
 
    void ProcessOnTurnSystems(TurnType currentTurnType) {
@@ -45,30 +43,30 @@ public class TurnHandlerSystem : Reference, ISystem {
 
    public void Run() {
       _turn ??= World.GetElement<Turn>();
-      ProcessTurnChanges();
+      _debugUi ??= World.GetElement<DebugUi>();
       HandlePlayerInputTrigger();
    }
 
-   void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
+   async void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
 
       if (_turn == null || _turn.CurrentTurn == TurnType.Idle) {
          return;
       }
 
-      foreach (var _ in this.Receive<PlayerHasMadeInputTrigger>()) {
-         if (_turn.CurrentTurn == TurnType.PlayerTurn) {
-            SetCurrentTurn(TurnType.EnemyTurn);
-         }
+      if (!InputSystem.PlayerInputted) return;
+
+      if (_turn.CurrentTurn == TurnType.PlayerTurn) {
+         SetCurrentTurn(TurnType.EnemyTurn);
       }
+      InputSystem.PlayerInputted = false;
    }
 
-   void ProcessTurnChanges() { // Progress turn phases on changed
-      var triggers = this.Receive<TurnChangedTrigger>();
-
-      foreach (var turnTrigger in triggers) {
-         switch (turnTrigger.Turn) {
+   async void ProcessTurnChanges() { // Progress turn phases on changed
+      switch (_turn?.CurrentTurn) {
             case TurnType.Processing:
-               ResetTurn();
+               TickWorld();
+               TurnNumber += 1;
+               await ResetTurn();
                return;
             case TurnType.EnemyTurn:
                SetCurrentTurn(TurnType.Processing);
@@ -82,14 +80,11 @@ public class TurnHandlerSystem : Reference, ISystem {
             default:
                throw new ArgumentOutOfRangeException();
          }
-      }
    }
 
-   async void ResetTurn() {
+   async Task ResetTurn() {
       SetCurrentTurn(TurnType.Idle);
       await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
       SetCurrentTurn(TurnType.PlayerTurn);
-
-      this.Send(new NewTurnTrigger());
    }
 }

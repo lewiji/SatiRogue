@@ -1,5 +1,6 @@
 using Godot;
 using RelEcs;
+using SatiRogue.Debug;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
@@ -13,6 +14,8 @@ public class InputSystem : ISystem {
 
    public static bool HandlingInput = true;
    public static bool Paused = false;
+   public static bool PlayerInputted = false;
+   public static bool PlayerShot = false;
 
    public void Run() {
       if (Paused)
@@ -57,11 +60,12 @@ public class InputSystem : ISystem {
 
       if (!aim && HandlingInput && input.Direction != Vector2.Zero) {
          /* It's sending a message to the `PlayerInputSystem` to tell it to run. */
-         this.Send(new PlayerHasMadeInputTrigger());
+         Logger.Info($"InputSystem: Detected player input: {input.Direction}");
+         PlayerInputted = true;
          HandlingInput = false;
       } else if (shoot) {
-         this.Send(new PlayerHasMadeInputTrigger());
-         this.Send(new PlayerHasShotTrigger());
+         PlayerInputted = true;
+         PlayerShot = true;
          HandlingInput = false;
       }
 
@@ -84,7 +88,7 @@ public class InputSystem : ISystem {
       }
 
       if (HandlingInput && InputIsDiagonal(input.Direction)) {
-         this.Send(new PlayerHasMadeInputTrigger());
+         PlayerInputted = true;
          HandlingInput = false;
       }
    }

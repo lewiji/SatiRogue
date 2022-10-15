@@ -16,9 +16,8 @@ public class DebugToolsSystem : Reference, ISystem {
    public World World { get; set; }
 
    public void Run() {
-      if (!World.GetElement<SatiConfig>().DebugTools) return;
-      
       var debugUi = DebugUiScene.Instance<DebugUi>();
+      debugUi.Enabled = World.GetElement<SatiConfig>().DebugTools;
       World.GetElement<Hud>().GetNode("%HudItems").AddChild(debugUi);
       World.AddOrReplaceElement(debugUi);
 

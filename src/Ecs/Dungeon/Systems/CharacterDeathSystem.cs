@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
+using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
@@ -14,16 +15,17 @@ public class CharacterDeathSystem : Reference, ISystem {
    public World World { get; set; } = null!;
 
    public void Run() {
-      foreach (var charDiedTrigger in this.Receive<CharacterDiedTrigger>()) {
-         charDiedTrigger.Character.Alive = false;
+      foreach (var (entity, character) in this.QueryBuilder<Entity, Character>().Has<Dead>().Build()) {
+         character.Alive = false;
+         World.RemoveComponent<Dead>(entity.Identity);
 
-         if (charDiedTrigger.Character is Player player) {
-            var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
+         if (character is Player player) {
+            var timer = character.GetTree().CreateTimer(0.618f);
             timer.Connect("timeout", this, nameof(HandlePlayerDeath));
             player.AnimationPlayer.Play("on_death");
          } else {
-            var timer = charDiedTrigger.Character.GetTree().CreateTimer(0.618f);
-            timer.Connect("timeout", this, nameof(FreeEntity), new Array {charDiedTrigger.Character});
+            var timer = character.GetTree().CreateTimer(0.618f);
+            timer.Connect("timeout", this, nameof(FreeEntity), new Array {character});
          }
       }
    }

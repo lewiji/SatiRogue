@@ -24,6 +24,8 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       _messageLog ??= World.GetElement<MessageLog>();
 
       foreach (var (playerEntity, player, gridPos, input) in this.Query<Entity, Player, GridPositionComponent, InputDirectionComponent>()) {
+         
+         Logger.Info($"Player Input received: {input.Direction}");
          if (input.Direction == Vector2.Zero)
             continue;
 
@@ -80,8 +82,8 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                var enemyStats = World.GetComponent<Stats>(identity.Value).Record;
                var damage = Mathf.Max(0, playerStats.Strength - enemyStats.Defence);
                this.GetComponent<HealthComponent>(entity!.Value).Value -= damage;
-               this.Send(new CharacterAnimationTrigger(player, "attack"));
-               this.Send(new CharacterAnimationTrigger(character, "hit"));
+               World.GetComponent<CharacterAnimationComponent>(playerEntity.Identity).Animation = "attack";
+               World.GetComponent<CharacterAnimationComponent>(identity.Value).Animation = "hit";
 
                if (player.AnimatedSprite3D != null) {
                   player.AnimatedSprite3D.FlipH = inputDirectionComponent.Direction.x switch {

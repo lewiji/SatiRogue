@@ -70,14 +70,16 @@ public class CharacterMovementSystem : Reference, ISystem {
       _pathfindingHelper?.SetCellWeight(currentCell.Id, currentCell.Occupants.Count);
       _pathfindingHelper?.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
-      if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity && 
-          !World.HasComponent<Moving>(entity.Value.Identity)) {
-         World.AddComponent<Moving>(entity.Value.Identity);
+      if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity) {
+         if (!World.HasComponent<Moving>(entity.Value.Identity)) 
+            World.AddComponent<Moving>(entity.Value.Identity);
+         
+         if (character.Visible) {
+            SendWalkAnimation(World.GetComponent<CharacterAnimationComponent>(entity.Value.Identity));
+         }
       }
 
-      if (character.Visible) {
-         SendWalkAnimation(character);
-      }
+      
 
       if (character.AnimatedSprite3D != null) {
          character.AnimatedSprite3D.FlipH = inputDirectionComponent.Direction.x switch {
@@ -88,7 +90,7 @@ public class CharacterMovementSystem : Reference, ISystem {
       }
    }
 
-   protected virtual void SendWalkAnimation(Character character) {
-      this.Send(new CharacterAnimationTrigger(character, "walk"));
+   protected virtual void SendWalkAnimation(CharacterAnimationComponent animationComponent) {
+      animationComponent.Animation = "walk";
    }
 }

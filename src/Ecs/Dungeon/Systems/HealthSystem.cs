@@ -1,6 +1,7 @@
 using Godot;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
+using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
@@ -16,9 +17,9 @@ public class HealthSystem : ISystem {
 
    public void Run() {
       _playerData ??= World.GetElement<PersistentPlayerData>();
-      var query = this.QueryBuilder<Entity, Character, HealthComponent, StatBar3D>().Has<Alive>().Build();
+      var query = this.QueryBuilder<Entity, Character, HealthComponent, CharacterAnimationComponent, StatBar3D>().Has<Alive>().Build();
 
-      foreach (var (entity, character, health, statBar3D) in query) {
+      foreach (var (entity, character, health, animationComponent, statBar3D) in query) {
          if (health.Invincible && health.Value < health.Max) health.Value = health.Max;
          
          if (Mathf.IsEqualApprox(statBar3D.Percent, health.Percent))
@@ -33,9 +34,10 @@ public class HealthSystem : ISystem {
 
          if (health.Value > 0)
             continue;
-         this.Send(new CharacterAnimationTrigger(character, "die"));
-         this.Send(new CharacterDiedTrigger(character, entity));
+         animationComponent.Animation = "die";
+         //this.Send(new CharacterDiedTrigger(character, entity));
          this.On(entity).Remove<Alive>();
+         this.On(entity).Add<Dead>();
       }
    }
 }
