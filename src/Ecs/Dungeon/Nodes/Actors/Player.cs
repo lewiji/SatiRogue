@@ -4,6 +4,7 @@ using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
+using SatiRogue.resources;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
@@ -32,5 +33,12 @@ public partial class Player : Character {
          .Add(new Walkable())
          .Add<Controllable>()
          .Add<Alive>();
+   }
+
+   [OnReady]
+   void SetAndroidPerformance() {
+      if (SatiConfig.IsMobile) {
+         GetNode("ReflectionProbe").QueueFree();
+      }
    }
 }

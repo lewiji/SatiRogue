@@ -11,38 +11,36 @@ rect_min_size = Vector2( 900, 900 )
 mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 900, 900 )
+margin_right = 450.0
+rect_min_size = Vector2( 300, 900 )
 mouse_filter = 2
-custom_constants/margin_right = 150
-custom_constants/margin_top = 150
 custom_constants/margin_left = 150
+custom_constants/margin_bottom = 150
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_left = 150.0
-margin_top = 150.0
-margin_right = 750.0
-margin_bottom = 900.0
-rect_min_size = Vector2( 600, 750 )
+margin_right = 450.0
+margin_bottom = 750.0
+rect_min_size = Vector2( 300, 300 )
 mouse_filter = 2
 alignment = 2
 
 [node name="Control3" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_right = 600.0
-margin_bottom = 396.0
-rect_min_size = Vector2( 600, 250 )
+margin_right = 300.0
+margin_bottom = 303.0
+rect_min_size = Vector2( 300, 100 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VirtualJoystick" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 400.0
-margin_right = 600.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 100, 100 )
+margin_top = 307.0
+margin_right = 300.0
+margin_bottom = 557.0
+rect_min_size = Vector2( 300, 250 )
+mouse_filter = 1
 script = ExtResource( 1 )
-deadzone_size = 3.0
 action_left = "move_left"
 action_right = "move_right"
 action_up = "move_up"
@@ -73,9 +71,11 @@ texture = ExtResource( 3 )
 stretch_mode = 6
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 504.0
-margin_right = 600.0
+margin_top = 561.0
+margin_right = 300.0
 margin_bottom = 750.0
-rect_min_size = Vector2( 600, 246 )
+rect_min_size = Vector2( 300, 100 )
 mouse_filter = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.62
