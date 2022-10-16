@@ -24,7 +24,7 @@ public class CharacterDeathSystem : Reference, ISystem {
             timer.Connect("timeout", this, nameof(HandlePlayerDeath));
             player.AnimationPlayer.Play("on_death");
          } else {
-            var timer = character.GetTree().CreateTimer(0.618f);
+            var timer = character.GetTree().CreateTimer(character.Particles.Lifetime);
             timer.Connect("timeout", this, nameof(FreeEntity), new Array {character});
          }
       }

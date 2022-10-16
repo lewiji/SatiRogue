@@ -25,10 +25,12 @@ playing = true
 
 [node name="Particles" type="Particles" parent="."]
 emitting = false
-amount = 72
+amount = 16
+lifetime = 1.6
 one_shot = true
-explosiveness = 0.62
+explosiveness = 0.86
 randomness = 0.31
+visibility_aabb = AABB( -3.39185, -7.02018, -4.01083, 5.75981, 11.326, 9.08626 )
 process_material = ExtResource( 2 )
 draw_pass_1 = ExtResource( 1 )
 

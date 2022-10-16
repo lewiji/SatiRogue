@@ -131,7 +131,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                _messageLog?.AddMessage($"Found the stairs down.");
                InputSystem.Paused = true;
                occupantHandled = true;
-               break;
+               return;
          }
       }
 

@@ -7,7 +7,7 @@ namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Character : GameObject {
    bool _alive = true;
-   Particles? _particles;
+   public Particles? Particles;
    public AnimatedSprite3D? AnimatedSprite3D;
    public string CharacterName = "";
    public bool Behaving {
@@ -33,7 +33,7 @@ public partial class Character : GameObject {
    [OnReady]
    public virtual void OnReady() {
       Visible = false;
-      _particles = GetNode("Particles") as Particles;
+      Particles = GetNode("Particles") as Particles;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
       // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
@@ -50,9 +50,9 @@ public partial class Character : GameObject {
    }
 
    public void OnDeathAnimation() {
-      if (_particles != null) {
-         _particles.Visible = true;
-         _particles.Emitting = true;
+      if (Particles != null) {
+         Particles.Visible = true;
+         Particles.Emitting = true;
       }
    }
 
