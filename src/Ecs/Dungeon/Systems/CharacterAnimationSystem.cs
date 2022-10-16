@@ -22,18 +22,24 @@ public class CharacterAnimationSystem : Reference, ISystem {
    void PlayRequestedAnimation() {
 
       foreach (var (character, animationComponent) in this.Query<Character, CharacterAnimationComponent>()) {
-         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || animationComponent.Animation == "")
+         if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || !animationComponent.HasAnimations())
+            continue;
+         
+         if (animationComponent.PeekAnimation() != "die" && sprite.Animation != "idle" && sprite.Playing)
             continue;
 
-         if (sprite.Frames.HasAnimation(animationComponent.Animation)) {
-            sprite.Play(animationComponent.Animation);
+         var animation = animationComponent.PopAnimation();
+
+         if (sprite.Frames.HasAnimation(animation)) {
+            sprite.Play(animation);
+            Logger.Info($"Animation: {character.CharacterName} playing {animation}");
+         } else {
+            Logger.Info($"Animation: {character.CharacterName} has no animation called {animation}");
          }
 
          if (animationComponent.Animation == "die") {
             character.OnDeathAnimation();
          }
-
-         animationComponent.Animation = "";
       }
    }
 }

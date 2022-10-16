@@ -66,7 +66,7 @@ public class BaseBt : Gig {
 
       if (CheckLineOfSight(world, gridPos, playerGridPos)) {
          return MoveTowardsGridPos(world.GetElement<PathfindingHelper>(), gridPos, playerGridPos, inputDir)
-                || Attack(playerHealth, playerGridPos, playerStats, gridPos, inputDir, enemyAni, enemy, playerAni, enemyStats, world, 
+                || Attack(playerHealth, playerGridPos, playerStats, gridPos, inputDir, playerAni, enemy, enemyAni, enemyStats, world, 
                 messageLog)
                 || MoveRandomly(inputDir);
       }

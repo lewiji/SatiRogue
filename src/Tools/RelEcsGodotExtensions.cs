@@ -32,7 +32,7 @@ public static class RelEcsGodotExtensions {
    }
 }
 
-public class SatiSystemGroup {
+public class SatiSystemGroup : Node {
    readonly SystemGroup _systemGroup = new();
    readonly World _world;
    public SatiSystemGroup(GameStateController gsc) {
@@ -46,9 +46,8 @@ public class SatiSystemGroup {
       return this;
    }
 
-   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-   public void Run(World world)
+   public void Run()
    {
-      _systemGroup.Run(world);
+      _systemGroup.Run(_world);
    }
 }

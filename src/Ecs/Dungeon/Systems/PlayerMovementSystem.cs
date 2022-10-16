@@ -64,6 +64,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       Player player,
       InputDirectionComponent inputDirectionComponent,
       GridPositionComponent gridPos) {
+      var occupantHandled = false;
       foreach (var targetId in targetCell.Occupants) {
          var target = GD.InstanceFromId(targetId);
 
@@ -93,6 +94,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                   };
                }
                _messageLog?.AddMessage($"Hit {character.CharacterName} for {damage} damage.");
+               occupantHandled = true;
                break;
             }
             case Chest chest when World.HasComponent<Closed>(identity.Value):
@@ -105,18 +107,21 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                playerStore.Gold += goldAmount;
                World.GetElement<Loot>().NumLoots = playerStore.Gold;
                _messageLog?.AddMessage($"Retrieved {goldAmount} gold from chest.");
+               occupantHandled = true;
                break;
             case Health {Taken: false} health:
                health.Taken = true;
                var healthAmount = 1;
                this.GetComponent<HealthComponent>(((Marshallable<Entity>) player.GetMeta("Entity")).Value).Value += healthAmount;
                _messageLog?.AddMessage($"Relic healed player {healthAmount} HP.");
+               occupantHandled = true;
                break;
             case SpatialItem spatialItem when World.HasComponent<Collectable>(identity.Value):
                this.On(entity!.Value).Remove<Collectable>().Remove<GridPositionComponent>().Add<InInventory>().Add<JustPickedUp>();
                spatialItem.BlocksCell = false;
                spatialItem.Visible = false;
                _messageLog?.AddMessage($"Picked up {spatialItem.Name} from the ground.");
+               occupantHandled = true;
                break;
             case Stairs stairs:
                Logger.Info("Stairs!");
@@ -125,12 +130,14 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                World.GetElement<StairsConfirmation>().Popup();
                _messageLog?.AddMessage($"Found the stairs down.");
                InputSystem.Paused = true;
-               return;
-            default:
-               MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
-               this.Send(new CharacterAudioTrigger(player, "walk"));
-               return;
+               occupantHandled = true;
+               break;
          }
+      }
+
+      if (!occupantHandled && !targetCell.Blocked) {
+         MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
+         this.Send(new CharacterAudioTrigger(player, "walk"));
       }
    }
 }

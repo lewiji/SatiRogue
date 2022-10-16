@@ -12,33 +12,26 @@ namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class TurnHandlerSystem : Reference, ISystem {
    public World World { get; set; } = null!;
-   readonly float _minTurnTime = 0.2f;
+   readonly float _minTurnTime = 0.08f;
    public int TurnNumber { get; private set; }
    Turn? _turn;
-   SatiSystemGroup _onTurnSystems;
    DebugUi? _debugUi;
 
-   public TurnHandlerSystem(SatiSystemGroup onTurnSystems) {
-      _onTurnSystems = onTurnSystems;
-   }
+   [Signal] public delegate void ExecutePlayerTurn();
+   [Signal] public delegate void ExecuteNpcTurn();
+   [Signal] public delegate void ExecuteTurnEnd();
 
    async void SetCurrentTurn(TurnType turnType) {
-      if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn)) {
+      if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn) || _turn.CurrentTurn == turnType) {
          return;
       }
       _turn.CurrentTurn = turnType;
-
       _debugUi?.SetTurn(_turn.CurrentTurn);
-
       ProcessTurnChanges();
    }
 
    void ProcessOnTurnSystems(TurnType currentTurnType) {
       this.Send(new TurnChangedTrigger(currentTurnType));
-   }
-
-   void TickWorld() {
-     _onTurnSystems.Run(World);
    }
 
    public void Run() {
@@ -49,42 +42,40 @@ public class TurnHandlerSystem : Reference, ISystem {
 
    async void HandlePlayerInputTrigger() { // Wait for player input to move to EnemyTurn
 
-      if (_turn == null || _turn.CurrentTurn == TurnType.Idle) {
+      if (_turn is not {CurrentTurn: TurnType.Idle}) {
          return;
       }
 
       if (!InputSystem.PlayerInputted) return;
-
-      if (_turn.CurrentTurn == TurnType.PlayerTurn) {
-         SetCurrentTurn(TurnType.EnemyTurn);
-      }
+      SetCurrentTurn(TurnType.PlayerTurn);
+      
       InputSystem.PlayerInputted = false;
    }
 
    async void ProcessTurnChanges() { // Progress turn phases on changed
       switch (_turn?.CurrentTurn) {
-            case TurnType.Processing:
-               TickWorld();
-               TurnNumber += 1;
-               await ResetTurn();
-               return;
             case TurnType.EnemyTurn:
                SetCurrentTurn(TurnType.Processing);
-               return;
+               EmitSignal(nameof(ExecuteNpcTurn));
+               await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
+               EmitSignal(nameof(ExecuteTurnEnd));
+               SetCurrentTurn(TurnType.Idle);
+               break;
             case TurnType.PlayerTurn:
-               InputSystem.HandlingInput = true;
-               return;
+               SetCurrentTurn(TurnType.Processing);
+               EmitSignal(nameof(ExecutePlayerTurn));
+               await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
+               SetCurrentTurn(TurnType.EnemyTurn);
+               break;
             case TurnType.Idle:
+               TurnNumber += 1;
+               InputSystem.HandlingInput = true;
+               break;
+            case TurnType.Processing:
                // Handled by player input trigger/idle timeouts
-               return;
+               break;
             default:
                throw new ArgumentOutOfRangeException();
          }
-   }
-
-   async Task ResetTurn() {
-      SetCurrentTurn(TurnType.Idle);
-      await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
-      SetCurrentTurn(TurnType.PlayerTurn);
    }
 }

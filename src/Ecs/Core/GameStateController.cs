@@ -47,7 +47,7 @@ public class GameStateController : Node {
 
       var currentState = _stack.Peek();
       World.GetElement<DeltaTime>().Value = delta;
-      currentState.ProcessSystems.Run(World);
+      currentState.ProcessSystems.Run();
    }
 
    public override void _PhysicsProcess(float delta) {
@@ -57,7 +57,7 @@ public class GameStateController : Node {
 
       var currentState = _stack.Peek();
       World.GetElement<PhysicsDeltaTime>().Value = delta;
-      currentState.PhysicsSystems.Run(World);
+      currentState.PhysicsSystems.Run();
       World.Tick();
    }
 
@@ -71,7 +71,7 @@ public class GameStateController : Node {
 
    public override void _ExitTree() {
       foreach (var state in _stack) {
-         state.ExitSystems.Run(World);
+         state.ExitSystems.Run();
       }
    }
 
@@ -92,7 +92,7 @@ public class GameStateController : Node {
          return;
 
       var currentState = _stack.Pop();
-      currentState.ExitSystems.Run(World);
+      currentState.ExitSystems.Run();
       RemoveChild(currentState);
       currentState.QueueFree();
 
@@ -101,7 +101,7 @@ public class GameStateController : Node {
 
       currentState = _stack.Peek();
       World.ReplaceElement(currentState);
-      currentState.ContinueSystems.Run(World);
+      currentState.ContinueSystems.Run();
    }
 
    void PushStateDeferred(GameState newState, bool hideCurrentState = false) {
@@ -114,7 +114,7 @@ public class GameStateController : Node {
             return;
          }
 
-         currentState.PauseSystems.Run(World);
+         currentState.PauseSystems.Run();
 
          if (hideCurrentState) {
             var children = currentState.GetChildren();
@@ -135,13 +135,13 @@ public class GameStateController : Node {
          World.AddOrReplaceElement(newState);
 
       newState.SetupSystems(this);
-      newState.InitSystems.Run(World);
+      newState.InitSystems.Run();
    }
 
    void ChangeStateDeferred(GameState newState) {
       if (_stack.Count > 0) {
          var currentState = _stack.Pop();
-         currentState.ExitSystems.Run(World);
+         currentState.ExitSystems.Run();
          RemoveChild(currentState);
          currentState.QueueFree();
       }
@@ -151,6 +151,6 @@ public class GameStateController : Node {
       AddChild(newState);
       World.ReplaceElement(newState);
       newState.SetupSystems(this);
-      newState.InitSystems.Run(World);
+      newState.InitSystems.Run();
    }
 }

@@ -11,7 +11,9 @@ using SatiRogue.Tools;
 namespace SatiRogue.Ecs;
 
 public class DungeonState : GameState {
-   public SatiSystemGroup? OnTurnSystems;
+   public SatiSystemGroup? OnPlayerTurnSystems;
+   public SatiSystemGroup? OnNpcTurnSystems;
+   public SatiSystemGroup? OnTurnEndSystems;
    GameStateController? _gsc;
 
    public override void Init(GameStateController gameStates) {
@@ -24,7 +26,9 @@ public class DungeonState : GameState {
       _gsc = gameStates;
       _gsc.World.AddOrReplaceElement(this);
 
-      OnTurnSystems = new SatiSystemGroup(_gsc);
+      OnPlayerTurnSystems = new SatiSystemGroup(_gsc);
+      OnNpcTurnSystems = new SatiSystemGroup(_gsc);
+      OnTurnEndSystems = new SatiSystemGroup(_gsc);
 
       var entitiesNode = new Entities();
       _gsc.World.AddOrReplaceElement(entitiesNode);
@@ -52,16 +56,12 @@ public class DungeonState : GameState {
       var playerMovementSystem = new PlayerMovementSystem();
       _gsc.World.AddOrReplaceElement(playerMovementSystem);
 
-      OnTurnSystems.Add(playerMovementSystem)
-         .Add(new PlayerShootSystem())
-         .Add(new EnemyBehaviourSystem())
-         .Add(new CharacterMovementSystem())
-         .Add(new FogSystem())
-         .Add(new ResetInputDirectionSystem())
-         .Add(new HealthSystem())
-         .Add(new PersistInventorySystem());
+      OnPlayerTurnSystems.Add(playerMovementSystem).Add(new PlayerShootSystem()).Add(new FogSystem());
+      OnNpcTurnSystems.Add(new EnemyBehaviourSystem()).Add(new CharacterMovementSystem());
+      OnTurnEndSystems.Add(new ResetInputDirectionSystem()).Add(new HealthSystem()).Add(new PersistInventorySystem());
+      
 
-      var turnHandlerSystem = new TurnHandlerSystem(OnTurnSystems);
+      var turnHandlerSystem = new TurnHandlerSystem();
       var inputSystem = new InputSystem();
       _gsc.World.AddOrReplaceElement(turnHandlerSystem);
       _gsc.World.AddOrReplaceElement(inputSystem);
@@ -76,7 +76,15 @@ public class DungeonState : GameState {
          .Add(new CharacterDeathSystem())
          .Add(new LevelChangeSystem());
 
+      turnHandlerSystem.Connect(nameof(TurnHandlerSystem.ExecutePlayerTurn), OnPlayerTurnSystems, nameof(SatiSystemGroup.Run));
+      turnHandlerSystem.Connect(nameof(TurnHandlerSystem.ExecuteNpcTurn), OnNpcTurnSystems, nameof(SatiSystemGroup.Run));
+      turnHandlerSystem.Connect(nameof(TurnHandlerSystem.ExecuteTurnEnd), OnTurnEndSystems, nameof(SatiSystemGroup.Run));
+
       ExitSystems.Add(new CleanupDungeonSystem());
+   }
+
+   void ExecutePlayerTurnSystems() {
+      OnPlayerTurnSystems.Run();
    }
 
    void PrintOrphans() {

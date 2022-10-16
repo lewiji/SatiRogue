@@ -37,7 +37,9 @@ public class InterpolateWalkAnimationSystem : ISystem {
          return;
       }
 
-      spatial.Translation = spatial.Translation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
+      var translationDelta = spatial.Translation.DirectionTo(gridPos.Position) * spatial.Translation.DistanceTo(gridPos.Position);
+      spatial.Translation += (translationDelta * 10f * _delta!.Value);
+      //spatial.Translation = spatial.Translation.LinearInterpolate(gridPos.Position, _lerpWeight * _delta!.Value);
       /*spatial.Translation.CubicInterpolate(gridPos.Position,
       gridPos.Position - gridPos.LastPosition.DirectionTo(gridPos.Position) * 0.1f,
       gridPos.Position - gridPos.Position.DirectionTo(gridPos.LastPosition) * 0.1f, _lerpWeight * _delta!.Value);*/
