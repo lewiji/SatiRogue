@@ -40,7 +40,7 @@ public class CompileShaders : Reference, ISystem {
    public async void OnAllResourcesLoaded() {
       if (_shadersToCompile > 0) {
          GD.Print($"CompileShaders: {_shadersToCompile} to compile");
-         await ToSignal(_shaderCompiler!.GetTree().CreateTimer(2f), "timeout");
+         await ToSignal(_shaderCompiler!.GetTree().CreateTimer(0.5f), "timeout");
       }
 
       OnFinished();

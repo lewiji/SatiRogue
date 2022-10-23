@@ -59,7 +59,6 @@ public class PreloadResources : Reference, ISystem {
          Logger.Info("Resources already loaded.");
          return;
       }
-      Logger.Info($"Preloading {ResourcePaths.Length} resources.");
 
       _loadingThread = new Thread(LoadAllResources);
       _loadingThread.Start();

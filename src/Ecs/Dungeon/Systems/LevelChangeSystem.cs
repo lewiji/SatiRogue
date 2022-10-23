@@ -97,6 +97,7 @@ public class LevelChangeSystem : Reference, ISystem {
       GD.Print("Awaiting new mapgen");
       var mapGenState = World.GetElement<MapGenState>();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
+      await mapGenState.ToSignal(mapGenState.GetTree().CreateTimer(0.618f), "timeout");
       var fade = World.GetElement<Fade>();
       await fade.FadeFromBlack();
       InputSystem.Paused = false;
