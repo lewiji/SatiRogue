@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoguelikeMono", "RoguelikeMono.csproj", "{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatiRogue", "SatiRogue.csproj", "{7819F925-B621-4F78-8B1A-4F7F11CFDD8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

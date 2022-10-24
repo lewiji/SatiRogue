@@ -116,7 +116,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="RoguelikeMono"
+config/name="SatiRogue"
 run/main_scene="res://Main.tscn"
 run/delta_sync_after_draw=true
 boot_splash/show_image=false
@@ -237,7 +237,7 @@ limits/message_queue/max_size_kb=8192
 
 [mono]
 
-project/assembly_name="RoguelikeMono"
+project/assembly_name="SatiRogue"
 
 [physics]
 
