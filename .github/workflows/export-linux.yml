@@ -1,20 +1,34 @@
 name: export-linux
 on:
-  workflow_dispatch:
-  
+  workflow_dispatch:  
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: lfs
     steps:
-      - uses: actions/checkout@v3
-      - uses: paulloz/godot-action@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Test lfs env
+        run: |
+          export LFS_URL=`git config -f .lfsconfig --get lfs.url`
+          #export LFS_AUTHED_URL=${LFS_URL/https:\/\//https:\/\/${{ secrets.LFS_USERNAME }}:${{ secrets.LFS_PASSWORD }}@}
+          #git config -f .lfsconfig lfs.url ${LFS_AUTHED_URL}
+          git config lfs.${LFS_AUTHED_URL}.access basic
+          git lfs env
+          git lfs fetch --all
+          git lfs checkout
+      - name: Build Godot export binary
+        uses: paulloz/godot-action@v1
         with:
           version: 3.5
           mono: true
       - run: |
+          mkdir -p export
           godot --version
-          godot --export "Linux/X11" "./export"
-          
-
-
-      
+          godot --export "Linux/X11" "export/"
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          path: "export"
