@@ -2,7 +2,7 @@
 
 ## A turn-based dungeon-crawler roguelike RPG, made with Godot 3.x C# + RelEcs
 
-*I've heard it said that you've 7 only rebirths remaining, from 
+*I've heard it said that you've only 7 rebirths remaining, from 
 [entering the stream](https://en.wikipedia.org/wiki/Sot%C4%81panna), to the 
 [final extinguishment](https://en.wikipedia.org/wiki/Arhat).*
 
