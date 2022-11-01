@@ -1,0 +1,342 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://assets/JestansFantasyTextures/jestans_fantasy_32_pbr.png" type="Texture" id=1]
+[ext_resource path="res://resources/level_meshes/wall_atlas_shader.gdshader" type="Shader" id=2]
+[ext_resource path="res://scenes/res/EnvironmentEditor.tres" type="Environment" id=3]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/DungeonDirectionalLight.tscn" type="PackedScene" id=4]
+[ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=5]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/DiagonalLockIndicator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/res/SpriteFramesPlayer.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Actors/Player.cs" type="Script" id=8]
+[ext_resource path="res://scenes/ThreeDee/res/player/player_spatial_mat.tres" type="Material" id=9]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/SpatialCamera.cs" type="Script" id=10]
+[ext_resource path="res://resources/particles/blood_mesh.tres" type="QuadMesh" id=11]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/DirectionIndicator.tscn" type="PackedScene" id=12]
+[ext_resource path="res://audio/Barefoot Dirt footsteps 4.wav" type="AudioStream" id=13]
+
+[sub_resource type="QuadMesh" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/tile_size = Vector2( 32, 32 )
+shader_param/tile_index = 29
+shader_param/pbr_atlas = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Visual/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 50, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Visual/Camera:v_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "on_death"
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Visual/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 50, -0.25, 0, 0.1, 0, 50, -0.25, 0, 0.155487, -3.35793, 18, -0.14906, 0.689558, 0.15094, -0.751799, 16, -0.74906, 0.0325108, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.24, 1.3, 2 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Visual/Camera:v_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.1, 0, 0, -0.25, 0, 0.5, 0.718502, 1, -0.23, -0.214796, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.24, 1.2 )
+}
+
+[node name="Spatial" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance9" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance10" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance11" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance12" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance13" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance14" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance15" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance16" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance17" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance18" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance19" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance20" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance21" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance22" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance23" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance24" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance25" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance26" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance27" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance28" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance29" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance30" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance31" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance32" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance33" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance34" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance35" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance36" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="MeshInstance37" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 1 )
+
+[node name="DirectionalLight" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 3 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 0.747098, 0.250354, -0.615766, -0.0141933, 0.932159, 0.36177, 0.664563, -0.261538, 0.699968, -0.46523, 3.79833, 2.21233 )
+spot_range = 21.1878
+spot_angle = 32.1417
+
+[node name="Player" type="Spatial" parent="."]
+physics_interpolation_mode = 2
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.51466 )
+script = ExtResource( 8 )
+
+[node name="Visual" type="AnimatedSprite3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.75, 0 )
+portal_mode = 2
+material_override = ExtResource( 9 )
+pixel_size = 0.05
+shaded = true
+double_sided = false
+frames = ExtResource( 7 )
+animation = "endwalk"
+playing = true
+
+[node name="Camera" type="Camera" parent="Player/Visual"]
+transform = Transform( 1, 0, 0, 0, 0.78801, 0.615661, 0, -0.615661, 0.78801, 0, 4.23, 8 )
+projection = 1
+current = true
+fov = 50.0
+size = 14.0
+script = ExtResource( 10 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Player/Visual"]
+stream = ExtResource( 13 )
+unit_size = 5.0
+attenuation_filter_cutoff_hz = 7000.0
+
+[node name="Light" type="SpotLight" parent="Player/Visual"]
+transform = Transform( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
+light_energy = 0.25
+shadow_color = Color( 0.101961, 0.0392157, 0.219608, 1 )
+shadow_bias = 0.015
+spot_range = 18.0
+spot_attenuation = 0.618
+spot_angle = 60.0
+spot_angle_attenuation = 0.787678
+
+[node name="RayCast" type="RayCast" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )
+debug_shape_custom_color = Color( 0, 1, 0.0862745, 1 )
+debug_shape_thickness = 3
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="Player"]
+extents = Vector3( 16, 8.28695, 16 )
+origin_offset = Vector3( 0, 2, 0 )
+enable_shadows = true
+interior_enable = true
+interior_ambient_color = Color( 0.337255, 0.027451, 0.65098, 1 )
+interior_ambient_energy = 1.62
+interior_ambient_contrib = 0.62
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+playback_process_mode = 0
+playback_speed = 0.62
+anims/RESET = SubResource( 4 )
+anims/on_death = SubResource( 2 )
+
+[node name="Particles" type="Particles" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
+generate_lightmap = false
+emitting = false
+amount = 128
+lifetime = 2.2
+one_shot = true
+speed_scale = 1.62
+explosiveness = 0.62
+visibility_aabb = AABB( -8.60355, -6.49244, -10.091, 17.281, 13.1657, 21.249 )
+process_material = ExtResource( 5 )
+draw_pass_1 = ExtResource( 11 )
+
+[node name="DirectionIndicator" parent="Player" instance=ExtResource( 12 )]
+visible = false
+
+[node name="DiagonalLockIndicator" parent="Player" instance=ExtResource( 6 )]
+physics_interpolation_mode = 1
+visible = false
