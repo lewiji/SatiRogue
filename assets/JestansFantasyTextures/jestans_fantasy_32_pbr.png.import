@@ -2,24 +2,26 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.stex"
+path.s3tc="res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.s3tc.stex"
+path.etc2="res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/JestansFantasyTextures/jestans_fantasy_32_pbr.png"
-dest_files=[ "res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.stex" ]
+dest_files=[ "res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.s3tc.stex", "res://.import/jestans_fantasy_32_pbr.png-9de0ebf24c53ca7a532bcadc8e691c6d.etc2.stex" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/mode=2
+compress/lossy_quality=0.1
+compress/hdr_mode=1
 compress/bptc_ldr=0
-compress/normal_map=1
-flags/repeat=2
+compress/normal_map=2
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=true
 flags/anisotropic=true

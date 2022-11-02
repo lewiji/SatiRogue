@@ -29,7 +29,7 @@ void vertex() {
 
 void fragment() {
 	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(pbr_atlas,base_uv);
+	vec4 albedo_tex = texture(pbr_atlas, base_uv);
 	if (albedo_tex.a < 0.1) {
 		discard;
 	} else { 
@@ -46,11 +46,11 @@ void fragment() {
 		AO = dot(occ_tex,vec4(1.0, 0.0, 0.0, 0.0));
 		AO_LIGHT_AFFECT = 0.32;
 		
-		vec4 roughness_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 3.0) + (pixel_offset.x * 6.0), base_uv.y));
-		METALLIC = dot(roughness_tex,vec4(1.0, 0.0, 0.0, 0.0)) * -1.0;
+		vec4 metallic_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 3.0) + (pixel_offset.x * 6.0), base_uv.y));
+		METALLIC = dot(metallic_tex,vec4(1.0, 0.0, 0.0, 0.0)) * -1.0;
 		
 		
-		vec4 metallic_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 4.0) + (pixel_offset.x * 8.0), base_uv.y));
-		ROUGHNESS = dot(metallic_tex,vec4(1.0, 1.0, 1.0, 0.0)) * 1.0;
+		vec4 roughness_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 4.0) + (pixel_offset.x * 8.0), base_uv.y));
+		ROUGHNESS = dot(roughness_tex,vec4(1.0, 1.0, 1.0, 0.0)) * 1.0;
 	}
 }
