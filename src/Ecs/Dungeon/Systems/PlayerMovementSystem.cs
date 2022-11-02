@@ -64,8 +64,8 @@ public class PlayerMovementSystem : CharacterMovementSystem {
       var occupantHandled = false;
 
       foreach (var targetId in targetCell.Occupants) {
-         if (GD.InstanceFromId(targetId) is GameObject {Enabled: true} targetNode && 
-             (targetNode.GetMeta("Entity") as Marshallable<Entity>)?.Value is { } entity) {
+         if (GD.InstanceFromId(targetId) is GameObject {Enabled: true} targetNode
+             && (targetNode.GetMeta("Entity") as Marshallable<Entity>)?.Value is { } entity) {
             switch (targetNode) {
                case Character character when World.IsAlive(entity): {
                   var playerStats = World.GetComponent<Stats>(playerEntity).Record;
@@ -122,10 +122,11 @@ public class PlayerMovementSystem : CharacterMovementSystem {
                   return;
             }
          }
-
-         if (occupantHandled || targetCell.Blocked) continue;
-         MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
-         World.Send(new CharacterAudioTrigger(player, "walk"));
       }
+
+      if (occupantHandled || targetCell.Blocked) return;
+      // Default to MoveToCell action if no handled occupants were found and cell isn't blocked
+      MoveToCell(player, gridPos, inputDirectionComponent, targetCell);
+      World.Send(new CharacterAudioTrigger(player, "walk"));
    }
 }

@@ -17,15 +17,11 @@ public class CharacterMovementSystem : Reference, ISystem {
 
    protected MapGenData? MapData;
    PathfindingHelper? _pathfindingHelper;
-   QueryBuilder<Character, GridPositionComponent, InputDirectionComponent>? _movableCharacterQuery;
 
    public virtual void Run() {
       InitialiseSystem();
-      _movableCharacterQuery ??= World.Query<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>();
-         
-      var query = _movableCharacterQuery!.Build();
 
-      foreach (var (character, gridPos, input) in query) {
+      foreach (var (character, gridPos, input) in World.Query<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>().Build()) {
          if (input.Direction == Vector2.Zero)
             continue;
 
