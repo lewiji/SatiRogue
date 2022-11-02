@@ -6,17 +6,17 @@ uniform vec4 albedo : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D pbr_atlas;
 
 uniform vec2 tile_size = vec2(32.0, 32.0);
-uniform int tile_index = 0;
+uniform vec2 atlas_size = vec2(2048, 256);
 
+varying float custom_tile_index;
 varying vec2 tile_offset;
-varying vec2 atlas_size;
 varying vec2 pixel_offset;
 
 void vertex() {
-	atlas_size = vec2(textureSize(pbr_atlas, 0));
+	custom_tile_index = floor(INSTANCE_CUSTOM.r * 255.0);
 	pixel_offset = 1.0 / atlas_size;
 	tile_offset = tile_size / atlas_size;
-	float albedo_tile_index = float(tile_index) * 5.0;
+	float albedo_tile_index = custom_tile_index * 5.0;
 	vec2 albedo_tile_coords = vec2(mod(albedo_tile_index, 60.0), floor(albedo_tile_index / 60.0));
 	
 	vec3 uv1_scale = vec3(tile_size.x / atlas_size.x, tile_size.y / atlas_size.y, 1.0);
