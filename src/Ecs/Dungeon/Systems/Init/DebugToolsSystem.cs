@@ -28,8 +28,8 @@ public class DebugToolsSystem : Reference, ISystem {
 
    void OnWarpToStairs() {
       Logger.Info("Debug: Warp to stairs requested.");
-      foreach (var (player, playerGridPos) in this.Query<Player, GridPositionComponent>()) {
-         foreach (var (stairs, stairsGridPos) in this.Query<Stairs, GridPositionComponent>()) {
+      foreach (var (player, playerGridPos) in World.Query<Player, GridPositionComponent>().Build()) {
+         foreach (var (stairs, stairsGridPos) in World.Query<Stairs, GridPositionComponent>().Build()) {
             Logger.Info($"Debug: Warping player {player.Name}@{playerGridPos.Position} to stairs {stairs}@{stairsGridPos.Position}.");
             //playerGridPos.Position = stairsGridPos.Position;
             World.GetElement<PlayerMovementSystem>().TeleportToCell(player, stairsGridPos.Position);
@@ -40,7 +40,7 @@ public class DebugToolsSystem : Reference, ISystem {
 
    void OnGodModeChanged(bool enabled) {
       Logger.Info($"Debug: God Mode {(enabled ? "on" : "off")}.");
-      foreach (var (player, playerHealth) in this.Query<Player, HealthComponent>()) {
+      foreach (var (player, playerHealth) in World.Query<Player, HealthComponent>().Build()) {
          playerHealth.Invincible = enabled;
       }
    }
@@ -48,7 +48,7 @@ public class DebugToolsSystem : Reference, ISystem {
    void OnHealPlayer() {
       Logger.Info($"Debug: Player heal requested.");
 
-      foreach (var (player, playerHealth) in this.Query<Player, HealthComponent>()) {
+      foreach (var (player, playerHealth) in World.Query<Player, HealthComponent>().Build()) {
          playerHealth.Value = playerHealth.Max;
       }
    }

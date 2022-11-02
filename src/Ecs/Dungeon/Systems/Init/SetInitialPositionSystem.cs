@@ -23,8 +23,7 @@ public class SetInitialPositionSystem : ISystem {
 
       var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
 
-      var stairsQuery = this.Query<Stairs, GridPositionComponent>();
-
+      var stairsQuery = World.Query<Stairs, GridPositionComponent>().Build();
       foreach (var (stairs, gridPos) in stairsQuery) {
          var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
 
@@ -76,8 +75,7 @@ public class SetInitialPositionSystem : ISystem {
          }
       }
 
-      var query = this.Query<Character, GridPositionComponent>();
-
+      var query = World.Query<Character, GridPositionComponent>().Build();
       foreach (var (character, gridPos) in query) {
          if (!availableCells.Any())
             break;
@@ -94,7 +92,7 @@ public class SetInitialPositionSystem : ISystem {
          }
 
          gridPos.Position = chosenCell.Value.Position;
-         if (character.GetEntity() is {} entity) World.AddComponent<Moving>(entity.Identity);
+         if (character.GetEntity() is {} entity) World.AddComponent<Moving>(entity);
 
          if (character is Player) {
             World.TryGetElement<DebugUi>()?.SetPlayerPos(gridPos.Position);
@@ -103,8 +101,7 @@ public class SetInitialPositionSystem : ISystem {
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
       }
 
-      var itemQuery = this.Query<Item, GridPositionComponent>();
-
+      var itemQuery = World.Query<Item, GridPositionComponent>().Build();
       foreach (var (item, gridPos) in itemQuery) {
          if (!availableCells.Any())
             break;
@@ -125,8 +122,7 @@ public class SetInitialPositionSystem : ISystem {
          item.Translation = gridPos.Position;
       }
 
-      var propQuery = this.Query<Prop, GridPositionComponent>();
-
+      var propQuery = World.Query<Prop, GridPositionComponent>().Build();
       foreach (var (prop, gridPos) in propQuery) {
          if (!availableCells.Any())
             break;

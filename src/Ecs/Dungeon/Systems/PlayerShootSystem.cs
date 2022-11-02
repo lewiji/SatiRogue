@@ -17,8 +17,8 @@ public class PlayerShootSystem : ISystem {
    readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Arrow.tscn");
 
    public void Run() {
-      foreach (var _ in this.Receive<PlayerHasShotTrigger>()) {
-         foreach (var (_, gridPos, input) in this.Query<Player, GridPositionComponent, InputDirectionComponent>()) {
+      foreach (var _ in World.Receive<PlayerHasShotTrigger>(this)) {
+         foreach (var (_, gridPos, input) in World.Query<Player, GridPositionComponent, InputDirectionComponent>().Build()) {
             var direction = new Vector2(1, 0);
 
             if (input.LastDirection != Vector2.Zero) {
@@ -28,12 +28,12 @@ public class PlayerShootSystem : ISystem {
             var arrow = _arrowScene.Instance<Arrow>();
             var entitiesNode = World.GetElement<Entities>();
             entitiesNode.AddChild(arrow);
-            var arrowEntity = this.Spawn(arrow).Id();
+            var arrowEntity = World.Spawn(arrow).Id();
 
             var arrowGridPos = new GridPositionComponent {
                Position = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y)
             };
-            this.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
+            World.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
 
             arrow.Direction = direction;
             arrow.Translation = arrowGridPos.Position;
@@ -50,7 +50,7 @@ public class PlayerShootSystem : ISystem {
                      if (GD.InstanceFromId(cellOccupant) is not Enemy enemy || !enemy.Alive)
                         continue;
                      var entity = enemy.GetMeta("Entity") as Marshallable<Entity>;
-                     this.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
+                     World.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
 
                      if (arrow.Destination == Vector3.Zero) {
                         arrow.Destination = cell.Position;

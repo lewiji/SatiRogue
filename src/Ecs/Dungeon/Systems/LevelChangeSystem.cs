@@ -18,7 +18,7 @@ public class LevelChangeSystem : Reference, ISystem {
    public void Run() {
       var playerStore = World.GetElement<PersistentPlayerData>();
 
-      foreach (var stairsDown in this.Receive<StairsDownTrigger>()) {
+      foreach (var stairsDown in World.Receive<StairsDownTrigger>(this)) {
          Logger.Info("Stairs down system activating.");
          var gsc = World.GetElement<GameStateController>();
 
@@ -29,7 +29,7 @@ public class LevelChangeSystem : Reference, ISystem {
          break;
       }
 
-      foreach (var restart in this.Receive<RestartGameTrigger>()) {
+      foreach (var restart in World.Receive<RestartGameTrigger>(this)) {
          Logger.Info("Restart game requested.");
          var gsc = World.GetElement<GameStateController>();
 
@@ -40,7 +40,7 @@ public class LevelChangeSystem : Reference, ISystem {
          break;
       }
 
-      foreach (var exit in this.Receive<BackToMainMenuTrigger>()) {
+      foreach (var exit in World.Receive<BackToMainMenuTrigger>(this)) {
          Logger.Info("Exit to menu requested.");
          var gsc = World.GetElement<GameStateController>();
 

@@ -15,6 +15,6 @@ public class PlaceStairs : ISystem {
       var entitiesNode = World.GetElement<Entities>();
       var stairsNode = StairsScene.Instance<Stairs>();
       entitiesNode.AddChild(stairsNode);
-      this.Spawn(stairsNode);
+      World.Spawn(stairsNode);
    }
 }

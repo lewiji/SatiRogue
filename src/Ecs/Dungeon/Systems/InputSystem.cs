@@ -21,7 +21,7 @@ public class InputSystem : ISystem {
       if (Paused)
          return;
 
-      foreach (var input in this.QueryBuilder<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
+      foreach (var input in World.Query<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
          var aim = Input.IsActionPressed("aim");
          var diagonalLock = Input.IsActionPressed("diagonal_lock");
          var shoot = Input.IsActionJustPressed("shoot");
@@ -53,8 +53,8 @@ public class InputSystem : ISystem {
       if (Paused)
          return;
 
-      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Has<DiagonalLock>().Build()) {
-         this.On(entity).Remove<DiagonalLock>();
+      foreach (var (entity, player) in World.Query<Entity, Player>().Has<DiagonalLock>().Build()) {
+         World.On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;
       }
 
@@ -70,8 +70,8 @@ public class InputSystem : ISystem {
       }
 
       if (aim) {
-         foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Not<Aiming>().Build()) {
-            this.On(entity).Add<Aiming>();
+         foreach (var (entity, player) in World.Query<Entity, Player>().Not<Aiming>().Build()) {
+            World.On(entity).Add<Aiming>();
             player.DirectionIndicator.Visible = true;
          }
       } else {
@@ -82,8 +82,8 @@ public class InputSystem : ISystem {
    void HandleDiagonalLockedInput(InputDirectionComponent input) {
       RemoveAim();
 
-      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Not<DiagonalLock>().Build()) {
-         this.On(entity).Add<DiagonalLock>();
+      foreach (var (entity, player) in World.Query<Entity, Player>().Not<DiagonalLock>().Build()) {
+         World.On(entity).Add<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = true;
       }
 
@@ -100,8 +100,8 @@ public class InputSystem : ISystem {
    }
 
    void RemoveAim() {
-      foreach (var (entity, player) in this.QueryBuilder<Entity, Player>().Has<Aiming>().Build()) {
-         this.On(entity).Remove<Aiming>();
+      foreach (var (entity, player) in World.Query<Entity, Player>().Has<Aiming>().Build()) {
+         World.On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;
       }
    }

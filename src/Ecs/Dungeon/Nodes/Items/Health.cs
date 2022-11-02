@@ -37,7 +37,7 @@ public partial class Health : Item {
    }
 
    void OnAnimationFinished(string _) {
-      _world?.Despawn(_entity!.Identity);
+      _world?.Despawn(_entity!);
       QueueFree();
    }
 

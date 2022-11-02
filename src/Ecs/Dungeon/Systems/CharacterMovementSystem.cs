@@ -21,7 +21,7 @@ public class CharacterMovementSystem : Reference, ISystem {
 
    public virtual void Run() {
       InitialiseSystem();
-      _movableCharacterQuery ??= this.QueryBuilder<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>();
+      _movableCharacterQuery ??= World.Query<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>();
          
       var query = _movableCharacterQuery!.Build();
 
@@ -49,11 +49,11 @@ public class CharacterMovementSystem : Reference, ISystem {
       if (!character.HasMeta("Entity") || character.GetMeta("Entity") is not Marshallable<Entity> entity) return;
       Logger.Info($"Teleporting entity {entity.Value.Identity}");
       
-      World.GetComponent<Walkable>(entity.Value.Identity).Teleporting = true;
+      World.GetComponent<Walkable>(entity.Value).Teleporting = true;
       
       MoveToCell(character, 
-         World.GetComponent<GridPositionComponent>(entity.Value.Identity), 
-         World.GetComponent<InputDirectionComponent>(entity.Value.Identity), 
+         World.GetComponent<GridPositionComponent>(entity.Value), 
+         World.GetComponent<InputDirectionComponent>(entity.Value), 
          MapData!.GetCellAt(position));
    }
 
@@ -71,11 +71,11 @@ public class CharacterMovementSystem : Reference, ISystem {
       _pathfindingHelper?.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
       if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity) {
-         if (!World.HasComponent<Moving>(entity.Value.Identity)) 
-            World.AddComponent<Moving>(entity.Value.Identity);
+         if (!World.HasComponent<Moving>(entity.Value)) 
+            World.AddComponent<Moving>(entity.Value);
          
          if (character.Visible) {
-            SendWalkAnimation(World.GetComponent<CharacterAnimationComponent>(entity.Value.Identity));
+            SendWalkAnimation(World.GetComponent<CharacterAnimationComponent>(entity.Value));
          }
       }
 

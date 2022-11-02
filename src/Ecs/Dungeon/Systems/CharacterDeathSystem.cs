@@ -15,9 +15,9 @@ public class CharacterDeathSystem : Reference, ISystem {
    public World World { get; set; } = null!;
 
    public void Run() {
-      foreach (var (entity, character) in this.QueryBuilder<Entity, Character>().Has<Dead>().Build()) {
+      foreach (var (entity, character) in World.Query<Entity, Character>().Has<Dead>().Build()) {
          character.Alive = false;
-         World.RemoveComponent<Dead>(entity.Identity);
+         World.RemoveComponent<Dead>(entity);
 
          if (character is Player player) {
             var timer = character.GetTree().CreateTimer(0.618f);
@@ -37,7 +37,7 @@ public class CharacterDeathSystem : Reference, ISystem {
 
       if (entity!.Value.IsNone)
          return;
-      var gridPos = this.GetComponent<GridPositionComponent>(entity.Value);
+      var gridPos = World.GetComponent<GridPositionComponent>(entity.Value);
       var currentCell = mapData.GetCellAt(gridPos.Position);
       currentCell.Occupants.Remove(character.GetInstanceId());
       this.DespawnAndFree(entity.Value);

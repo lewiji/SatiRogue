@@ -10,7 +10,7 @@ public class PlayerIndicatorSystem : ISystem {
    public World World { get; set; } = null!;
 
    public void Run() {
-      foreach (var (player, input) in this.QueryBuilder<Player, InputDirectionComponent>().Has<Aiming>().Build()) {
+      foreach (var (player, input) in World.Query<Player, InputDirectionComponent>().Has<Aiming>().Build()) {
          if (input.Direction != Vector2.Zero) {
             player.DirectionIndicator.Direction = input.Direction;
          } else if (input.LastDirection != Vector2.Zero) {

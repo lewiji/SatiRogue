@@ -17,7 +17,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    public void Run() {
       _delta ??= World.GetElement<PhysicsDeltaTime>();
 
-      foreach (var (spatial, gridPos, walkable) in this.QueryBuilder<Character, GridPositionComponent, Walkable>().Has<Moving>()
+      foreach (var (spatial, gridPos, walkable) in World.Query<Character, GridPositionComponent, Walkable>().Has<Moving>()
       .Build()) {
          if (walkable.Teleporting) {
             TeleportSpatial(spatial, gridPos);
@@ -46,7 +46,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void RemoveMovingComponent(Spatial spatial) {
-      if (spatial.GetEntity() is { } entity && World.HasComponent<Moving>(entity.Identity)) World.RemoveComponent<Moving>(entity.Identity);
+      if (spatial.GetEntity() is { } entity && World.HasComponent<Moving>(entity)) World.RemoveComponent<Moving>(entity);
    }
 
    void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {

@@ -17,41 +17,41 @@ public class SpawnItemsSystem : ISystem {
    static readonly PackedScene LampScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Lamp.tscn");
 
    public void Run() {
-      var numChests = Mathf.CeilToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
+      var numChests = Mathf.CeilToInt(World.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
       Logger.Info($"Spawning {numChests} chests");
       var entitiesNode = World.GetElement<Entities>();
 
       for (var chestIndex = 0; chestIndex < numChests; chestIndex++) {
          var chestNode = ChestScene.Instance<Chest>();
          entitiesNode.AddChild(chestNode);
-         this.Spawn(chestNode);
+         World.Spawn(chestNode);
       }
 
-      var numHealth = Mathf.CeilToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
+      var numHealth = Mathf.CeilToInt(World.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(3f, 5f));
       Logger.Info($"Spawning {numHealth} health crystals.");
 
       for (var healthIndex = 0; healthIndex < numHealth; healthIndex++) {
          var healthNode = HealthScene.Instance<Health>();
          entitiesNode.AddChild(healthNode);
-         this.Spawn(healthNode);
+         World.Spawn(healthNode);
       }
 
-      var numAnkhs = Mathf.CeilToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 6f));
+      var numAnkhs = Mathf.CeilToInt(World.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 6f));
       Logger.Info($"Spawning {numAnkhs} Ankhs");
 
       for (var ankhIndex = 0; ankhIndex < numHealth; ankhIndex++) {
          var spatialItem = SpatialItemScene.Instance<SpatialItem>();
          entitiesNode.AddChild(spatialItem);
-         this.Spawn(spatialItem);
+         World.Spawn(spatialItem);
       }
 
-      var numLamps = Mathf.RoundToInt(this.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 8f));
+      var numLamps = Mathf.RoundToInt(World.GetElement<MapGenData>().GeneratorParameters.NumRooms / (float) GD.RandRange(4f, 8f));
       Logger.Info($"Spawning {numLamps} lamps");
 
       for (var lampIndex = 0; lampIndex < numHealth; lampIndex++) {
          var lamp = LampScene.Instance<Lamp>();
          entitiesNode.AddChild(lamp);
-         this.Spawn(lamp);
+         World.Spawn(lamp);
       }
    }
 }

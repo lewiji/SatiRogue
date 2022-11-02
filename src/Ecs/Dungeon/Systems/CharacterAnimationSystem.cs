@@ -21,7 +21,7 @@ public class CharacterAnimationSystem : Reference, ISystem {
 
    void PlayRequestedAnimation() {
 
-      foreach (var (character, animationComponent) in this.Query<Character, CharacterAnimationComponent>()) {
+      foreach (var (character, animationComponent) in World.Query<Character, CharacterAnimationComponent>().Build()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || !animationComponent.HasAnimations())
             continue;
          

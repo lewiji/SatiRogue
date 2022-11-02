@@ -75,15 +75,15 @@ public class SpawnHudSystem : Reference, ISystem {
    }
 
    void OnContinueFromDeath() {
-      this.Send(new RestartGameTrigger());
+      World.Send(new RestartGameTrigger());
    }
 
    void OnExitFromDeath() {
-      this.Send(new BackToMainMenuTrigger());
+      World.Send(new BackToMainMenuTrigger());
    }
 
    void OnStairsDown() {
       Logger.Info("Hud stairs down callback triggering");
-      this.Send(new StairsDownTrigger());
+      World.Send(new StairsDownTrigger());
    }
 }

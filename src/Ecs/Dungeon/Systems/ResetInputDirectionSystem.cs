@@ -8,7 +8,7 @@ public class ResetInputDirectionSystem : ISystem {
    public World World { get; set; } = null!;
 
    public void Run() {
-      foreach (var input in this.Query<InputDirectionComponent>()) {
+      foreach (var input in World.Query<InputDirectionComponent>().Build()) {
          input.Direction = Vector2.Zero;
       }
    }

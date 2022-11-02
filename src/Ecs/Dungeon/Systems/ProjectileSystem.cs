@@ -11,7 +11,7 @@ public class ProjectileSystem : ISystem {
 
    public void Run() {
       _delta ??= World.GetElement<PhysicsDeltaTime>();
-      var query = this.QueryBuilder<Entity, Arrow>().Has<Firing>().Build();
+      var query = World.Query<Entity, Arrow>().Has<Firing>().Build();
 
       foreach (var (entity, arrow) in query) {
          if (arrow.Translation.IsEqualApprox(arrow.Destination)) {

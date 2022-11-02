@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
-
-namespace SatiRogue.scenes;
+namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 [Tool]
 public class RoomMultiMesh : MultiMeshInstance {

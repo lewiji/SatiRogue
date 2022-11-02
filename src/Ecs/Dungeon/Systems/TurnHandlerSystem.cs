@@ -31,7 +31,7 @@ public class TurnHandlerSystem : Reference, ISystem {
    }
 
    void ProcessOnTurnSystems(TurnType currentTurnType) {
-      this.Send(new TurnChangedTrigger(currentTurnType));
+      World.Send(new TurnChangedTrigger(currentTurnType));
    }
 
    public void Run() {
@@ -57,14 +57,14 @@ public class TurnHandlerSystem : Reference, ISystem {
             case TurnType.EnemyTurn:
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecuteNpcTurn));
-               await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
+               await ToSignal(World.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
                EmitSignal(nameof(ExecuteTurnEnd));
                SetCurrentTurn(TurnType.Idle);
                break;
             case TurnType.PlayerTurn:
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecutePlayerTurn));
-               await ToSignal(this.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
+               await ToSignal(World.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
                SetCurrentTurn(TurnType.EnemyTurn);
                break;
             case TurnType.Idle:

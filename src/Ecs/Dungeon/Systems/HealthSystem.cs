@@ -17,7 +17,7 @@ public class HealthSystem : ISystem {
 
    public void Run() {
       _playerData ??= World.GetElement<PersistentPlayerData>();
-      var query = this.QueryBuilder<Entity, Character, HealthComponent, CharacterAnimationComponent, StatBar3D>().Has<Alive>().Build();
+      var query = World.Query<Entity, Character, HealthComponent, CharacterAnimationComponent, StatBar3D>().Has<Alive>().Build();
 
       foreach (var (entity, character, health, animationComponent, statBar3D) in query) {
          if (health.Invincible && health.Value < health.Max) health.Value = health.Max;
@@ -35,9 +35,9 @@ public class HealthSystem : ISystem {
          if (health.Value > 0)
             continue;
          animationComponent.Animation = "die";
-         //this.Send(new CharacterDiedTrigger(character, entity));
-         this.On(entity).Remove<Alive>();
-         this.On(entity).Add<Dead>();
+         //World.Send(new CharacterDiedTrigger(character, entity));
+         World.On(entity).Remove<Alive>();
+         World.On(entity).Add<Dead>();
       }
    }
 }

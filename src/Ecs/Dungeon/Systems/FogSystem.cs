@@ -16,7 +16,7 @@ public class FogSystem : ISystem {
       var mapGenData = World.GetElement<MapGenData>();
       var fogMultiMeshes = World.GetElement<FogMultiMeshes>();
 
-      foreach (var (_, gridPosition) in this.Query<Player, GridPositionComponent>()) {
+      foreach (var (_, gridPosition) in World.Query<Player, GridPositionComponent>().Build()) {
          CalculateFov(gridPosition, mapGenData, fogMultiMeshes);
       }
    }

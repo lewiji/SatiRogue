@@ -92,7 +92,7 @@ public class SpawnEnemySystem : ISystem {
          enemyNode.EnemyRecord = enemyRecord;
          entitiesNode.AddChild(enemyNode);
          enemyNode.Stats.Record.Health = health;
-         this.Spawn(enemyNode);
+         World.Spawn(enemyNode);
       }
    }
 }

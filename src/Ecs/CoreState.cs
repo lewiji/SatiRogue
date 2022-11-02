@@ -7,7 +7,7 @@ namespace SatiRogue.Ecs;
 public class CoreState : GameState {
    public override void Init(GameStateController gameStates) {
       gameStates.World.AddOrReplaceElement(this);
-      InitSystems.Add(new InitFade()).Add(new InitGdSerializer());
+      InitSystems.Add(new InitFade());
    }
 
    public CoreState(GameStateController gameStateController) : base(gameStateController) { }

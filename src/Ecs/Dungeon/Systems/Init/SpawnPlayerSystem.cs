@@ -16,7 +16,7 @@ public class SpawnPlayerSystem : ISystem {
       Logger.Info("Spawning Player entity");
       var playerNode = _playerScene.Instance<Player>();
       World.GetElement<Entities>().AddChild(playerNode);
-      var playerEntity = this.Spawn(playerNode).Id();
+      var playerEntity = World.Spawn(playerNode);
       World.AddOrReplaceElement(playerNode);
    }
 }

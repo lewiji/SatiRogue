@@ -6,7 +6,7 @@
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/DungeonDirectionalLight.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/res/SpriteFramesPlayer.tres" type="SpriteFrames" id=7]
 [ext_resource path="res://resources/level_meshes/1_1_cube_Cube.mesh" type="ArrayMesh" id=14]
-[ext_resource path="res://scenes/RoomMultiMesh.cs" type="Script" id=16]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/RoomMultiMesh.cs" type="Script" id=16]
 
 [sub_resource type="MultiMesh" id=10]
 transform_format = 1
@@ -71,7 +71,7 @@ shaded = true
 double_sided = false
 frames = ExtResource( 7 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="Camera" type="Camera" parent="Player/Visual"]

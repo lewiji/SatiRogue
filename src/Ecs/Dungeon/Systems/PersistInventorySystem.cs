@@ -10,11 +10,11 @@ public class PersistInventorySystem : ISystem {
    public World World { get; set; }
 
    public void Run() {
-      var query = this.QueryBuilder<Entity, Item>().Has<JustPickedUp>().Has<InInventory>().Build();
+      var query = World.Query<Entity, Item>().Has<JustPickedUp>().Has<InInventory>().Build();
 
       foreach (var (entity, item) in query) {
          World.GetElement<PersistentPlayerData>().AddItem(item);
-         World.RemoveComponent<JustPickedUp>(entity.Identity);
+         World.RemoveComponent<JustPickedUp>(entity);
          item.GetParent().RemoveChild(item);
       }
    }

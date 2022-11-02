@@ -17,7 +17,7 @@ public class AudioSystem : ISystem {
          {"sword", World.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("SwordWoosh1")}
       };
 
-      foreach (var audioTrigger in this.Receive<CharacterAudioTrigger>()) {
+      foreach (var audioTrigger in World.Receive<CharacterAudioTrigger>(this)) {
          Play(audioTrigger.Audio, audioTrigger.Character.Translation);
       }
    }

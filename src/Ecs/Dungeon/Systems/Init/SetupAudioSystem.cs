@@ -21,7 +21,7 @@ public class SetupAudioSystem : ISystem {
          Autoplay = true
       };
       audioNodes.AddChild(ambienceAudio);
-      this.Spawn(ambienceAudio).Add<AmbientAudio>();
+      World.Spawn(ambienceAudio).Add<AmbientAudio>();
 
       AddSfx(audioNodes, "Footsteps4", "res://audio/Barefoot Dirt footsteps 4.wav", "footsteps", true, 0.5f, false);
       AddSfx(audioNodes, "SwordWoosh1", "res://audio/Sword Woosh 1.wav", "sfx");

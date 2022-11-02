@@ -12,12 +12,12 @@ public class CharacterHealthBarSystem : ISystem {
    static readonly PackedScene HealthBarScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
 
    public void Run() {
-      var query = this.Query<Entity, Character, HealthComponent>();
+      var query = World.Query<Entity, Character, HealthComponent>();
 
-      foreach (var (entity, character, health) in query) {
+      foreach (var (entity, character, health) in query.Build()) {
          var healthBarNode = HealthBarScene.Instance<StatBar3D>();
          character.AddChild(healthBarNode);
-         //this.On(entity).Add(healthBarNode);
+         //World.On(entity).Add(healthBarNode);
          GodotExtensions.AddNodeComponent(World, entity, healthBarNode);
          healthBarNode.Percent = health.Percent;
 

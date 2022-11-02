@@ -52,7 +52,7 @@ public class Logger : Node {
 
          switch (logKeyPair.Key) {
             case LogLevel.Error:
-               _log.Error(logString);
+               _log.Err(logString);
                break;
             case LogLevel.Warn:
                _log.Warn(logString);
