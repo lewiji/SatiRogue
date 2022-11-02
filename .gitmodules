@@ -1,6 +1,12 @@
 [submodule "lib/RelEcs"]
 	path = lib/RelEcs
-	url = git@github.com:Byteron/RelEcs.git
+	url = https://github.com/Byteron/RelEcs.git
 [submodule "lib/RelEcsGodot"]
 	path = lib/RelEcsGodot
-	url = git@github.com:Byteron/RelEcsGodot.git
+	url = git@github.com:lewiji/RelEcsGodot.git
+[submodule "lib/go_dot_log"]
+	path = lib/go_dot_log
+	url = https://github.com/chickensoft-games/go_dot_log.git
+[submodule "lib/activelogic-cs"]
+	path = lib/activelogic-cs
+	url = https://github.com/active-logic/activelogic-cs.git

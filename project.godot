@@ -9,61 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "InputEventAction",
-"class": "InputEventMultiScreenDrag",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventMultiScreenDrag.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventMultiScreenLongPress",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventMultiScreenLongPress.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventMultiScreenSwipe",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventMultiScreenSwipe.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventMultiScreenTap",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventMultiScreenTap.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventScreenPinch",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventScreenPinch.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventScreenTwist",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventScreenTwist.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventSingleScreenDrag",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventSingleScreenDrag.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventSingleScreenLongPress",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventSingleScreenLongPress.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventSingleScreenSwipe",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventSingleScreenSwipe.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventSingleScreenTap",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventSingleScreenTap.gd"
-}, {
-"base": "InputEventAction",
-"class": "InputEventSingleScreenTouch",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/CustomInputEvents/InputEventSingleScreenTouch.gd"
-}, {
 "base": "EditorInspectorPlugin",
 "class": "InspectedObjectGetter",
 "language": "GDScript",
@@ -84,33 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/laigter_tools/laigter_cli_result.gd"
 }, {
-"base": "InputEventAction",
-"class": "RawGesture",
-"language": "GDScript",
-"path": "res://lib/touch_input_manager/RawGesture.gd"
-}, {
 "base": "Control",
 "class": "VirtualJoystick",
 "language": "GDScript",
 "path": "res://lib/virtual-joystick/joystick/virtual_joystick.gd"
 } ]
 _global_script_class_icons={
-"InputEventMultiScreenDrag": "",
-"InputEventMultiScreenLongPress": "",
-"InputEventMultiScreenSwipe": "",
-"InputEventMultiScreenTap": "",
-"InputEventScreenPinch": "",
-"InputEventScreenTwist": "",
-"InputEventSingleScreenDrag": "",
-"InputEventSingleScreenLongPress": "",
-"InputEventSingleScreenSwipe": "",
-"InputEventSingleScreenTap": "",
-"InputEventSingleScreenTouch": "",
 "InspectedObjectGetter": "",
 "LTConfig": "",
 "LaigterCli": "",
 "LaigterCliResult": "",
-"RawGesture": "",
 "VirtualJoystick": ""
 }
 
@@ -127,7 +55,6 @@ config/icon="res://satirogue_logo.png"
 
 TextTransitionSettings="*res://addons/teeb.text_transitions/TextTransitionSettings.gd"
 Logger="*res://src/Debug/Logger.cs"
-GameScheduler="*res://src/Tools/GameScheduler.cs"
 
 [debug]
 

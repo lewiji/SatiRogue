@@ -21,35 +21,23 @@
         <DebugType>full</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Chickensoft.GoDotDep" Version="1.0.0" />
-        <PackageReference Include="GDSerializer" Version="2.0.3" />
         <PackageReference Include="GodotOnReady" Version="1.2.2" />
         <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="System.Threading.Channels" Version="7.0.0-rc.1.22426.10" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="lib\activelogic\Debug\netstandard2.1\main.dll" />
-        <Content Include="lib\go_dot_net\Fasterflect.dll" />
-        <Content Include="lib\go_dot_net\GoDotCollections.dll" />
-        <Content Include="lib\go_dot_net\GoDotLog.dll" />
-        <Content Include="lib\go_dot_net\Newtonsoft.Json.dll" />
+      <Compile Remove="lib\activelogic-cs\Patches\**" />
+      <Compile Remove="lib\activelogic-cs\Tests\**" />
+      <Compile Remove="lib\go_dot_log\test\**" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Fasterflect">
-            <HintPath>lib\go_dot_net\Fasterflect.dll</HintPath>
-        </Reference>
-        <Reference Include="GoDotCollections">
-            <HintPath>lib\go_dot_net\GoDotCollections.dll</HintPath>
-        </Reference>
-        <Reference Include="GoDotLog">
-            <HintPath>lib\go_dot_net\GoDotLog.dll</HintPath>
-        </Reference>
-        <Reference Include="main, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>lib\activelogic\Debug\netstandard2.1\main.dll</HintPath>
-        </Reference>
-        <Reference Include="Newtonsoft.Json">
-            <HintPath>lib\go_dot_net\Newtonsoft.Json.dll</HintPath>
-        </Reference>
+      <EmbeddedResource Remove="lib\activelogic-cs\Patches\**" />
+      <EmbeddedResource Remove="lib\activelogic-cs\Tests\**" />
+      <EmbeddedResource Remove="lib\go_dot_log\test\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="addons\.editorconfig" />
+      <Content Include="lib\.editorconfig" />
     </ItemGroup>
 </Project>
