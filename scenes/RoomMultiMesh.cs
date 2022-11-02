@@ -1,51 +1,121 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
-namespace SatiRogue.scenes; 
+namespace SatiRogue.scenes;
 
+[Tool]
 public class RoomMultiMesh : MultiMeshInstance {
-   [Export] int Width { get; set; } = 5;
-   [Export] int Height { get; set; } = 5;
-   
-   public override void _Ready() {
-      Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
-      Multimesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit;
-      Multimesh.InstanceCount = CalculateInstanceCount();
-      CreateRoom();
+   public enum RoomTileType { Floor, Wall }
+   public struct TileData {
+      public TileData(RoomTileType tileType, Vector3 translation) : this() {
+         TileType = tileType;
+         Translation = translation;
+      }
+      public RoomTileType TileType { get; set; }
+      public Vector3 Translation { get; set; }
+      public int TileIndexOffset { get; set; } = 0;
    }
 
-   void CreateRoom() {
-      var instanceId = 0;
+   [Export] int Width {
+      get => _width;
+      set {
+         _width = value;
+         CallDeferred(nameof(CreateRoom));
+      }
+   }
+   [Export] int Height {
+      get => _height;
+      set {
+         _height = value;
+         CallDeferred(nameof(CreateRoom));
+      }
+   }
+   [Export] int FloorTile {
+      get => _floorTile;
+      set {
+         _floorTile = value;
+         CallDeferred(nameof(CreateRoom));
+      }
+   }
+   [Export] int WallTile {
+      get => _wallTile;
+      set {
+         _wallTile = value;
+         CallDeferred(nameof(CreateRoom));
+      }
+   }
+
+   List<TileData> _tileData = new ();
+   int _width = 5;
+   int _height = 5;
+   int _floorTile = 0;
+   int _wallTile = 1;
+
+   public override void _EnterTree() {
+      Multimesh.InstanceCount = 0;
+      Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
+      Multimesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit;
+   }
+
+   public void CreateRoom() {
+      _tileData.Clear();
+      EnumerateTileTranslations();
+      Multimesh.InstanceCount = _tileData.Count;
+      InstanceMeshes();
+   }
+
+   void EnumerateTileTranslations() {
       for (var y = 0; y < Height; y++) {
          for (var x = 0; x < Width; x++) {
-            Multimesh.SetInstanceCustomData(instanceId, Color.Color8(0, 0, 0, 0));
-            Multimesh.SetInstanceTransform(instanceId++, new Transform(Basis.Identity, new Vector3(x, 0, y)));
+            AddFloorTileTranslation(x, y);
          }
       }
 
-      for (var wallE = 1; wallE <= Height; wallE++) {
-         Multimesh.SetInstanceCustomData(instanceId, Color.Color8(1, 0, 0, 0));
-         Multimesh.SetInstanceTransform(instanceId++, new Transform(Basis.Identity, new Vector3(0, 1, wallE)));
+      for (var wallEastWest = 0; wallEastWest < Height; wallEastWest++) {
+         AddWallTileTranslation(-1, wallEastWest);
+         AddWallTileTranslation(Width, wallEastWest);
       }
 
-      for (var wallW = 0; wallW < Height; wallW++) {
-         Multimesh.SetInstanceCustomData(instanceId, Color.Color8(1, 0, 0, 0));
-         Multimesh.SetInstanceTransform(instanceId++, new Transform(Basis.Identity, new Vector3(Width, 1, wallW)));
-      }
-
-      for (var wallN = 1; wallN <= Width; wallN++) {
-         Multimesh.SetInstanceCustomData(instanceId, Color.Color8(1, 0, 0, 0));
-         Multimesh.SetInstanceTransform(instanceId++, new Transform(Basis.Identity, new Vector3(wallN, 1, Height)));
-      }
-
-      for (var wallS = 0; wallS < Width; wallS++) {
-         Multimesh.SetInstanceCustomData(instanceId, Color.Color8(1, 0, 0, 0));
-         Multimesh.SetInstanceTransform(instanceId++, new Transform(Basis.Identity, new Vector3(wallS, 1, 0)));
+      for (var wallNorthSouth = -1; wallNorthSouth <= Width; wallNorthSouth++) {
+         AddWallTileTranslation(wallNorthSouth, -1);
+         AddWallTileTranslation(wallNorthSouth, Height);
       }
    }
 
-   int CalculateInstanceCount() {
-      int floor = Width * Height;
-      int walls = Width * 2 + Height * 2;
-      return floor + walls;
+   void AddFloorTileTranslation(int x, int y, float height = 0) {
+      _tileData.Add(new TileData(tileType: RoomTileType.Floor, translation: new Vector3(x, height, y)));
+   }
+
+   void AddWallTileTranslation(int x, int y, float height = 1) {
+      _tileData.Add(new TileData(tileType: RoomTileType.Wall, translation: new Vector3(x, height, y)));
+   }
+
+   void InstanceMeshes() {
+      for (var index = 0; index < _tileData.Count; index++) {
+         var tileData = _tileData[index];
+         SetInstance(index, tileData);
+      }
+   }
+
+   void SetInstance(int instanceId, TileData tileData) {
+      Multimesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, tileData.Translation));
+      switch (tileData.TileType) {
+         case RoomTileType.Floor:
+            SetFloorTile(instanceId);
+            break;
+         case RoomTileType.Wall: 
+            SetWallTile(instanceId);
+            break;
+         default: throw new ArgumentOutOfRangeException();
+      }
+   }
+
+   void SetWallTile(int instanceId, int tileOffset = 0) {
+      Multimesh.SetInstanceCustomData(instanceId, Color.Color8((byte) (WallTile + tileOffset), 0, 0, 0));
+   }
+
+   void SetFloorTile(int instanceId, int tileOffset = 0) {
+      Multimesh.SetInstanceCustomData(instanceId, Color.Color8((byte) (FloorTile + tileOffset), 0, 0, 0));
    }
 }

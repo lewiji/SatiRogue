@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform vec4 albedo : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D pbr_atlas;
@@ -44,13 +44,13 @@ void fragment() {
 		
 		vec4 occ_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 2.0) + (pixel_offset.x * 4.0), base_uv.y));
 		AO = dot(occ_tex,vec4(1.0, 0.0, 0.0, 0.0));
-		AO_LIGHT_AFFECT = 0.32;
+		AO_LIGHT_AFFECT = 0.3;
 		
 		vec4 metallic_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 3.0) + (pixel_offset.x * 6.0), base_uv.y));
 		METALLIC = dot(metallic_tex,vec4(1.0, 0.0, 0.0, 0.0)) * -1.0;
 		
 		
 		vec4 roughness_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 4.0) + (pixel_offset.x * 8.0), base_uv.y));
-		ROUGHNESS = dot(roughness_tex,vec4(1.0, 1.0, 1.0, 0.0)) * 1.0;
+		ROUGHNESS = dot(roughness_tex,vec4(1.0, 0.0, 0.0, 0.0)) * 1.0;
 	}
 }
