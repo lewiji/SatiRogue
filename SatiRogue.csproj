@@ -38,6 +38,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="addons\.editorconfig" />
+      <Content Include="assets\elthen\elthen_texarr.ta-builder" />
       <Content Include="lib\.editorconfig" />
     </ItemGroup>
 </Project>

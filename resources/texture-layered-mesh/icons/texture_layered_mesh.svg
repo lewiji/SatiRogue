@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:export-filename="/home/djrm/Projects/godot/tools/editor/icons/icon_node_2d.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docname="texture_layered_mesh.svg">
+  <defs
+     id="defs4">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4588">
+      <g
+         inkscape:label="Clip"
+         id="use4590">
+        <g
+           id="g4618">
+          <rect
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+             id="rect4612"
+             width="14"
+             height="1"
+             x="1"
+             y="5" />
+          <rect
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+             id="rect4614"
+             width="14"
+             height="1"
+             x="1"
+             y="7.5" />
+          <rect
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+             id="rect4616"
+             width="14"
+             height="1"
+             x="1"
+             y="10" />
+        </g>
+      </g>
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4655">
+      <g
+         inkscape:label="Clip"
+         id="use4657">
+        <g
+           clip-path="none"
+           id="g4674">
+          <g
+             id="g4672"
+             inkscape:label="Clip">
+            <rect
+               y="5"
+               x="1"
+               height="1"
+               width="14"
+               id="rect4666"
+               style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+            <rect
+               y="7.5"
+               x="1"
+               height="1"
+               width="14"
+               id="rect4668"
+               style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+            <rect
+               y="10"
+               x="1"
+               height="1"
+               width="14"
+               id="rect4670"
+               style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+          </g>
+        </g>
+        <g
+           id="use4676"
+           inkscape:label="Clip">
+          <rect
+             y="5"
+             x="1"
+             height="1"
+             width="14"
+             id="rect4688"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+          <rect
+             y="7.5"
+             x="1"
+             height="1"
+             width="14"
+             id="rect4690"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+          <rect
+             y="10"
+             x="1"
+             height="1"
+             width="14"
+             id="rect4692"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+        </g>
+      </g>
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="63.999998"
+     inkscape:cx="4.2881211"
+     inkscape:cy="7.8217577"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     inkscape:window-x="1912"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:document-rotation="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3336"
+       empspacing="4"
+       spacingx="0.5"
+       spacingy="0.5" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="opacity:1;fill:#fc9c9c;fill-opacity:0.99607843;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       mask="none"
+       d="M 3 1 A 2 2 0 0 0 1 3 A 2 2 0 0 0 1.6835938 4.5 L 5.9140625 4.5 L 5.4140625 4 L 11.271484 4 A 2 2 0 0 0 11.683594 4.5 L 14.318359 4.5 A 2 2 0 0 0 15 3 A 2 2 0 0 0 13 1 A 2 2 0 0 0 11.269531 2 L 4.7285156 2 A 2 2 0 0 0 3 1 z M 2 6 L 2 7.25 L 4 7.25 L 4 6 L 2 6 z M 4.5859375 6 L 5.8359375 7.25 L 8.6640625 7.25 L 7.4140625 6 L 4.5859375 6 z M 12 6 L 12 7.25 L 14 7.25 L 14 6 L 12 6 z M 2 8.75 L 2 10 L 4 10 L 4 8.75 L 2 8.75 z M 7.3359375 8.75 L 8.5859375 10 L 11.414062 10 L 10.164062 8.75 L 7.3359375 8.75 z M 12 8.75 L 12 10 L 14 10 L 14 8.75 L 12 8.75 z M 1.6816406 11.5 A 2 2 0 0 0 1 13 A 2 2 0 0 0 3 15 A 2 2 0 0 0 4.7304688 14 L 11.271484 14 A 2 2 0 0 0 13 15 A 2 2 0 0 0 15 13 A 2 2 0 0 0 14.320312 11.5 L 10.085938 11.5 L 10.585938 12 L 4.7285156 12 A 2 2 0 0 0 4.3164062 11.5 L 1.6816406 11.5 z "
+       id="path4162" />
+  </g>
+</svg>
