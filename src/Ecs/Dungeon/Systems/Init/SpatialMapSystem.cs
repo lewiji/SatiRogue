@@ -114,7 +114,7 @@ public class SpatialMapSystem : ISystem {
 
    void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room) {
       if (GetCellCustomDataForCellType(cell.Type) is not { } color) return;
-      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, cell.Position - room.Translation));
+      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, new Vector3(0, -1, 0) + cell.Position - room.Translation));
       mMesh.SetInstanceCustomData(instanceId, color);
    }
 

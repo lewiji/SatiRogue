@@ -26,7 +26,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>spritesheet-only</string>
         <key>textureFileName</key>
-        <filename>elthen_packed_v2.png</filename>
+        <filename>player.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrQualityLevel</key>
@@ -82,7 +82,7 @@
             <key>width</key>
             <int>4096</int>
             <key>height</key>
-            <int>4096</int>
+            <int>512</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -98,13 +98,13 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
-                <enum type="AlgorithmMaxRectsSettings::Heuristic">AreaFit</enum>
+                <enum type="AlgorithmMaxRectsSettings::Heuristic">Best</enum>
             </struct>
             <key>basic</key>
             <struct type="AlgorithmBasicSettings">
@@ -137,7 +137,7 @@
         <key>autoAliasEnabled</key>
         <false/>
         <key>trimSpriteNames</key>
-        <true/>
+        <false/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -167,7 +167,11 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">basilisk.png</key>
+            <key type="filename">../player/Squire Sprite Sheet 3.png</key>
+            <key type="filename">../player/Squire Sprite Sheet 3_n.png</key>
+            <key type="filename">../player/Squire Sprite Sheet 3_o.png</key>
+            <key type="filename">../player/Squire Sprite Sheet 3_p.png</key>
+            <key type="filename">../player/Squire Sprite Sheet 3_s.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -176,82 +180,20 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>960,96,1920,192</rect>
+                <rect>128,48,256,96</rect>
                 <key>scale9Paddings</key>
-                <rect>960,96,1920,192</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">fire_elemental.png</key>
-            <key type="filename">maw_purple.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>640,40,1280,80</rect>
-                <key>scale9Paddings</key>
-                <rect>640,40,1280,80</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">harpy_blue.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>560,80,1120,160</rect>
-                <key>scale9Paddings</key>
-                <rect>560,80,1120,160</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">player.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>640,48,1280,96</rect>
-                <key>scale9Paddings</key>
-                <rect>640,48,1280,96</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ratfolk.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>960,40,1920,80</rect>
-                <key>scale9Paddings</key>
-                <rect>960,40,1920,80</rect>
+                <rect>128,48,256,96</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>basilisk.png</filename>
-            <filename>fire_elemental.png</filename>
-            <filename>harpy_blue.png</filename>
-            <filename>maw_purple.png</filename>
-            <filename>player.png</filename>
-            <filename>ratfolk.png</filename>
+            <filename>../player/Squire Sprite Sheet 3.png</filename>
+            <filename>../player/Squire Sprite Sheet 3_n.png</filename>
+            <filename>../player/Squire Sprite Sheet 3_o.png</filename>
+            <filename>../player/Squire Sprite Sheet 3_p.png</filename>
+            <filename>../player/Squire Sprite Sheet 3_s.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

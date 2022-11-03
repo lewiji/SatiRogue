@@ -9,7 +9,6 @@ namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Enemy : Character {
    public SpriteFrames? Frames;
-   public Material? Material;
    public Stats Stats = new(Stats.DefaultEnemyClass);
 
    [OnReadyGet("HoverStats")]
@@ -24,8 +23,8 @@ public partial class Enemy : Character {
    public override void OnSpawn(EntityBuilder entityBuilder) {
       base.OnSpawn(entityBuilder);
 
-      Material = EnemyRecord?.GraphicsSet.Material;
-      Frames = EnemyRecord?.GraphicsSet.Frames;
+      //Material = EnemyRecord?.GraphicsSet.Material;
+      Frames = EnemyRecord?.SpriteFrames;
 
       if (EnemyRecord?.Name != null)
          CharacterName = EnemyRecord.Name;
@@ -56,7 +55,6 @@ public partial class Enemy : Character {
       if (AnimatedSprite3D == null)
          return;
       AnimatedSprite3D.Frames = Frames;
-      AnimatedSprite3D.MaterialOverride = Material;
    }
 
    void OnMouseEntered() {

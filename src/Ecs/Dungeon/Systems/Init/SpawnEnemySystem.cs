@@ -27,28 +27,23 @@ public class SpawnEnemySystem : ISystem {
       {EnemyType.FireKasina, "FireKasina"}
    };
 
-   static readonly SpatialMaterial HarpyMat = GD.Load<SpatialMaterial>("res://resources/enemies/harpy/harpy_blue_spatial_mat.tres");
    static readonly SpriteFrames HarpyFrames = GD.Load<SpriteFrames>("res://resources/enemies/harpy/harpy_blue_spriteframes.tres");
-   static readonly SpatialMaterial MawMat = GD.Load<SpatialMaterial>("res://resources/enemies/maw/maw_purple_spatial_mat.tres");
    static readonly SpriteFrames MawFrames = GD.Load<SpriteFrames>("res://resources/enemies/maw/maw_purple_sprite_Frames.tres");
-   static readonly SpatialMaterial RatMat = GD.Load<SpatialMaterial>("res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres");
    static readonly SpriteFrames RatFrames = GD.Load<SpriteFrames>("res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres");
-   static readonly SpatialMaterial FireElementalMat = GD.Load<SpatialMaterial>(
-      "res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres");
    static readonly SpriteFrames FireElementalFrames = GD.Load<SpriteFrames>(
       "res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres");
 
-   static readonly Dictionary<EnemyType, EnemyGraphics> EnemyGraphics = new() {
-      {EnemyType.Harpy, new EnemyGraphics(HarpyFrames, HarpyMat)},
-      {EnemyType.Maw, new EnemyGraphics(MawFrames, MawMat)},
-      {EnemyType.Rat, new EnemyGraphics(RatFrames, RatMat)},
-      {EnemyType.FireKasina, new EnemyGraphics(FireElementalFrames, FireElementalMat)}
+   static readonly Dictionary<EnemyType, SpriteFrames> EnemyGraphics = new() {
+      {EnemyType.Harpy, HarpyFrames},
+      {EnemyType.Maw, MawFrames},
+      {EnemyType.Rat, RatFrames},
+      {EnemyType.FireKasina, FireElementalFrames}
    };
 
    public record EnemyRecord {
       public EnemyType EnemyType { get; set; }
       public string Name { get; set; } = "";
-      public EnemyGraphics GraphicsSet { get; set; }
+      public SpriteFrames SpriteFrames { get; set; }
       public EnemyClass Class { get; set; }
    }
 
@@ -56,25 +51,25 @@ public class SpawnEnemySystem : ISystem {
       new() {
          EnemyType = EnemyType.Harpy,
          Name = HumanReadableEnemyNames[EnemyType.Harpy],
-         GraphicsSet = EnemyGraphics[EnemyType.Harpy],
+         SpriteFrames = EnemyGraphics[EnemyType.Harpy],
          Class = EnemyClass.LowlyEnemy
       },
       new() {
          EnemyType = EnemyType.Maw,
          Name = HumanReadableEnemyNames[EnemyType.Maw],
-         GraphicsSet = EnemyGraphics[EnemyType.Maw],
+         SpriteFrames = EnemyGraphics[EnemyType.Maw],
          Class = EnemyClass.LowlyEnemy
       },
       new() {
          EnemyType = EnemyType.Rat,
          Name = HumanReadableEnemyNames[EnemyType.Rat],
-         GraphicsSet = EnemyGraphics[EnemyType.Rat],
+         SpriteFrames = EnemyGraphics[EnemyType.Rat],
          Class = EnemyClass.LowlyEnemy
       },
       new() {
          EnemyType = EnemyType.FireKasina,
          Name = HumanReadableEnemyNames[EnemyType.FireKasina],
-         GraphicsSet = EnemyGraphics[EnemyType.FireKasina],
+         SpriteFrames = EnemyGraphics[EnemyType.FireKasina],
          Class = EnemyClass.LowlyEnemy
       }
    };
