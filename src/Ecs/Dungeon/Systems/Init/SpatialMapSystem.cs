@@ -20,8 +20,7 @@ public class SpatialMapSystem : ISystem {
    static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/1_1_cube_Cube.mesh");
 
 
-   static readonly PackedScene LightingScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DungeonDirectionalLight.tscn");
-   static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
+   
    readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
 
    MapGenData _mapGenData = null!;
@@ -39,8 +38,6 @@ public class SpatialMapSystem : ISystem {
          * (_mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
       Logger.Info("Building chunks");
-      _mapGeometry.AddChild(FloorPlaneScene.Instance());
-      _mapGeometry.AddChild(LightingScene.Instance());
       //ChooseLevelMaterialSet();
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
@@ -99,7 +96,9 @@ public class SpatialMapSystem : ISystem {
             InstanceCount = chunkCells.GetUpperBound(0)
          },
          CastShadow = GeometryInstance.ShadowCastingSetting.On,
-         PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off
+         PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
+         UseInBakedLight = true,
+         GenerateLightmap = true,
       };
       chunkRoom.AddChild(mmInst);
       mmInst.Owner = _mapGeometry;

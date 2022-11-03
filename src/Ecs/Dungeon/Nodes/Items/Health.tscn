@@ -105,9 +105,10 @@ script = ExtResource( 3 )
 [node name="Visual" type="AnimatedSprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
 material_override = ExtResource( 2 )
+use_in_baked_light = true
 pixel_size = 0.02
 frames = SubResource( 9 )
-frame = 6
+frame = 7
 playing = true
 
 [node name="Particles" type="Particles" parent="."]

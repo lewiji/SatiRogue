@@ -39,7 +39,7 @@ shader = SubResource( 21 )
 shader_param/normal_map = ExtResource( 23 )
 
 [sub_resource type="AtlasTexture" id=19]
-flags = 9
+flags = 27
 atlas = ExtResource( 19 )
 region = Rect2( 928, 320, 48, 48 )
 
@@ -492,8 +492,8 @@ size_flags_stretch_ratio = 0.32
 [node name="Light2D" type="Light2D" parent="."]
 unique_name_in_owner = true
 texture = ExtResource( 12 )
-offset = Vector2( 1680, 1084 )
-texture_scale = 31.1111
+offset = Vector2( 556, 654 )
+texture_scale = 12.1111
 energy = 1.62
 range_height = 64.0
 range_item_cull_mask = 7

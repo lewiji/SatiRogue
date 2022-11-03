@@ -1,0 +1,25 @@
+[remap]
+
+importer="texture_array"
+type="TextureArray"
+path="res://.import/TestAtlasMaterial.exr-c78f5adb66eb3199ba946078d34923dd.texarr"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://scenes/TestAtlasMaterial.exr"
+dest_files=[ "res://.import/TestAtlasMaterial.exr-c78f5adb66eb3199ba946078d34923dd.texarr" ]
+
+[params]
+
+compress/mode=0
+compress/no_bptc_if_rgb=false
+flags/repeat=false
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=false
+slices/horizontal=1
+slices/vertical=4

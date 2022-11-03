@@ -51,7 +51,8 @@ public class DungeonState : GameState {
          .Add(new InitFogSystem())
          .Add(new FogSystem())
          .Add(new CharacterHealthBarSystem())
-         .Add(new InventorySystem());
+         .Add(new InventorySystem())
+         .Add(new InitLightingSystem());
 
       var playerMovementSystem = new PlayerMovementSystem();
       _gsc.World.AddOrReplaceElement(playerMovementSystem);

@@ -12,6 +12,7 @@ script = ExtResource( 6 )
 [node name="Visual" type="AnimatedSprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.906012, 0.423251, 0, -0.423251, 0.906012, 0, 0.45, 0 )
 material_override = ExtResource( 2 )
+use_in_baked_light = true
 pixel_size = 0.035
 frames = ExtResource( 1 )
 animation = "closed"

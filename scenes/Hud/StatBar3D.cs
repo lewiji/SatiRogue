@@ -26,7 +26,7 @@ public partial class StatBar3D : Spatial {
    static Color _bgColor = new(0.464285714286f, 0, 0);
    static Color _fgColor = new(0.4892f, 0.5504f, 1f);
    static Transform _bgTransform = new(Basis.Identity, new Vector3(0, 0, 0));
-   static Transform _fgTransform = new(Basis.Identity, new Vector3(0, 0.01f, 0.015f));
+   static Transform _fgTransform = new(Basis.Identity, new Vector3(0, -0.003f, 0.01f));
 
    [Export]
    public float Percent {
