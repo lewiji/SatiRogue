@@ -22,19 +22,16 @@ public class PreloadResources : Reference, ISystem {
    public delegate void AllResourcesLoaded();
 
    static readonly string[] ResourcePaths = {
-      "res://assets/overworld/WallShaderShadows.tres",
-      "res://assets/overworld/WallShader.tres",
+      "res://resources/level_meshes/1_1_cube_Cube.mesh",
+      "res://resources/character_atlas_shader_material.tres",
       "res://scenes/ThreeDee/res/FogTileShaderMaterial.tres",
-      "res://resources/enemies/flash_overlay_shadermaterial.tres",
       "res://resources/hud/StatBar3DShaderMat.tres",
-      "res://assets/overworld/OverworldMatShader.material",
       "res://src/Ecs/Dungeon/Nodes/Items/HealthMaterial.tres",
       "res://resources/particles/blood_particle_material.tres",
       "res://resources/enemies/fire_elemental/FireElementalSpatialMaterial.tres",
       "res://resources/enemies/harpy/harpy_blue_spatial_mat.tres",
       "res://resources/enemies/maw/maw_purple_spatial_mat.tres",
       "res://resources/enemies/ratfolk/ratfolk_axe_spatial_mat.tres",
-      "res://resources/props/room_spatialmaterial.tres",
       "res://src/Character/CharacterPositionMarkerMaterial.tres",
       "res://src/Ecs/Dungeon/Nodes/Items/ChestMaterial.tres",
       "res://resources/particles/enemy_blood_spatial_material.tres",
@@ -51,7 +48,6 @@ public class PreloadResources : Reference, ISystem {
       "res://src/Ecs/Dungeon/Nodes/Items/ChestSpriteFrames.tres"
    };
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
-   Thread? _loadingThread;
    CompileShaders? _compileShaders;
 
    public void Run() {
@@ -59,9 +55,7 @@ public class PreloadResources : Reference, ISystem {
          Logger.Info("Resources already loaded.");
          return;
       }
-
-      _loadingThread = new Thread(LoadAllResources);
-      _loadingThread.Start();
+      CallDeferred(nameof(LoadAllResources));
    }
 
    void LoadAllResources() {
@@ -84,8 +78,6 @@ public class PreloadResources : Reference, ISystem {
       var resQueue = World.GetElement<ResourceQueue>();
       resQueue.Disconnect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
       resQueue.Disconnect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
-      _loadingThread?.Join();
-      _loadingThread = null;
       EmitSignal(nameof(AllResourcesLoaded));
    }
 }

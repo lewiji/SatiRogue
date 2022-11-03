@@ -17,22 +17,8 @@ namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 public class SpatialMapSystem : ISystem {
    public World World { get; set; } = null!;
 
-   static readonly Dictionary<CellType, Mesh> CellMeshResources = new() {
-      {CellType.Floor, GD.Load<Mesh>("res://resources/level_meshes/floor_tile_mesh.tres")},
-      {CellType.Stairs, GD.Load<Mesh>("res://resources/level_meshes/stairs_mesh.tres")},
-      {CellType.Wall, GD.Load<Mesh>("res://resources/level_meshes/wall_mesh.tres")}, {
-         CellType.DoorClosed,
-         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface7081.mesh")
-      }, {
-         CellType.DoorOpen,
-         GD.Load<Mesh>("res://scenes/ThreeDee/res_compressed/polySurface8475.mesh")
-      }
-   };
+   static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/1_1_cube_Cube.mesh");
 
-   static readonly Array<LevelMaterialSet> LevelMaterialSets = new() {
-      GD.Load<LevelMaterialSet>("res://resources/level_material_sets/dungeon_0.tres"),
-      GD.Load<LevelMaterialSet>("res://resources/level_material_sets/dungeon_1.tres")
-   };
 
    static readonly PackedScene LightingScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DungeonDirectionalLight.tscn");
    static readonly PackedScene FloorPlaneScene = GD.Load<PackedScene>("res://resources/props/FloorPlane.tscn");
@@ -55,17 +41,17 @@ public class SpatialMapSystem : ISystem {
       Logger.Info("Building chunks");
       _mapGeometry.AddChild(FloorPlaneScene.Instance());
       _mapGeometry.AddChild(LightingScene.Instance());
-      ChooseLevelMaterialSet();
+      //ChooseLevelMaterialSet();
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
 
    void ChooseLevelMaterialSet() {
-      var idx = Mathf.RoundToInt((float) GD.RandRange(0, LevelMaterialSets.Count - 1));
+      /*var idx = Mathf.RoundToInt((float) GD.RandRange(0, LevelMaterialSets.Count - 1));
       var levelMatSet = LevelMaterialSets[idx];
       Logger.Info($"Chose {levelMatSet} Level Material Set.");
       CellMeshResources[CellType.Floor].SurfaceSetMaterial(0, levelMatSet.FloorMaterial);
       CellMeshResources[CellType.Wall].SurfaceSetMaterial(0, levelMatSet.WallMaterial);
-      CellMeshResources[CellType.Stairs].SurfaceSetMaterial(0, levelMatSet.StairsMaterial);
+      CellMeshResources[CellType.Stairs].SurfaceSetMaterial(0, levelMatSet.StairsMaterial);*/
    }
 
    void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
@@ -103,37 +89,52 @@ public class SpatialMapSystem : ISystem {
       _mapGeometry.AddChild(chunkRoom);
       chunkRoom.Owner = _mapGeometry;
       chunkRoom.Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
+      
+      
+      var mmInst = new MultiMeshInstance {
+         Multimesh = new MultiMesh {
+            Mesh = CellMesh,
+            TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
+            CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit,
+            InstanceCount = chunkCells.GetUpperBound(0)
+         },
+         CastShadow = GeometryInstance.ShadowCastingSetting.On,
+         PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off
+      };
+      chunkRoom.AddChild(mmInst);
+      mmInst.Owner = _mapGeometry;
 
+      var instanceId = 0;
       // Create MultiMesh for each cell type in this chunk data
-      foreach (CellType cellType in _cellTypes) {
-         var cellsOfThisTypeInChunk = chunkCells.Where(cell => cell != null && cell.Type == cellType).ToArray();
-         var meshForCellType = GetMeshResourceForCellType(cellType);
-
-         if (meshForCellType == null)
-            continue;
-
-         var mmInst = new MultiMeshInstance {
-            Multimesh = new MultiMesh {
-               Mesh = meshForCellType,
-               TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
-               InstanceCount = cellsOfThisTypeInChunk.Length
-            },
-            CastShadow = GeometryInstance.ShadowCastingSetting.On,
-            PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off
-         };
-         chunkRoom.AddChild(mmInst);
-         mmInst.Owner = _mapGeometry;
-
-         for (var i = 0; i < cellsOfThisTypeInChunk.Length; i++) {
-            mmInst.Multimesh.SetInstanceTransform(i,
-               new Transform(Basis.Identity, cellsOfThisTypeInChunk[i].Position - chunkRoom.Translation));
-         }
+      foreach (var chunkCell in chunkCells) {
+         if (chunkCell is not { } cell || cell.Type == CellType.Void) continue;
+         SetTile(mmInst.Multimesh, instanceId++, cell, chunkRoom);
       }
    }
 
-   static Mesh? GetMeshResourceForCellType(CellType? cellType) {
-      CellMeshResources.TryGetValue(cellType.GetValueOrDefault(), out var mesh);
-      return mesh;
+   void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room) {
+      if (GetCellCustomDataForCellType(cell.Type) is not { } color) return;
+      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, cell.Position - room.Translation));
+      mMesh.SetInstanceCustomData(instanceId, color);
+   }
+
+   Color? GetCellCustomDataForCellType(CellType? cellType) {
+      switch (cellType) {
+         case CellType.Floor:
+            return Color.Color8(0, 0, 0, 0);
+         case CellType.Wall:
+            return Color.Color8(1, 0, 0, 0);
+         case CellType.DoorClosed: 
+            return Color.Color8(2, 0, 0, 0);
+         case CellType.DoorOpen: 
+            return Color.Color8(3, 0, 0, 0);
+         case CellType.Stairs:
+            return Color.Color8(4, 0, 0, 0);
+         case CellType.Void: break;
+         case null: break;
+         default: throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null);
+      }
+      return null;
    }
 
    Vector3[] GetChunkMinMaxCoords(int chunkId, int chunkWidth, int maxWidth) {

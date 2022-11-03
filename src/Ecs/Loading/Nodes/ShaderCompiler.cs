@@ -18,6 +18,9 @@ public partial class ShaderCompiler : CanvasLayer {
    Control _canvasItemWigglers = null!;
 
    public bool ProcessResourcePreloader(Resource res) {
+      if (res is Mesh mesh && res.ResourceName == "1_1_cube_Cube") {
+         CallDeferred(nameof(InstanceMultiMeshWiggler), mesh);
+      }
       if (res is not Material material)
          return false;
 
@@ -53,6 +56,24 @@ public partial class ShaderCompiler : CanvasLayer {
          case Shader.Mode.Particles:
             CallDeferred(nameof(InstanceParticlesWiggler), material);
             break;
+      }
+   }
+
+   void InstanceMultiMeshWiggler(Mesh mesh) {
+      Logger.Info("Instancing multimesh wiggler");
+      var mmInst = new MultiMeshInstance();
+      mmInst.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
+      var mMesh = new MultiMesh();
+      mmInst.Multimesh = mMesh;
+      mMesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
+      mMesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit;
+      mMesh.Mesh = mesh;
+      _spatialWigglers.AddChild(mmInst);
+      mMesh.InstanceCount = 5;
+
+      for (var i = 0; i < 5; i++) {
+         mMesh.SetInstanceTransform(i, new Transform(Basis.Identity, new Vector3(i, i, i)));
+         mMesh.SetInstanceCustomData(i, Color.Color8((byte) i, 0, 0, 0));
       }
    }
 

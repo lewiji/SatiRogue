@@ -1,113 +1,99 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using Godot;
 using SatiRogue.Debug;
-using Thread = System.Threading.Thread;
 
 namespace SatiRogue.Tools;
 
-public class ResourceQueue : Resource {
+public class ResourceQueue : Node {
    [Signal] public delegate void ResourceLoaded(Resource resource);
    [Signal] public delegate void AllLoaded();
    
-   static readonly HashSet<string> _toLoad = new();
+   readonly Queue<string> _toLoad = new();
+   Thread? _thread;
+   Mutex? _toLoadMutex;
+   Semaphore? _toLoadSemaphore;
+   bool _exitThread = false;
+
+   public override void _Ready() {
+      _toLoadMutex = new();
+      _toLoadSemaphore = new();
+      _exitThread = false;
+      _thread = new();
+
+      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
+      Connect(nameof(AllLoaded), this, nameof(OnQueueFinished));
+   }
 
    public void QueueResource(string path) {
-      _toLoad.Add(path);
+      _toLoadMutex?.Lock();
+      _toLoad.Enqueue(path);
+      _toLoadMutex?.Unlock();
    }
 
-   public async void LoadQueuedResources() {
-      Logger.Info($"Preloading {_toLoad.Count} resources.");
-      while (_toLoad.Count > 0) {
-         var path = _toLoad.First();
-         _toLoad.Remove(path);
-         var res = await Load<Resource>(path);
-         EmitSignal(nameof(ResourceLoaded), res);
-      }
-      EmitSignal(nameof(AllLoaded));
+   public void LoadQueuedResources() {
+      if (_thread == null) 
+         throw new Exception("Loading thread not initialised.");
+
+      _thread.Start(this, nameof(LoaderThread), null, Thread.Priority.Low);
+      _toLoadSemaphore?.CallDeferred("post");
    }
-   
-   static async Task<TResource?> Load<TResource>(string path, Delegates.ReportProgress? reportProgress = null)
-      where TResource : Resource {
-      if (ResourceLoader.HasCached(path)) {
-         GD.Print("Is in cache: " + path);
-         return ResourceLoader.Load<TResource>(path);
-      }
 
-      var reader = LoadInBackground<TResource>(path);
+   void LoaderThread() {
+      Logger.Info("Loader thread running...");
 
-      while (await reader.WaitToReadAsync()) {
-         if (!reader.TryRead(out var progress)) {
-            continue;
+      while (true) {
+         _toLoadSemaphore?.Wait();
+         
+         _toLoadMutex?.Lock();
+         var shouldExit = _exitThread;
+         _toLoadMutex?.Unlock();
+
+         if (shouldExit) 
+            break;
+         
+         _toLoadMutex?.Lock();
+         var toLoadCounter = _toLoad.Count;
+         _toLoadMutex?.Unlock();
+         
+         if (toLoadCounter > 0) {
+            _toLoadMutex?.Lock();
+            var path = _toLoad.Dequeue();
+            _toLoadMutex?.Unlock();
+            var res = ResourceLoader.Load(path);
+            //EmitSignal(nameof(ResourceLoaded), res);
+            CallDeferred("emit_signal", nameof(ResourceLoaded), res);
+         } else {
+            // check if exit was requested during load (i.e. app quit)
+            _toLoadMutex?.Lock();
+            var forceExit = _exitThread;
+            _toLoadMutex?.Unlock();
+
+            if (!forceExit) 
+               CallDeferred("emit_signal", nameof(AllLoaded));
          }
-
-         if (progress.Finished) {
-            return progress.Resource as TResource;
-         }
-
-         reportProgress?.Invoke(path, progress.Progress);
       }
-
-      throw new InvalidOperationException("We should never be here.");
    }
 
-   static ChannelReader<ResourceLoadingProgress<T>> LoadInBackground<T>(string path) where T : Resource {
-      Logger.Debug($"Loading in background: {path}");
-
-      var result = Channel.CreateUnbounded<ResourceLoadingProgress<T>>();
-
-      Task.Run(async () => {
-         var interactiveLoader = ResourceLoader.LoadInteractive(path);
-
-         do {
-            var error = interactiveLoader.Poll();
-
-            if (error == Error.FileEof || error != Error.Ok) {
-               if (error != Error.FileEof) {
-                  GD.Print("Loading failed. Error: " + error);
-               }
-               // send resource
-               await result.Writer.WriteAsync(new ResourceLoadingProgress<T>(path, (T) interactiveLoader.GetResource()));
-               result.Writer.Complete();
-               return;
-            }
-
-            // send a progress update
-            await result.Writer.WriteAsync(new ResourceLoadingProgress<T>(path,
-               interactiveLoader.GetStage() / (float) interactiveLoader.GetStageCount()));
-         }
-         while (true);
-      });
-
-      return result.Reader;
-   }
-}
-
-public static class Delegates {
-   public delegate ResourceLoadingProgress<Resource> ReportProgress(string path, float progress);
-}
-
-public class ResourceLoadingProgress<T> {
-   public ResourceLoadingProgress(string path, Resource resource) {
-      Path = path;
-      Resource = resource;
-      Finished = true;
-      Progress = 1.0f;
+   void OnResourceLoaded(Resource? resource) {
+      // check queue for next resource
+      _toLoadSemaphore?.Post();
    }
 
-   public ResourceLoadingProgress(string path, float progress) {
-      Path = path;
-      Progress = progress;
-      Finished = false;
-      Resource = null;
+   public override void _ExitTree() {
+      if (_thread  != null && _thread.IsActive()) {
+         OnQueueFinished();
+      }
    }
 
-   public string Path { get; set; }
-   public bool Finished { get; set; }
-   public Resource? Resource { get; set; }
-   public float Progress { get; set; }
+   void OnQueueFinished() {
+      // exit thread
+      _toLoadMutex?.Lock();
+      _exitThread = true;
+      _toLoadMutex?.Unlock();
+      _toLoadSemaphore?.Post();
+      _thread?.WaitToFinish();
+      Logger.Info("Loading queue finished.");
+   }
 }
