@@ -67,10 +67,10 @@ margin_right = 2530.0
 margin_bottom = 1418.0
 rect_min_size = Vector2( 0, 38 )
 script = ExtResource( 2 )
-inc_dec_options_nodepath = NodePath("Panel/MarginContainer/CenterContainer/HBoxContainer/OptionButton")
-inc_button_nodepath = NodePath("Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue/IncreaseButton")
-dec_button_nodepath = NodePath("Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue/DecreaseButton")
-default_step_lineedit_path = NodePath("Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue/ValueLineEdit")
+inc_dec_options_nodepath = NodePath("Panel/MarginContainer/HBoxContainer/OptionButton")
+inc_button_nodepath = NodePath("Panel/MarginContainer/HBoxContainer/CurrentValue/IncreaseButton")
+dec_button_nodepath = NodePath("Panel/MarginContainer/HBoxContainer/CurrentValue/DecreaseButton")
+default_step_lineedit_path = NodePath("Panel/MarginContainer/HBoxContainer/CurrentValue/ValueLineEdit")
 
 [node name="Panel" type="Panel" parent="."]
 margin_left = 7.0
@@ -85,22 +85,20 @@ size_flags_vertical = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
+custom_constants/margin_right = 4
+custom_constants/margin_left = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel/MarginContainer"]
-margin_right = 2516.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+margin_left = 4.0
+margin_right = 2512.0
 margin_bottom = 42.0
-rect_min_size = Vector2( 0, 30 )
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/CenterContainer"]
-margin_left = 1122.0
-margin_top = 7.0
-margin_right = 1393.0
-margin_bottom = 35.0
 rect_min_size = Vector2( 0, 28 )
+size_flags_horizontal = 3
+custom_constants/separation = 4
 alignment = 1
 
-[node name="Toolbar" type="HBoxContainer" parent="Panel/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="Toolbar" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+visible = false
 margin_right = 57.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 0, 28 )
@@ -109,7 +107,7 @@ size_flags_vertical = 4
 custom_constants/separation = 1
 alignment = 1
 
-[node name="BackButton" type="ToolButton" parent="Panel/MarginContainer/CenterContainer/HBoxContainer/Toolbar"]
+[node name="BackButton" type="ToolButton" parent="Panel/MarginContainer/HBoxContainer/Toolbar"]
 margin_top = 2.0
 margin_right = 28.0
 margin_bottom = 26.0
@@ -117,7 +115,7 @@ hint_tooltip = "Undo"
 size_flags_vertical = 4
 icon = SubResource( 2 )
 
-[node name="ForwardButton" type="ToolButton" parent="Panel/MarginContainer/CenterContainer/HBoxContainer/Toolbar"]
+[node name="ForwardButton" type="ToolButton" parent="Panel/MarginContainer/HBoxContainer/Toolbar"]
 margin_left = 29.0
 margin_top = 2.0
 margin_right = 57.0
@@ -126,67 +124,70 @@ hint_tooltip = "Redo"
 size_flags_vertical = 4
 icon = SubResource( 4 )
 
-[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
+visible = false
 modulate = Color( 1, 1, 1, 0.247059 )
-margin_left = 61.0
 margin_top = 4.0
-margin_right = 69.0
+margin_right = 8.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 20 )
 size_flags_vertical = 4
 
-[node name="CurrentValue" type="HBoxContainer" parent="Panel/MarginContainer/CenterContainer/HBoxContainer"]
-margin_left = 73.0
-margin_right = 193.0
-margin_bottom = 28.0
+[node name="CurrentValue" type="HBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_right = 2508.0
+margin_bottom = 42.0
 rect_min_size = Vector2( 0, 28 )
+size_flags_horizontal = 3
 size_flags_vertical = 5
-custom_constants/separation = 3
+custom_constants/separation = 6
 alignment = 1
 
-[node name="DecreaseButton" type="ToolButton" parent="Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue"]
-margin_top = 2.0
+[node name="DecreaseButton" type="ToolButton" parent="Panel/MarginContainer/HBoxContainer/CurrentValue"]
+margin_top = 9.0
 margin_right = 28.0
-margin_bottom = 26.0
+margin_bottom = 33.0
 hint_tooltip = "Decrease default_float_step precision"
 size_flags_vertical = 4
 icon = SubResource( 6 )
 
-[node name="ValueLineEdit" type="LineEdit" parent="Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue"]
-margin_left = 31.0
-margin_top = 2.0
-margin_right = 89.0
-margin_bottom = 26.0
+[node name="ValueLineEdit" type="LineEdit" parent="Panel/MarginContainer/HBoxContainer/CurrentValue"]
+margin_left = 34.0
+margin_top = 9.0
+margin_right = 2474.0
+margin_bottom = 33.0
 hint_tooltip = "default_float_step"
+size_flags_horizontal = 3
 size_flags_vertical = 4
 align = 1
 
-[node name="IncreaseButton" type="ToolButton" parent="Panel/MarginContainer/CenterContainer/HBoxContainer/CurrentValue"]
-margin_left = 92.0
-margin_top = 2.0
-margin_right = 120.0
-margin_bottom = 26.0
+[node name="IncreaseButton" type="ToolButton" parent="Panel/MarginContainer/HBoxContainer/CurrentValue"]
+margin_left = 2480.0
+margin_top = 9.0
+margin_right = 2508.0
+margin_bottom = 33.0
 hint_tooltip = "Increase default_float_step precision"
 size_flags_vertical = 4
 icon = SubResource( 8 )
 
-[node name="VSeparator2" type="VSeparator" parent="Panel/MarginContainer/CenterContainer/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
+visible = false
 modulate = Color( 1, 1, 1, 0.247059 )
-margin_left = 197.0
+margin_left = 136.0
 margin_top = 4.0
-margin_right = 205.0
+margin_right = 144.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 20 )
 size_flags_vertical = 4
 
-[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/CenterContainer/HBoxContainer"]
-margin_left = 209.0
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/HBoxContainer"]
+visible = false
+margin_left = 148.0
 margin_top = 2.0
-margin_right = 271.0
+margin_right = 210.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Choose amount to  increase/decrease default_float_step with -/+ buttons"
 size_flags_vertical = 4
 text = "*/0.1"
-items = [ "*/0.1", null, false, 0, null, "*/0.1", null, false, 1, null, "*/0.1", null, false, 2, null ]
+items = [ "*/0.1", null, false, 0, null, "*/0.1", null, false, 1, null, "*/0.1", null, false, 2, null, "*/0.1", null, false, 3, null ]
 selected = 0
