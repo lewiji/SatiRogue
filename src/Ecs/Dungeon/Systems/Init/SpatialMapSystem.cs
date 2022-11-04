@@ -19,10 +19,6 @@ public class SpatialMapSystem : ISystem {
 
    static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/1_1_cube_Cube.mesh");
 
-
-   
-   readonly Array _cellTypes = Enum.GetValues(typeof(CellType));
-
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
 
@@ -113,7 +109,8 @@ public class SpatialMapSystem : ISystem {
 
    void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room) {
       if (GetCellCustomDataForCellType(cell.Type) is not { } color) return;
-      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, new Vector3(0, -1, 0) + cell.Position - room.Translation));
+      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, 
+         GetTranslationOffsetForCellType(cell.Type) + cell.Position - room.Translation));
       mMesh.SetInstanceCustomData(instanceId, color);
    }
 
@@ -124,16 +121,27 @@ public class SpatialMapSystem : ISystem {
          case CellType.Wall:
             return Color.Color8(1, 0, 0, 0);
          case CellType.DoorClosed: 
-            return Color.Color8(2, 0, 0, 0);
          case CellType.DoorOpen: 
-            return Color.Color8(3, 0, 0, 0);
          case CellType.Stairs:
-            return Color.Color8(4, 0, 0, 0);
-         case CellType.Void: break;
+         case CellType.Void:
          case null: break;
          default: throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null);
       }
       return null;
+   }
+   
+   Vector3 GetTranslationOffsetForCellType(CellType? cellType) {
+      switch (cellType) {
+         case CellType.Wall:
+            return new Vector3(0, 0, 0);
+         case CellType.Floor:
+         case CellType.DoorClosed: 
+         case CellType.DoorOpen: 
+         case CellType.Stairs:
+         case CellType.Void:
+         case null: return new Vector3(0, -1, 0);
+         default: throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null);
+      }
    }
 
    Vector3[] GetChunkMinMaxCoords(int chunkId, int chunkWidth, int maxWidth) {

@@ -11,6 +11,7 @@ namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class FogSystem : ISystem {
    public World World { get; set; } = null!;
+   static readonly Vector3 OffScreenCoords = new (-1000f, 1000f, -1000f);
 
    public void Run() {
       var mapGenData = World.GetElement<MapGenData>();
@@ -22,9 +23,7 @@ public class FogSystem : ISystem {
    }
 
    public static void CalculateFov(GridPositionComponent gridPositionComponent, MapGenData mapGenData, FogMultiMeshes fogMultiMeshes) {
-      var offScreenCoords = new Vector3(-1000f, 1000f, -1000f);
-
-      ShadowCast.ComputeVisibility(mapGenData, gridPositionComponent.Position, 11.0f);
+      ShadowCast.ComputeVisibility(mapGenData, gridPositionComponent.Position, 11.5f);
 
       var maxWidth = mapGenData.GeneratorParameters.Width;
       var chunkWidth = mapGenData.GeneratorParameters.Width.Factors().GetMedian();
@@ -34,7 +33,7 @@ public class FogSystem : ISystem {
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(position, chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
-         fogMultiMeshes.Instances[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, offScreenCoords));
+         fogMultiMeshes.Instances[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, OffScreenCoords));
       }
    }
 }

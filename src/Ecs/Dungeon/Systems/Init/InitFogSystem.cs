@@ -67,9 +67,9 @@ public class InitFogSystem : ISystem {
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
             InstanceCount = chunkWidth * chunkWidth
          },
-         CastShadow = GeometryInstance.ShadowCastingSetting.Off,
+         CastShadow = GeometryInstance.ShadowCastingSetting.On,
          PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
-         Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z)
+         Translation = new Vector3(chunkCoords[0].x, 0.618f, chunkCoords[0].z)
       };
       _mapGeometry?.AddChild(fogMultiMeshInstance);
       fogMultiMeshInstance.Owner = _mapGeometry;

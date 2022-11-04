@@ -82,8 +82,8 @@ public static class ShadowCast {
       // NOTE: depending on the compiler, it's possible that passing the octant transform
       // values as four integers rather than an object reference would speed things up.
       // It's much tidier this way though.
-      for (var txidx = 0; txidx < SOctantTransform.Length; txidx++)
-         CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, SOctantTransform[txidx]);
+      foreach (var t in SOctantTransform)
+         CastLight(grid, gridPosn, viewRadius, 1, 1.0f, 0.0f, t);
    }
 
    /// <summary>
@@ -198,6 +198,7 @@ public static class ShadowCast {
                   prevWasBlocked = false;
                   leftViewSlope = savedRightSlope;
                }
+               grid.SetLight(gridVec + Vector3.Back, distanceSquared);
             } else {
                if (curBlocked) {
                   // Found a wall.  Split the view area, recursively pursuing the
@@ -214,6 +215,7 @@ public static class ShadowCast {
                   // looking for another opening.
                   prevWasBlocked = true;
                   savedRightSlope = rightBlockSlope;
+                  grid.SetLight(gridVec + Vector3.Back, distanceSquared);
                }
             }
          }
