@@ -72,7 +72,6 @@ shaded = true
 double_sided = false
 frames = ExtResource( 7 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Camera" type="Camera" parent="Player/Visual2"]
@@ -95,6 +94,7 @@ spot_angle_attenuation = 0.787678
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0 )
+visible = false
 extents = Vector3( 20, 10, 20 )
 origin_offset = Vector3( 0, 3, 4 )
 box_projection = true
