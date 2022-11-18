@@ -1,0 +1,1518 @@
+{
+	"textures": [
+		{
+			"image": "item_icons.png",
+			"size": {
+				"w": 1024,
+				"h": 256
+			},
+			"sprites": [
+				{
+					"filename": "AMULETS/AMULET 1.png",
+					"region": {
+						"x": 2,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "AMULETS/AMULET 2.png",
+					"region": {
+						"x": 52,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "AMULETS/AMULET 3.png",
+					"region": {
+						"x": 102,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "AMULETS/AMULET 4.png",
+					"region": {
+						"x": 152,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "AMULETS/AMULET 5.png",
+					"region": {
+						"x": 202,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BAGS/BAG 1.png",
+					"region": {
+						"x": 252,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BAGS/BAG 2.png",
+					"region": {
+						"x": 302,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BAGS/BAG 3.png",
+					"region": {
+						"x": 352,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BAGS/BAG 4.png",
+					"region": {
+						"x": 402,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BAGS/BAG 5.png",
+					"region": {
+						"x": 452,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BELTS/BELT  2.png",
+					"region": {
+						"x": 502,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BELTS/BELT  3.png",
+					"region": {
+						"x": 552,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BELTS/BELT  4.png",
+					"region": {
+						"x": 602,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BELTS/BELT  5.png",
+					"region": {
+						"x": 652,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BELTS/BELT 1.png",
+					"region": {
+						"x": 702,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 1.png",
+					"region": {
+						"x": 752,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 2.png",
+					"region": {
+						"x": 802,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 3.png",
+					"region": {
+						"x": 852,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 4.png",
+					"region": {
+						"x": 902,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 5.png",
+					"region": {
+						"x": 952,
+						"y": 2,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 6.png",
+					"region": {
+						"x": 2,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 7.png",
+					"region": {
+						"x": 52,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 8.png",
+					"region": {
+						"x": 102,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 9.png",
+					"region": {
+						"x": 152,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "BOTTLES/BOTTLE 10.png",
+					"region": {
+						"x": 202,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 1.png",
+					"region": {
+						"x": 252,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 2.png",
+					"region": {
+						"x": 302,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 3.png",
+					"region": {
+						"x": 352,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 4.png",
+					"region": {
+						"x": 402,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 5.png",
+					"region": {
+						"x": 452,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 6.png",
+					"region": {
+						"x": 502,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 7.png",
+					"region": {
+						"x": 552,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 8.png",
+					"region": {
+						"x": 602,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 9.png",
+					"region": {
+						"x": 652,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "FOODS/FOOD 10.png",
+					"region": {
+						"x": 702,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "GEARS/DRINK HORN.png",
+					"region": {
+						"x": 752,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "GEARS/GOBLET.png",
+					"region": {
+						"x": 802,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "GEARS/KEY.png",
+					"region": {
+						"x": 852,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "GEARS/NACKLE 1.png",
+					"region": {
+						"x": 902,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "GEARS/NACKLE 2.png",
+					"region": {
+						"x": 952,
+						"y": 52,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGE GEARS/MAGE GEAR 1.png",
+					"region": {
+						"x": 2,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGE GEARS/MAGE GEAR 2.png",
+					"region": {
+						"x": 52,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGE GEARS/MAGE GEAR 3.png",
+					"region": {
+						"x": 102,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGE GEARS/MAGE GEAR 4.png",
+					"region": {
+						"x": 152,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGE GEARS/MAGE GEAR 5.png",
+					"region": {
+						"x": 202,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGICAL ORBS/MAGICAL ORB 1.png",
+					"region": {
+						"x": 252,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGICAL ORBS/MAGICAL ORB 2.png",
+					"region": {
+						"x": 302,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGICAL ORBS/MAGICAL ORB 3.png",
+					"region": {
+						"x": 352,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGICAL ORBS/MAGICAL ORB 4.png",
+					"region": {
+						"x": 402,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "MAGICAL ORBS/MAGICAL ORB 5.png",
+					"region": {
+						"x": 452,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "RINGS/RING 1.png",
+					"region": {
+						"x": 502,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "RINGS/RING 2.png",
+					"region": {
+						"x": 552,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "RINGS/RING 3.png",
+					"region": {
+						"x": 602,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "RINGS/RING 4.png",
+					"region": {
+						"x": 652,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "RINGS/RING 5.png",
+					"region": {
+						"x": 702,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 1.png",
+					"region": {
+						"x": 752,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 2.png",
+					"region": {
+						"x": 802,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 3.png",
+					"region": {
+						"x": 852,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 4.png",
+					"region": {
+						"x": 902,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 5.png",
+					"region": {
+						"x": 952,
+						"y": 102,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 6.png",
+					"region": {
+						"x": 2,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 7.png",
+					"region": {
+						"x": 52,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 8.png",
+					"region": {
+						"x": 102,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 9.png",
+					"region": {
+						"x": 152,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "ROBES/ROBE 10.png",
+					"region": {
+						"x": 202,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SPEARS/SPEAR 1.png",
+					"region": {
+						"x": 252,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SPEARS/SPEAR 2.png",
+					"region": {
+						"x": 302,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SPEARS/SPEAR 3.png",
+					"region": {
+						"x": 352,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SPEARS/SPEAR 4.png",
+					"region": {
+						"x": 402,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SPEARS/SPEAR 5.png",
+					"region": {
+						"x": 452,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 1.png",
+					"region": {
+						"x": 502,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 2.png",
+					"region": {
+						"x": 552,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 3.png",
+					"region": {
+						"x": 602,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 4.png",
+					"region": {
+						"x": 652,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 5.png",
+					"region": {
+						"x": 702,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 6.png",
+					"region": {
+						"x": 752,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 7.png",
+					"region": {
+						"x": 802,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 8.png",
+					"region": {
+						"x": 852,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 9.png",
+					"region": {
+						"x": 902,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "STONES/STONE 10.png",
+					"region": {
+						"x": 952,
+						"y": 152,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SWORDS/SWORD 1.png",
+					"region": {
+						"x": 2,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SWORDS/SWORD 2.png",
+					"region": {
+						"x": 52,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SWORDS/SWORD 3.png",
+					"region": {
+						"x": 102,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SWORDS/SWORD 4.png",
+					"region": {
+						"x": 152,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "SWORDS/SWORD 5.png",
+					"region": {
+						"x": 202,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/CHEST 1.png",
+					"region": {
+						"x": 252,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/CHEST 2.png",
+					"region": {
+						"x": 302,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/CROWN.png",
+					"region": {
+						"x": 352,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/FEATHER.png",
+					"region": {
+						"x": 402,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/LAMB.png",
+					"region": {
+						"x": 452,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/LEATHER WATER BAG.png",
+					"region": {
+						"x": 502,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/LIFE POTION.png",
+					"region": {
+						"x": 552,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/MANA POTION.png",
+					"region": {
+						"x": 602,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/MONEY BAG.png",
+					"region": {
+						"x": 652,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "VARIOUS/PIPE.png",
+					"region": {
+						"x": 702,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "WIZARD ROBES/WIZARD ROBE 1.png",
+					"region": {
+						"x": 752,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "WIZARD ROBES/WIZARD ROBE 2.png",
+					"region": {
+						"x": 802,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "WIZARD ROBES/WIZARD ROBE 3.png",
+					"region": {
+						"x": 852,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "WIZARD ROBES/WIZARD ROBE 4.png",
+					"region": {
+						"x": 902,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "WIZARD ROBES/WIZARD ROBE 5.png",
+					"region": {
+						"x": 952,
+						"y": 202,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:e050705e9acc1b27f7f377dcb22939fa:2cc367d2ba2230ada7984518dbb4ab6f:5e0092264facffd50a88c5749e7e75a5$"
+	}
+}
