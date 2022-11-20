@@ -11,32 +11,29 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class TurnHandlerSystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
    readonly float _minTurnTime = 0.08f;
    public int TurnNumber { get; private set; }
    Turn? _turn;
    DebugUi? _debugUi;
-
+   World? _world;
    [Signal] public delegate void ExecutePlayerTurn();
    [Signal] public delegate void ExecuteNpcTurn();
    [Signal] public delegate void ExecuteTurnEnd();
 
-   async void SetCurrentTurn(TurnType turnType) {
+   void SetCurrentTurn(TurnType turnType) {
       if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn) || _turn.CurrentTurn == turnType) {
          return;
       }
       _turn.CurrentTurn = turnType;
-      _debugUi?.SetTurn(_turn.CurrentTurn);
-      ProcessTurnChanges();
+      CallDeferred(nameof(ProcessTurnChanges));
    }
 
-   void ProcessOnTurnSystems(TurnType currentTurnType) {
-      World.Send(new TurnChangedTrigger(currentTurnType));
-   }
-
-   public void Run() {
-      _turn ??= World.GetElement<Turn>();
-      _debugUi ??= World.GetElement<DebugUi>();
+   public void Run(World world)
+   {
+      _world ??= world;
+      _turn ??= world.GetElement<Turn>();
+      _debugUi ??= world.GetElement<DebugUi>();
       HandlePlayerInputTrigger();
    }
 
@@ -52,20 +49,19 @@ public class TurnHandlerSystem : Reference, ISystem {
       InputSystem.PlayerInputted = false;
    }
 
-   async void ProcessTurnChanges() { // Progress turn phases on changed
+   void ProcessTurnChanges() { // Progress turn phases on changed
       switch (_turn?.CurrentTurn) {
             case TurnType.EnemyTurn:
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecuteNpcTurn));
-               await ToSignal(World.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
-               EmitSignal(nameof(ExecuteTurnEnd));
-               SetCurrentTurn(TurnType.Idle);
+               _world!.GetElement<SceneTree>().CreateTimer(_minTurnTime)
+                  .Connect("timeout", this, nameof(OnEnemyTurnFinished));
                break;
             case TurnType.PlayerTurn:
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecutePlayerTurn));
-               await ToSignal(World.GetElement<SceneTree>().CreateTimer(_minTurnTime), "timeout");
-               SetCurrentTurn(TurnType.EnemyTurn);
+               _world!.GetElement<SceneTree>().CreateTimer(_minTurnTime)
+                  .Connect("timeout", this, nameof(OnPlayerTurnFinished));
                break;
             case TurnType.Idle:
                TurnNumber += 1;
@@ -77,5 +73,16 @@ public class TurnHandlerSystem : Reference, ISystem {
             default:
                throw new ArgumentOutOfRangeException();
          }
+   }
+
+   void OnEnemyTurnFinished()
+   {
+      EmitSignal(nameof(ExecuteTurnEnd));
+      SetCurrentTurn(TurnType.Idle);
+   }
+
+   void OnPlayerTurnFinished()
+   {
+      SetCurrentTurn(TurnType.EnemyTurn);
    }
 }

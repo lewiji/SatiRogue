@@ -9,14 +9,14 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SpawnPlayerSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    readonly PackedScene _playerScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Actors/Player3d.tscn");
 
-   public void Run() {
+   public void Run(World world) {
       Logger.Info("Spawning Player entity");
       var playerNode = _playerScene.Instance<Player>();
-      World.GetElement<Entities>().AddChild(playerNode);
-      var playerEntity = World.Spawn(playerNode);
-      World.AddOrReplaceElement(playerNode);
+      world.GetElement<Entities>().AddChild(playerNode);
+      var playerEntity = world.Spawn(playerNode);
+      world.AddOrReplaceElement(playerNode);
    }
 }

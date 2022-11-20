@@ -15,15 +15,15 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SetInitialPositionSystem : ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
-      var mapData = World.GetElement<MapGenData>();
-      var pathfindingHelper = World.GetElement<PathfindingHelper>();
+   public void Run(World world) {
+      var mapData = world.GetElement<MapGenData>();
+      var pathfindingHelper = world.GetElement<PathfindingHelper>();
 
       var availableCells = mapData.IndexedCells.Where(c => !c.Value.Blocked).ToArray();
 
-      var stairsQuery = World.Query<Stairs, GridPositionComponent>().Build();
+      var stairsQuery = world.Query<Stairs, GridPositionComponent>().Build();
       foreach (var (stairs, gridPos) in stairsQuery) {
          var chosenCell = availableCells[(int) (GD.Randi() % availableCells.Length)];
 
@@ -42,14 +42,14 @@ public class SetInitialPositionSystem : ISystem {
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
          stairs.Translation = gridPos.Position;
          
-         World.TryGetElement<DebugUi>()?.SetStairsPos(gridPos.Position);
+         world.TryGetElement<DebugUi>()?.SetStairsPos(gridPos.Position);
          Logger.Info($"Spawned stairs at {stairs.Translation}");
 
          // Make hole for stairs to sit in in floor
          var maxWidth = mapData.GeneratorParameters.Width;
          var chunkWidth = mapData.GeneratorParameters.Width.Factors().GetMedian();
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(gridPos.Position, chunkWidth, maxWidth);
-         var mapGeometry = World.GetElement<MapGeometry>();
+         var mapGeometry = world.GetElement<MapGeometry>();
          var chunkSpatial = mapGeometry.GetNode<Spatial>($"Chunk{chunkId}");
          var floorMultiMesh = chunkSpatial.GetChild<MultiMeshInstance>(0);
          var instanceId = -1;
@@ -75,7 +75,7 @@ public class SetInitialPositionSystem : ISystem {
          }
       }
 
-      var query = World.Query<Character, GridPositionComponent>().Build();
+      var query = world.Query<Character, GridPositionComponent>().Build();
       foreach (var (character, gridPos) in query) {
          if (!availableCells.Any())
             break;
@@ -92,16 +92,13 @@ public class SetInitialPositionSystem : ISystem {
          }
 
          gridPos.Position = chosenCell.Value.Position;
-         if (character.GetEntity() is {} entity) World.AddComponent<Moving>(entity);
+         if (character.GetEntity() is {} entity) world.AddComponent<Moving>(entity);
 
-         if (character is Player) {
-            World.TryGetElement<DebugUi>()?.SetPlayerPos(gridPos.Position);
-         }
          chosenCell.Value.Occupants.Add(character.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
       }
 
-      var itemQuery = World.Query<Item, GridPositionComponent>().Build();
+      var itemQuery = world.Query<Item, GridPositionComponent>().Build();
       foreach (var (item, gridPos) in itemQuery) {
          if (!availableCells.Any())
             break;
@@ -122,7 +119,7 @@ public class SetInitialPositionSystem : ISystem {
          item.Translation = gridPos.Position;
       }
 
-      var propQuery = World.Query<Prop, GridPositionComponent>().Build();
+      var propQuery = world.Query<Prop, GridPositionComponent>().Build();
       foreach (var (prop, gridPos) in propQuery) {
          if (!availableCells.Any())
             break;

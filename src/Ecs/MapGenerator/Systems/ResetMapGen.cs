@@ -7,12 +7,12 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
 public class ResetMapGen : ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
+   public void Run(World world) {
       GD.Print("Resetting mapgen");
-      var mapgen = World.GetElement<MapGenData>();
+      var mapgen = world.GetElement<MapGenData>();
       mapgen.Reset();
-      World.RemoveElement<PathfindingHelper>();
+      world.RemoveElement<PathfindingHelper>();
    }
 }

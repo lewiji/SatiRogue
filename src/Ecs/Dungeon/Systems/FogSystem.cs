@@ -10,14 +10,14 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class FogSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    static readonly Vector3 OffScreenCoords = new (-1000f, 1000f, -1000f);
 
-   public void Run() {
-      var mapGenData = World.GetElement<MapGenData>();
-      var fogMultiMeshes = World.GetElement<FogMultiMeshes>();
+   public void Run(World world) {
+      var mapGenData = world.GetElement<MapGenData>();
+      var fogMultiMeshes = world.GetElement<FogMultiMeshes>();
 
-      foreach (var (_, gridPosition) in World.Query<Player, GridPositionComponent>().Build()) {
+      foreach (var (_, gridPosition) in world.Query<Player, GridPositionComponent>().Build()) {
          CalculateFov(gridPosition, mapGenData, fogMultiMeshes);
       }
    }
@@ -33,7 +33,7 @@ public class FogSystem : ISystem {
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(position, chunkWidth, maxWidth);
          var localPos = position - InitFogSystem.GetChunkMinMaxCoords(chunkId, maxWidth + chunkWidth, chunkWidth)[0];
          var localId = (int) localPos.x + (int) localPos.z * chunkWidth;
-         fogMultiMeshes.Instances[chunkId].Multimesh.SetInstanceTransform(localId, new Transform(Basis.Identity, OffScreenCoords));
+         fogMultiMeshes.Instances[chunkId].Multimesh.SetInstanceColor(localId, new Color(0, 0, 0, 0f));
       }
    }
 }

@@ -5,11 +5,11 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Loading.Systems; 
 
 public class CreateResourceQueue : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
+   public void Run(World world) {
       var resQueue = new ResourceQueue();
-      World.AddOrReplaceElement(resQueue);
-      World.GetElement<LoadingState>().AddChild(resQueue);
+      world.AddOrReplaceElement(resQueue);
+      world.GetElement<LoadingState>().AddChild(resQueue);
    }
 }

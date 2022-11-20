@@ -58,7 +58,8 @@ _global_script_class_icons={
 
 config/name="SatiRogue"
 run/main_scene="res://Main.tscn"
-run/delta_sync_after_draw=true
+run/low_processor_mode=true
+run/delta_smoothing=false
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://satirogue_logo.png"
@@ -166,40 +167,26 @@ GENERATE_OCCLUSION=false
 GENERATE_PARALLAX=false
 HIDE_LAIGTER_GUI=true
 
-[logging]
-
-file_logging/enable_file_logging.pc=false
-
-[memory]
-
-limits/message_queue/max_size_kb=8192
-
 [mono]
 
 project/assembly_name="SatiRogue"
 
 [physics]
 
+common/physics_fps=40
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
-threads/thread_model=2
 quality/shadows/filter_mode=0
 quality/shading/force_vertex_shading.mobile=false
 quality/shading/force_lambert_over_burley.mobile=false
 quality/shading/force_blinn_over_ggx.mobile=false
-misc/mesh_storage/split_stream=true
-quality/shading/use_physical_light_attenuation=true
-quality/filters/anisotropic_filter_level=16
+quality/spatial_partitioning/render_tree_balance=0.5
 2d/options/ninepatch_mode=0
-gles3/shaders/max_simultaneous_compiles=1
-gles3/shaders/shader_cache_size_mb=1024
-gles3/shaders/shader_cache_size_mb.mobile=512
-gles3/shaders/shader_cache_size_mb.web=256
-quality/lightmapping/use_bicubic_sampling=false
 environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )
-quality/reflections/atlas_size=1024
+quality/reflections/atlas_size=512
+quality/reflections/atlas_subdiv=4
 quality/depth/hdr.mobile=true

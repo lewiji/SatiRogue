@@ -15,14 +15,14 @@ public class FogMultiMeshes {
 }
 
 public class InitFogSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    readonly FogMultiMeshes _fogMultiMeshes = new();
    MapGeometry? _mapGeometry;
 
-   public void Run() {
-      World.AddOrReplaceElement(_fogMultiMeshes);
-      var mapGenData = World.GetElement<MapGenData>();
+   public void Run(World world) {
+      world.AddOrReplaceElement(_fogMultiMeshes);
+      var mapGenData = world.GetElement<MapGenData>();
       var cells = mapGenData.IndexedCells.Values.ToArray();
 
       foreach (var mmInst in _fogMultiMeshes.Instances)
@@ -36,7 +36,7 @@ public class InitFogSystem : ISystem {
       var totalChunks = Mathf.CeilToInt((mapGenData.GeneratorParameters.Width + chunkWidth)
          * (mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
-      _mapGeometry = World.GetElement<MapGeometry>();
+      _mapGeometry = world.GetElement<MapGeometry>();
 
       Logger.Info("Building fog");
 
@@ -65,9 +65,10 @@ public class InitFogSystem : ISystem {
          Multimesh = new MultiMesh {
             Mesh = _fogMesh,
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
+            ColorFormat = MultiMesh.ColorFormatEnum.Color8bit,
             InstanceCount = chunkWidth * chunkWidth
          },
-         CastShadow = GeometryInstance.ShadowCastingSetting.On,
+         CastShadow = GeometryInstance.ShadowCastingSetting.Off,
          PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
          Translation = new Vector3(chunkCoords[0].x, 0.618f, chunkCoords[0].z)
       };

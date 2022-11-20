@@ -10,42 +10,56 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class InputSystem : ISystem {
-   public World World { get; set; } = null!;
+   
 
    public static bool HandlingInput = true;
    public static bool Paused = false;
    public static bool PlayerInputted = false;
    public static bool PlayerShot = false;
+   InputDirectionComponent? _playerInputDirectionComponent;
 
-   public void Run() {
+   World? _world;
+   public void Run(World world)
+   {
+      _world ??= world;
       if (Paused)
          return;
 
-      foreach (var input in World.Query<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build()) {
-         var aim = Input.IsActionPressed("aim");
-         var diagonalLock = Input.IsActionPressed("diagonal_lock");
-         var shoot = Input.IsActionJustPressed("shoot");
-         var direction = new Vector2(0, 0); //, "move_right", "move_up", "move_down"
-
-         if (Input.IsActionPressed("move_left")) {
-            direction.x = -1;
-         } else if (Input.IsActionPressed("move_right")) {
-            direction.x = 1;
+      if (_playerInputDirectionComponent == null)
+      {
+         foreach (var input in world.Query<InputDirectionComponent>().Has<Controllable>().Has<Alive>().Build())
+         {
+            _playerInputDirectionComponent = input;
          }
+      }
 
-         if (Input.IsActionPressed("move_up")) {
-            direction.y = -1;
-         } else if (Input.IsActionPressed("move_down")) {
-            direction.y = 1;
-         }
+      var aim = Input.IsActionPressed("aim");
+      var diagonalLock = Input.IsActionPressed("diagonal_lock");
+      var shoot = Input.IsActionJustPressed("shoot");
+      var direction = new Vector2(0, 0); //, "move_right", "move_up", "move_down"
 
-         input.Direction = direction.Round();
+      if (Input.IsActionPressed("move_left")) {
+         direction.x = -1;
+      } else if (Input.IsActionPressed("move_right")) {
+         direction.x = 1;
+      }
 
-         if (diagonalLock) {
-            HandleDiagonalLockedInput(input);
-         } else {
-            HandleUnlockedInput(aim, input, shoot);
-         }
+      if (Input.IsActionPressed("move_up")) {
+         direction.y = -1;
+      } else if (Input.IsActionPressed("move_down")) {
+         direction.y = 1;
+      }
+
+      if (_playerInputDirectionComponent == null) return;
+      _playerInputDirectionComponent.Direction = direction.Round();
+
+      if (diagonalLock)
+      {
+         HandleDiagonalLockedInput(_playerInputDirectionComponent);
+      }
+      else
+      {
+         HandleUnlockedInput(aim, _playerInputDirectionComponent, shoot);
       }
    }
 
@@ -53,8 +67,8 @@ public class InputSystem : ISystem {
       if (Paused)
          return;
 
-      foreach (var (entity, player) in World.Query<Entity, Player>().Has<DiagonalLock>().Build()) {
-         World.On(entity).Remove<DiagonalLock>();
+      foreach (var (entity, player) in _world!.Query<Entity, Player>().Has<DiagonalLock>().Build()) {
+         _world!.On(entity).Remove<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = false;
       }
 
@@ -70,8 +84,8 @@ public class InputSystem : ISystem {
       }
 
       if (aim) {
-         foreach (var (entity, player) in World.Query<Entity, Player>().Not<Aiming>().Build()) {
-            World.On(entity).Add<Aiming>();
+         foreach (var (entity, player) in _world!.Query<Entity, Player>().Not<Aiming>().Build()) {
+            _world!.On(entity).Add<Aiming>();
             player.DirectionIndicator.Visible = true;
          }
       } else {
@@ -82,8 +96,8 @@ public class InputSystem : ISystem {
    void HandleDiagonalLockedInput(InputDirectionComponent input) {
       RemoveAim();
 
-      foreach (var (entity, player) in World.Query<Entity, Player>().Not<DiagonalLock>().Build()) {
-         World.On(entity).Add<DiagonalLock>();
+      foreach (var (entity, player) in _world!.Query<Entity, Player>().Not<DiagonalLock>().Build()) {
+         _world!.On(entity).Add<DiagonalLock>();
          player.DiagonalLockIndicator.Visible = true;
       }
 
@@ -100,8 +114,8 @@ public class InputSystem : ISystem {
    }
 
    void RemoveAim() {
-      foreach (var (entity, player) in World.Query<Entity, Player>().Has<Aiming>().Build()) {
-         World.On(entity).Remove<Aiming>();
+      foreach (var (entity, player) in _world!.Query<Entity, Player>().Has<Aiming>().Build()) {
+         _world!.On(entity).Remove<Aiming>();
          player.DirectionIndicator.Visible = false;
       }
    }

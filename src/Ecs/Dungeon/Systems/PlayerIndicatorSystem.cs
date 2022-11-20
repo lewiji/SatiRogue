@@ -7,10 +7,10 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PlayerIndicatorSystem : ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
-      foreach (var (player, input) in World.Query<Player, InputDirectionComponent>().Has<Aiming>().Build()) {
+   public void Run(World world) {
+      foreach (var (player, input) in world.Query<Player, InputDirectionComponent>().Has<Aiming>().Build()) {
          if (input.Direction != Vector2.Zero) {
             player.DirectionIndicator.Direction = input.Direction;
          } else if (input.LastDirection != Vector2.Zero) {

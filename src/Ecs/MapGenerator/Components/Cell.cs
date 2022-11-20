@@ -29,7 +29,6 @@ public enum CellVisibility {
 }
 
 public class Cell : Reference {
-   [Signal] public delegate void VisibilityChanged();
 
    long _id;
 
@@ -87,8 +86,6 @@ public class Cell : Reference {
          character.CheckVisibility(_visibility == CellVisibility.CurrentlyVisible);
          Logger.Debug($"Setting {character.Name} Visibility: {character.Visible}");
       }
-
-      EmitSignal(nameof(VisibilityChanged));
    }
 
    public Cell SetCellVisibility(CellVisibility? visibility) {

@@ -8,11 +8,14 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class InventorySystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
    Inventory? _inventoryUi;
-
-   public void Run() {
-      var persistentStore = World.GetElement<PersistentPlayerData>();
+   World? _world;
+   
+   public void Run(World world)
+   {
+      _world ??= world;
+      var persistentStore = world.GetElement<PersistentPlayerData>();
       GD.Print($"===> persistent items: {persistentStore.GetItems().Count}");
 
       foreach (var item in persistentStore.GetItems()) {
@@ -22,7 +25,7 @@ public class InventorySystem : Reference, ISystem {
 
       GD.Print($"<=== persistent items");
 
-      var invUi = World.GetElement<Inventory>();
+      var invUi = world.GetElement<Inventory>();
       _inventoryUi = invUi;
       var itemSlots = invUi.GetItemSlots();
 
@@ -38,7 +41,7 @@ public class InventorySystem : Reference, ISystem {
          return;
 
       if (isOpen) {
-         var persistentStore = World.GetElement<PersistentPlayerData>();
+         var persistentStore = _world!.GetElement<PersistentPlayerData>();
          _inventoryUi.ClearSlots();
 
          foreach (var item in persistentStore.GetItems()) {
@@ -52,7 +55,7 @@ public class InventorySystem : Reference, ISystem {
    }
 
    void OnItemSlotPressed(int index) {
-      var invUi = World.GetElement<Inventory>();
+      var invUi = _world!.GetElement<Inventory>();
       var itemSlot = invUi.GetItemSlot(index);
       Logger.Info($"Inventory item {itemSlot?.ItemName} clicked at index {index}.");
    }

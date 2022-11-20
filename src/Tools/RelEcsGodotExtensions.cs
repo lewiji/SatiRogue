@@ -18,12 +18,6 @@ public static class RelEcsGodotExtensions {
       return world.HasElement<T>() ? world.GetElement<T>() : null;
    }
 
-   public static SystemGroup Add(this SystemGroup systemGroup, ISystem aSystem, World world) {
-      systemGroup.Add(aSystem);
-      aSystem.World = world;
-      return systemGroup;
-   }
-
    public static Entity? GetEntity(this Node node) {
       if (node.HasMeta("Entity") && node.GetMeta("Entity") is Marshallable<Entity> entity) {
          return entity.Value;
@@ -41,7 +35,6 @@ public class SatiSystemGroup : Node {
       
    [MethodImpl(MethodImplOptions.AggressiveInlining)]
    public SatiSystemGroup Add(ISystem aSystem) {
-      aSystem.World = _world;
       _systemGroup.Add(aSystem);
       return this;
    }

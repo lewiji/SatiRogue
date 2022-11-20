@@ -12,12 +12,15 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class CharacterDeathSystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
+   World? _world;
 
-   public void Run() {
-      foreach (var (entity, character) in World.Query<Entity, Character>().Has<Dead>().Build()) {
+   public void Run(World world)
+   {
+      _world ??= world;
+      foreach (var (entity, character) in world.Query<Entity, Character>().Has<Dead>().Build()) {
          character.Alive = false;
-         World.RemoveComponent<Dead>(entity);
+         world.RemoveComponent<Dead>(entity);
 
          if (character is Player player) {
             var timer = character.GetTree().CreateTimer(0.618f);
@@ -31,19 +34,19 @@ public class CharacterDeathSystem : Reference, ISystem {
    }
 
    void FreeEntity(Character character) {
-      var mapData = World.GetElement<MapGenData>();
+      var mapData = _world!.GetElement<MapGenData>();
 
       var entity = character.GetMeta("Entity") as Marshallable<Entity>;
 
       if (entity!.Value.IsNone)
          return;
-      var gridPos = World.GetComponent<GridPositionComponent>(entity.Value);
+      var gridPos = _world!.GetComponent<GridPositionComponent>(entity.Value);
       var currentCell = mapData.GetCellAt(gridPos.Position);
       currentCell.Occupants.Remove(character.GetInstanceId());
-      this.DespawnAndFree(entity.Value);
+      _world!.DespawnAndFree(entity.Value);
    }
 
    void HandlePlayerDeath() {
-      World.GetElement<DeathScreen>().FadeToDeath();
+      _world!.GetElement<DeathScreen>().FadeToDeath();
    }
 }

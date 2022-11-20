@@ -15,16 +15,16 @@ using Array = System.Array;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SpatialMapSystem : ISystem {
-   public World World { get; set; } = null!;
+   
 
    static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/dungeon_tile.mesh");
 
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
 
-   public void Run() {
-      _mapGenData = World.GetElement<MapGenData>();
-      _mapGeometry = World.GetElement<MapGeometry>();
+   public void Run(World world) {
+      _mapGenData = world.GetElement<MapGenData>();
+      _mapGeometry = world.GetElement<MapGeometry>();
 
       var maxWidth = _mapGenData.GeneratorParameters.Width;
       var chunkWidth = _mapGenData.GeneratorParameters.Width.Factors().GetMedian();

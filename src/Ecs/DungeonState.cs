@@ -57,10 +57,20 @@ public class DungeonState : GameState {
       var playerMovementSystem = new PlayerMovementSystem();
       _gsc.World.AddOrReplaceElement(playerMovementSystem);
 
-      OnPlayerTurnSystems.Add(playerMovementSystem).Add(new PlayerShootSystem()).Add(new FogSystem());
-      OnNpcTurnSystems.Add(new EnemyBehaviourSystem()).Add(new CharacterMovementSystem());
-      OnTurnEndSystems.Add(new ResetInputDirectionSystem()).Add(new HealthSystem()).Add(new PersistInventorySystem());
+      OnPlayerTurnSystems
+         .Add(playerMovementSystem)
+         .Add(new PlayerShootSystem())
+         .Add(new FogSystem());
       
+      OnNpcTurnSystems
+         .Add(new EnemyBehaviourSystem())
+         .Add(new CharacterMovementSystem());
+      
+      OnTurnEndSystems
+         .Add(new AttackSystem())
+         .Add(new ResetInputDirectionSystem())
+         .Add(new HealthSystem())
+         .Add(new PersistInventorySystem());
 
       var turnHandlerSystem = new TurnHandlerSystem();
       var inputSystem = new InputSystem();

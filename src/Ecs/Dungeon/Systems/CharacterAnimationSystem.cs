@@ -10,18 +10,22 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class CharacterAnimationSystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
    Turn? _turn;
+   
+   World? _world;
 
-   public void Run() {
-      _turn ??= World.GetElement<Turn>();
+   public void Run(World world)
+   {
+      _world ??= world;
+      _turn ??= world.GetElement<Turn>();
       PlayRequestedAnimation();
    }
 
    void PlayRequestedAnimation() {
 
-      foreach (var (character, animationComponent) in World.Query<Character, CharacterAnimationComponent>().Build()) {
+      foreach (var (character, animationComponent) in _world!.Query<Character, CharacterAnimationComponent>().Build()) {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || !animationComponent.HasAnimations())
             continue;
          

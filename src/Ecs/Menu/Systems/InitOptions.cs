@@ -10,18 +10,20 @@ using Option = SatiRogue.Ecs.Menu.Nodes.Option;
 namespace SatiRogue.Ecs.Menu.Systems;
 
 public class InitOptions : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
    static readonly PackedScene OptionsScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Options.tscn");
    Options? _options;
    readonly string _configPath = "user://satirogue.cfg";
-
-   public void Run() {
-      var menuState = World.GetElement<MenuState>();
+   World? _world;
+   public void Run(World world)
+   {
+      _world ??= world;
+      var menuState = world.GetElement<MenuState>();
       _options = OptionsScene.Instance<Options>();
       _options.Connect(nameof(Options.OptionChanged), this, nameof(OnOptionChanged));
       _options.Connect("ready", this, nameof(OnOptionsReady));
       menuState.AddChild(_options);
-      World.AddOrReplaceElement(_options);
+      world.AddOrReplaceElement(_options);
    }
 
    ConfigFile GetOrCreateConfigFile() {
@@ -36,7 +38,7 @@ public class InitOptions : Reference, ISystem {
    void OnOptionsReady() {
       var optionsChildren = _options!.GetNode<Control>("%OptionsContainer").GetChildren();
       var cfg = GetOrCreateConfigFile();
-      var worldEnv = World.GetElement<WorldEnvironment>();
+      var worldEnv = _world!.GetElement<WorldEnvironment>();
 
       foreach (Node optionsChild in optionsChildren) {
          if (optionsChild is not Option option)
@@ -89,7 +91,7 @@ public class InitOptions : Reference, ISystem {
                case Option.OptionType.ProjectSetting:
                   break;
                case Option.OptionType.EnvironmentSetting:
-                  World.GetElement<WorldEnvironment>().Environment.Set(splitKey, keyValue[optionKey]);
+                  _world!.GetElement<WorldEnvironment>().Environment.Set(splitKey, keyValue[optionKey]);
                   break;
                default:
                   throw new ArgumentOutOfRangeException(nameof(optionLocation), optionLocation, null);

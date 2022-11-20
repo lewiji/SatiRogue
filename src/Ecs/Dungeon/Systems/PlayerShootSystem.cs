@@ -13,12 +13,12 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class PlayerShootSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Arrow.tscn");
 
-   public void Run() {
-      foreach (var _ in World.Receive<PlayerHasShotTrigger>(this)) {
-         foreach (var (_, gridPos, input) in World.Query<Player, GridPositionComponent, InputDirectionComponent>().Build()) {
+   public void Run(World world) {
+      foreach (var _ in world.Receive<PlayerHasShotTrigger>(this)) {
+         foreach (var (_, gridPos, input) in world.Query<Player, GridPositionComponent, InputDirectionComponent>().Build()) {
             var direction = new Vector2(1, 0);
 
             if (input.LastDirection != Vector2.Zero) {
@@ -26,19 +26,19 @@ public class PlayerShootSystem : ISystem {
             }
             Logger.Debug($"Firing {direction}");
             var arrow = _arrowScene.Instance<Arrow>();
-            var entitiesNode = World.GetElement<Entities>();
+            var entitiesNode = world.GetElement<Entities>();
             entitiesNode.AddChild(arrow);
-            var arrowEntity = World.Spawn(arrow).Id();
+            var arrowEntity = world.Spawn(arrow).Id();
 
             var arrowGridPos = new GridPositionComponent {
                Position = gridPos.Position + new Vector3(input.Direction.x, 0, input.Direction.y)
             };
-            World.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
+            world.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
 
             arrow.Direction = direction;
             arrow.Translation = arrowGridPos.Position;
 
-            var mapData = World.GetElement<MapGenData>();
+            var mapData = world.GetElement<MapGenData>();
 
             for (var shootDistance = 0; shootDistance < arrow.Range; shootDistance++) {
                var cell = mapData.GetCellAt(arrowGridPos.Position + new Vector3(direction.x, 0, direction.y) * shootDistance);
@@ -50,7 +50,7 @@ public class PlayerShootSystem : ISystem {
                      if (GD.InstanceFromId(cellOccupant) is not Enemy enemy || !enemy.Alive)
                         continue;
                      var entity = enemy.GetMeta("Entity") as Marshallable<Entity>;
-                     World.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
+                     world.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
 
                      if (arrow.Destination == Vector3.Zero) {
                         arrow.Destination = cell.Position;

@@ -10,7 +10,7 @@ using Thread = System.Threading.Thread;
 namespace SatiRogue.Ecs.Loading.Systems;
 
 public class PreloadResources : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
    [Signal]
    public delegate void ResourceLoaded(Resource res);
@@ -20,6 +20,8 @@ public class PreloadResources : Reference, ISystem {
 
    [Signal]
    public delegate void AllResourcesLoaded();
+
+   World? _world;
 
    static readonly string[] ResourcePaths = {
       "res://resources/level_meshes/dungeon_tile.mesh",
@@ -46,7 +48,9 @@ public class PreloadResources : Reference, ISystem {
    readonly Stack<string> _resourcesToLoad = new(ResourcePaths);
    CompileShaders? _compileShaders;
 
-   public void Run() {
+   public void Run(World world)
+   {
+      _world ??= world;
       if (_resourcesToLoad.Count <= 0) {
          Logger.Info("Resources already loaded.");
          return;
@@ -55,7 +59,7 @@ public class PreloadResources : Reference, ISystem {
    }
 
    void LoadAllResources() {
-      var resQueue = World.GetElement<ResourceQueue>();
+      var resQueue = _world!.GetElement<ResourceQueue>();
       resQueue.Connect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
       resQueue.Connect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
       foreach (var resourcePath in ResourcePaths) {
@@ -65,13 +69,13 @@ public class PreloadResources : Reference, ISystem {
    }
 
    void OnResourceLoaded(Resource res) {
-      _compileShaders ??= World.GetElement<CompileShaders>();
+      _compileShaders ??= _world!.GetElement<CompileShaders>();
       _compileShaders.OnResourceReceived(res);
    }
 
    void OnResourcesFinished() {
       Logger.Info("All resources loaded");
-      var resQueue = World.GetElement<ResourceQueue>();
+      var resQueue = _world!.GetElement<ResourceQueue>();
       resQueue.Disconnect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
       resQueue.Disconnect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
       EmitSignal(nameof(AllResourcesLoaded));

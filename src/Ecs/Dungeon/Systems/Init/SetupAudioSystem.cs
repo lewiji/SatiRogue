@@ -7,13 +7,13 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SetupAudioSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
 
-   public void Run() {
+   public void Run(World world) {
       var audioNodes = new AudioNodes();
-      World.GetElement<DungeonState>().AddChild(audioNodes);
-      World.AddOrReplaceElement(audioNodes);
+      world.GetElement<DungeonState>().AddChild(audioNodes);
+      world.AddOrReplaceElement(audioNodes);
 
       var ambienceAudio = new AudioStreamPlayer {
          Stream = Ambience,
@@ -21,7 +21,7 @@ public class SetupAudioSystem : ISystem {
          Autoplay = true
       };
       audioNodes.AddChild(ambienceAudio);
-      World.Spawn(ambienceAudio).Add<AmbientAudio>();
+      world.Spawn(ambienceAudio).Add<AmbientAudio>();
 
       AddSfx(audioNodes, "Footsteps4", "res://audio/Barefoot Dirt footsteps 4.wav", "footsteps", true, 0.5f, false);
       AddSfx(audioNodes, "SwordWoosh1", "res://audio/Sword Woosh 1.wav", "sfx");

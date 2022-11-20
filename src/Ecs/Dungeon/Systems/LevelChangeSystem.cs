@@ -12,15 +12,18 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class LevelChangeSystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
    bool _firstRun = true;
+   World? _world;
+   
+   public void Run(World world)
+   {
+      _world ??= world;
+      var playerStore = world.GetElement<PersistentPlayerData>();
 
-   public void Run() {
-      var playerStore = World.GetElement<PersistentPlayerData>();
-
-      foreach (var stairsDown in World.Receive<StairsDownTrigger>(this)) {
+      foreach (var stairsDown in world.Receive<StairsDownTrigger>(this)) {
          Logger.Info("Stairs down system activating.");
-         var gsc = World.GetElement<GameStateController>();
+         var gsc = world.GetElement<GameStateController>();
 
          if (gsc.CurrentState is not DungeonState)
             continue;
@@ -29,9 +32,9 @@ public class LevelChangeSystem : Reference, ISystem {
          break;
       }
 
-      foreach (var restart in World.Receive<RestartGameTrigger>(this)) {
+      foreach (var restart in world.Receive<RestartGameTrigger>(this)) {
          Logger.Info("Restart game requested.");
-         var gsc = World.GetElement<GameStateController>();
+         var gsc = world.GetElement<GameStateController>();
 
          if (gsc.CurrentState is not DungeonState)
             continue;
@@ -40,9 +43,9 @@ public class LevelChangeSystem : Reference, ISystem {
          break;
       }
 
-      foreach (var exit in World.Receive<BackToMainMenuTrigger>(this)) {
+      foreach (var exit in world.Receive<BackToMainMenuTrigger>(this)) {
          Logger.Info("Exit to menu requested.");
-         var gsc = World.GetElement<GameStateController>();
+         var gsc = world.GetElement<GameStateController>();
 
          if (gsc.CurrentState is not DungeonState)
             continue;
@@ -53,30 +56,30 @@ public class LevelChangeSystem : Reference, ISystem {
 
       if (!_firstRun)
          return;
-      World.AddOrReplaceElement(this);
-      World.GetElement<FloorCounter>().FloorNumber = playerStore.Floor;
+      world.AddOrReplaceElement(this);
+      world.GetElement<FloorCounter>().FloorNumber = playerStore.Floor;
       _firstRun = false;
       AddInitialSpawnMessageLog();
    }
 
    async void AddInitialSpawnMessageLog() {
-      var playerStore = World.GetElement<PersistentPlayerData>();
-      var msgLog = World.GetElement<MessageLog>();
+      var playerStore = _world!.GetElement<PersistentPlayerData>();
+      var msgLog = _world!.GetElement<MessageLog>();
       await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
       msgLog.AddMessage($"Worldling {playerStore.PlayerName} entered the dungeon realm.");
    }
 
    async void AddNewFloorSpawnMessageLog() {
-      var playerStore = World.GetElement<PersistentPlayerData>();
-      var msgLog = World.GetElement<MessageLog>();
+      var playerStore = _world!.GetElement<PersistentPlayerData>();
+      var msgLog = _world!.GetElement<MessageLog>();
       await msgLog.ToSignal(msgLog.GetTree().CreateTimer(0.618f), "timeout");
       msgLog.AddMessage($"Worldling {playerStore.PlayerName} descended to floor {playerStore.Floor}.");
    }
 
    async void ExitToMainMenu(GameStateController gsc) {
-      World.GetElement<Menu.Nodes.Menu>().Visible = true;
+      _world!.GetElement<Menu.Nodes.Menu>().Visible = true;
       await DestroyCurrentStates(gsc);
-      var fade = World.GetElement<Fade>();
+      var fade = _world!.GetElement<Fade>();
       await fade.FadeFromBlack();
    }
 
@@ -86,7 +89,7 @@ public class LevelChangeSystem : Reference, ISystem {
    }
 
    async Task DestroyCurrentStates(GameStateController gsc) {
-      var fade = World.GetElement<Fade>();
+      var fade = _world!.GetElement<Fade>();
       await fade.FadeToBlack();
       gsc.PopState();
       await ToSignal(gsc.GetTree(), "idle_frame");
@@ -95,10 +98,10 @@ public class LevelChangeSystem : Reference, ISystem {
 
    async Task CreateNewMapGenState() {
       GD.Print("Awaiting new mapgen");
-      var mapGenState = World.GetElement<MapGenState>();
+      var mapGenState = _world!.GetElement<MapGenState>();
       await ToSignal(mapGenState, nameof(MapGenState.FinishedGenerating));
       await mapGenState.ToSignal(mapGenState.GetTree().CreateTimer(0.618f), "timeout");
-      var fade = World.GetElement<Fade>();
+      var fade = _world!.GetElement<Fade>();
       await fade.FadeFromBlack();
       InputSystem.Paused = false;
       AddNewFloorSpawnMessageLog();

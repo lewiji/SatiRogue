@@ -20,6 +20,9 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
         <DebugType>full</DebugType>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+      <WarningLevel>3</WarningLevel>
+    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="GodotOnReady" Version="1.2.2" />
         <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />

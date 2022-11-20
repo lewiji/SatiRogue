@@ -7,10 +7,10 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
 public class FloodFill : ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
-      var mapGenData = World.GetElement<MapGenData>();
+   public void Run(World world) {
+      var mapGenData = world.GetElement<MapGenData>();
       var startPoint = mapGenData.GeneratorSpaces.First();
       var centre = startPoint.Position + startPoint.Size / 2f;
       FloodFillWalls(mapGenData, (int) centre.x, (int) centre.y);

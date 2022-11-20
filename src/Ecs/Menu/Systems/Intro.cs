@@ -8,19 +8,21 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Menu.Systems;
 
 public class Intro : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
    [Signal]
    public delegate void IntroFinished();
 
    readonly PackedScene _introScene = GD.Load<PackedScene>("res://src/Ecs/Intro/Nodes/Intro.tscn");
    Control? _intro;
-
-   public void Run() {
+   World? _world;
+   public void Run(World world)
+   {
+      _world ??= world;
       _intro = _introScene.Instance<IntroScene>();
       _intro.Connect("ready", this, nameof(OnIntroReady));
       _intro.Connect(nameof(IntroScene.DebugSkipToNewGame), this, nameof(OnSkipToNewGame));
-      World.GetElement<MenuState>().AddChild(_intro);
+      world.GetElement<MenuState>().AddChild(_intro);
    }
 
    void OnIntroReady() {
@@ -32,7 +34,7 @@ public class Intro : Reference, ISystem {
 
    void OnSkipToNewGame() {
       OnIntroFinished("");
-      World.GetElement<InitMenu>().OnNewGameRequested();
+      _world!.GetElement<InitMenu>().OnNewGameRequested();
    }
 
    // ReSharper disable once UnusedParameter.Local

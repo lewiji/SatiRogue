@@ -8,16 +8,16 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class AudioSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    Dictionary<string, AudioStreamPlayer3D>? _audioStreams;
 
-   public void Run() {
+   public void Run(World world) {
       _audioStreams ??= new Dictionary<string, AudioStreamPlayer3D> {
-         {"walk", World.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("Footsteps4")},
-         {"sword", World.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("SwordWoosh1")}
+         {"walk", world.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("Footsteps4")},
+         {"sword", world.GetElement<AudioNodes>().GetNode<AudioStreamPlayer3D>("SwordWoosh1")}
       };
 
-      foreach (var audioTrigger in World.Receive<CharacterAudioTrigger>(this)) {
+      foreach (var audioTrigger in world.Receive<CharacterAudioTrigger>(this)) {
          Play(audioTrigger.Audio, audioTrigger.Character.Translation);
       }
    }

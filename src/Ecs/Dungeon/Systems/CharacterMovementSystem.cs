@@ -13,15 +13,18 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class CharacterMovementSystem : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
    protected MapGenData? MapData;
    PathfindingHelper? _pathfindingHelper;
+   protected World? World;
+   
+   public virtual void Run(World world)
+   {
+      World ??= world;
+      InitialiseSystem(world);
 
-   public virtual void Run() {
-      InitialiseSystem();
-
-      foreach (var (character, gridPos, input) in World.Query<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>().Build()) {
+      foreach (var (character, gridPos, input) in world.Query<Character, GridPositionComponent, InputDirectionComponent>().Not<Controllable>().Build()) {
          if (input.Direction == Vector2.Zero)
             continue;
 
@@ -35,21 +38,21 @@ public class CharacterMovementSystem : Reference, ISystem {
       }
    }
 
-   protected void InitialiseSystem() {
-      MapData ??= World.GetElement<MapGenData>();
-      _pathfindingHelper ??= World.GetElement<PathfindingHelper>();
+   protected void InitialiseSystem(World? world) {
+      MapData ??= world?.GetElement<MapGenData>();
+      _pathfindingHelper ??= world?.GetElement<PathfindingHelper>();
    }
 
    public void TeleportToCell(Character character, Vector3 position) {
-      InitialiseSystem();
+      InitialiseSystem(World);
       if (!character.HasMeta("Entity") || character.GetMeta("Entity") is not Marshallable<Entity> entity) return;
       Logger.Info($"Teleporting entity {entity.Value.Identity}");
       
-      World.GetComponent<Walkable>(entity.Value).Teleporting = true;
+      World!.GetComponent<Walkable>(entity.Value).Teleporting = true;
       
       MoveToCell(character, 
-         World.GetComponent<GridPositionComponent>(entity.Value), 
-         World.GetComponent<InputDirectionComponent>(entity.Value), 
+         World!.GetComponent<GridPositionComponent>(entity.Value), 
+         World!.GetComponent<InputDirectionComponent>(entity.Value), 
          MapData!.GetCellAt(position));
    }
 
@@ -67,11 +70,11 @@ public class CharacterMovementSystem : Reference, ISystem {
       _pathfindingHelper?.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
       if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity) {
-         if (!World.HasComponent<Moving>(entity.Value)) 
-            World.AddComponent<Moving>(entity.Value);
+         if (!World!.HasComponent<Moving>(entity.Value)) 
+            World!.AddComponent<Moving>(entity.Value);
          
          if (character.Visible) {
-            SendWalkAnimation(World.GetComponent<CharacterAnimationComponent>(entity.Value));
+            SendWalkAnimation(World!.GetComponent<CharacterAnimationComponent>(entity.Value));
          }
       }
 

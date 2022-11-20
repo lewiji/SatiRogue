@@ -11,17 +11,17 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class SpawnEnemySystem : ISystem {
-   public World World { get; set; } = null!;
+   
    static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
    static readonly List<EnemyResource> EnemyResources = new ();
 
-   public void Run()
+   public void Run(World world)
    {
       LoadEnemyResources();
 
-      var numEnemies = World.GetElement<MapGenData>().GeneratorParameters.NumEnemies;
+      var numEnemies = world.GetElement<MapGenData>().GeneratorParameters.NumEnemies;
       Logger.Info($"Spawning {numEnemies} enemies");
-      var entitiesNode = World.GetElement<Entities>();
+      var entitiesNode = world.GetElement<Entities>();
 
       for (var enemy = 0; enemy < numEnemies; enemy++) {
          var enemyNode = EnemyScene.Instance<Enemy>();
@@ -31,7 +31,7 @@ public class SpawnEnemySystem : ISystem {
          enemyNode.EnemyResource = enemyResource;
          entitiesNode.AddChild(enemyNode);
          enemyNode.Stats.Record.Health = health;
-         World.Spawn(enemyNode);
+         world.Spawn(enemyNode);
       }
    }
 

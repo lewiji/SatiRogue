@@ -5,10 +5,10 @@ using SatiRogue.Tools;
 namespace SatiRogue.Ecs.Session;
 
 public class InitPersistentPlayerData : ISystem {
-   public World World { get; set; }
+   
 
-   public void Run() {
+   public void Run(World world) {
       var playerStore = new PersistentPlayerData();
-      World.AddOrReplaceElement(playerStore);
+      world.AddOrReplaceElement(playerStore);
    }
 }

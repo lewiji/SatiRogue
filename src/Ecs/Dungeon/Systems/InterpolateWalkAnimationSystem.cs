@@ -10,14 +10,17 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class InterpolateWalkAnimationSystem : ISystem {
-   public World World { get; set; } = null!;
+   
    float _lerpWeight = 14f;
    PhysicsDeltaTime? _delta;
 
-   public void Run() {
-      _delta ??= World.GetElement<PhysicsDeltaTime>();
+   World? _world;
+   public void Run(World world)
+   {
+      _world ??= world;
+      _delta ??= world.GetElement<PhysicsDeltaTime>();
 
-      foreach (var (spatial, gridPos, walkable) in World.Query<Character, GridPositionComponent, Walkable>().Has<Moving>()
+      foreach (var (spatial, gridPos, walkable) in world.Query<Character, GridPositionComponent, Walkable>().Has<Moving>()
       .Build()) {
          if (walkable.Teleporting) {
             TeleportSpatial(spatial, gridPos);
@@ -31,7 +34,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      if (spatial.Translation.DistanceSquaredTo(gridPos.Position) < 0.0005f) {
+      if (spatial.Translation.WithinManhattanDistance(gridPos.Position, 0.01f)) {
          spatial.Translation = gridPos.Position;
          RemoveMovingComponent(spatial);
          return;
@@ -46,7 +49,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void RemoveMovingComponent(Spatial spatial) {
-      if (spatial.GetEntity() is { } entity && World.HasComponent<Moving>(entity)) World.RemoveComponent<Moving>(entity);
+      if (spatial.GetEntity() is { } entity && _world!.HasComponent<Moving>(entity)) _world!.RemoveComponent<Moving>(entity);
    }
 
    void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {

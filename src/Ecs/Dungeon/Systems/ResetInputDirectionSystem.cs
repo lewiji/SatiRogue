@@ -5,10 +5,10 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
 public class ResetInputDirectionSystem : ISystem {
-   public World World { get; set; } = null!;
+   
 
-   public void Run() {
-      foreach (var input in World.Query<InputDirectionComponent>().Build()) {
+   public void Run(World world) {
+      foreach (var input in world.Query<InputDirectionComponent>().Build()) {
          input.Direction = Vector2.Zero;
       }
    }

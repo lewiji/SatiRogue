@@ -69,7 +69,7 @@ public partial class SpatialCamera : Camera {
       _currentShakeIntensity = Mathf.Min(_currentShakeIntensity + intensity, 1.0f);
    }
 
-   public override void _Process(float delta) {
+   public override void _PhysicsProcess(float delta) {
       if (_currentShakeIntensity > 0f) {
          _currentShakeIntensity = Mathf.Max(_currentShakeIntensity - ShakeDecay * delta, 0);
          ProcessShake();

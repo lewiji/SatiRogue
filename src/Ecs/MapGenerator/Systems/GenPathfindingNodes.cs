@@ -51,15 +51,15 @@ public class PathfindingHelper {
 }
 
 public class GenPathfindingNodes : ISystem {
-   public World World { get; set; } = null!;
+   
    static readonly Vector3[] Offsets = {
       Vector3.Back, Vector3.Forward, Vector3.Left, Vector3.Right, Vector3.Back + Vector3.Left,
       Vector3.Back + Vector3.Right, Vector3.Forward + Vector3.Left, Vector3.Forward + Vector3.Right
    };
 
-   public void Run() {
+   public void Run(World world) {
       var cellIdToAStarId = new Dictionary<long, int>();
-      var mapGenData = World.GetElement<MapGenData>();
+      var mapGenData = world.GetElement<MapGenData>();
       var aStar = new AStar();
       aStar.ReserveSpace(mapGenData.IndexedCells.Count);
 
@@ -81,6 +81,6 @@ public class GenPathfindingNodes : ISystem {
          }
       }
 
-      World.AddOrReplaceElement(new PathfindingHelper(aStar, cellIdToAStarId));
+      world.AddOrReplaceElement(new PathfindingHelper(aStar, cellIdToAStarId));
    }
 }

@@ -10,7 +10,7 @@ using World = RelEcs.World;
 namespace SatiRogue.Ecs.Loading.Systems;
 
 public class CompileShaders : Reference, ISystem {
-   public World World { get; set; } = null!;
+   
 
    [Signal]
    public delegate void ShadersCompiled();
@@ -20,12 +20,12 @@ public class CompileShaders : Reference, ISystem {
    SatiConfig? _satiConfig;
    int _shadersToCompile = 0;
 
-   public void Run() {
+   public void Run(World world) {
       _shaderCompiler = ShaderCompilerScene.Instance<ShaderCompiler>();
-      World.GetElement<LoadingState>().AddChild(_shaderCompiler);
-      World.AddOrReplaceElement(_shaderCompiler);
-      World.AddOrReplaceElement(this);
-      _satiConfig ??= World.GetElement<SatiConfig>();
+      world.GetElement<LoadingState>().AddChild(_shaderCompiler);
+      world.AddOrReplaceElement(_shaderCompiler);
+      world.AddOrReplaceElement(this);
+      _satiConfig ??= world.GetElement<SatiConfig>();
    }
 
    public void OnResourceReceived(Resource resource) {

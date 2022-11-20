@@ -13,13 +13,14 @@ namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
 public class DebugToolsSystem : Reference, ISystem {
    static readonly PackedScene DebugUiScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DebugUi.tscn");
-   public World World { get; set; }
-
-   public void Run() {
+   World? _world;
+   public void Run(World world)
+   {
+      _world ??= world;
       var debugUi = DebugUiScene.Instance<DebugUi>();
-      debugUi.Enabled = World.GetElement<SatiConfig>().DebugTools;
-      World.GetElement<Hud>().GetNode("%HudItems").AddChild(debugUi);
-      World.AddOrReplaceElement(debugUi);
+      debugUi.Enabled = world.GetElement<SatiConfig>().DebugTools;
+      world.GetElement<Hud>().GetNode("%HudItems").AddChild(debugUi);
+      world.AddOrReplaceElement(debugUi);
 
       debugUi.Connect(nameof(DebugUi.WarpToStairs), this, nameof(OnWarpToStairs));
       debugUi.Connect(nameof(DebugUi.GodModeChanged), this, nameof(OnGodModeChanged));
@@ -28,11 +29,11 @@ public class DebugToolsSystem : Reference, ISystem {
 
    void OnWarpToStairs() {
       Logger.Info("Debug: Warp to stairs requested.");
-      foreach (var (player, playerGridPos) in World.Query<Player, GridPositionComponent>().Build()) {
-         foreach (var (stairs, stairsGridPos) in World.Query<Stairs, GridPositionComponent>().Build()) {
+      foreach (var (player, playerGridPos) in _world!.Query<Player, GridPositionComponent>().Build()) {
+         foreach (var (stairs, stairsGridPos) in _world!.Query<Stairs, GridPositionComponent>().Build()) {
             Logger.Info($"Debug: Warping player {player.Name}@{playerGridPos.Position} to stairs {stairs}@{stairsGridPos.Position}.");
             //playerGridPos.Position = stairsGridPos.Position;
-            World.GetElement<PlayerMovementSystem>().TeleportToCell(player, stairsGridPos.Position);
+            _world!.GetElement<PlayerMovementSystem>().TeleportToCell(player, stairsGridPos.Position);
             return;
          }
       }
@@ -40,7 +41,7 @@ public class DebugToolsSystem : Reference, ISystem {
 
    void OnGodModeChanged(bool enabled) {
       Logger.Info($"Debug: God Mode {(enabled ? "on" : "off")}.");
-      foreach (var (player, playerHealth) in World.Query<Player, HealthComponent>().Build()) {
+      foreach (var (player, playerHealth) in _world!.Query<Player, HealthComponent>().Build()) {
          playerHealth.Invincible = enabled;
       }
    }
@@ -48,7 +49,7 @@ public class DebugToolsSystem : Reference, ISystem {
    void OnHealPlayer() {
       Logger.Info($"Debug: Player heal requested.");
 
-      foreach (var (player, playerHealth) in World.Query<Player, HealthComponent>().Build()) {
+      foreach (var (player, playerHealth) in _world!.Query<Player, HealthComponent>().Build()) {
          playerHealth.Value = playerHealth.Max;
       }
    }
