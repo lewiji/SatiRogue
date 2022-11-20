@@ -13,9 +13,3 @@ shadow_bias = 0.02
 directional_shadow_mode = 0
 directional_shadow_normal_bias = 0.1
 directional_shadow_depth_range = 1
-
-[node name="GIProbe" type="GIProbe" parent="."]
-physics_interpolation_mode = 1
-subdiv = 0
-extents = Vector3( 128, 10, 128 )
-dynamic_range = 5

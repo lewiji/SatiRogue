@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/Resources/EnemyResource.cs" type="Script" id=1]
+[ext_resource path="res://resources/enemies/ratfolk/ratfolk_axe_spriteframes.tres" type="SpriteFrames" id=2]
+
+[resource]
+script = ExtResource( 1 )
+Species = 2
+Name = "Ratfolk"
+SpriteFrames = ExtResource( 2 )
+Level = 0

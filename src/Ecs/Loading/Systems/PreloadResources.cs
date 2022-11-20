@@ -22,7 +22,7 @@ public class PreloadResources : Reference, ISystem {
    public delegate void AllResourcesLoaded();
 
    static readonly string[] ResourcePaths = {
-      "res://resources/level_meshes/1_1_cube_Cube.mesh",
+      "res://resources/level_meshes/dungeon_tile.mesh",
       "res://resources/character_atlas_shader_material.tres",
       "res://scenes/ThreeDee/res/FogTileShaderMaterial.tres",
       "res://resources/hud/StatBar3DShaderMat.tres",

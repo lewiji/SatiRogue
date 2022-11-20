@@ -8,7 +8,6 @@ public partial class DebugUi : MarginContainer {
    [Signal] public delegate void WarpToStairs();
    [Signal] public delegate void GodModeChanged(bool enabled);
    [Signal] public delegate void HealPlayer();
-   [Signal] public delegate void BakeGi();
    
    [OnReadyGet("%BgContainer")] Control? _bgContainer;
    [OnReadyGet("%ControlsContainer")] Control? _controlsContainer;
@@ -19,7 +18,6 @@ public partial class DebugUi : MarginContainer {
    [OnReadyGet("%WarpToStairsButton")] Button? _warpStairsButton;
    [OnReadyGet("%ReplenishHealthButton")] private Button? _healButton;
    [OnReadyGet("%GodModeCheckButton")] CheckButton? _godModeCheckButton;
-   [OnReadyGet("%GIProbeButton")] Button? _giProbeButton;
    public bool Enabled { get; set; }
 
    [OnReady] void SetupScene() {
@@ -31,7 +29,6 @@ public partial class DebugUi : MarginContainer {
       _warpStairsButton?.Connect("pressed", this, nameof(OnWarpStairsPressed));
       _healButton?.Connect("pressed", this, nameof(OnHealPressed));
       _godModeCheckButton?.Connect("toggled", this, nameof(OnGodModeToggled));
-      _giProbeButton?.Connect("pressed", this, nameof(OnGiBakePressed));
    }
 
    void OnWarpStairsPressed() {
@@ -39,10 +36,6 @@ public partial class DebugUi : MarginContainer {
    }
    void OnHealPressed() {
       EmitSignal(nameof(HealPlayer));
-   }
-
-   void OnGiBakePressed() {
-      EmitSignal(nameof(BakeGi));
    }
 
    void OnGodModeToggled(bool isToggled) {

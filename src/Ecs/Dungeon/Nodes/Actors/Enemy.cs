@@ -4,12 +4,13 @@ using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
 using SatiRogue.Ecs.Dungeon.Systems.Init;
+using SatiRogue.Resources;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Enemy : Character {
    public SpriteFrames? Frames;
-   public Stats Stats = new(Stats.DefaultEnemyClass);
+   public Stats Stats = new(EnemyData.DefaultEnemyLevel);
 
    [OnReadyGet("HoverStats")]
    HoverStats _hoverStats = null!;
@@ -18,16 +19,16 @@ public partial class Enemy : Character {
 
    [OnReadyGet("Area")]
    Area _area = null!;
-   public SpawnEnemySystem.EnemyRecord? EnemyRecord;
+   public EnemyResource? EnemyResource;
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       base.OnSpawn(entityBuilder);
 
       //Material = EnemyRecord?.GraphicsSet.Material;
-      Frames = EnemyRecord?.SpriteFrames;
+      Frames = EnemyResource?.SpriteFrames;
 
-      if (EnemyRecord?.Name != null)
-         CharacterName = EnemyRecord.Name;
+      if (EnemyResource?.Name != null)
+         CharacterName = EnemyResource.Name;
 
       entityBuilder.Add(Stats)
          .Add(new HealthComponent(Stats.Record.Health))

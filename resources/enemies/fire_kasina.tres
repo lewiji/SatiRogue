@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://resources/enemies/fire_elemental/FireElementalSpriteFrames.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://src/Resources/EnemyResource.cs" type="Script" id=2]
+
+[resource]
+script = ExtResource( 2 )
+Species = 3
+Name = "Fire Kasina"
+SpriteFrames = ExtResource( 1 )
+Level = 0

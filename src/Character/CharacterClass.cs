@@ -7,7 +7,3 @@ public enum PlayerClass {
    Anagami,
    Arhat
 }
-
-public enum EnemyClass {
-   LowlyEnemy
-}

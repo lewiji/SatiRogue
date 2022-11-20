@@ -71,6 +71,7 @@ shaded = true
 double_sided = false
 frames = ExtResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Camera" type="Camera" parent="Visual"]

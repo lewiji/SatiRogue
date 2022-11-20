@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SatiRogue.Debug;
+using SatiRogue.Resources;
 
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
@@ -27,25 +28,12 @@ public class Stats {
       }
    };
 
-   public static readonly Dictionary<EnemyClass, StatsRecordClass> EnemyClassInitialStats = new() {
-      {
-         EnemyClass.LowlyEnemy,
-         new StatsRecordClass {
-            Health = 1,
-            SightRange = 8,
-            Speed = 1,
-            Strength = 1,
-            Defence = 0
-         }
-      }
-   };
 
    public const PlayerClass DefaultPlayerClass = PlayerClass.Worldling;
-   public const EnemyClass DefaultEnemyClass = EnemyClass.LowlyEnemy;
 
    public Stats() {
-      Record = EnemyClassInitialStats[DefaultEnemyClass];
-      Logger.Warn($"Stats: No EnemyClass/PlayerClass passed into Stats constructor. Constructing default {DefaultEnemyClass}.");
+      Record = EnemyData.InitialStats[EnemyData.DefaultEnemyLevel];
+      Logger.Warn($"Stats: No EnemyClass/PlayerClass passed into Stats constructor. Constructing default {EnemyData.DefaultEnemyLevel}.");
    }
 
    public Stats(PlayerClass characterClass) {
@@ -59,14 +47,14 @@ public class Stats {
       }
    }
 
-   public Stats(EnemyClass characterClass) {
-      if (EnemyClassInitialStats.ContainsKey(characterClass)) {
-         Record = EnemyClassInitialStats[characterClass];
+   public Stats(EnemyData.Level characterClass) {
+      if (EnemyData.InitialStats.ContainsKey(characterClass)) {
+         Record = EnemyData.InitialStats[characterClass];
       } else {
-         Record = EnemyClassInitialStats[DefaultEnemyClass];
+         Record = EnemyData.InitialStats[EnemyData.DefaultEnemyLevel];
 
          Logger.Warn(
-            $"Stats: Couldn't find stats record for enemy class: {characterClass}. Constructing default {DefaultEnemyClass} instead.");
+            $"Stats: Couldn't find stats record for enemy class: {characterClass}. Constructing default {EnemyData.DefaultEnemyLevel} instead.");
       }
    }
 }

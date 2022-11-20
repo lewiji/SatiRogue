@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://src/Ecs/Dungeon/Nodes/Resources/ItemResource.cs" type="Script" id=1]
+[ext_resource path="res://src/Resources/ItemResource.cs" type="Script" id=1]
 [ext_resource path="res://resources/items/sprite_frames/swords/sword_2.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://resources/items/materials/inventory_items.material" type="Material" id=3]
 

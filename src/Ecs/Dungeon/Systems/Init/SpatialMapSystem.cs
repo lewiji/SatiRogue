@@ -17,7 +17,7 @@ namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 public class SpatialMapSystem : ISystem {
    public World World { get; set; } = null!;
 
-   static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/1_1_cube_Cube.mesh");
+   static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/dungeon_tile.mesh");
 
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
@@ -34,7 +34,7 @@ public class SpatialMapSystem : ISystem {
          * (_mapGenData.GeneratorParameters.Height + chunkWidth) / (float) chunkSize);
 
       Logger.Info("Building chunks");
-      //ChooseLevelMaterialSet();
+      ChooseLevelMaterialSet();
       BuildChunks(maxWidth, totalChunks, chunkWidth);
    }
 

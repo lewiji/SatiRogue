@@ -18,7 +18,7 @@ public partial class ShaderCompiler : CanvasLayer {
    Control _canvasItemWigglers = null!;
 
    public bool ProcessResourcePreloader(Resource res) {
-      if (res is Mesh mesh && res.ResourceName == "1_1_cube_Cube") {
+      if (res is Mesh mesh && res.ResourceName == "dungeon_tile") {
          CallDeferred(nameof(InstanceMultiMeshWiggler), mesh);
       }
       if (res is not Material material)

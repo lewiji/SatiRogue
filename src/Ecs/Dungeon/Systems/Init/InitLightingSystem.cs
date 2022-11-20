@@ -12,9 +12,5 @@ public class InitLightingSystem : ISystem {
       var mapGeometry = World.GetElement<MapGeometry>();
       var lighting = LightingScene.Instance<DungeonDirectionalLight>();
       mapGeometry.AddChild(lighting);
-
-      if (World.TryGetElement<DebugUi>(out var debugUi)) {
-         debugUi.Connect(nameof(DebugUi.BakeGi), lighting, nameof(DungeonDirectionalLight.BakeLighting));
-      }
    }
 }
