@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="ParticlesWiggler" type="Spatial"]
+physics_interpolation_mode = 1
+
+[node name="Particles" type="Particles" parent="."]
+physics_interpolation_mode = 1
+generate_lightmap = false
+emitting = false
+amount = 32
+fract_delta = false
+visibility_aabb = AABB( -16, -16, -16, 32, 32, 32 )

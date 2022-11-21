@@ -58,7 +58,6 @@ _global_script_class_icons={
 
 config/name="SatiRogue"
 run/main_scene="res://Main.tscn"
-run/low_processor_mode=true
 run/delta_smoothing=false
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
@@ -71,6 +70,7 @@ Logger="*res://src/Debug/Logger.cs"
 
 [debug]
 
+settings/fps/force_fps=60
 settings/physics_interpolation/enable_warnings=false
 
 [display]
@@ -87,7 +87,7 @@ convert_text_resources_to_binary_on_export=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/codeandweb.texturepacker/plugin.cfg", "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/codeandweb.texturepacker/plugin.cfg", "res://addons/debug_draw_3d/plugin.cfg", "res://addons/float_step_adjuster/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [importer_defaults]
 
@@ -180,13 +180,21 @@ common/physics_interpolation=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+quality/directional_shadow/size=2048
+quality/shadow_atlas/size=2048
 quality/shadows/filter_mode=0
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
 quality/shading/force_vertex_shading.mobile=false
+quality/shading/force_lambert_over_burley=true
 quality/shading/force_lambert_over_burley.mobile=false
 quality/shading/force_blinn_over_ggx.mobile=false
-quality/spatial_partitioning/render_tree_balance=0.5
+quality/filters/anisotropic_filter_level=8
 2d/options/ninepatch_mode=0
+quality/spatial_partitioning/bvh_collision_margin=0.3
+quality/lightmapping/use_bicubic_sampling=false
 environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )
 quality/reflections/atlas_size=512
 quality/reflections/atlas_subdiv=4
+quality/filters/use_debanding=true
 quality/depth/hdr.mobile=true

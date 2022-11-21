@@ -30,27 +30,33 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(pbr_atlas, base_uv);
-	if (albedo_tex.a < 0.1) {
-		discard;
-	} else { 
-		albedo_tex.rgb = mix(pow((albedo_tex.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)),vec3(2.4)),albedo_tex.rgb.rgb * (1.0 / 12.92),lessThan(albedo_tex.rgb,vec3(0.04045)));
+	albedo_tex.rgb = mix(pow((albedo_tex.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)),vec3(2.4)),albedo_tex.rgb.rgb * (1.0 / 12.92),lessThan(albedo_tex.rgb,vec3(0.04045)));
+	
+	float alpha = albedo_tex.a;
+	if (alpha > 0.5) {
 		ALBEDO = albedo.rgb * albedo_tex.rgb;
-		
-		vec4 normal_tex = texture(pbr_atlas,vec2(base_uv.x + tile_offset.x + pixel_offset.x * 2.0, base_uv.y));
-		NORMALMAP = normal_tex.rgb;
-		NORMALMAP_DEPTH = 1.0;
-		
-		SPECULAR = 0.5;
-		
-		vec4 occ_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 2.0) + (pixel_offset.x * 4.0), base_uv.y));
-		AO = dot(occ_tex,vec4(1.0, 0.0, 0.0, 0.0));
-		AO_LIGHT_AFFECT = 0.3;
-		
-		vec4 metallic_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 3.0) + (pixel_offset.x * 6.0), base_uv.y));
-		METALLIC = dot(metallic_tex,vec4(1.0, 0.0, 0.0, 0.0)) * -1.0;
-		
-		
-		vec4 roughness_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 4.0) + (pixel_offset.x * 8.0), base_uv.y));
-		ROUGHNESS = dot(roughness_tex,vec4(1.0, 0.0, 0.0, 0.0)) * 1.0;
+	} else {
+		ALPHA_SCISSOR = 0.5;
+		ALPHA = 0.0;
 	}
+	
+	vec4 normal_tex = texture(pbr_atlas,vec2(base_uv.x + tile_offset.x + pixel_offset.x * 2.0, base_uv.y));
+	NORMALMAP = normal_tex.rgb;
+	NORMALMAP_DEPTH = 1.0;
+	
+	SPECULAR = 0.5;
+	
+	vec4 occ_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 2.0) + (pixel_offset.x * 4.0), base_uv.y));
+	AO = dot(occ_tex,vec4(1.0, 0.0, 0.0, 0.0));
+	AO_LIGHT_AFFECT = 0.3;
+	
+	vec4 metallic_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 3.0) + (pixel_offset.x * 6.0), base_uv.y));
+	METALLIC = dot(metallic_tex,vec4(1.0, 0.0, 0.0, 0.0)) * -1.0;
+	
+	
+	vec4 roughness_tex = texture(pbr_atlas,vec2(base_uv.x + (tile_offset.x * 4.0) + (pixel_offset.x * 8.0), base_uv.y));
+	ROUGHNESS = dot(roughness_tex,vec4(1.0, 0.0, 0.0, 0.0)) * 1.0;
+	
+	
+	
 }

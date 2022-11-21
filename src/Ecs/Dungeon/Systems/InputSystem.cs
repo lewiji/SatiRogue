@@ -22,7 +22,7 @@ public class InputSystem : ISystem {
    public void Run(World world)
    {
       _world ??= world;
-      if (Paused)
+      if (Paused || !world.GetElement<Player>().Alive)
          return;
 
       if (_playerInputDirectionComponent == null)

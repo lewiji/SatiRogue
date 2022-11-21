@@ -80,6 +80,7 @@ projection = 1
 current = true
 fov = 50.0
 size = 14.0
+far = 50.0
 script = ExtResource( 5 )
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Visual"]
@@ -91,7 +92,6 @@ attenuation_filter_cutoff_hz = 7000.0
 physics_interpolation_mode = 1
 transform = Transform( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
 light_energy = 0.25
-shadow_enabled = true
 shadow_color = Color( 0.101961, 0.0392157, 0.219608, 1 )
 shadow_bias = 0.015
 spot_range = 18.0
@@ -100,35 +100,41 @@ spot_angle = 60.0
 spot_angle_attenuation = 0.787678
 
 [node name="RayCast" type="RayCast" parent="."]
+physics_interpolation_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )
 debug_shape_custom_color = Color( 0, 1, 0.0862745, 1 )
 debug_shape_thickness = 3
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
 physics_interpolation_mode = 1
-intensity = 0.62
-extents = Vector3( 16, 5, 16 )
-origin_offset = Vector3( 0, 4.99, -1.618 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0 )
+extents = Vector3( 20, 10, 20 )
+origin_offset = Vector3( 0, 3, 4 )
 box_projection = true
 enable_shadows = true
-interior_ambient_color = Color( 0.52549, 0.478431, 0.768627, 1 )
-interior_ambient_contrib = 0.5
+interior_enable = true
+interior_ambient_color = Color( 0.337255, 0.027451, 0.65098, 1 )
+interior_ambient_contrib = 0.62
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_process_mode = 0
 playback_speed = 0.62
 anims/RESET = SubResource( 1 )
 anims/on_death = SubResource( 2 )
 
 [node name="Particles" type="Particles" parent="."]
+physics_interpolation_mode = 1
 transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
 generate_lightmap = false
 emitting = false
-amount = 128
+amount = 32
 lifetime = 2.2
 one_shot = true
 speed_scale = 1.62
 explosiveness = 0.62
+fract_delta = false
 visibility_aabb = AABB( -8.60355, -6.49244, -10.091, 17.281, 13.1657, 21.249 )
 process_material = ExtResource( 3 )
 draw_pass_1 = ExtResource( 4 )

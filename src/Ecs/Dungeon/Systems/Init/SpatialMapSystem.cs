@@ -17,7 +17,7 @@ namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 public class SpatialMapSystem : ISystem {
    
 
-   static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/dungeon_tile.mesh");
+   static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/dungeon_voxel.mesh");
 
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
@@ -103,7 +103,8 @@ public class SpatialMapSystem : ISystem {
       // Create MultiMesh for each cell type in this chunk data
       foreach (var chunkCell in chunkCells) {
          if (chunkCell is not { } cell || cell.Type == CellType.Void) continue;
-         SetTile(mmInst.Multimesh, instanceId++, cell, chunkRoom);
+         SetTile(mmInst.Multimesh, instanceId, cell, chunkRoom);
+         instanceId += 1;
       }
    }
 

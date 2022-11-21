@@ -60,13 +60,16 @@ tracks/1/keys = {
 }
 
 [node name="SpatialShaderWiggler" type="Spatial"]
+physics_interpolation_mode = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 1.618, 0, 0 )
+transform = Transform( -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0, 0, 1, 1.618, 0, 0 )
+generate_lightmap = false
 mesh = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "wiggle"
+playback_process_mode = 0
 anims/RESET = SubResource( 3 )
 anims/wiggle = SubResource( 4 )
