@@ -66,21 +66,13 @@ public class PlayerMovementSystem : CharacterMovementSystem {
              && (targetNode.GetMeta("Entity") as Marshallable<Entity>)?.Value is { } entity) {
             
             switch (targetNode) {
-               case Character character when World!.IsAlive(entity): {
+               case Character when World!.IsAlive(entity): {
                   World!.AddComponent(entity, new Attacked(playerEntity));
                   occupantHandled = true;
                   break;
                }
-               case Chest chest when World!.HasComponent<Closed>(entity):
-                  chest.Open = true;
-                  chest.BlocksCell = false;
-                  World!.On(entity).Remove<Closed>().Add<Open>();
-                  chest.Enabled = false;
-                  var goldAmount = 1;
-                  var playerStore = World!.GetElement<PersistentPlayerData>();
-                  playerStore.Gold += goldAmount;
-                  World!.GetElement<Loot>().NumLoots = playerStore.Gold;
-                  _messageLog?.AddMessage($"Retrieved {goldAmount} gold from chest.");
+               case Chest when World!.HasComponent<Closed>(entity):
+                  World!.AddComponent(entity, new OpeningContainer());
                   occupantHandled = true;
                   break;
                case Health {Taken: false} health:

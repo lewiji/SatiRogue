@@ -67,6 +67,7 @@ public class DungeonState : GameState {
          .Add(new CharacterMovementSystem());
       
       OnTurnEndSystems
+         .Add(new OpenContainersSystem())
          .Add(new AttackSystem())
          .Add(new ResetInputDirectionSystem())
          .Add(new HealthSystem())

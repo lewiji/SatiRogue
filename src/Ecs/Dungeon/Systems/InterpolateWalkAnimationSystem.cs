@@ -34,7 +34,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      if (spatial.Translation.WithinManhattanDistance(gridPos.Position, 0.01f)) {
+      if (spatial.Translation.WithinManhattanDistance(gridPos.Position, 0.005f)) {
          spatial.Translation = gridPos.Position;
          RemoveMovingComponent(spatial);
          return;
