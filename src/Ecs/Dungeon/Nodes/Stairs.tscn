@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/devils-workshop-3d-rpg/wallStepsMesh.tres" type="ArrayMesh" id=1]
+[ext_resource path="res://resources/level_meshes/stairs_mesh.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Stairs.cs" type="Script" id=2]
 [ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/atlas_all.png" type="Texture" id=3]
 
