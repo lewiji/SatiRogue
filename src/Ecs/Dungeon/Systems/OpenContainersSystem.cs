@@ -12,12 +12,16 @@ public class OpenContainersSystem : ISystem
     {
         foreach (var (chestEntity, chest, _) in world.Query<Entity, Chest, OpeningContainer>().Build())
         {
-            chest.Open = true;
             chest.BlocksCell = false;
+            chest.Enabled = false;
+            
             world.On(chestEntity).Remove<Closed>().Add<Open>();
             world.On(chestEntity).Remove<OpeningContainer>();
-            chest.Enabled = false;
-            var goldAmount = 1;
+            
+            if (chest.AnimatedSprite3D != null) chest.AnimatedSprite3D.Animation = "opening";
+            if (chest.Particles != null) chest.Particles.Emitting = true;
+            
+            var goldAmount = 1; // TODO
             var playerStore = world.GetElement<PersistentPlayerData>();
             playerStore.Gold += goldAmount;
             world.GetElement<Loot>().NumLoots = playerStore.Gold;

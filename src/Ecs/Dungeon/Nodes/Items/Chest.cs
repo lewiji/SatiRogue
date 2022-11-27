@@ -8,24 +8,6 @@ public partial class Chest : Item {
    bool _open;
    [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;
    [OnReadyGet("Particles")] public Particles? Particles;
-   public bool Locked { get; set; }
-
-   [Export] public bool Open {
-      get => _open;
-      set {
-         if (AnimatedSprite3D != null) {
-            // Closing
-            if (!value && _open && AnimatedSprite3D.Animation is not "closed" or "closing") {
-               AnimatedSprite3D.Animation = "closing";
-            } // Opening
-            else if (!_open && value && AnimatedSprite3D.Animation is not "open" or "opening") {
-               AnimatedSprite3D.Animation = "opening";
-               if (Particles != null) Particles.Emitting = true;
-            }
-         }
-         _open = value;
-      }
-   }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
