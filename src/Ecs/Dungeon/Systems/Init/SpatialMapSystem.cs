@@ -22,6 +22,38 @@ public class SpatialMapSystem : ISystem {
    MapGenData _mapGenData = null!;
    MapGeometry _mapGeometry = null!;
 
+   record LevelTileIndexSet
+   {
+	   public Dictionary<CellType, int> CellTypeTileIndices { get; set; } = new();
+   }
+
+   readonly LevelTileIndexSet[] _levelTiles = new[] {
+	   new LevelTileIndexSet {
+		   CellTypeTileIndices = {
+			   {CellType.Wall, 0},
+			   {CellType.Floor, 1}
+		   }
+	   },
+	   new LevelTileIndexSet {
+		   CellTypeTileIndices = {
+			   {CellType.Wall, 2},
+			   {CellType.Floor, 3}
+		   }
+	   },
+	   new LevelTileIndexSet {
+		   CellTypeTileIndices = {
+			   {CellType.Wall, 4},
+			   {CellType.Floor, 5}
+		   }
+	   },
+	   new LevelTileIndexSet {
+		   CellTypeTileIndices = {
+			   {CellType.Wall, 6},
+			   {CellType.Floor, 7}
+		   }
+	   },
+   };
+
    public void Run(World world) {
       _mapGenData = world.GetElement<MapGenData>();
       _mapGeometry = world.GetElement<MapGeometry>();
@@ -35,19 +67,15 @@ public class SpatialMapSystem : ISystem {
 
       Logger.Info("Building chunks");
       ChooseLevelMaterialSet();
-      BuildChunks(maxWidth, totalChunks, chunkWidth);
+      BuildChunks(maxWidth, totalChunks, chunkWidth, ChooseLevelMaterialSet());
    }
 
-   void ChooseLevelMaterialSet() {
-      /*var idx = Mathf.RoundToInt((float) GD.RandRange(0, LevelMaterialSets.Count - 1));
-      var levelMatSet = LevelMaterialSets[idx];
-      Logger.Info($"Chose {levelMatSet} Level Material Set.");
-      CellMeshResources[CellType.Floor].SurfaceSetMaterial(0, levelMatSet.FloorMaterial);
-      CellMeshResources[CellType.Wall].SurfaceSetMaterial(0, levelMatSet.WallMaterial);
-      CellMeshResources[CellType.Stairs].SurfaceSetMaterial(0, levelMatSet.StairsMaterial);*/
+   LevelTileIndexSet ChooseLevelMaterialSet() {
+      var idx = Mathf.RoundToInt((float) GD.RandRange(0, _levelTiles.Length - 1));
+      return _levelTiles[idx];
    }
 
-   void BuildChunks(int maxWidth, int totalChunks, int chunkWidth) {
+   void BuildChunks(int maxWidth, int totalChunks, int chunkWidth, LevelTileIndexSet levelTiles) {
       var cells = _mapGenData.IndexedCells.Values.ToArray();
 
       var chunkCells = new Cell[chunkWidth * chunkWidth];
@@ -72,12 +100,12 @@ public class SpatialMapSystem : ISystem {
             }
          }
 
-         BuildChunk(chunkId, chunkCoords, chunkCells);
+         BuildChunk(chunkId, chunkCoords, chunkCells, levelTiles);
          Array.Clear(chunkCells, 0, cellCount);
       }
    }
 
-   void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells) {
+   void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells, LevelTileIndexSet levelTiles) {
       var chunkRoom = new Spatial {Name = $"Chunk{chunkId}"};
       _mapGeometry.AddChild(chunkRoom);
       chunkRoom.Owner = _mapGeometry;
@@ -103,32 +131,23 @@ public class SpatialMapSystem : ISystem {
       // Create MultiMesh for each cell type in this chunk data
       foreach (var chunkCell in chunkCells) {
 	      if (chunkCell is not {Type: (CellType.Wall or CellType.Floor)}) continue;
-	      SetTile(mmInst.Multimesh, instanceId, chunkCell, chunkRoom);
+	      SetTile(mmInst.Multimesh, instanceId, chunkCell, chunkRoom, levelTiles);
 	      instanceId += 1;
       }
    }
 
-   void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room) {
-      if (GetCellCustomDataForCellType(cell.Type) is not { } color) return;
+   void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room, LevelTileIndexSet levelTiles) {
+      if (GetCellCustomDataForCellType(cell.Type, levelTiles) is not { } color) return;
       mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, 
          GetTranslationOffsetForCellType(cell.Type) + cell.Position - room.Translation));
       mMesh.SetInstanceCustomData(instanceId, color);
    }
 
-   Color? GetCellCustomDataForCellType(CellType? cellType) {
-      switch (cellType) {
-         case CellType.Floor:
-            return Color.Color8(0, 0, 0, 0);
-         case CellType.Wall:
-            return Color.Color8(1, 0, 0, 0);
-         case CellType.DoorClosed: 
-         case CellType.DoorOpen: 
-         case CellType.Stairs:
-         case CellType.Void:
-         case null: break;
-         default: throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null);
-      }
-      return null;
+   Color? GetCellCustomDataForCellType(CellType? cellType, LevelTileIndexSet levelTiles) {
+	   if (levelTiles.CellTypeTileIndices.TryGetValue(cellType.GetValueOrDefault(), out var value)) {
+		   return Color.Color8((byte) value, 0, 0, 0);
+	   }
+	   return null;
    }
    
    Vector3 GetTranslationOffsetForCellType(CellType? cellType) {
