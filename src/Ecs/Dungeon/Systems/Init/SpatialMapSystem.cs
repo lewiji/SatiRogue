@@ -89,7 +89,7 @@ public class SpatialMapSystem : ISystem {
             Mesh = CellMesh,
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
             CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit,
-            InstanceCount = chunkCells.GetUpperBound(0)
+            InstanceCount = chunkCells.GetUpperBound(0) + 1
          },
          CastShadow = GeometryInstance.ShadowCastingSetting.On,
          PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
@@ -102,9 +102,9 @@ public class SpatialMapSystem : ISystem {
       var instanceId = 0;
       // Create MultiMesh for each cell type in this chunk data
       foreach (var chunkCell in chunkCells) {
-         if (chunkCell is not { } cell || cell.Type == CellType.Void) continue;
-         SetTile(mmInst.Multimesh, instanceId, cell, chunkRoom);
-         instanceId += 1;
+	      if (chunkCell is not {Type: (CellType.Wall or CellType.Floor)}) continue;
+	      SetTile(mmInst.Multimesh, instanceId, chunkCell, chunkRoom);
+	      instanceId += 1;
       }
    }
 

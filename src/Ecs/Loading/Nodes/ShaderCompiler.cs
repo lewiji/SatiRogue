@@ -93,6 +93,7 @@ public partial class ShaderCompiler : CanvasLayer {
    async void SetMultiMesh(Mesh mesh)
    {
       if (_multiMeshInstance == null) return;
+      Logger.Info("Precompiling multimesh");
       var mMesh = new MultiMesh();
       _multiMeshInstance.Multimesh = mMesh;
       mMesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;

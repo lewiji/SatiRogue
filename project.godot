@@ -58,6 +58,7 @@ _global_script_class_icons={
 
 config/name="SatiRogue"
 run/main_scene="res://Main.tscn"
+run/delta_sync_after_draw=true
 run/delta_smoothing=false
 boot_splash/show_image=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
@@ -70,12 +71,11 @@ Logger="*res://src/Debug/Logger.cs"
 
 [debug]
 
-settings/fps/force_fps=60
 settings/physics_interpolation/enable_warnings=false
 
 [display]
 
-window/size/width=900
+window/size/width=1600
 window/size/height=900
 window/size/always_on_top=true
 window/stretch/mode="viewport"
@@ -167,13 +167,21 @@ GENERATE_OCCLUSION=false
 GENERATE_PARALLAX=false
 HIDE_LAIGTER_GUI=true
 
+[logging]
+
+file_logging/enable_file_logging.pc=false
+
+[memory]
+
+limits/multithreaded_server/rid_pool_prealloc=256
+limits/message_queue/max_size_kb=8192
+
 [mono]
 
 project/assembly_name="SatiRogue"
 
 [physics]
 
-common/physics_fps=40
 common/physics_jitter_fix=0.0
 common/physics_interpolation=true
 
@@ -184,17 +192,11 @@ quality/directional_shadow/size=2048
 quality/shadow_atlas/size=2048
 quality/shadows/filter_mode=0
 quality/reflections/texture_array_reflections=false
-quality/reflections/high_quality_ggx=false
 quality/shading/force_vertex_shading.mobile=false
-quality/shading/force_lambert_over_burley=true
 quality/shading/force_lambert_over_burley.mobile=false
 quality/shading/force_blinn_over_ggx.mobile=false
 quality/filters/anisotropic_filter_level=8
 2d/options/ninepatch_mode=0
 quality/spatial_partitioning/bvh_collision_margin=0.3
-quality/lightmapping/use_bicubic_sampling=false
-environment/default_clear_color=Color( 0.168627, 0.168627, 0.168627, 1 )
-quality/reflections/atlas_size=512
-quality/reflections/atlas_subdiv=4
-quality/filters/use_debanding=true
+environment/default_clear_color=Color( 0.101961, 0.0431373, 0.254902, 1 )
 quality/depth/hdr.mobile=true

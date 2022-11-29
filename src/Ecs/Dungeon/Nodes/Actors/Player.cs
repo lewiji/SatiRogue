@@ -37,9 +37,21 @@ public partial class Player : Character {
    }
 
    [OnReady]
-   void SetAndroidPerformance() {
+   async void SetupReflectionProbe()
+   {
+	   var reflProbe = GetNode<ReflectionProbe>("ReflectionProbe");
+	   
       if (SatiConfig.IsMobile) {
-         GetNode("ReflectionProbe").QueueFree();
+         reflProbe.QueueFree();
+      } else {
+	      await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
+	      reflProbe.Translate(new Vector3(0, 0.0001f, 0));
       }
+   }
+
+   [OnReady] void SetChildVisibility()
+   {
+	   DirectionIndicator.Visible = false;
+	   DiagonalLockIndicator.Visible = false;
    }
 }

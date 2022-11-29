@@ -189,5 +189,5 @@ rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Choose amount to  increase/decrease default_float_step with -/+ buttons"
 size_flags_vertical = 4
 text = "*/0.1"
-items = [ "*/0.1", null, false, 0, null, "*/0.1", null, false, 1, null, "*/0.1", null, false, 2, null, "*/0.1", null, false, 3, null ]
+items = [ "*/0.1", null, false, 0, null, "*/0.1", null, false, 1, null, "*/0.1", null, false, 2, null, "*/0.1", null, false, 3, null, "*/0.1", null, false, 4, null, "*/0.1", null, false, 5, null, "*/0.1", null, false, 6, null ]
 selected = 0
