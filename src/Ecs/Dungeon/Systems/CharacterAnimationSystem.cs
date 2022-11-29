@@ -29,17 +29,11 @@ public class CharacterAnimationSystem : Reference, ISystem {
          if (!IsInstanceValid(character) || character.AnimatedSprite3D is not { } sprite || !animationComponent.HasAnimations())
             continue;
          
-         if (animationComponent.PeekAnimation() != "die" && sprite.Animation != "idle" && sprite.Playing)
+         if (animationComponent.PeekAnimation() != "die" && sprite.Animation != "idle")
             continue;
 
          var animation = animationComponent.PopAnimation();
-
-         if (sprite.Frames.HasAnimation(animation)) {
-            sprite.Play(animation);
-            Logger.Info($"Animation: {character.CharacterName} playing {animation}");
-         } else {
-            Logger.Info($"Animation: {character.CharacterName} has no animation called {animation}");
-         }
+         sprite.Play(animation);
 
          if (animationComponent.Animation == "die") {
             character.OnDeathAnimation();

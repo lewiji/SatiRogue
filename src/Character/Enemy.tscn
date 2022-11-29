@@ -20,4 +20,3 @@ visible = false
 
 [node name="VisibilityNotifier" parent="." index="4"]
 aabb = AABB( -1, 0, -1, 2, 2, 2 )
-max_distance = 32.0
