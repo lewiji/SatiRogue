@@ -117,7 +117,7 @@ public class SpatialMapSystem : ISystem {
             Mesh = CellMesh,
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
             CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit,
-            InstanceCount = chunkCells.GetUpperBound(0) + 1
+            InstanceCount = chunkCells.Count(c => c is { Type: CellType.Wall or CellType.Floor })
          },
          CastShadow = GeometryInstance.ShadowCastingSetting.On,
          PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,

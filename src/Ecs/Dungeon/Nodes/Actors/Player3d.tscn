@@ -91,6 +91,7 @@ attenuation_filter_cutoff_hz = 7000.0
 physics_interpolation_mode = 1
 transform = Transform( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
 light_energy = 0.25
+shadow_enabled = true
 shadow_color = Color( 0.101961, 0.0392157, 0.219608, 1 )
 shadow_bias = 0.015
 spot_range = 18.0
@@ -106,7 +107,7 @@ debug_shape_thickness = 3
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0 )
-intensity = 0.62
+intensity = 0.2
 extents = Vector3( 16, 5, 12 )
 origin_offset = Vector3( 0, 3.99, 3 )
 box_projection = true
