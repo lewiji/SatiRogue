@@ -22,7 +22,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
 
       foreach (var (spatial, gridPos, walkable) in world.Query<Character, GridPositionComponent, Walkable>().Has<Moving>()
       .Build()) {
-         if (walkable.Teleporting) {
+         if (walkable.Teleporting || !spatial.VisibilityNotifier.IsOnScreen()) {
             TeleportSpatial(spatial, gridPos);
          } else {
             InterpolateSpatial(spatial, gridPos);
@@ -34,7 +34,7 @@ public class InterpolateWalkAnimationSystem : ISystem {
    }
 
    void InterpolateSpatial(Spatial spatial, GridPositionComponent gridPos) {
-      if (spatial.Translation.WithinManhattanDistance(gridPos.Position, 0.005f)) {
+      if (spatial.Translation.WithinManhattanDistance(gridPos.Position, 0.01f)) {
          spatial.Translation = gridPos.Position;
          RemoveMovingComponent(spatial);
          return;
@@ -55,6 +55,6 @@ public class InterpolateWalkAnimationSystem : ISystem {
    void TeleportSpatial(Spatial spatial, GridPositionComponent gridPos) {
       spatial.Translation = gridPos.Position;
       RemoveMovingComponent(spatial);
-      spatial.ResetPhysicsInterpolation();
+      //spatial.ResetPhysicsInterpolation();
    }
 }

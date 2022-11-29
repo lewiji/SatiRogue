@@ -46,7 +46,7 @@ public class SetInitialPositionSystem : ISystem {
          Logger.Info($"Spawned stairs at {stairs.Translation}");
 
          // Make hole for stairs to sit in in floor
-         var maxWidth = mapData.GeneratorParameters.Width;
+         /*var maxWidth = mapData.GeneratorParameters.Width;
          var chunkWidth = mapData.GeneratorParameters.Width.Factors().GetMedian();
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(gridPos.Position, chunkWidth, maxWidth);
          var mapGeometry = world.GetElement<MapGeometry>();
@@ -72,7 +72,7 @@ public class SetInitialPositionSystem : ISystem {
             Logger.Info($"Removed floor tile {instanceId} from chunk {chunkId}.");
          } else {
             Logger.Warn($"Failed to find floor tile at {localGridPos} ({gridPos.Position})");
-         }
+         }*/
       }
 
       var query = world.Query<Character, GridPositionComponent>().Build();

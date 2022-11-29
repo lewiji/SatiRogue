@@ -10,6 +10,8 @@ public partial class Character : GameObject {
    public Particles? Particles;
    public AnimatedSprite3D? AnimatedSprite3D;
    public string CharacterName = "";
+   [OnReadyGet("VisibilityNotifier")]
+   public VisibilityNotifier VisibilityNotifier = default!;
    public bool Behaving {
       get => Alive && Enabled;
    }

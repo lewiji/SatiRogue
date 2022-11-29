@@ -17,8 +17,9 @@ public partial class Enemy : Character {
    bool _hovering = false;
    Camera? _playerCamera;
 
-   [OnReadyGet("Area")]
-   Area _area = null!;
+
+   //[OnReadyGet("Area")]
+   //Area _area = null!;
    public EnemyResource? EnemyResource;
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
@@ -50,8 +51,8 @@ public partial class Enemy : Character {
 
       _hoverStats.Visible = _hovering;
       _hoverStats.SetStatsRecord(Stats.Record);
-      _area.Connect("mouse_entered", this, nameof(OnMouseEntered));
-      _area.Connect("mouse_exited", this, nameof(OnMouseExited));
+      //_area.Connect("mouse_entered", this, nameof(OnMouseEntered));
+      //_area.Connect("mouse_exited", this, nameof(OnMouseExited));
 
       if (AnimatedSprite3D == null)
          return;

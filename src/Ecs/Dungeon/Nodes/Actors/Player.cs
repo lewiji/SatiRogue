@@ -44,7 +44,7 @@ public partial class Player : Character {
       if (SatiConfig.IsMobile) {
          reflProbe.QueueFree();
       } else {
-	      await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
+	      await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 	      reflProbe.Translate(new Vector3(0, 0.0001f, 0));
       }
    }

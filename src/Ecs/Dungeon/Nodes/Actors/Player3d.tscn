@@ -142,3 +142,6 @@ draw_pass_1 = ExtResource( 4 )
 [node name="DirectionIndicator" parent="." instance=ExtResource( 9 )]
 
 [node name="DiagonalLockIndicator" parent="." instance=ExtResource( 10 )]
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+max_distance = 32.0
