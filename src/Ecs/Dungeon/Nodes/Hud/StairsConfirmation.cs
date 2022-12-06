@@ -1,20 +1,27 @@
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Ecs.Dungeon.Systems;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class StairsConfirmation : Control {
-   [Signal] public delegate void StairsConfirmed();
-   [Signal] public delegate void StairsCancelled();
+   [Signal] public delegate void StairsConfirmedEventHandler();
+   [Signal] public delegate void StairsCancelledEventHandler();
 
-   [OnReadyGet("%PopupPanel")] PopupPanel _popupPanel = null!;
-   [OnReadyGet("%YesButton")] Button _yesButton = null!;
-   [OnReadyGet("%NoButton")] Button _noButton = null!;
+   PopupPanel _popupPanel = null!;
+   Button _yesButton = null!;
+   Button _noButton = null!;
 
-   [OnReady] void ConnectButtons() {
-      _yesButton.Connect("pressed", this, nameof(OnYesPressed));
-      _noButton.Connect("pressed", this, nameof(OnNoPressed));
+   public override void _Ready()
+   {
+	   _popupPanel = GetNode<PopupPanel>("%PopupPanel");
+	   _yesButton = GetNode<Button>("%YesButton");
+	   _noButton = GetNode<Button>("%NoButton");
+	   ConnectButtons();
+   }
+
+   void ConnectButtons() {
+      _yesButton.Connect("pressed",new Callable(this,nameof(OnYesPressed)));
+      _noButton.Connect("pressed",new Callable(this,nameof(OnNoPressed)));
    }
 
    void OnYesPressed() {
@@ -31,6 +38,6 @@ public partial class StairsConfirmation : Control {
    }
 
    public void Popup() {
-      _popupPanel?.PopupCenteredClamped(_popupPanel.RectMinSize);
+      _popupPanel?.PopupCenteredClamped(_popupPanel.MinSize);
    }
 }

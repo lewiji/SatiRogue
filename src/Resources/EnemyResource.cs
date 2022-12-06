@@ -2,7 +2,7 @@ using Godot;
 
 namespace SatiRogue.Resources;
 
-public class EnemyResource : Resource
+public partial class EnemyResource : Resource
 {
     [Export] public EnemyData.Species Species { get; set; }
     [Export] public string Name { get; set; } = "";

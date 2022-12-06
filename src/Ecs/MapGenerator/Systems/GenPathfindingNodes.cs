@@ -8,11 +8,11 @@ using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class PathfindingHelper {
-   readonly AStar _aStar;
-   readonly Dictionary<long, int> _cellIdToAStarId;
+public partial class PathfindingHelper {
+   readonly AStar3D _aStar;
+   readonly Dictionary<long, long> _cellIdToAStarId;
 
-   public PathfindingHelper(AStar aStar, Dictionary<long, int> cellIdToAStarId) {
+   public PathfindingHelper(AStar3D aStar, Dictionary<long, long> cellIdToAStarId) {
       _aStar = aStar;
       _cellIdToAStarId = cellIdToAStarId;
    }
@@ -50,7 +50,7 @@ public class PathfindingHelper {
    }
 }
 
-public class GenPathfindingNodes : ISystem {
+public partial class GenPathfindingNodes : ISystem {
    
    static readonly Vector3[] Offsets = {
       Vector3.Back, Vector3.Forward, Vector3.Left, Vector3.Right, Vector3.Back + Vector3.Left,
@@ -58,9 +58,9 @@ public class GenPathfindingNodes : ISystem {
    };
 
    public void Run(World world) {
-      var cellIdToAStarId = new Dictionary<long, int>();
+      var cellIdToAStarId = new Dictionary<long, long>();
       var mapGenData = world.GetElement<MapGenData>();
-      var aStar = new AStar();
+      var aStar = new AStar3D();
       aStar.ReserveSpace(mapGenData.IndexedCells.Count);
 
       foreach (var keyValuePair in mapGenData.IndexedCells) {
@@ -70,11 +70,11 @@ public class GenPathfindingNodes : ISystem {
          if (keyValuePair.Value.Type == CellType.Wall) aStar.SetPointDisabled(aStarId);
       }
 
-      var points = aStar.GetPoints();
+      var points = aStar.GetPointIds();
 
       foreach (int point in points) {
          foreach (var offset in Offsets) {
-            var neighbourVec = new Vector3(aStar.GetPointPosition(point)) + offset;
+            var neighbourVec = aStar.GetPointPosition(point) + offset;
 
             if (cellIdToAStarId.TryGetValue(IdCalculator.IdFromVec3(neighbourVec), out var neighbourId))
                aStar.ConnectPoints(point, neighbourId);

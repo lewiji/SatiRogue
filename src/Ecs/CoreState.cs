@@ -4,7 +4,7 @@ using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs;
 
-public class CoreState : GameState {
+public partial class CoreState : GameState {
    public override void Init(GameStateController gameStates) {
       gameStates.World.AddOrReplaceElement(this);
       InitSystems.Add(new InitFade());

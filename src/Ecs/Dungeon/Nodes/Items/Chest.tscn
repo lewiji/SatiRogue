@@ -6,11 +6,11 @@
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Items/CoinsParticlesMaterial.tres" type="Material" id=8]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Items/CoinsMesh.tres" type="QuadMesh" id=9]
 
-[node name="Chest" type="Spatial"]
+[node name="Chest" type="Node3D"]
 script = ExtResource( 6 )
 
 [node name="Visual" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.906012, 0.423251, 0, -0.423251, 0.906012, 0, 0.45, 0 )
+transform = Transform3D( 1, 0, 0, 0, 0.906012, 0.423251, 0, -0.423251, 0.906012, 0, 0.45, 0 )
 material_override = ExtResource( 2 )
 use_in_baked_light = true
 pixel_size = 0.035
@@ -18,8 +18,8 @@ frames = ExtResource( 1 )
 animation = "closed"
 playing = true
 
-[node name="Particles" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12897 )
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12897 )
 generate_lightmap = false
 emitting = false
 amount = 24

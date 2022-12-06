@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=2 format=2]
 
-[ext_resource path="res://assets/item_icons/item_icons.sprites/STONES/STONE 5.tres" type="Texture" id=1]
+[ext_resource path="res://assets/item_icons/item_icons.sprites/STONES/STONE 5.tres" type="Texture2D" id=1]
 
 [resource]
 animations = [ {

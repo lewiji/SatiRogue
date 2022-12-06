@@ -7,6 +7,6 @@ public enum TurnType {
    Idle
 }
 
-public class Turn {
+public partial class Turn {
    public TurnType CurrentTurn { get; set; } = TurnType.Idle;
 }

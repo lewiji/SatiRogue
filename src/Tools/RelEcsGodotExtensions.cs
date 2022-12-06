@@ -19,14 +19,14 @@ public static class RelEcsGodotExtensions {
    }
 
    public static Entity? GetEntity(this Node node) {
-      if (node.HasMeta("Entity") && node.GetMeta("Entity") is Marshallable<Entity> entity) {
+      if (node.HasMeta("Entity") && node.GetMeta("Entity").Obj is Marshallable<Entity> entity) {
          return entity.Value;
       }
       return null;
    }
 }
 
-public class SatiSystemGroup : Node {
+public partial class SatiSystemGroup : Node {
    readonly SystemGroup _systemGroup = new();
    readonly World _world;
    public SatiSystemGroup(GameStateController gsc) {

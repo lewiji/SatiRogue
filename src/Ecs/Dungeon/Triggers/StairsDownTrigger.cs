@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Triggers;
 
-public class StairsDownTrigger { }
+public partial class StairsDownTrigger { }

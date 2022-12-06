@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/ankh_large/frame0000.png" type="Texture" id=1]
+[ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/ankh_large/frame0000.png" type="Texture2D" id=1]
 [ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/ankh_large/frame0000_spatial_material.tres" type="Material" id=2]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Items/SpatialItem.cs" type="Script" id=12]
 
@@ -21,8 +21,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 0, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath("AnimatedSprite3D:offset:y")
@@ -31,8 +31,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 0, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 
 [sub_resource type="Animation" id=3]
@@ -46,15 +46,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 4, -0.8, -0.0118995, 0.8, -0.0538297, 0, -0.5, 0.00471401, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 4 )
+"points": PackedFloat32Array( 0, -0.25, 0, 0.25, 0, 4, -0.8, -0.0118995, 0.8, -0.0538297, 0, -0.5, 0.00471401, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 2, 4 )
 }
 
-[node name="SpatialItem" type="Spatial"]
+[node name="SpatialItem" type="Node3D"]
 script = ExtResource( 12 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.954761, 0.297375, 0, -0.297375, 0.954761, 0, 0.759634, 0 )
+transform = Transform3D( 1, 0, 0, 0, 0.954761, 0.297375, 0, -0.297375, 0.954761, 0, 0.759634, 0 )
 material_override = ExtResource( 2 )
 use_in_baked_light = true
 pixel_size = 0.04

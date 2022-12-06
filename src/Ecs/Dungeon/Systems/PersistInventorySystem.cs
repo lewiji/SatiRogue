@@ -6,7 +6,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class PersistInventorySystem : ISystem {
+public partial class PersistInventorySystem : ISystem {
    
 
    public void Run(World world) {

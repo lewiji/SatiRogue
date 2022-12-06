@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Huge monster Growls 5.wav-0ac9ce5de0b71475d4588de3d54aeb08.sample"
+type="AudioStreamWAV"
+uid="uid://cjdxs5oh0vof6"
+path="res://.godot/imported/Huge monster Growls 5.wav-0ac9ce5de0b71475d4588de3d54aeb08.sample"
 
 [deps]
 
 source_file="res://audio/Huge monster Growls 5.wav"
-dest_files=[ "res://.import/Huge monster Growls 5.wav-0ac9ce5de0b71475d4588de3d54aeb08.sample" ]
+dest_files=["res://.godot/imported/Huge monster Growls 5.wav-0ac9ce5de0b71475d4588de3d54aeb08.sample"]
 
 [params]
 

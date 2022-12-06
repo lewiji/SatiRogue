@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://assets/JestansFantasyTextures/jestans_fantasy_32_pbr.png" type="Texture" id=1]
+[ext_resource path="res://assets/JestansFantasyTextures/jestans_fantasy_32_pbr.png" type="Texture2D" id=1]
 [ext_resource path="res://resources/level_meshes/wall_atlas_shader.gdshader" type="Shader" id=2]
 
 [resource]

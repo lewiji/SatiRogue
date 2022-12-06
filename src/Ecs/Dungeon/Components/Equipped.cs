@@ -1,6 +1,6 @@
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class Equipped
+public partial class Equipped
 {
     
 }

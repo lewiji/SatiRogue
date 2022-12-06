@@ -1,69 +1,78 @@
 using Godot;
 using Godot.Collections;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 namespace SatiRogue.Ecs.Menu.Nodes;
 
-[Tool]
 public partial class Menu : Control {
-   [Signal] public delegate void NewGameRequested();
-   [Signal] public delegate void OptionsRequested();
+   [Signal] public delegate void NewGameRequestedEventHandler();
+   [Signal] public delegate void OptionsRequestedEventHandler();
 
-   [OnReadyGet("%Light2D")] Light2D _light2D = null!;
-   [OnReadyGet("%NewGame")] Button _newGame = null!;
-   [OnReadyGet("%ContinueGame")] Button _continue = null!;
-   [OnReadyGet("%Options")] Button _options = null!;
-   [OnReadyGet("%Quit")] Button _quit = null!;
+   PointLight2D _light2D = default!;
+   Button _newGame = default!;
+   Button _continue = default!;
+   Button _options = default!;
+   Button _quit = default!;
 
-   [OnReady] void ConnectButtons() {
-      _newGame.Connect("pressed", this, nameof(OnNewGamePressed));
-      var newGameOccluder = (LightOccluder2D) _newGame.GetNode("Control/LightOccluder2D");
-      _newGame.Connect("mouse_entered", this, nameof(EnableOccluder), new Array {newGameOccluder});
-      _newGame.Connect("mouse_exited", this, nameof(DisableOccluder), new Array {newGameOccluder});
+   public override void _Ready()
+   {
+	   _light2D = GetNode<PointLight2D>("%PointLight2D");
+	   _newGame = GetNode<Button>("%NewGame");
+	   _continue = GetNode<Button>("%ContinueGame");
+	   _options = GetNode<Button>("%Options");
+	   _quit = GetNode<Button>("%Quit");
+	   ConnectButtons();
+	   SetLightSize();
+   }
 
-      _quit.Connect("pressed", this, nameof(OnQuitPressed));
-      var quitOccluder = (LightOccluder2D) _quit.GetNode("Control/LightOccluder2D");
-      _quit.Connect("mouse_entered", this, nameof(EnableOccluder), new Array {quitOccluder});
-      _quit.Connect("mouse_exited", this, nameof(DisableOccluder), new Array {quitOccluder});
+   void ConnectButtons() {
+	  _newGame.Pressed += OnNewGamePressed;
+	  var newGameOccluder = (LightOccluder2D) _newGame.GetNode("Control/LightOccluder2D");
+	  _newGame.MouseEntered += () => { EnableOccluder(newGameOccluder); };
+	  _newGame.MouseExited += () => { DisableOccluder(newGameOccluder); };
+	  
+	  _quit.Pressed += OnQuitPressed;
+	  var quitOccluder = (LightOccluder2D) _quit.GetNode("Control/LightOccluder2D");
+	  _quit.MouseEntered += () => { EnableOccluder(quitOccluder); };
+	  _quit.MouseExited += () => { DisableOccluder(quitOccluder); };
 
-      _options.Connect("pressed", this, nameof(OnOptionsPressed));
-      var optionsOccluder = (LightOccluder2D) _options.GetNode("Control/LightOccluder2D");
-      _options.Connect("mouse_entered", this, nameof(EnableOccluder), new Array {optionsOccluder});
-      _options.Connect("mouse_exited", this, nameof(DisableOccluder), new Array {optionsOccluder});
+	  _options.Pressed += OnOptionsPressed;
+	  var optionsOccluder = (LightOccluder2D) _options.GetNode("Control/LightOccluder2D");
+	  _options.MouseEntered += () => { EnableOccluder(optionsOccluder); };
+	  _options.MouseExited += () => { DisableOccluder(optionsOccluder); };
 
-      GetViewport().Connect("size_changed", this, nameof(OnWindowSizeChanged));
+	  GetViewport().SizeChanged += OnWindowSizeChanged;
    }
 
    void EnableOccluder(LightOccluder2D occluder) {
-      occluder.Visible = true;
+	  occluder.Visible = true;
    }
 
    void DisableOccluder(LightOccluder2D occluder) {
-      occluder.Visible = false;
+	  occluder.Visible = false;
    }
 
    void OnOptionsPressed() {
-      EmitSignal(nameof(OptionsRequested));
+	  EmitSignal(nameof(OptionsRequested));
    }
 
    void OnNewGamePressed() {
-      EmitSignal(nameof(NewGameRequested));
+	  EmitSignal(nameof(NewGameRequested));
    }
 
    void OnQuitPressed() {
-      Logger.Info("Goodbye.");
-      GetTree().Notification(NotificationWmQuitRequest);
+	  Logger.Info("Goodbye.");
+	  GetTree().Notification((int)NotificationWmCloseRequest);
    }
 
    void OnWindowSizeChanged() {
-      var textureSize = _light2D.Texture.GetSize();
-      var viewportSize = GetViewport().Size;
-      _light2D.TextureScale = 2f * Mathf.Max(viewportSize.x / textureSize.x, viewportSize.y / textureSize.y);
-      GD.Print(_light2D.TextureScale);
-      _light2D.Offset = viewportSize;
+	  var textureSize = _light2D.Texture.GetSize();
+	  var viewportSize = GetViewport().GetVisibleRect().Size;
+	  _light2D.TextureScale = 2f * Mathf.Max(viewportSize.x / textureSize.x, viewportSize.y / textureSize.y);
+	  GD.Print(_light2D.TextureScale);
+	  _light2D.Offset = viewportSize;
    }
 
-   [OnReady] void SetLightSize() {
-      OnWindowSizeChanged();
+   void SetLightSize() {
+	  OnWindowSizeChanged();
    }
 }

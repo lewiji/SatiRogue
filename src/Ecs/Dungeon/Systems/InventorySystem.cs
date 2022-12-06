@@ -7,7 +7,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class InventorySystem : Reference, ISystem {
+public partial class InventorySystem : RefCounted, ISystem {
    
    Inventory? _inventoryUi;
    World? _world;
@@ -30,10 +30,10 @@ public class InventorySystem : Reference, ISystem {
       var itemSlots = invUi.GetItemSlots();
 
       foreach (var itemSlot in itemSlots) {
-         itemSlot.Connect(nameof(ItemSlot.OnPressed), this, nameof(OnItemSlotPressed));
+         itemSlot.Connect(nameof(ItemSlot.OnPressed),new Callable(this,nameof(OnItemSlotPressed)));
       }
 
-      invUi.Connect(nameof(Inventory.OpenChanged), this, nameof(OnInventoryOpenChanged));
+      invUi.Connect(nameof(Inventory.OpenChanged),new Callable(this,nameof(OnInventoryOpenChanged)));
    }
 
    void OnInventoryOpenChanged(bool isOpen) {

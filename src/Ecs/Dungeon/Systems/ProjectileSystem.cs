@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class ProjectileSystem : ISystem {
+public partial class ProjectileSystem : ISystem {
    
    PhysicsDeltaTime? _delta;
 
@@ -14,10 +14,10 @@ public class ProjectileSystem : ISystem {
       var query = world.Query<Entity, Arrow>().Has<Firing>().Build();
 
       foreach (var (entity, arrow) in query) {
-         if (arrow.Translation.IsEqualApprox(arrow.Destination)) {
+         if (arrow.Position.IsEqualApprox(arrow.Destination)) {
             world.DespawnAndFree(entity);
          } else {
-            arrow.Translation = arrow.Translation.MoveToward(arrow.Destination, _delta.Value * 20f);
+            arrow.Position = arrow.Position.MoveToward(arrow.Destination, _delta.Value * 20f);
          }
       }
    }

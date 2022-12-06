@@ -1,22 +1,29 @@
 using Godot;
-using GodotOnReady.Attributes;
+
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class Loot : Control {
    int _numLoots;
-   [OnReadyGet("HBoxContainer/RichTextLabel")] RichTextLabel _richTextLabel = null!;
+   RichTextLabel _richTextLabel = null!;
    public int NumLoots {
       get => _numLoots;
       set {
          _numLoots = value;
-         _richTextLabel.BbcodeText = $" {_numLoots}";
+         _richTextLabel.Text = $" {_numLoots}";
       }
    }
 
-   [OnReady] void SetInitial() { }
+   public override void _Ready()
+   {
+	   _richTextLabel = GetNode<RichTextLabel>("HBoxContainer/RichTextLabel");
+	   SetInitial();
+	   ConnectGuiInput();
+   }
 
-   [OnReady] void ConnectGuiInput() {
-      Connect("gui_input", this, nameof(OnGuiInput));
+   void SetInitial() { }
+
+   void ConnectGuiInput() {
+      Connect("gui_input",new Callable(this,nameof(OnGuiInput)));
    }
 
    void OnGuiInput(InputEvent @event) {

@@ -1,47 +1,46 @@
-<Project Sdk="Godot.NET.Sdk/3.3.0">
-    <PropertyGroup>
-        <LangVersion>10</LangVersion>
-        <Nullable>enable</Nullable>
-        <RootNamespace>SatiRogue</RootNamespace>
-        <PackageId>stream.sati.SatiRogue</PackageId>
-        <PackageVersion>0.0.1</PackageVersion>
-        <Title>SatiRogue</Title>
-        <Authors>Lewis J. Pollard</Authors>
-        <Company>sati.stream</Company>
-        <Product>SatiRogue</Product>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        <Configurations>ExportDebug;Debug;Release;ExportRelease</Configurations>
-        <Platforms>x64;AnyCPU</Platforms>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|x64' ">
-        <DebugSymbols>true</DebugSymbols>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-        <DebugType>full</DebugType>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-      <WarningLevel>3</WarningLevel>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="GodotOnReady" Version="1.2.2" />
-        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-        <PackageReference Include="System.Threading.Channels" Version="7.0.0-rc.1.22426.10" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Remove="lib\activelogic-cs\Patches\**" />
-      <Compile Remove="lib\activelogic-cs\Tests\**" />
-      <Compile Remove="lib\go_dot_log\test\**" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Remove="lib\activelogic-cs\Patches\**" />
-      <EmbeddedResource Remove="lib\activelogic-cs\Tests\**" />
-      <EmbeddedResource Remove="lib\go_dot_log\test\**" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="addons\.editorconfig" />
-      <Content Include="assets\elthen\elthen_texarr.ta-builder" />
-      <Content Include="lib\.editorconfig" />
-    </ItemGroup>
+<Project Sdk="Godot.NET.Sdk/4.0.0-beta.7">
+  <PropertyGroup>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SatiRogue</RootNamespace>
+    <PackageId>stream.sati.SatiRogue</PackageId>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Title>SatiRogue</Title>
+    <Authors>Lewis J. Pollard</Authors>
+    <Company>sati.stream</Company>
+    <Product>SatiRogue</Product>
+    <TargetFramework>net6.0</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Configurations>ExportDebug;Debug;Release;ExportRelease</Configurations>
+    <Platforms>x64;AnyCPU</Platforms>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Threading.Channels" Version="7.0.0-rc.1.22426.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="lib\activelogic-cs\Patches\**" />
+    <Compile Remove="lib\activelogic-cs\Tests\**" />
+    <Compile Remove="lib\go_dot_log\test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="lib\activelogic-cs\Patches\**" />
+    <EmbeddedResource Remove="lib\activelogic-cs\Tests\**" />
+    <EmbeddedResource Remove="lib\go_dot_log\test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="addons\.editorconfig" />
+    <Content Include="assets\elthen\elthen_texarr.ta-builder" />
+    <Content Include="lib\.editorconfig" />
+  </ItemGroup>
 </Project>

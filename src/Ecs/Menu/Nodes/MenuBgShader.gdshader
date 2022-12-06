@@ -3,7 +3,7 @@ shader_type canvas_item;
 uniform sampler2D normal_map: hint_normal;
 uniform float time_scale_x = 0.08;
 uniform float time_scale_y = 0.05;
-uniform vec4 shadow_color: hint_color = vec4(0.05, 0.05, 0.05, 0.5);
+uniform vec4 shadow_color: source_color = vec4(0.05, 0.05, 0.05, 0.5);
 
 void fragment(){
     vec2 newuv = UV;
@@ -11,12 +11,12 @@ void fragment(){
     newuv.y -= TIME * time_scale_y;
     vec4 c = texture(TEXTURE, newuv);
     COLOR = c;
-	NORMALMAP = texture(normal_map, newuv).rgb;
+	NORMAL_MAP = texture(normal_map, newuv).rgb;
 }
 
 void light() {
-	SHADOW_COLOR = COLOR - shadow_color;
-	LIGHT = SHADOW_COLOR;
+	SHADOW_MODULATE = COLOR - shadow_color;
+	LIGHT = SHADOW_MODULATE;
 }
 
 /*void fragment(){

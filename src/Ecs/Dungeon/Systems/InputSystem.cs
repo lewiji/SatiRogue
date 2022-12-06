@@ -10,7 +10,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class InputSystem : ISystem {
+public partial class InputSystem : ISystem {
    
 
    public static bool HandlingInput = true;

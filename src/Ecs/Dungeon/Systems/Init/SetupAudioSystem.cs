@@ -6,7 +6,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SetupAudioSystem : ISystem {
+public partial class SetupAudioSystem : ISystem {
    
    static readonly AudioStream Ambience = GD.Load<AudioStream>("res://audio/Ambience Dark Chamber Loop.ogg");
 
@@ -48,5 +48,5 @@ public class SetupAudioSystem : ISystem {
    }
 }
 
-public class AmbientAudio { }
-public class FootstepAudio { }
+public partial class AmbientAudio { }
+public partial class FootstepAudio { }

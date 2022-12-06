@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/UI Select Dark.wav-232ece8039f86d67069e1dc53601ecdc.sample"
+type="AudioStreamWAV"
+uid="uid://cgvgn5we5okyb"
+path="res://.godot/imported/UI Select Dark.wav-232ece8039f86d67069e1dc53601ecdc.sample"
 
 [deps]
 
 source_file="res://audio/UI Select Dark.wav"
-dest_files=[ "res://.import/UI Select Dark.wav-232ece8039f86d67069e1dc53601ecdc.sample" ]
+dest_files=["res://.godot/imported/UI Select Dark.wav-232ece8039f86d67069e1dc53601ecdc.sample"]
 
 [params]
 

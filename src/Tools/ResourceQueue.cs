@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using SatiRogue.Debug;
 
 namespace SatiRogue.Tools;
 
-public class ResourceQueue : Node {
-   [Signal] public delegate void ResourceLoaded(Resource resource);
-   [Signal] public delegate void AllLoaded();
+public partial class ResourceQueue : Node {
+   [Signal] public delegate void ResourceLoadedEventHandler(Resource resource);
+   [Signal] public delegate void AllLoadedEventHandler();
    
    readonly Queue<string> _toLoad = new();
    Thread? _thread;
@@ -22,8 +21,8 @@ public class ResourceQueue : Node {
       _exitThread = false;
       _thread = new();
 
-      Connect(nameof(ResourceLoaded), this, nameof(OnResourceLoaded));
-      Connect(nameof(AllLoaded), this, nameof(OnQueueFinished));
+      Connect(nameof(ResourceLoaded),new Callable(this,nameof(OnResourceLoaded)));
+      Connect(nameof(AllLoaded),new Callable(this,nameof(OnQueueFinished)));
    }
 
    public void QueueResource(string path) {
@@ -36,7 +35,7 @@ public class ResourceQueue : Node {
       if (_thread == null) 
          throw new Exception("Loading thread not initialised.");
 
-      _thread.Start(this, nameof(LoaderThread), null, Thread.Priority.Low);
+      _thread.Start(Callable.From(LoaderThread), Thread.Priority.Low);
       _toLoadSemaphore?.CallDeferred("post");
    }
 
@@ -82,7 +81,7 @@ public class ResourceQueue : Node {
    }
 
    public override void _ExitTree() {
-      if (_thread  != null && _thread.IsActive()) {
+      if (_thread  != null && _thread.IsAlive()) {
          OnQueueFinished();
       }
    }

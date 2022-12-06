@@ -4,7 +4,7 @@ using SatiRogue.Ecs.Menu.Systems;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs;
 
-public class MenuState : GameState {
+public partial class MenuState : GameState {
    GameStateController _gsc = null!;
 
    public override void Init(GameStateController gameStates) {
@@ -14,7 +14,7 @@ public class MenuState : GameState {
       Menu.Systems.Intro introSystem;
       InitSystems.Add(new InitMenu()).Add(new InitOptions()).Add(introSystem = new Menu.Systems.Intro());
 
-      introSystem.Connect(nameof(Menu.Systems.Intro.IntroFinished), this, nameof(OnIntroFinished));
+      introSystem.IntroFinished += OnIntroFinished;
    }
 
    async void OnIntroFinished() {

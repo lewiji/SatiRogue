@@ -1,6 +1,6 @@
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class HealthComponent {
+public partial class HealthComponent {
    public int Value { get; set; }
    public int Max;
    bool _invincible = false;

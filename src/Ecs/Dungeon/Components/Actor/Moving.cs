@@ -1,5 +1,5 @@
 namespace SatiRogue.Ecs.Dungeon.Components.Actor; 
 
-public class Moving {
+public partial class Moving {
    
 }

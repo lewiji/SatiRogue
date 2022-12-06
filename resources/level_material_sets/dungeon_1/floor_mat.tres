@@ -1,10 +1,10 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=2]
 
 [ext_resource path="res://assets/overworld/PolySurfaceShader.tres" type="Shader" id=1]
-[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_n.png" type="Texture" id=2]
-[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_o.png" type="Texture" id=3]
-[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_s.png" type="Texture" id=4]
-[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52.png" type="Texture" id=5]
+[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_n.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_o.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52_s.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/JestansFantasyTextures/32x32/FNTSY_TX__52.png" type="Texture2D" id=5]
 
 [resource]
 resource_name = "OverworldMat"

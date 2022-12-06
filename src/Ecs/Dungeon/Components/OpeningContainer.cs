@@ -1,6 +1,6 @@
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class OpeningContainer
+public partial class OpeningContainer
 {
     
 }

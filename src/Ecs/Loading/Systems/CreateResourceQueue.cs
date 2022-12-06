@@ -4,7 +4,7 @@ using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Loading.Systems; 
 
-public class CreateResourceQueue : Reference, ISystem {
+public partial class CreateResourceQueue : RefCounted, ISystem {
    
 
    public void Run(World world) {

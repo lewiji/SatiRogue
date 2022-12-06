@@ -1,18 +1,25 @@
 using System.Threading.Tasks;
 using Godot;
-using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Core.Nodes;
 
 public partial class Fade : CanvasLayer {
-   [OnReadyGet("AnimationPlayer")] AnimationPlayer _animationPlayer = null!;
-   [OnReadyGet("%Light2D")] Light2D _light2D = null!;
-   [OnReadyGet("%LightAnimationTimer")] Timer _lightTimer = null!;
+   AnimationPlayer _animationPlayer = null!;
+   PointLight2D _light2D = null!;
+   Timer _lightTimer = null!;
    float _dt;
 
    bool _animatingDown = true;
 
-   [OnReady] void ConnectLightTimer() {
-      _lightTimer.Connect("timeout", this, nameof(OnLightTimer));
+   public override void _Ready()
+   {
+	   _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   _light2D = GetNode<PointLight2D>("%PointLight2D");
+	   _lightTimer = GetNode<Timer>("%LightAnimationTimer");
+	   ConnectLightTimer();
+   }
+
+   void ConnectLightTimer() {
+      _lightTimer.Connect("timeout",new Callable(this,nameof(OnLightTimer)));
    }
 
    public async Task QuickFade() {
@@ -41,7 +48,7 @@ public partial class Fade : CanvasLayer {
    }
 
    void OnLightTimer() {
-      _dt += _lightTimer.WaitTime;
+      _dt += (float)_lightTimer.WaitTime;
 
       if (_animatingDown) {
          _light2D.Offset += new Vector2(0, 1);

@@ -6,5 +6,5 @@
 
 [resource]
 script = ExtResource( 3 )
-ParticlesMaterial = ExtResource( 2 )
+ParticleProcessMaterial = ExtResource( 2 )
 DrawPassMeshes = [ ExtResource( 1 ) ]

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/large monster attack 2.wav-914424371187fa9500f059bfca465407.sample"
+type="AudioStreamWAV"
+uid="uid://cc0gexc0rj7om"
+path="res://.godot/imported/large monster attack 2.wav-914424371187fa9500f059bfca465407.sample"
 
 [deps]
 
 source_file="res://audio/large monster attack 2.wav"
-dest_files=[ "res://.import/large monster attack 2.wav-914424371187fa9500f059bfca465407.sample" ]
+dest_files=["res://.godot/imported/large monster attack 2.wav-914424371187fa9500f059bfca465407.sample"]
 
 [params]
 

@@ -1,7 +1,7 @@
-[gd_resource type="ParticlesMaterial" load_steps=9 format=2]
+[gd_resource type="ParticleProcessMaterial" load_steps=9 format=2]
 
-[ext_resource path="res://resources/particles/dungeon_environment_size_curve.tres" type="Texture" id=1]
-[ext_resource path="res://resources/particles/dungeon_environment_color_gradient.tres" type="Texture" id=2]
+[ext_resource path="res://resources/particles/dungeon_environment_size_curve.tres" type="Texture2D" id=1]
+[ext_resource path="res://resources/particles/dungeon_environment_color_gradient.tres" type="Texture2D" id=2]
 
 [sub_resource type="Curve" id=3]
 min_value = -360.0
@@ -13,10 +13,10 @@ width = 128
 curve = SubResource( 3 )
 
 [sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0, 0.180064, 1 )
-colors = PoolColorArray( 0.0431373, 0, 0.0666667, 0, 0.315791, 0.138279, 0.411621, 1, 0.101057, 0, 0.446777, 0.498039 )
+offsets = PackedFloat32Array( 0, 0.180064, 1 )
+colors = PackedColorArray( 0.0431373, 0, 0.0666667, 0, 0.315791, 0.138279, 0.411621, 1, 0.101057, 0, 0.446777, 0.498039 )
 
-[sub_resource type="GradientTexture" id=2]
+[sub_resource type="GradientTexture2D" id=2]
 gradient = SubResource( 1 )
 width = 192
 

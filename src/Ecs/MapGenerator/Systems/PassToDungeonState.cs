@@ -5,7 +5,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class PassToDungeonState : Reference, ISystem {
+public partial class PassToDungeonState : RefCounted, ISystem {
    
 
    public void Run(World world) {

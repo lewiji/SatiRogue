@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/large monster attack 4.wav-d7a6221f1c20e4d266b4747fc82549c6.sample"
+type="AudioStreamWAV"
+uid="uid://coplfbwc4texu"
+path="res://.godot/imported/large monster attack 4.wav-d7a6221f1c20e4d266b4747fc82549c6.sample"
 
 [deps]
 
 source_file="res://audio/large monster attack 4.wav"
-dest_files=[ "res://.import/large monster attack 4.wav-d7a6221f1c20e4d266b4747fc82549c6.sample" ]
+dest_files=["res://.godot/imported/large monster attack 4.wav-d7a6221f1c20e4d266b4747fc82549c6.sample"]
 
 [params]
 

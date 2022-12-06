@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Sword Woosh 10.wav-c1b235ca5b2710b32a7fb80807168bd7.sample"
+type="AudioStreamWAV"
+uid="uid://clrpdvye5jqg6"
+path="res://.godot/imported/Sword Woosh 10.wav-c1b235ca5b2710b32a7fb80807168bd7.sample"
 
 [deps]
 
 source_file="res://audio/Sword Woosh 10.wav"
-dest_files=[ "res://.import/Sword Woosh 10.wav-c1b235ca5b2710b32a7fb80807168bd7.sample" ]
+dest_files=["res://.godot/imported/Sword Woosh 10.wav-c1b235ca5b2710b32a7fb80807168bd7.sample"]
 
 [params]
 

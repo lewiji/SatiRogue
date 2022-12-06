@@ -1,5 +1,4 @@
 using Godot;
-using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.MapGenerator.Components;
 
@@ -7,11 +6,10 @@ namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Character : GameObject {
    bool _alive = true;
-   public Particles? Particles;
+   public GPUParticles3D? GPUParticles3D;
    public AnimatedSprite3D? AnimatedSprite3D;
    public string CharacterName = "";
-   [OnReadyGet("VisibilityNotifier")]
-   public VisibilityNotifier VisibilityNotifier = default!;
+   public VisibleOnScreenNotifier3D VisibleOnScreenNotifier3D = default!;
    public bool Behaving {
       get => Alive && Enabled;
    }
@@ -32,14 +30,15 @@ public partial class Character : GameObject {
    }
    public Cell? CurrentCell { get; set; }
 
-   [OnReady]
-   public virtual void OnReady() {
-      Visible = false;
-      Particles = GetNode("Particles") as Particles;
+   public override void _Ready()
+   {
+	   VisibleOnScreenNotifier3D = GetNode<VisibleOnScreenNotifier3D>("VisibleOnScreenNotifier3D");
+			Visible = false;
+      GPUParticles3D = GetNode("Particles") as GPUParticles3D;
       AnimatedSprite3D = GetNode("Visual") as AnimatedSprite3D;
       // TODO try this again
       //WallPeekSprite = GetNode("VisualWallPeek") as AnimatedSprite3D;
-      AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAnimationFinished));
+      AnimatedSprite3D?.Connect("animation_finished",new Callable(this,nameof(OnAnimationFinished)));
    }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
@@ -52,9 +51,9 @@ public partial class Character : GameObject {
    }
 
    public void OnDeathAnimation() {
-      if (Particles != null) {
-         Particles.Visible = true;
-         Particles.Emitting = true;
+      if (GPUParticles3D != null) {
+         GPUParticles3D.Visible = true;
+         GPUParticles3D.Emitting = true;
       }
    }
 

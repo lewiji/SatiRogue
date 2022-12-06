@@ -6,7 +6,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class PlayerIndicatorSystem : ISystem {
+public partial class PlayerIndicatorSystem : ISystem {
    
 
    public void Run(World world) {

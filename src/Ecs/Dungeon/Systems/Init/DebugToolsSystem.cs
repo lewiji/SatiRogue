@@ -11,20 +11,20 @@ using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init; 
 
-public class DebugToolsSystem : Reference, ISystem {
+public partial class DebugToolsSystem : RefCounted, ISystem {
    static readonly PackedScene DebugUiScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/DebugUi.tscn");
    World? _world;
    public void Run(World world)
    {
       _world ??= world;
-      var debugUi = DebugUiScene.Instance<DebugUi>();
+      var debugUi = DebugUiScene.Instantiate<DebugUi>();
       debugUi.Enabled = world.GetElement<SatiConfig>().DebugTools;
       world.GetElement<Hud>().GetNode("%HudItems").AddChild(debugUi);
       world.AddOrReplaceElement(debugUi);
 
-      debugUi.Connect(nameof(DebugUi.WarpToStairs), this, nameof(OnWarpToStairs));
-      debugUi.Connect(nameof(DebugUi.GodModeChanged), this, nameof(OnGodModeChanged));
-      debugUi.Connect(nameof(DebugUi.HealPlayer), this, nameof(OnHealPlayer));
+      debugUi.Connect(nameof(DebugUi.WarpToStairs),new Callable(this,nameof(OnWarpToStairs)));
+      debugUi.Connect(nameof(DebugUi.GodModeChanged),new Callable(this,nameof(OnGodModeChanged)));
+      debugUi.Connect(nameof(DebugUi.HealPlayer),new Callable(this,nameof(OnHealPlayer)));
    }
 
    void OnWarpToStairs() {

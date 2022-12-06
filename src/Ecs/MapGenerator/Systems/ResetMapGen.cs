@@ -6,7 +6,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.MapGenerator.Systems;
 
-public class ResetMapGen : ISystem {
+public partial class ResetMapGen : ISystem {
    
 
    public void Run(World world) {

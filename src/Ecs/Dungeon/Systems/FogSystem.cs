@@ -9,7 +9,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class FogSystem : ISystem {
+public partial class FogSystem : ISystem {
    
    static readonly Vector3 OffScreenCoords = new (-1000f, 1000f, -1000f);
 

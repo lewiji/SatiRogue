@@ -10,7 +10,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SpawnEnemySystem : ISystem {
+public partial class SpawnEnemySystem : ISystem {
    
    static readonly PackedScene EnemyScene = GD.Load<PackedScene>("res://src/Character/Enemy.tscn");
    static readonly List<EnemyResource> EnemyResources = new ();
@@ -24,7 +24,7 @@ public class SpawnEnemySystem : ISystem {
       var entitiesNode = world.GetElement<Entities>();
 
       for (var enemy = 0; enemy < numEnemies; enemy++) {
-         var enemyNode = EnemyScene.Instance<Enemy>();
+         var enemyNode = EnemyScene.Instantiate<Enemy>();
          var monsterId = Mathf.FloorToInt((float) GD.RandRange(0, EnemyResources.Count));
          var health = Mathf.RoundToInt((float) GD.RandRange(1, 3));
          var enemyResource = EnemyResources[monsterId];
@@ -39,9 +39,9 @@ public class SpawnEnemySystem : ISystem {
    {
       if (EnemyResources.Count > 0) return;
       
-      var dir = new Directory();
-      dir.Open("res://resources/enemies");
-      dir.ListDirBegin(true);
+      var dir = DirAccess.Open("res://resources/enemies");
+      dir.IncludeNavigational = false;
+      dir.ListDirBegin();
       var path = dir.GetNext();
       while (path != "")
       {

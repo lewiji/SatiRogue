@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class DiagonalLock { }
+public partial class DiagonalLock { }

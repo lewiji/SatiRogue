@@ -2,7 +2,7 @@ shader_type spatial;
 
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
-uniform vec4 albedo : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 albedo : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D pbr_atlas;
 
 uniform vec2 tile_size = vec2(32.0, 32.0);
@@ -36,13 +36,13 @@ void fragment() {
 	if (alpha > 0.5) {
 		ALBEDO = albedo.rgb * albedo_tex.rgb;
 	} else {
-		ALPHA_SCISSOR = 0.5;
+		ALPHA_SCISSOR_THRESHOLD = 0.5;
 		ALPHA = 0.0;
 	}
 	
 	vec4 normal_tex = texture(pbr_atlas,vec2(base_uv.x + tile_offset.x + pixel_offset.x * 2.0, base_uv.y));
-	NORMALMAP = normal_tex.rgb;
-	NORMALMAP_DEPTH = 1.0;
+	NORMAL_MAP = normal_tex.rgb;
+	NORMAL_MAP_DEPTH = 1.0;
 	
 	SPECULAR = 0.5;
 	

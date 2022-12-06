@@ -1,15 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://c2pb0vpt4mb7l"]
 
-[ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=1]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Prickle.tres" type="RichTextEffect" id=2]
-[ext_resource path="res://fonts/SufferingExtended.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://addons/teeb.text_transitions/resources/Bounce.tres" type="RichTextEffect" id=4]
-[ext_resource path="res://audio/Pure Energy Release Dark.ogg" type="AudioStream" id=5]
-[ext_resource path="res://audio/UI Select Dark.wav" type="AudioStream" id=6]
-[ext_resource path="res://audio/Object Impact Thud.wav" type="AudioStream" id=7]
-[ext_resource path="res://src/Ecs/Intro/Nodes/IntroScene.cs" type="Script" id=8]
+[ext_resource type="AudioStream" uid="uid://qgl82d87awhl" path="res://audio/Pure Energy Release Dark.ogg" id="5"]
+[ext_resource type="AudioStream" uid="uid://cgvgn5we5okyb" path="res://audio/UI Select Dark.wav" id="6"]
+[ext_resource type="AudioStream" uid="uid://05e7t7roac64" path="res://audio/Object Impact Thud.wav" id="7"]
+[ext_resource type="Script" path="res://src/Ecs/Intro/Nodes/IntroScene.cs" id="8"]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id="1"]
 code = "/*
 	動的電子背景シェーダー by あるる（きのもと 結衣） @arlez80
 	Procedural Electric Background Shader by Yui Kinomoto @arlez80
@@ -18,8 +14,8 @@ code = "/*
 */
 shader_type canvas_item;
 
-uniform vec4 background_color : hint_color = vec4( 0.0, 0.0, 0.0, 1.0 );
-uniform vec4 line_color : hint_color = vec4( 0.0, 1.0, 1.0, 1.0 );
+uniform vec4 background_color : source_color = vec4( 0.0, 0.0, 0.0, 1.0 );
+uniform vec4 line_color : source_color = vec4( 0.0, 1.0, 1.0, 1.0 );
 uniform float line_freq = 9.56;
 uniform float height = 0.6;
 uniform float speed = 0.8;
@@ -37,703 +33,742 @@ void fragment( )
 	COLOR = mix( background_color, line_color, line * mod( uv.x - TIME * speed * abs( shift ), 1.0 ) /*  * mod( TIME + shift, 1.0 ) */ );
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/background_color = Color( 0.0431373, 0, 0.113725, 1 )
-shader_param/line_color = Color( 0.862745, 0.607843, 0, 1 )
-shader_param/line_freq = 0.0
-shader_param/height = 0.0
-shader_param/speed = 0.0
-shader_param/scale = Vector2( 1.618, 16.18 )
+[sub_resource type="ShaderMaterial" id="2"]
+shader = SubResource("1")
+shader_parameter/background_color = Color(0.0431373, 0, 0.113725, 1)
+shader_parameter/height = 0.0
+shader_parameter/line_color = Color(0.862745, 0.607843, 0, 1)
+shader_parameter/line_freq = 0.0
+shader_parameter/scale = Vector2(1.618, 16.18)
+shader_parameter/speed = 0.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 length = 0.001
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("ColorRect:material:shader_param/background_color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0.0431373, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("ColorRect:material:shader_param/background_color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("ColorRect:material:shader_param/background_color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0.113725, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("ColorRect:material:shader_param/background_color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/path = NodePath("ColorRect:material:shader_param/line_color:r")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
 tracks/4/keys = {
-"points": PoolRealArray( 0.862745, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/path = NodePath("ColorRect:material:shader_param/line_color:g")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
 tracks/5/keys = {
-"points": PoolRealArray( 0.607843, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
 tracks/6/path = NodePath("ColorRect:material:shader_param/line_color:b")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
 tracks/6/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
 tracks/7/path = NodePath("ColorRect:material:shader_param/line_color:a")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
 tracks/7/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
 tracks/8/path = NodePath("ColorRect:material:shader_param/speed")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
 tracks/8/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
 tracks/9/path = NodePath("ColorRect:material:shader_param/height")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
 tracks/9/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
 tracks/10/path = NodePath("ColorRect:material:shader_param/line_freq")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
 tracks/10/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
 tracks/11/path = NodePath("ColorRect:material:shader_param/scale:x")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
 tracks/11/keys = {
-"points": PoolRealArray( 1.618, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
 tracks/12/path = NodePath("ColorRect:material:shader_param/scale:y")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
-tracks/12/imported = false
-tracks/12/enabled = true
 tracks/12/keys = {
-"points": PoolRealArray( 16.18, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
 tracks/13/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:r")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
-tracks/13/imported = false
-tracks/13/enabled = true
 tracks/13/keys = {
-"points": PoolRealArray( 0.501961, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/14/type = "bezier"
+tracks/14/imported = false
+tracks/14/enabled = true
 tracks/14/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:g")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
 tracks/14/keys = {
-"points": PoolRealArray( 0.47451, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/15/type = "bezier"
+tracks/15/imported = false
+tracks/15/enabled = true
 tracks/15/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:b")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
 tracks/15/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/16/type = "bezier"
+tracks/16/imported = false
+tracks/16/enabled = true
 tracks/16/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:a")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
 tracks/16/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/17/type = "bezier"
+tracks/17/imported = false
+tracks/17/enabled = true
 tracks/17/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:r")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
 tracks/17/keys = {
-"points": PoolRealArray( 0.507812, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/18/type = "bezier"
+tracks/18/imported = false
+tracks/18/enabled = true
 tracks/18/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:g")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
-tracks/18/imported = false
-tracks/18/enabled = true
 tracks/18/keys = {
-"points": PoolRealArray( 0.168433, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/19/type = "bezier"
+tracks/19/imported = false
+tracks/19/enabled = true
 tracks/19/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:b")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
-tracks/19/imported = false
-tracks/19/enabled = true
 tracks/19/keys = {
-"points": PoolRealArray( 0.0793457, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/20/type = "bezier"
+tracks/20/imported = false
+tracks/20/enabled = true
 tracks/20/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:a")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
-tracks/20/imported = false
-tracks/20/enabled = true
 tracks/20/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/21/type = "bezier"
+tracks/21/imported = false
+tracks/21/enabled = true
 tracks/21/path = NodePath("CenterContainer/RichTextLabel:time")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
-tracks/21/imported = false
-tracks/21/enabled = true
 tracks/21/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/22/type = "bezier"
+tracks/22/imported = false
+tracks/22/enabled = true
 tracks/22/path = NodePath("CenterContainer/RichTextLabel:self_modulate:r")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
-tracks/22/imported = false
-tracks/22/enabled = true
 tracks/22/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/23/type = "bezier"
+tracks/23/imported = false
+tracks/23/enabled = true
 tracks/23/path = NodePath("CenterContainer/RichTextLabel:self_modulate:g")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
-tracks/23/imported = false
-tracks/23/enabled = true
 tracks/23/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/24/type = "bezier"
+tracks/24/imported = false
+tracks/24/enabled = true
 tracks/24/path = NodePath("CenterContainer/RichTextLabel:self_modulate:b")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
-tracks/24/imported = false
-tracks/24/enabled = true
 tracks/24/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/25/type = "bezier"
+tracks/25/imported = false
+tracks/25/enabled = true
 tracks/25/path = NodePath("CenterContainer/RichTextLabel:self_modulate:a")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
-tracks/25/imported = false
-tracks/25/enabled = true
 tracks/25/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
 tracks/26/path = NodePath("CenterContainer/RichTextLabel:all_at_once")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
-tracks/26/imported = false
-tracks/26/enabled = true
 tracks/26/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ true ]
+"values": [true]
 }
 tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
 tracks/27/path = NodePath("LogoAudio:playing")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
-tracks/27/imported = false
-tracks/27/enabled = true
 tracks/27/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ false ]
+"values": [false]
 }
 tracks/28/type = "bezier"
+tracks/28/imported = false
+tracks/28/enabled = true
 tracks/28/path = NodePath("LogoAudio:volume_db")
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
-tracks/28/imported = false
-tracks/28/enabled = true
 tracks/28/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
 tracks/29/path = NodePath("WhopAudio:playing")
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
-tracks/29/imported = false
-tracks/29/enabled = true
 tracks/29/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ false ]
+"values": [false]
 }
 tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
 tracks/30/path = NodePath("PhwoompAudio:playing")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
-tracks/30/imported = false
-tracks/30/enabled = true
 tracks/30/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ false ]
+"values": [false]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id="4"]
 resource_name = "intro"
 length = 5.0
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("ColorRect:material:shader_param/background_color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.0431373, -0.25, 0, 0.25, 0, 0.0431373, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 4.5, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("ColorRect:material:shader_param/background_color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 4.5, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("ColorRect:material:shader_param/background_color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.113725, -0.25, 0, 0.25, 0, 0.113725, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 4.5, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("ColorRect:material:shader_param/background_color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 4.5, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/path = NodePath("ColorRect:material:shader_param/line_color:r")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
 tracks/4/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.862745, -0.25, 0, 0.25, 0, 0.862745, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 3.5, 4.2 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/path = NodePath("ColorRect:material:shader_param/line_color:g")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
 tracks/5/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.607843, -0.25, 0, 0.25, 0, 0.607843, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 3.5, 4.2 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
 tracks/6/path = NodePath("ColorRect:material:shader_param/line_color:b")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
 tracks/6/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 3.5, 4.2 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
 tracks/7/path = NodePath("ColorRect:material:shader_param/line_color:a")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
 tracks/7/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 3.5, 4.2 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
 tracks/8/path = NodePath("ColorRect:material:shader_param/height")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
 tracks/8/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.618, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 4.6 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
 tracks/9/path = NodePath("ColorRect:material:shader_param/line_freq")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
 tracks/9/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 2.3, 2.2019, 5, -0.0999999, 0.858719, 0.25, 0 ),
-"times": PoolRealArray( 0, 4.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
 tracks/10/path = NodePath("ColorRect:material:shader_param/scale:x")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
 tracks/10/keys = {
-"points": PoolRealArray( 0.618, -0.25, 0, 0.2, 0.556643, 1.618, -0.4, -0.139362, 0.25, 0 ),
-"times": PoolRealArray( 0, 1.8 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
 tracks/11/path = NodePath("ColorRect:material:shader_param/scale:y")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
 tracks/11/keys = {
-"points": PoolRealArray( 0.618, -0.25, 0, 1.84737, 22.0127, 16.18, -0.809689, 31.289, 0.25, 0 ),
-"times": PoolRealArray( 0, 1.85 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
 tracks/12/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:r")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
-tracks/12/imported = false
-tracks/12/enabled = true
 tracks/12/keys = {
-"points": PoolRealArray( 0.498039, -0.25, 0, 0.25, 0, 0.498039, -0.25, 0, 0.25, 0, 0.501961, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
 tracks/13/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:g")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
-tracks/13/imported = false
-tracks/13/enabled = true
 tracks/13/keys = {
-"points": PoolRealArray( 0.470588, -0.25, 0, 0.25, 0, 0.470588, -0.25, 0, 0.25, 0, 0.47451, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/14/type = "bezier"
+tracks/14/imported = false
+tracks/14/enabled = true
 tracks/14/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:b")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
 tracks/14/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/15/type = "bezier"
+tracks/15/imported = false
+tracks/15/enabled = true
 tracks/15/path = NodePath("CenterContainer/RichTextLabel:custom_colors/default_color:a")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
 tracks/15/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 1.55179, 0.0569975, 1, -0.4, -0.395934, 0.25, 0, 1, -0.710191, -0.00813895, 0.0949574, -0.116968, 0, -0.135833, 0.149317, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1, 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/16/type = "bezier"
+tracks/16/imported = false
+tracks/16/enabled = true
 tracks/16/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:r")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
-tracks/16/imported = false
-tracks/16/enabled = true
 tracks/16/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 1.54246, 0.00940454, 0.507812, -0.482894, 0.26852, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/17/type = "bezier"
+tracks/17/imported = false
+tracks/17/enabled = true
 tracks/17/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:g")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
-tracks/17/imported = false
-tracks/17/enabled = true
 tracks/17/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 1.52847, 0.00601855, 0.168433, -0.0401914, 0.199887, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/18/type = "bezier"
+tracks/18/imported = false
+tracks/18/enabled = true
 tracks/18/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:b")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
-tracks/18/imported = false
-tracks/18/enabled = true
 tracks/18/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 1.75981, 0.000939548, 0.0793457, -0.140191, 0.14507, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/19/type = "bezier"
+tracks/19/imported = false
+tracks/19/enabled = true
 tracks/19/path = NodePath("CenterContainer/RichTextLabel:custom_colors/font_color_shadow:a")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
-tracks/19/imported = false
-tracks/19/enabled = true
 tracks/19/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.0611157, -0.201222, 0, -0.250896, 0.219529, 0.25, 0 ),
-"times": PoolRealArray( 0, 1, 3.1, 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/20/type = "bezier"
+tracks/20/imported = false
+tracks/20/enabled = true
 tracks/20/path = NodePath("CenterContainer/RichTextLabel:time")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
-tracks/20/imported = false
-tracks/20/enabled = true
 tracks/20/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 1.6, 3.6, 4.4, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/21/type = "bezier"
+tracks/21/imported = false
+tracks/21/enabled = true
 tracks/21/path = NodePath("CenterContainer/RichTextLabel:self_modulate:r")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
-tracks/21/imported = false
-tracks/21/enabled = true
 tracks/21/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/22/type = "bezier"
+tracks/22/imported = false
+tracks/22/enabled = true
 tracks/22/path = NodePath("CenterContainer/RichTextLabel:self_modulate:g")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
-tracks/22/imported = false
-tracks/22/enabled = true
 tracks/22/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/23/type = "bezier"
+tracks/23/imported = false
+tracks/23/enabled = true
 tracks/23/path = NodePath("CenterContainer/RichTextLabel:self_modulate:b")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
-tracks/23/imported = false
-tracks/23/enabled = true
 tracks/23/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/24/type = "bezier"
+tracks/24/imported = false
+tracks/24/enabled = true
 tracks/24/path = NodePath("CenterContainer/RichTextLabel:self_modulate:a")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
-tracks/24/imported = false
-tracks/24/enabled = true
 tracks/24/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 4.6, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
 tracks/25/path = NodePath("CenterContainer/RichTextLabel:all_at_once")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
-tracks/25/imported = false
-tracks/25/enabled = true
 tracks/25/keys = {
-"times": PoolRealArray( 0, 4.4 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 4.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
 tracks/26/path = NodePath("LogoAudio:playing")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
-tracks/26/imported = false
-tracks/26/enabled = true
 tracks/26/keys = {
-"times": PoolRealArray( 0, 1.7, 5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 1.7, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [ false, true, false ]
+"values": [false, true, false]
 }
 tracks/27/type = "bezier"
+tracks/27/imported = false
+tracks/27/enabled = true
 tracks/27/path = NodePath("LogoAudio:volume_db")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
-tracks/27/imported = false
-tracks/27/enabled = true
 tracks/27/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.469683, -0.254009, -3, -0.130316, -0.0397861, 0.25, 0, -3, -0.25, 0, 0.569684, -1.16662, -25, -0.830317, 1.29476, 0.25, 0 ),
-"times": PoolRealArray( 1.7, 2.3, 3.4, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
 tracks/28/path = NodePath("WhopAudio:playing")
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
-tracks/28/imported = false
-tracks/28/enabled = true
 tracks/28/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
 tracks/29/path = NodePath("PhwoompAudio:playing")
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
-tracks/29/imported = false
-tracks/29/enabled = true
 tracks/29/keys = {
-"times": PoolRealArray( 4.75371, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(4.75371, 5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 
-[sub_resource type="DynamicFont" id=5]
-size = 128
-font_data = ExtResource( 3 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7col1"]
+_data = {
+"RESET": SubResource("3"),
+"intro": SubResource("4")
+}
 
 [node name="Intro" type="MarginContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 8 )
+script = ExtResource("8")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource( 2 )
-margin_right = 900.0
-margin_bottom = 900.0
+material = SubResource("2")
+layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 3 )
-anims/intro = SubResource( 4 )
+libraries = {
+"": SubResource("AnimationLibrary_7col1")
+}
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-margin_right = 900.0
-margin_bottom = 900.0
+layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
-margin_left = 100.0
-margin_top = 373.0
-margin_right = 800.0
-margin_bottom = 526.71
-rect_min_size = Vector2( 700, 153.71 )
-custom_colors/default_color = Color( 0.501961, 0.47451, 1, 1 )
-custom_colors/font_color_shadow = Color( 0.507812, 0.168433, 0.0793457, 1 )
-custom_constants/shadow_offset_x = 3
-custom_constants/shadow_offset_y = 3
-custom_fonts/normal_font = SubResource( 5 )
+layout_mode = 2
 bbcode_enabled = true
-bbcode_text = "[center][bounce][prickle pow=5]sati.stream[/prickle][/bounce][/center]"
 text = "[center][bounce][prickle pow=5]sati.stream[/prickle][/bounce][/center]"
 fit_content_height = true
 scroll_active = false
-custom_effects = [ ExtResource( 2 ), ExtResource( 4 ) ]
-script = ExtResource( 1 )
-id = "intro"
-length = 32.0
-all_at_once = true
-animation_time = 2.0
 
 [node name="LogoAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-bus = "ambience"
+stream = ExtResource("5")
+bus = &"ambience"
 
 [node name="WhopAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
+stream = ExtResource("6")
 volume_db = -6.0
 pitch_scale = 0.13
 
 [node name="PhwoompAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource("7")
 volume_db = -6.0
-bus = "ambience"
+bus = &"ambience"

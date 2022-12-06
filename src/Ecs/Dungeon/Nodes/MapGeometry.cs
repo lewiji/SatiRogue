@@ -1,7 +1,7 @@
 using Godot;
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
-public class MapGeometry : Spatial {
+public partial class MapGeometry : Node3D {
    public override void _EnterTree() {
       Name = "MapGeometry";
    }

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Godot;
 using GoDotLog;
 namespace SatiRogue.Debug;
 
-public class Logger : Node {
+public partial class Logger : Node {
    public enum LogLevel {
       None,
       Error,
@@ -42,7 +42,7 @@ public class Logger : Node {
       Print(what);
    }
 
-   public override void _Process(float delta) {
+   public override void _Process(double delta) {
       if (QueuedLogs.Count <= 0) return;
       var numToLog = Mathf.Min(MaxLogsPerFrame, QueuedLogs.Count);
 

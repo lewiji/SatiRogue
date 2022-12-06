@@ -9,7 +9,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SpawnItemsSystem : ISystem {
+public partial class SpawnItemsSystem : ISystem {
    
    static readonly PackedScene ChestScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Chest.tscn");
    static readonly PackedScene HealthScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Health.tscn");
@@ -22,7 +22,7 @@ public class SpawnItemsSystem : ISystem {
       var entitiesNode = world.GetElement<Entities>();
 
       for (var chestIndex = 0; chestIndex < numChests; chestIndex++) {
-         var chestNode = ChestScene.Instance<Chest>();
+         var chestNode = ChestScene.Instantiate<Chest>();
          entitiesNode.AddChild(chestNode);
          world.Spawn(chestNode);
       }
@@ -31,7 +31,7 @@ public class SpawnItemsSystem : ISystem {
       Logger.Info($"Spawning {numHealth} health crystals.");
 
       for (var healthIndex = 0; healthIndex < numHealth; healthIndex++) {
-         var healthNode = HealthScene.Instance<Health>();
+         var healthNode = HealthScene.Instantiate<Health>();
          entitiesNode.AddChild(healthNode);
          world.Spawn(healthNode);
       }
@@ -40,7 +40,7 @@ public class SpawnItemsSystem : ISystem {
       Logger.Info($"Spawning {numAnkhs} Ankhs");
 
       for (var ankhIndex = 0; ankhIndex < numHealth; ankhIndex++) {
-         var spatialItem = SpatialItemScene.Instance<SpatialItem>();
+         var spatialItem = SpatialItemScene.Instantiate<SpatialItem>();
          entitiesNode.AddChild(spatialItem);
          world.Spawn(spatialItem);
       }
@@ -49,7 +49,7 @@ public class SpawnItemsSystem : ISystem {
       Logger.Info($"Spawning {numLamps} lamps");
 
       for (var lampIndex = 0; lampIndex < numHealth; lampIndex++) {
-         var lamp = LampScene.Instance<Lamp>();
+         var lamp = LampScene.Instantiate<Lamp>();
          entitiesNode.AddChild(lamp);
          world.Spawn(lamp);
       }

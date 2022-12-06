@@ -9,17 +9,17 @@ using Thread = System.Threading.Thread;
 
 namespace SatiRogue.Ecs.Loading.Systems;
 
-public class PreloadResources : Reference, ISystem {
+public partial class PreloadResources : RefCounted, ISystem {
    
 
    [Signal]
-   public delegate void ResourceLoaded(Resource res);
+   public delegate void ResourceLoadedEventHandler(Resource res);
 
    [Signal]
-   public delegate void ResourceFailed(string path);
+   public delegate void ResourceFailedEventHandler(string path);
 
    [Signal]
-   public delegate void AllResourcesLoaded();
+   public delegate void AllResourcesLoadedEventHandler();
 
    World? _world;
 
@@ -58,8 +58,8 @@ public class PreloadResources : Reference, ISystem {
 
    void LoadAllResources() {
       var resQueue = _world!.GetElement<ResourceQueue>();
-      resQueue.Connect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
-      resQueue.Connect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
+      resQueue.Connect(nameof(ResourceQueue.ResourceLoaded),new Callable(this,nameof(OnResourceLoaded)));
+      resQueue.Connect(nameof(ResourceQueue.AllLoaded),new Callable(this,nameof(OnResourcesFinished)));
       foreach (var resourcePath in ResourcePaths) {
          resQueue.QueueResource(resourcePath);
       }
@@ -74,8 +74,8 @@ public class PreloadResources : Reference, ISystem {
    void OnResourcesFinished() {
       Logger.Info("All resources loaded");
       var resQueue = _world!.GetElement<ResourceQueue>();
-      resQueue.Disconnect(nameof(ResourceQueue.ResourceLoaded), this, nameof(OnResourceLoaded));
-      resQueue.Disconnect(nameof(ResourceQueue.AllLoaded), this, nameof(OnResourcesFinished));
+      resQueue.Disconnect(nameof(ResourceQueue.ResourceLoaded),new Callable(this,nameof(OnResourceLoaded)));
+      resQueue.Disconnect(nameof(ResourceQueue.AllLoaded),new Callable(this,nameof(OnResourcesFinished)));
       EmitSignal(nameof(AllResourcesLoaded));
    }
 }

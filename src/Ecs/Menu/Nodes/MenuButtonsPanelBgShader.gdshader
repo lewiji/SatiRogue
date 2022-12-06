@@ -8,5 +8,5 @@ void fragment(){
     vec4 c = texture(TEXTURE, UV) * COLOR;
 	vec4 b = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
     COLOR = mix(c, b, interp_amount);
-	NORMALMAP = texture(normal_map, UV).rgb;
+	NORMAL_MAP = texture(normal_map, UV).rgb;
 }

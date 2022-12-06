@@ -1,35 +1,36 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.stex"
+type="CompressedTexture2D"
+uid="uid://c5mccx1qy26to"
+path.s3tc="res://.godot/imported/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.s3tc.ctex"
+path.etc2="res://.godot/imported/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.etc2.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc", "etc2"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ui/GUI_set_01_v2_0/grid_marker_n.png"
-dest_files=[ "res://.import/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.stex" ]
+dest_files=["res://.godot/imported/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.s3tc.ctex", "res://.godot/imported/grid_marker_n.png-80cc5c8b4d1babfb0e5a08fae833ddbe.etc2.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=true
-flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

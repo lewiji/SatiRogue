@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class EnemyBehaviourSystem : ISystem {
+public partial class EnemyBehaviourSystem : ISystem {
    
 
    public void Run(World world) {

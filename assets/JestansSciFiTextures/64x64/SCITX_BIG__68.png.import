@@ -1,8 +1,9 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/SCITX_BIG__68.png-0e3e1a72c4c4e68df8f256de16ccf31c.stex"
+type="CompressedTexture2D"
+uid="uid://b4tg372d2p1k8"
+path="res://.godot/imported/SCITX_BIG__68.png-0e3e1a72c4c4e68df8f256de16ccf31c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,26 +11,24 @@ metadata={
 [deps]
 
 source_file="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__68.png"
-dest_files=[ "res://.import/SCITX_BIG__68.png-0e3e1a72c4c4e68df8f256de16ccf31c.stex" ]
+dest_files=["res://.godot/imported/SCITX_BIG__68.png-0e3e1a72c4c4e68df8f256de16ccf31c.ctex"]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
-flags/filter=false
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

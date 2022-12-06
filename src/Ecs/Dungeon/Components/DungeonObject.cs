@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class DungeonObject { }
+public partial class DungeonObject { }

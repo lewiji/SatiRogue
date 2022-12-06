@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=35 format=2]
 
-[ext_resource path="res://assets/elthen/elthen_albedo.png" type="Texture" id=1]
+[ext_resource path="res://assets/elthen/elthen_albedo.png" type="Texture2D" id=1]
 
 [sub_resource type="AtlasTexture" id=34]
 flags = 9

@@ -1,4 +1,4 @@
-[gd_resource type="CubeMesh" load_steps=2 format=2]
+[gd_resource type="BoxMesh" load_steps=2 format=2]
 
 [ext_resource path="res://scenes/ThreeDee/res/FogTileShaderMaterial.tres" type="Material" id=1]
 

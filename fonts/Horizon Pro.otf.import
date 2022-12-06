@@ -1,0 +1,32 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://d386lqmuu55lw"
+path="res://.godot/imported/Horizon Pro.otf-5319d0c372e348f7c1eafa6198e781c8.fontdata"
+
+[deps]
+
+source_file="res://fonts/Horizon Pro.otf"
+dest_files=["res://.godot/imported/Horizon Pro.otf-5319d0c372e348f7c1eafa6198e781c8.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

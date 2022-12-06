@@ -1,29 +1,16 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=26 format=3 uid="uid://dqowntcb38jnn"]
 
-[ext_resource path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__52.png" type="Texture" id=1]
-[ext_resource path="res://src/Ecs/Menu/Nodes/OptionFont64.tres" type="DynamicFont" id=2]
-[ext_resource path="res://assets/ui/GUI_set_01_v2_0/atlas_GUIset_v2_0.png" type="Texture" id=3]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxHover.tres" type="StyleBox" id=4]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxNormal.tres" type="StyleBox" id=5]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxPressed.tres" type="StyleBox" id=6]
-[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro96.tres" type="DynamicFont" id=7]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxDisabled.tres" type="StyleBox" id=8]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonStyleBoxFocus.tres" type="StyleBox" id=9]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuBorderStylebox.tres" type="StyleBox" id=10]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuBgShaderMaterial.tres" type="Material" id=11]
-[ext_resource path="res://assets/light/rainbow_1.png" type="Texture" id=12]
-[ext_resource path="res://src/Ecs/Menu/Nodes/Menu.cs" type="Script" id=13]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonShaderMaterial.tres" type="Material" id=14]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonPanelStylebox.tres" type="StyleBox" id=15]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShaderMaterial.tres" type="Material" id=16]
-[ext_resource path="res://src/Ecs/Menu/Nodes/MenuButtonGroup.tres" type="ButtonGroup" id=17]
-[ext_resource path="res://addons/teeb.text_effects/resources/Rain.tres" type="RichTextEffect" id=18]
-[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=19]
-[ext_resource path="res://addons/teeb.text_transitions/RichTextTransition.gd" type="Script" id=20]
-[ext_resource path="res://addons/teeb.text_transitions/resources/WFC.tres" type="RichTextEffect" id=22]
-[ext_resource path="res://assets/ui/HAS UI/UI_atlas_n.png" type="Texture" id=23]
+[ext_resource type="Texture2D" uid="uid://ds1lnors8rwbp" path="res://assets/JestansFantasyTextures/64x64/FNTSY_TX_64__52.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://uuc06qa5kax2" path="res://assets/ui/GUI_set_01_v2_0/atlas_GUIset_v2_0.png" id="3"]
+[ext_resource type="Material" path="res://src/Ecs/Menu/Nodes/MenuBgShaderMaterial.tres" id="11"]
+[ext_resource type="Texture2D" uid="uid://bpppxsmumhb84" path="res://assets/light/rainbow_1.png" id="12"]
+[ext_resource type="Script" path="res://src/Ecs/Menu/Nodes/Menu.cs" id="13"]
+[ext_resource type="Material" path="res://src/Ecs/Menu/Nodes/MenuButtonShaderMaterial.tres" id="14"]
+[ext_resource type="Material" path="res://src/Ecs/Menu/Nodes/MenuButtonsPanelBgShaderMaterial.tres" id="16"]
+[ext_resource type="Texture2D" uid="uid://dt5bpd0bi8gd1" path="res://assets/ui/HAS UI/UI_atlas.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://c3a0g3r2unb4y" path="res://assets/ui/HAS UI/UI_atlas_n.png" id="23"]
 
-[sub_resource type="Shader" id=21]
+[sub_resource type="Shader" id="21"]
 code = "shader_type canvas_item;
 
 uniform sampler2D normal_map: hint_normal;
@@ -31,193 +18,202 @@ uniform sampler2D normal_map: hint_normal;
 void fragment(){
     vec4 c = texture(TEXTURE, UV) * COLOR;
     COLOR = c;
-	NORMALMAP = texture(normal_map, UV).rgb;
+	NORMAL_MAP = texture(normal_map, UV).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=20]
-shader = SubResource( 21 )
-shader_param/normal_map = ExtResource( 23 )
+[sub_resource type="ShaderMaterial" id="20"]
+shader = SubResource("21")
+shader_parameter/normal_map = ExtResource("23")
 
-[sub_resource type="AtlasTexture" id=19]
-flags = 27
-atlas = ExtResource( 19 )
-region = Rect2( 928, 320, 48, 48 )
+[sub_resource type="AtlasTexture" id="19"]
+atlas = ExtResource("19")
+region = Rect2(928, 320, 48, 48)
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id="12"]
 length = 0.001
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:time")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id="13"]
 resource_name = "fade_in"
 length = 1.62
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:time")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.831345, 0.888859, 1, -0.233391, -0.644752, 0.25, 0 ),
-"times": PoolRealArray( 0, 1.62 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id="14"]
 resource_name = "fade_out"
 length = 0.62
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:time")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.309755, -0.63422, 0, -0.0765082, 0.741414, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.62 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="OccluderPolygon2D" id=9]
-polygon = PoolVector2Array( 2, 0, 632, 0, 630, 6, 4, 6 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pqt4i"]
+_data = {
+"RESET": SubResource("12"),
+"fade_in": SubResource("13"),
+"fade_out": SubResource("14")
+}
 
-[sub_resource type="AtlasTexture" id=1]
-flags = 9
-atlas = ExtResource( 3 )
-region = Rect2( 792, 128, 30, 30 )
-margin = Rect2( 8, 12, 16, 24 )
+[sub_resource type="OccluderPolygon2D" id="9"]
+polygon = PackedVector2Array(2, 0, 632, 0, 630, 6, 4, 6)
 
-[sub_resource type="OccluderPolygon2D" id=3]
-polygon = PoolVector2Array( 447, 0, 3, 0, 5, 2, 445, 2 )
+[sub_resource type="AtlasTexture" id="1"]
+atlas = ExtResource("3")
+region = Rect2(792, 128, 30, 30)
+margin = Rect2(8, 12, 16, 24)
 
-[sub_resource type="AtlasTexture" id=16]
-flags = 9
-atlas = ExtResource( 3 )
-region = Rect2( 764, 353, 25, 30 )
-margin = Rect2( 8, 12, 16, 24 )
+[sub_resource type="OccluderPolygon2D" id="3"]
+polygon = PackedVector2Array(447, 0, 3, 0, 5, 2, 445, 2)
 
-[sub_resource type="AtlasTexture" id=17]
-flags = 9
-atlas = ExtResource( 3 )
-region = Rect2( 1, 505, 30, 30 )
-margin = Rect2( 8, 12, 16, 24 )
+[sub_resource type="AtlasTexture" id="16"]
+atlas = ExtResource("3")
+region = Rect2(764, 353, 25, 30)
+margin = Rect2(8, 12, 16, 24)
 
-[sub_resource type="AtlasTexture" id=18]
-flags = 9
-atlas = ExtResource( 3 )
-region = Rect2( 761, 321, 30, 30 )
-margin = Rect2( 8, 12, 16, 24 )
+[sub_resource type="AtlasTexture" id="17"]
+atlas = ExtResource("3")
+region = Rect2(1, 505, 30, 30)
+margin = Rect2(8, 12, 16, 24)
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="AtlasTexture" id="18"]
+atlas = ExtResource("3")
+region = Rect2(761, 321, 30, 30)
+margin = Rect2(8, 12, 16, 24)
+
+[sub_resource type="Animation" id="10"]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Light2D:energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"points": PoolRealArray( 1.62, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Light2D:range_height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:range_height")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"points": PoolRealArray( 64, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id="11"]
 resource_name = "scroll_light"
 length = 10.0
-loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Light2D:energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"points": PoolRealArray( 1.2, -0.25, 0, 0.9, 0.0369176, 2.1, -1.8, -0.150195, 1.9, -0.750761, 1.2, -2.8, 0.27957, 0.25, 0 ),
-"times": PoolRealArray( 0, 3, 10 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Light2D:range_height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:range_height")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 3.77272, 1.02317, 1024, -4.03538, -0.305298, 5.37497, -0.641785, 0, -2.26164, 1.2188, 0.25, 0 ),
-"times": PoolRealArray( 0, 5, 10 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7fh1v"]
+_data = {
+"RESET": SubResource("10"),
+"scroll_light": SubResource("11")
 }
 
 [node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 13 )
+mouse_filter = 1
+script = ExtResource("13")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 0.133333, 0, 0.294118, 1 )
+modulate = Color(0.133333, 0, 0.294118, 1)
 light_mask = 6
-material = ExtResource( 11 )
+material = ExtResource("11")
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 1 )
+texture = ExtResource("1")
 stretch_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 16
-custom_constants/margin_top = 32
-custom_constants/margin_left = 16
-custom_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 16.0
-margin_top = 32.0
-margin_right = 884.0
-margin_bottom = 896.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LogoContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
 light_mask = 2
-margin_right = 868.0
-margin_bottom = 108.0
+offset_right = 1152.0
+offset_bottom = 46.0
 size_flags_horizontal = 3
 
 [node name="TextureRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/LogoContainer"]
-self_modulate = Color( 1, 1, 1, 0.882353 )
+self_modulate = Color(1, 1, 1, 0.882353)
 light_mask = 2
-material = SubResource( 20 )
-margin_left = 184.0
-margin_top = 11.0
-margin_right = 684.0
-margin_bottom = 97.0
-rect_min_size = Vector2( 500, 86 )
+material = SubResource("20")
+offset_left = 553.0
+offset_right = 599.0
+offset_bottom = 46.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = SubResource( 19 )
+texture = SubResource("19")
 patch_margin_left = 23
 patch_margin_top = 23
 patch_margin_right = 23
@@ -225,77 +221,57 @@ patch_margin_bottom = 23
 
 [node name="Label" type="RichTextLabel" parent="MarginContainer/VBoxContainer/LogoContainer"]
 light_mask = 4
-margin_left = 134.0
-margin_right = 734.0
-margin_bottom = 108.0
-rect_min_size = Vector2( 600, 108 )
-rect_clip_content = false
+clip_contents = false
+offset_left = 576.0
+offset_top = 11.0
+offset_right = 576.0
+offset_bottom = 34.0
 size_flags_horizontal = 3
-custom_colors/default_color = Color( 0.741176, 0.454902, 0.0823529, 1 )
-custom_colors/font_color_shadow = Color( 0.397973, 0.1872, 0.52, 1 )
-custom_constants/shadow_offset_x = 4
-custom_constants/shadow_offset_y = 2
-custom_fonts/normal_font = ExtResource( 7 )
 bbcode_enabled = true
-bbcode_text = "[center][wfc][rain]SatiRogue[/rain][/wfc][/center]"
 text = "SatiRogue"
 fit_content_height = true
 scroll_active = false
-custom_effects = [ ExtResource( 18 ), ExtResource( 22 ) ]
-script = ExtResource( 20 )
-length = 32.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/VBoxContainer/LogoContainer/Label"]
 autoplay = "fade_in"
-anims/RESET = SubResource( 12 )
-anims/fade_in = SubResource( 13 )
-anims/fade_out = SubResource( 14 )
+libraries = {
+"": SubResource("AnimationLibrary_pqt4i")
+}
 
 [node name="MenuButtonsContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 112.0
-margin_right = 868.0
-margin_bottom = 736.0
-mouse_filter = 1
+offset_top = 50.0
+offset_right = 1152.0
+offset_bottom = 546.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.62
-custom_constants/margin_right = 96
-custom_constants/margin_top = 72
-custom_constants/margin_left = 96
-custom_constants/margin_bottom = 48
 
 [node name="Border" type="Panel" parent="MarginContainer/VBoxContainer/MenuButtonsContainer"]
 light_mask = 2
-margin_left = 96.0
-margin_top = 72.0
-margin_right = 772.0
-margin_bottom = 576.0
-rect_min_size = Vector2( 300, 216 )
-mouse_filter = 1
+offset_right = 1152.0
+offset_bottom = 496.0
 size_flags_vertical = 3
-custom_styles/panel = ExtResource( 10 )
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border"]
 show_behind_parent = true
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 600, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 20
-custom_constants/margin_left = 20
 
 [node name="Bg" type="Panel" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/MarginContainer"]
-self_modulate = Color( 0.552941, 0.203922, 0.878431, 1 )
+self_modulate = Color(0.552941, 0.203922, 0.878431, 1)
 light_mask = 6
-material = ExtResource( 16 )
-margin_left = 20.0
-margin_right = 656.0
-margin_bottom = 504.0
+material = ExtResource("16")
+offset_right = 1152.0
+offset_bottom = 496.0
 size_flags_horizontal = 3
-custom_styles/panel = ExtResource( 15 )
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/MarginContainer/Bg"]
+layout_mode = 3
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -304,212 +280,162 @@ size_flags_vertical = 3
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/MarginContainer/Bg/Control"]
 visible = false
 light_mask = 4
-occluder = SubResource( 9 )
-light_mask = 4
+occluder = SubResource("9")
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer"]
-margin_left = 113.0
-margin_top = 44.0
-margin_right = 563.0
-margin_bottom = 460.0
+offset_left = 528.0
+offset_top = 180.0
+offset_right = 623.0
+offset_bottom = 316.0
 size_flags_vertical = 3
-custom_constants/separation = 32
 
 [node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 light_mask = 2
-material = ExtResource( 14 )
-margin_right = 450.0
-margin_bottom = 80.0
-rect_min_size = Vector2( 450, 64 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 0.929412, 0.643137, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 9 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 5 )
+material = ExtResource("14")
+offset_right = 95.0
+offset_bottom = 31.0
 action_mode = 0
-group = ExtResource( 17 )
 text = "NEW GAME"
-icon = SubResource( 1 )
+icon = SubResource("1")
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/NewGame"]
+layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -225.0
-margin_top = -8.0
-margin_right = 225.0
-margin_bottom = -6.0
+offset_left = -225.0
+offset_top = -8.0
+offset_right = 225.0
+offset_bottom = -6.0
 mouse_filter = 2
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/NewGame/Control"]
 visible = false
 light_mask = 4
-occluder = SubResource( 3 )
-light_mask = 4
+occluder = SubResource("3")
 
 [node name="ContinueGame" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 light_mask = 4
-material = ExtResource( 14 )
-margin_top = 112.0
-margin_right = 450.0
-margin_bottom = 192.0
-rect_min_size = Vector2( 360, 0 )
-custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 9 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 5 )
+material = ExtResource("14")
+offset_top = 35.0
+offset_right = 95.0
+offset_bottom = 66.0
 disabled = true
-group = ExtResource( 17 )
 text = "CONTINUE"
-icon = SubResource( 16 )
+icon = SubResource("16")
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/ContinueGame"]
+layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -225.0
-margin_top = -8.0
-margin_right = 225.0
-margin_bottom = -6.0
+offset_left = -225.0
+offset_top = -8.0
+offset_right = 225.0
+offset_bottom = -6.0
 mouse_filter = 2
-__meta__ = {
-"_editor_description_": ""
-}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/ContinueGame/Control"]
 visible = false
 light_mask = 4
-occluder = SubResource( 3 )
-light_mask = 4
+occluder = SubResource("3")
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 light_mask = 4
-material = ExtResource( 14 )
-margin_top = 224.0
-margin_right = 450.0
-margin_bottom = 304.0
-rect_min_size = Vector2( 360, 0 )
-custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 9 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 5 )
-group = ExtResource( 17 )
+material = ExtResource("14")
+offset_top = 70.0
+offset_right = 95.0
+offset_bottom = 101.0
 text = "OPTIONS"
-icon = SubResource( 17 )
+icon = SubResource("17")
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Options"]
+layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -225.0
-margin_top = -8.0
-margin_right = 225.0
-margin_bottom = -6.0
+offset_left = -225.0
+offset_top = -8.0
+offset_right = 225.0
+offset_bottom = -6.0
 mouse_filter = 2
-__meta__ = {
-"_editor_description_": ""
-}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Options/Control"]
 visible = false
 light_mask = 4
-occluder = SubResource( 3 )
-light_mask = 4
+occluder = SubResource("3")
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 light_mask = 4
-material = ExtResource( 14 )
-margin_top = 336.0
-margin_right = 450.0
-margin_bottom = 416.0
-rect_min_size = Vector2( 360, 0 )
-custom_colors/font_color = Color( 0.388235, 0.619608, 0.690196, 1 )
-custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 9 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 5 )
-group = ExtResource( 17 )
+material = ExtResource("14")
+offset_top = 105.0
+offset_right = 95.0
+offset_bottom = 136.0
 text = "QUIT"
-icon = SubResource( 18 )
+icon = SubResource("18")
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Quit"]
+layout_mode = 3
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -225.0
-margin_top = -8.0
-margin_right = 225.0
-margin_bottom = -6.0
+offset_left = -225.0
+offset_top = -8.0
+offset_right = 225.0
+offset_bottom = -6.0
 mouse_filter = 2
-__meta__ = {
-"_editor_description_": ""
-}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MarginContainer/VBoxContainer/MenuButtonsContainer/Border/CenterContainer/VBoxContainer/Quit/Control"]
 visible = false
 light_mask = 4
-occluder = SubResource( 3 )
-light_mask = 4
+occluder = SubResource("3")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 740.0
-margin_right = 868.0
-margin_bottom = 864.0
+offset_top = 550.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.32
 
-[node name="Light2D" type="Light2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="."]
 unique_name_in_owner = true
-texture = ExtResource( 12 )
-offset = Vector2( 556, 654 )
-texture_scale = 12.1111
 energy = 1.62
-range_height = 64.0
 range_item_cull_mask = 7
 shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 0.498039 )
-shadow_buffer_size = 1024
-shadow_gradient_length = 1.6
+shadow_color = Color(0, 0, 0, 0.498039)
 shadow_item_cull_mask = 4
+texture = ExtResource("12")
+offset = Vector2(556, 654)
+texture_scale = 12.1111
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "scroll_light"
 playback_speed = 1.62
-anims/RESET = SubResource( 10 )
-anims/scroll_light = SubResource( 11 )
+libraries = {
+"": SubResource("AnimationLibrary_7fh1v")
+}
 
-[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
-rect = Rect2( 0, 0, 64, 64 )
-freeze_bodies = false
-pause_particles = false
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(0, 0, 64, 64)

@@ -4,7 +4,7 @@ using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs.Session;
 
-public class InitPersistentPlayerData : ISystem {
+public partial class InitPersistentPlayerData : ISystem {
    
 
    public void Run(World world) {

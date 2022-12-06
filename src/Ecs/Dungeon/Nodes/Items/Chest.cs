@@ -1,20 +1,26 @@
 using Godot;
-using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 public partial class Chest : Item {
    bool _open;
-   [OnReadyGet("Visual")] public AnimatedSprite3D? AnimatedSprite3D;
-   [OnReadyGet("Particles")] public Particles? Particles;
+   public AnimatedSprite3D? AnimatedSprite3D;
+   public GPUParticles3D? GPUParticles3D;
+
+   public override void _Ready()
+   {
+	   AnimatedSprite3D = GetNode<AnimatedSprite3D>("Visual");
+	   GPUParticles3D = GetNode<GPUParticles3D>("GPUParticles3D");
+	   ConnectAnimationFinished();
+   }
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
       entityBuilder.Add(this as Item).Add(new GridPositionComponent()).Add<Closed>();
    }
 
-   [OnReady] void ConnectAnimationFinished() {
-      AnimatedSprite3D?.Connect("animation_finished", this, nameof(OnAniFinished));
+   void ConnectAnimationFinished() {
+      AnimatedSprite3D?.Connect("animation_finished",new Callable(this,nameof(OnAniFinished)));
    }
 
    void OnAniFinished() {

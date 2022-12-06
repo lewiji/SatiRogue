@@ -12,7 +12,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class CharacterMovementSystem : Reference, ISystem {
+public partial class CharacterMovementSystem : RefCounted, ISystem {
    
 
    protected MapGenData? MapData;
@@ -45,14 +45,14 @@ public class CharacterMovementSystem : Reference, ISystem {
 
    public void TeleportToCell(Character character, Vector3 position) {
       InitialiseSystem(World);
-      if (!character.HasMeta("Entity") || character.GetMeta("Entity") is not Marshallable<Entity> entity) return;
-      Logger.Info($"Teleporting entity {entity.Value.Identity}");
+      if (!character.HasMeta("Entity") || character.GetEntity() is not { } entity) return;
+      Logger.Info($"Teleporting entity {entity.Identity}");
       
-      World!.GetComponent<Walkable>(entity.Value).Teleporting = true;
+      World!.GetComponent<Walkable>(entity).Teleporting = true;
       
       MoveToCell(character, 
-         World!.GetComponent<GridPositionComponent>(entity.Value), 
-         World!.GetComponent<InputDirectionComponent>(entity.Value), 
+         World!.GetComponent<GridPositionComponent>(entity), 
+         World!.GetComponent<InputDirectionComponent>(entity), 
          MapData!.GetCellAt(position));
    }
 
@@ -69,12 +69,12 @@ public class CharacterMovementSystem : Reference, ISystem {
       _pathfindingHelper?.SetCellWeight(currentCell.Id, currentCell.Occupants.Count);
       _pathfindingHelper?.SetCellWeight(targetCell.Id, targetCell.Occupants.Count);
 
-      if (character.HasMeta("Entity") && character.GetMeta("Entity") is Marshallable<Entity> entity) {
-         if (!World!.HasComponent<Moving>(entity.Value)) 
-            World!.AddComponent<Moving>(entity.Value);
+      if (character.HasMeta("Entity") && character.GetEntity() is { } entity) {
+         if (!World!.HasComponent<Moving>(entity)) 
+            World!.AddComponent<Moving>(entity);
          
          if (character.Visible) {
-            SendWalkAnimation(World!.GetComponent<CharacterAnimationComponent>(entity.Value));
+            SendWalkAnimation(World!.GetComponent<CharacterAnimationComponent>(entity));
          }
       }
 

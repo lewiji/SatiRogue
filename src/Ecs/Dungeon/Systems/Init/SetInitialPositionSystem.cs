@@ -14,7 +14,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SetInitialPositionSystem : ISystem {
+public partial class SetInitialPositionSystem : ISystem {
    
 
    public void Run(World world) {
@@ -40,18 +40,18 @@ public class SetInitialPositionSystem : ISystem {
          gridPos.Position = chosenCell.Value.Position;
          chosenCell.Value.Occupants.Add(stairs.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
-         stairs.Translation = gridPos.Position;
+         stairs.Position = gridPos.Position;
          
          world.TryGetElement<DebugUi>()?.SetStairsPos(gridPos.Position);
-         Logger.Info($"Spawned stairs at {stairs.Translation}");
+         Logger.Info($"Spawned stairs at {stairs.Position}");
 
          // Make hole for stairs to sit in in floor
          /*var maxWidth = mapData.GeneratorParameters.Width;
          var chunkWidth = mapData.GeneratorParameters.Width.Factors().GetMedian();
          var chunkId = SpatialMapSystem.GetChunkIdForPosition(gridPos.Position, chunkWidth, maxWidth);
          var mapGeometry = world.GetElement<MapGeometry>();
-         var chunkSpatial = mapGeometry.GetNode<Spatial>($"Chunk{chunkId}");
-         var floorMultiMesh = chunkSpatial.GetChild<MultiMeshInstance>(0);
+         var chunkSpatial = mapGeometry.GetNode<Node3D>($"Chunk{chunkId}");
+         var floorMultiMesh = chunkSpatial.GetChild<MultiMeshInstance3D>(0);
          var instanceId = -1;
          var localGridPos = chunkSpatial.ToLocal(gridPos.Position);
          var instanceCount = floorMultiMesh.Multimesh.InstanceCount;
@@ -68,7 +68,7 @@ public class SetInitialPositionSystem : ISystem {
          if (instanceId > -1) {
             Logger.Info(
                $"Found floor tile {instanceId} at {chunkSpatial.ToGlobal(floorMultiMesh.Multimesh.GetInstanceTransform(instanceId).origin)}");
-            floorMultiMesh.Multimesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, new Vector3(-1000f, -1000f, -1000f)));
+            floorMultiMesh.Multimesh.SetInstanceTransform(instanceId, new Transform3D(Basis.Identity, new Vector3(-1000f, -1000f, -1000f)));
             Logger.Info($"Removed floor tile {instanceId} from chunk {chunkId}.");
          } else {
             Logger.Warn($"Failed to find floor tile at {localGridPos} ({gridPos.Position})");
@@ -116,7 +116,7 @@ public class SetInitialPositionSystem : ISystem {
          gridPos.Position = chosenCell.Value.Position;
          chosenCell.Value.Occupants.Add(item.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
-         item.Translation = gridPos.Position;
+         item.Position = gridPos.Position;
       }
 
       var propQuery = world.Query<Prop, GridPositionComponent>().Build();
@@ -137,7 +137,7 @@ public class SetInitialPositionSystem : ISystem {
          gridPos.Position = chosenCell.Value.Position;
          chosenCell.Value.Occupants.Add(prop.GetInstanceId());
          pathfindingHelper.SetCellWeight(chosenCell.Value.Id, chosenCell.Value.Occupants.Count);
-         prop.Translation = gridPos.Position;
+         prop.Position = gridPos.Position;
       }
    }
 }

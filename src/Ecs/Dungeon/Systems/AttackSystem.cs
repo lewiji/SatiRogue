@@ -8,7 +8,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class AttackSystem : ISystem
+public partial class AttackSystem : ISystem
 {
     MessageLog? _messageLog;
     public void Run(World world)

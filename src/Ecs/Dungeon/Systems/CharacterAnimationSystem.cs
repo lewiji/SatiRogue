@@ -9,7 +9,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class CharacterAnimationSystem : Reference, ISystem {
+public partial class CharacterAnimationSystem : RefCounted, ISystem {
    
 
    Turn? _turn;

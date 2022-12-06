@@ -10,64 +10,64 @@ subdivide_depth = 8
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("OmniLight:translation:x")
+tracks/0/path = NodePath("OmniLight3D:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( -0.1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( -0.1, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("OmniLight:translation:y")
+tracks/1/path = NodePath("OmniLight3D:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 1.98946, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 1.98946, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("OmniLight:translation:z")
+tracks/2/path = NodePath("OmniLight3D:position:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( -0.429396, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( -0.429396, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("Light:translation:x")
+tracks/3/path = NodePath("Light3D:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( 3.27, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 3.27, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/4/type = "bezier"
-tracks/4/path = NodePath("Light:translation:y")
+tracks/4/path = NodePath("Light3D:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"points": PoolRealArray( 2.95501, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 2.95501, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/5/type = "bezier"
-tracks/5/path = NodePath("Light:translation:z")
+tracks/5/path = NodePath("Light3D:position:z")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"points": PoolRealArray( 30.9405, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 30.9405, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 
 [sub_resource type="Animation" id=4]
@@ -75,79 +75,79 @@ resource_name = "move_lights"
 length = 2.0
 loop = true
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("OmniLight:translation:x")
+tracks/0/path = NodePath("OmniLight3D:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( -0.1, -0.25, 0, 0.25, 0, 6.21135, -0.25, 0, 0.25, 0, 0.408427, -0.25, 0, 0.25, 0, 3.56884, -0.25, 0, 0.25, 0, 7.01998, -0.25, 0, 0.25, 0, -0.1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4, 0.9, 1.4, 1.7, 2 )
+"points": PackedFloat32Array( -0.1, -0.25, 0, 0.25, 0, 6.21135, -0.25, 0, 0.25, 0, 0.408427, -0.25, 0, 0.25, 0, 3.56884, -0.25, 0, 0.25, 0, 7.01998, -0.25, 0, 0.25, 0, -0.1, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.4, 0.9, 1.4, 1.7, 2 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("OmniLight:translation:y")
+tracks/1/path = NodePath("OmniLight3D:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 1.98946, -0.25, 0, 0.25, 0, 0.99, -0.25, 0, 0.25, 0, 1.98946, -0.25, 0, 0.25, 0, 2.99, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1.98946, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4, 0.9, 1.4, 1.7, 2 )
+"points": PackedFloat32Array( 1.98946, -0.25, 0, 0.25, 0, 0.99, -0.25, 0, 0.25, 0, 1.98946, -0.25, 0, 0.25, 0, 2.99, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1.98946, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.4, 0.9, 1.4, 1.7, 2 )
 }
 tracks/2/type = "bezier"
-tracks/2/path = NodePath("OmniLight:translation:z")
+tracks/2/path = NodePath("OmniLight3D:position:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( -0.429396, -0.25, 0, 0.25, 0, -2.98354, -0.25, 0, 0.25, 0, 0.502939, -0.25, 0, 0.25, 0, 3.58526, -0.25, 0, 0.25, 0, 1.06195, -0.25, 0, 0.25, 0, -0.429396, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4, 0.9, 1.4, 1.7, 2 )
+"points": PackedFloat32Array( -0.429396, -0.25, 0, 0.25, 0, -2.98354, -0.25, 0, 0.25, 0, 0.502939, -0.25, 0, 0.25, 0, 3.58526, -0.25, 0, 0.25, 0, 1.06195, -0.25, 0, 0.25, 0, -0.429396, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.4, 0.9, 1.4, 1.7, 2 )
 }
 tracks/3/type = "bezier"
-tracks/3/path = NodePath("Light:translation:x")
+tracks/3/path = NodePath("Light3D:position:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( 3.27, -0.25, 0, 0.25, 0, 12.0799, -0.25, 0, 0.25, 0, 8.71905, -0.25, 0, 0.25, 0, 3.36927, -0.25, 0, 0.25, 0, 3.27, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
+"points": PackedFloat32Array( 3.27, -0.25, 0, 0.25, 0, 12.0799, -0.25, 0, 0.25, 0, 8.71905, -0.25, 0, 0.25, 0, 3.36927, -0.25, 0, 0.25, 0, 3.27, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.5, 1, 1.5, 2 )
 }
 tracks/4/type = "bezier"
-tracks/4/path = NodePath("Light:translation:y")
+tracks/4/path = NodePath("Light3D:position:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"points": PoolRealArray( 2.95501, -0.25, 0, 0.25, 0, 6.20212, -0.25, 0, 0.25, 0, 0.080657, -0.25, 0, 0.25, 0, 3.94538, -0.25, 0, 0.25, 0, 2.95501, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
+"points": PackedFloat32Array( 2.95501, -0.25, 0, 0.25, 0, 6.20212, -0.25, 0, 0.25, 0, 0.080657, -0.25, 0, 0.25, 0, 3.94538, -0.25, 0, 0.25, 0, 2.95501, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.5, 1, 1.5, 2 )
 }
 tracks/5/type = "bezier"
-tracks/5/path = NodePath("Light:translation:z")
+tracks/5/path = NodePath("Light3D:position:z")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"points": PoolRealArray( 30.9405, -0.25, 0, 0.25, 0, 20.94, -0.25, 0, 0.25, 0, 30.9405, -0.25, 0, 0.25, 0, 40.94, -0.25, 0, 0.25, 0, 30.9405, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 )
+"points": PackedFloat32Array( 30.9405, -0.25, 0, 0.25, 0, 20.94, -0.25, 0, 0.25, 0, 30.9405, -0.25, 0, 0.25, 0, 40.94, -0.25, 0, 0.25, 0, 30.9405, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.5, 1, 1.5, 2 )
 }
 
-[node name="SpatialShaderRoot" type="Spatial"]
+[node name="SpatialShaderRoot" type="Node3D"]
 
-[node name="SpatialWigglers" type="Spatial" parent="."]
+[node name="SpatialWigglers" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0 )
 mesh = SubResource( 5 )
 
 [node name="DirectionalLight2" parent="." instance=ExtResource( 2 )]
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.98946, -0.429396 )
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.98946, -0.429396 )
 light_color = Color( 1, 0.980392, 0.462745, 1 )
 shadow_enabled = true
 shadow_bias = 0.08
@@ -158,8 +158,8 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Light" type="SpotLight" parent="."]
-transform = Transform( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 30.9405 )
+[node name="Light3D" type="SpotLight3D" parent="."]
+transform = Transform3D( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 30.9405 )
 light_energy = 0.25
 shadow_color = Color( 0.101961, 0.0392157, 0.219608, 1 )
 shadow_bias = 0.015
@@ -173,4 +173,4 @@ autoplay = "move_lights"
 anims/RESET = SubResource( 3 )
 anims/move_lights = SubResource( 4 )
 
-[node name="VisibilityEnabler" type="VisibilityEnabler" parent="."]
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]

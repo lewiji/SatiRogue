@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
 [ext_resource path="res://resources/hud/StatBar3DShader.gdshader" type="Shader" id=1]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/type5_combined.png" type="Texture2D" id=2]
 
 [resource]
 resource_local_to_scene = true

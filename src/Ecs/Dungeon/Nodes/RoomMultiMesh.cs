@@ -4,15 +4,15 @@ using Godot;
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 [Tool]
-public class RoomMultiMesh : MultiMeshInstance {
+public partial class RoomMultiMesh : MultiMeshInstance3D {
    public enum RoomTileType { Floor, Wall }
    public struct TileData {
       public TileData(RoomTileType tileType, Vector3 translation) : this() {
          TileType = tileType;
-         Translation = translation;
+         Position = translation;
       }
       public RoomTileType TileType { get; set; }
-      public Vector3 Translation { get; set; }
+      public Vector3 Position { get; set; }
       public int TileIndexOffset { get; set; } = 0;
    }
 
@@ -54,7 +54,7 @@ public class RoomMultiMesh : MultiMeshInstance {
    public override void _EnterTree() {
       Multimesh.InstanceCount = 0;
       Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
-      Multimesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit;
+      Multimesh.UseCustomData = true;
    }
 
    public void CreateRoom() {
@@ -98,7 +98,7 @@ public class RoomMultiMesh : MultiMeshInstance {
    }
 
    void SetInstance(int instanceId, TileData tileData) {
-      Multimesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, tileData.Translation));
+      Multimesh.SetInstanceTransform(instanceId, new Transform3D(Basis.Identity, tileData.Position));
       switch (tileData.TileType) {
          case RoomTileType.Floor:
             SetFloorTile(instanceId);

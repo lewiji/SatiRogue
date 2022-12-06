@@ -1,8 +1,8 @@
 // NOTE: Shader automatically converted from Godot Engine 3.5.1.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_toon,specular_schlick_ggx,shadows_disabled;
-uniform vec4 albedo : hint_color;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_toon,specular_schlick_ggx,shadows_disabled;
+uniform vec4 albedo : source_color;
 uniform sampler2DArray texture_array;
 uniform float specular;
 uniform float metallic;
@@ -16,7 +16,7 @@ const vec4 texture_channel = vec4(1.0, 0.0, 0.0, .0);
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],INV_VIEW_MATRIX[3]);
 }
 
 void fragment() {
@@ -28,8 +28,8 @@ void fragment() {
 		albedo_tex.rgb = mix(pow((albedo_tex.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)),vec3(2.4)),albedo_tex.rgb.rgb * (1.0 / 12.92),lessThan(albedo_tex.rgb,vec3(0.04045)));
 		ALBEDO = albedo.rgb * albedo_tex.rgb;
 				
-		NORMALMAP = (texture(texture_array,vec3(base_uv.x, base_uv.y, float(1))).xyz * 2.0);
-		NORMALMAP_DEPTH = 0.8;
+		NORMAL_MAP = (texture(texture_array,vec3(base_uv.x, base_uv.y, float(1))).xyz * 2.0);
+		NORMAL_MAP_DEPTH = 0.8;
 		
 		float metallic_tex = dot(texture(texture_array,vec3(base_uv.x, base_uv.y, float(4))),texture_channel);
 		METALLIC = metallic_tex * metallic;

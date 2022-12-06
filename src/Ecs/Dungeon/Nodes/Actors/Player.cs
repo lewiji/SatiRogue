@@ -1,5 +1,4 @@
 using Godot;
-using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Dungeon.Components;
@@ -9,13 +8,8 @@ using SatiRogue.resources;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Actors;
 
 public partial class Player : Character {
-   [OnReadyGet("AnimationPlayer")]
    public AnimationPlayer AnimationPlayer = null!;
-
-   [OnReadyGet("DiagonalLockIndicator")]
-   public Spatial DiagonalLockIndicator = null!;
-
-   [OnReadyGet("DirectionIndicator")]
+   public Node3D DiagonalLockIndicator = null!;
    public DirectionIndicator DirectionIndicator = null!;
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
@@ -36,7 +30,15 @@ public partial class Player : Character {
          .Add<Alive>();
    }
 
-   [OnReady]
+   public override void _Ready()
+   {
+	   AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   DiagonalLockIndicator = GetNode<Node3D>("DiagonalLockIndicator");
+	   DirectionIndicator = GetNode<DirectionIndicator>("DirectionIndicator");
+	   SetupReflectionProbe();
+	   SetChildVisibility();
+   }
+
    async void SetupReflectionProbe()
    {
 	   var reflProbe = GetNode<ReflectionProbe>("ReflectionProbe");
@@ -49,7 +51,7 @@ public partial class Player : Character {
       }
    }
 
-   [OnReady] void SetChildVisibility()
+   void SetChildVisibility()
    {
 	   DirectionIndicator.Visible = false;
 	   DiagonalLockIndicator.Visible = false;

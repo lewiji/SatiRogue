@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class Visible { }
+public partial class Visible { }

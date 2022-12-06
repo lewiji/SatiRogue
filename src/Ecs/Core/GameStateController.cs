@@ -7,15 +7,15 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Core;
 
-public class DeltaTime {
+public partial class DeltaTime {
    public float Value;
 }
 
-public class PhysicsDeltaTime {
+public partial class PhysicsDeltaTime {
    public float Value;
 }
 
-public class GameStateController : Node {
+public partial class GameStateController : Node {
    readonly Stack<GameState> _stack = new();
    public readonly World World = new();
 
@@ -40,23 +40,23 @@ public class GameStateController : Node {
       e.Dispose();
    }*/
 
-   public override void _Process(float delta) {
+   public override void _Process(double delta) {
       if (_stack.Count == 0) {
          return;
       }
 
       var currentState = _stack.Peek();
-      World.GetElement<DeltaTime>().Value = delta;
+      World.GetElement<DeltaTime>().Value = (float)delta;
       currentState.ProcessSystems.Run();
    }
 
-   public override void _PhysicsProcess(float delta) {
+   public override void _PhysicsProcess(double delta) {
       if (_stack.Count == 0) {
          return;
       }
 
       var currentState = _stack.Peek();
-      World.GetElement<PhysicsDeltaTime>().Value = delta;
+      World.GetElement<PhysicsDeltaTime>().Value = (float)delta;
       currentState.PhysicsSystems.Run();
       World.Tick();
    }

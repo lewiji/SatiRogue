@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class JustPickedUp { }
+public partial class JustPickedUp { }

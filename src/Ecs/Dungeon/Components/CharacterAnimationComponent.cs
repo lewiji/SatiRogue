@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot.Collections;
 namespace SatiRogue.Ecs.Dungeon.Components; 
 
-public class CharacterAnimationComponent {
+public partial class CharacterAnimationComponent {
    readonly Stack<string> _queuedAnimations = new ();
    string _animation = "idle";
    public string Animation {

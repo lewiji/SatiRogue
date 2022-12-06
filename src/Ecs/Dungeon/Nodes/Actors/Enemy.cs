@@ -1,5 +1,4 @@
 using Godot;
-using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 using SatiRogue.Ecs.Dungeon.Components.Actor;
@@ -12,14 +11,13 @@ public partial class Enemy : Character {
    public SpriteFrames? Frames;
    public Stats Stats = new(EnemyData.DefaultEnemyLevel);
 
-   [OnReadyGet("HoverStats")]
    HoverStats _hoverStats = null!;
    bool _hovering = false;
-   Camera? _playerCamera;
+   Camera3D? _playerCamera;
 
 
-   //[OnReadyGet("Area")]
-   //Area _area = null!;
+   //[OnReadyGet("Area3D")]
+   //Area3D _area = null!;
    public EnemyResource? EnemyResource;
 
    public override void OnSpawn(EntityBuilder entityBuilder) {
@@ -41,18 +39,19 @@ public partial class Enemy : Character {
          .Add<Alive>();
    }
 
-   [OnReady]
-   public void OnEnemyReady() {
-      CallDeferred(nameof(SetupSceneResources));
+   public override void _Ready()
+   {
+			_hoverStats = GetNode<HoverStats>("HoverStats");
+			CallDeferred(nameof(SetupSceneResources));
    }
 
    void SetupSceneResources() {
-      _playerCamera = GetTree().Root.GetCamera();
+      _playerCamera = GetTree().Root.GetCamera3d();
 
       _hoverStats.Visible = _hovering;
       _hoverStats.SetStatsRecord(Stats.Record);
-      //_area.Connect("mouse_entered", this, nameof(OnMouseEntered));
-      //_area.Connect("mouse_exited", this, nameof(OnMouseExited));
+      //_area.Connect("mouse_entered",new Callable(this,nameof(OnMouseEntered)));
+      //_area.Connect("mouse_exited",new Callable(this,nameof(OnMouseExited)));
 
       if (AnimatedSprite3D == null)
          return;
@@ -69,10 +68,10 @@ public partial class Enemy : Character {
       _hoverStats.Visible = false;
    }
 
-   public override void _PhysicsProcess(float delta) {
+   public override void _PhysicsProcess(double delta) {
       if (_hovering && _playerCamera != null) {
-         _hoverStats.RectGlobalPosition = _playerCamera.UnprojectPosition(GlobalTranslation)
-                                          - new Vector2(_hoverStats.RectSize.x / 2f, _hoverStats.RectSize.y * 1.32f);
+         _hoverStats.GlobalPosition = _playerCamera.UnprojectPosition(GlobalPosition)
+                                          - new Vector2(_hoverStats.Size.x / 2f, _hoverStats.Size.y * 1.32f);
       }
    }
 }

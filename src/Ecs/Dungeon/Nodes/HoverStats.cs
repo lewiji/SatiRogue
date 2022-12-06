@@ -5,7 +5,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
-public class HoverStats : Control {
+public partial class HoverStats : Control {
    static PackedScene _contentRowScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/HoverStatsKeyValueLabel.tscn");
    Stats.StatsRecordClass? _statsRecordClass;
    Control? _contentParent;
@@ -23,7 +23,7 @@ public class HoverStats : Control {
    }
 
    void AddContentRow(string name, string stat) {
-      var row = _contentRowScene.Instance<HoverStatsKeyValueLabel>();
+      var row = _contentRowScene.Instantiate<HoverStatsKeyValueLabel>();
       _contentParent?.AddChild(row);
       row.SetKeyValue(name, stat);
    }

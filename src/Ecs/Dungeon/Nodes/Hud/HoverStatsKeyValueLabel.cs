@@ -1,17 +1,19 @@
 using Godot;
-using GodotOnReady.Attributes;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class HoverStatsKeyValueLabel : HFlowContainer {
-   [OnReadyGet("KeyLabel")]
-   Label? _keyLabel;
-
-   [OnReadyGet("ValueLabel")]
+	 Label? _keyLabel;
    RichTextLabel? _valueLabel;
 
    string _keyName = "";
    string _value = "";
+
+   public override void _Ready()
+   {
+	   _keyLabel = GetNode<Label>("KeyLabel");
+	   _valueLabel = GetNode<RichTextLabel>("ValueLabel");
+   }
 
    public async void SetKeyValue(string name, string val) {
       _keyName = name;
@@ -25,6 +27,6 @@ public partial class HoverStatsKeyValueLabel : HFlowContainer {
          _keyLabel.Text = _keyName;
 
       if (_valueLabel != null)
-         _valueLabel.BbcodeText = _value;
+         _valueLabel.Text = _value;
    }
 }

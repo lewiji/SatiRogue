@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Earth Punch 4.wav-ddb694a7e22e3cf1cce20b1de13afeff.sample"
+type="AudioStreamWAV"
+uid="uid://brav6eoyeesip"
+path="res://.godot/imported/Earth Punch 4.wav-ddb694a7e22e3cf1cce20b1de13afeff.sample"
 
 [deps]
 
 source_file="res://audio/Earth Punch 4.wav"
-dest_files=[ "res://.import/Earth Punch 4.wav-ddb694a7e22e3cf1cce20b1de13afeff.sample" ]
+dest_files=["res://.godot/imported/Earth Punch 4.wav-ddb694a7e22e3cf1cce20b1de13afeff.sample"]
 
 [params]
 

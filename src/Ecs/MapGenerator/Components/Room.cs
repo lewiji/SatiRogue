@@ -1,5 +1,5 @@
 namespace SatiRogue.Ecs.MapGenerator.Components; 
 
-public class Room {
+public partial class Room {
    
 }

@@ -1,8 +1,9 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/frame0004.png-2d1aafa483f63521d13339c71f6e6f66.stex"
+type="CompressedTexture2D"
+uid="uid://cka7u5wqsk4tv"
+path="res://.godot/imported/frame0004.png-2d1aafa483f63521d13339c71f6e6f66.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,26 +11,24 @@ metadata={
 [deps]
 
 source_file="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/spirit_orb_red_small_B/frame0004.png"
-dest_files=[ "res://.import/frame0004.png-2d1aafa483f63521d13339c71f6e6f66.stex" ]
+dest_files=["res://.godot/imported/frame0004.png-2d1aafa483f63521d13339c71f6e6f66.ctex"]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=1
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

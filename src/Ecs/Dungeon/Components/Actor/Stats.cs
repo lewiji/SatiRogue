@@ -4,7 +4,7 @@ using SatiRogue.Resources;
 
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class Stats {
+public partial class Stats {
    public StatsRecordClass Record;
 
    public record StatsRecordClass {

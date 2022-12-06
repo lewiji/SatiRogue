@@ -9,11 +9,11 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Loading.Systems;
 
-public class CompileShaders : Reference, ISystem {
+public partial class CompileShaders : RefCounted, ISystem {
    
 
    [Signal]
-   public delegate void ShadersCompiled();
+   public delegate void ShadersCompiledEventHandler();
 
    static readonly PackedScene ShaderCompilerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ShaderCompiler.tscn");
    ShaderCompiler? _shaderCompiler;
@@ -21,7 +21,7 @@ public class CompileShaders : Reference, ISystem {
    int _shadersToCompile = 0;
 
    public void Run(World world) {
-      _shaderCompiler = ShaderCompilerScene.Instance<ShaderCompiler>();
+      _shaderCompiler = ShaderCompilerScene.Instantiate<ShaderCompiler>();
       world.GetElement<LoadingState>().AddChild(_shaderCompiler);
       world.AddOrReplaceElement(_shaderCompiler);
       world.AddOrReplaceElement(this);

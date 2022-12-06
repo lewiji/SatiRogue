@@ -1,7 +1,7 @@
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 namespace SatiRogue.Ecs.Dungeon.Triggers;
 
-public class CharacterAnimationTrigger {
+public partial class CharacterAnimationTrigger {
    public Character Character;
    public string Animation;
 

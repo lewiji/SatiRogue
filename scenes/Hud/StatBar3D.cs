@@ -1,22 +1,16 @@
 using System;
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using Object = Godot.Object;
 
 namespace SatiRogue.scenes.Hud;
 
 [Tool]
-public partial class StatBar3D : Spatial {
+public partial class StatBar3D : Node3D {
    public bool Hidden = false;
 
-   [OnReadyGet("AnimationPlayer", Export = true)]
    AnimationPlayer? _animationPlayer;
-
-   [OnReadyGet("MultiMeshInstance", OrNull = true, Export = true)]
-   MultiMeshInstance? _multiMeshInstance;
-
-   [OnReadyGet("Tween", Export = true)]
+   MultiMeshInstance3D? _multiMeshInstance;
    Tween? _tween;
 
    float _interpolatedPercent = 0f;
@@ -25,8 +19,8 @@ public partial class StatBar3D : Spatial {
 
    static Color _bgColor = new(0.464285714286f, 0, 0);
    static Color _fgColor = new(0.4892f, 0.5504f, 1f);
-   static Transform _bgTransform = new(Basis.Identity, new Vector3(0, 0, 0));
-   static Transform _fgTransform = new(Basis.Identity, new Vector3(0, -0.003f, 0.01f));
+   static Transform3D _bgTransform = new(Basis.Identity, new Vector3(0, 0, 0));
+   static Transform3D _fgTransform = new(Basis.Identity, new Vector3(0, -0.003f, 0.01f));
 
    [Export]
    public float Percent {
@@ -44,14 +38,21 @@ public partial class StatBar3D : Spatial {
          if (_tween == null)
             return;
 
-         if (_tween.IsActive())
-            _tween.StopAll();
-         _tween.InterpolateProperty(this, nameof(_interpolatedPercent), null, _percent, 0.062f, Tween.TransitionType.Sine);
-         _tween.Start();
+         if (_tween.IsRunning())
+            _tween.Kill();
+         _tween.TweenProperty(this, nameof(_interpolatedPercent), _percent, 0.062f);
       }
    }
 
-   [OnReady]
+   public override void _Ready()
+   {
+	   _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   _multiMeshInstance = GetNode<MultiMeshInstance3D>("MultiMeshInstance");
+	   _tween = GetNode<Tween>("Tween");
+	   SetupMultiMesh();
+	   SetupTween();
+   }
+
    void SetupMultiMesh() {
       // MultiMesh
       _shaderMaterial = _multiMeshInstance?.MaterialOverride as ShaderMaterial;
@@ -71,20 +72,19 @@ public partial class StatBar3D : Spatial {
       }
    }
 
-   [OnReady]
    void SetupTween() {
       if (_tween == null)
          return;
-      _tween.Connect("tween_step", this, nameof(OnTweenStep));
-      _tween.Connect("tween_all_completed", this, nameof(OnTweenCompleted));
+      _tween.Connect("tween_step",new Callable(this,nameof(OnTweenStep)));
+      _tween.Connect("tween_all_completed",new Callable(this,nameof(OnTweenCompleted)));
    }
 
    void OnTweenStep(Object obj, NodePath key, float elapsed, float value) {
-      _shaderMaterial?.SetShaderParam("percent_full", value);
+      _shaderMaterial?.SetShaderParameter("percent_full", value);
    }
 
    void OnTweenCompleted() {
-      _shaderMaterial?.SetShaderParam("percent_full", _percent);
+      _shaderMaterial?.SetShaderParameter("percent_full", _percent);
 
       if (Hidden || Math.Abs(_percent - 1f) < 0.01f) {
          Visible = false;

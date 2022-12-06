@@ -9,7 +9,7 @@ using Option = SatiRogue.Ecs.Menu.Nodes.Option;
 
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class InitOptions : Reference, ISystem {
+public partial class InitOptions : RefCounted, ISystem {
    
    static readonly PackedScene OptionsScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Options.tscn");
    Options? _options;
@@ -19,9 +19,9 @@ public class InitOptions : Reference, ISystem {
    {
       _world ??= world;
       var menuState = world.GetElement<MenuState>();
-      _options = OptionsScene.Instance<Options>();
-      _options.Connect(nameof(Options.OptionChanged), this, nameof(OnOptionChanged));
-      _options.Connect("ready", this, nameof(OnOptionsReady));
+      _options = OptionsScene.Instantiate<Options>();
+      _options.Connect(nameof(Options.OptionChanged),new Callable(this,nameof(OnOptionChanged)));
+      _options.Connect("ready",new Callable(this,nameof(OnOptionsReady)));
       menuState.AddChild(_options);
       world.AddOrReplaceElement(_options);
    }
@@ -61,14 +61,14 @@ public class InitOptions : Reference, ISystem {
          return;
       var splitKeys = option.OptionKey.Split(",");
       var initialVal = GetInitialConfigVal(cfg, option, worldEnv, splitKeys);
-      option.GetNode<CheckBox>("%CheckBox").Pressed = (bool) initialVal;
+      option.GetNode<CheckBox>("%CheckBox").ButtonPressed = (bool) initialVal;
 
       foreach (var key in splitKeys) {
          worldEnv.Environment.Set(key, initialVal);
       }
    }
 
-   static object GetInitialConfigVal(ConfigFile cfg, Option option, WorldEnvironment worldEnv, string[] splitKeys) {
+   static Variant GetInitialConfigVal(ConfigFile cfg, Option option, WorldEnvironment worldEnv, string[] splitKeys) {
       var initialVal = cfg.HasSectionKey(option.OptionLocation.ToString(), option.OptionKey)
          ? cfg.GetValue(option.OptionLocation.ToString(), option.OptionKey)
          : (bool) worldEnv.Environment.Get(splitKeys[0]);

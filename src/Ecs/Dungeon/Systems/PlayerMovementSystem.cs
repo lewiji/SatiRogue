@@ -11,11 +11,12 @@ using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using SatiRogue.Ecs.Dungeon.Systems.Init;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class PlayerMovementSystem : CharacterMovementSystem {
+public partial class PlayerMovementSystem : CharacterMovementSystem {
    MessageLog? _messageLog;
    public override void Run(World world) {
       World ??= world;
@@ -43,12 +44,12 @@ public class PlayerMovementSystem : CharacterMovementSystem {
    public void TeleportToCell(Player player, Vector3 position) {
       InitialiseSystem(World);
       
-      if (!player.HasMeta("Entity") || player.GetMeta("Entity") is not Marshallable<Entity> entity) return;
-      Logger.Info($"Teleporting entity {entity.Value}");
-      var gridPos = World!.GetComponent<GridPositionComponent>(entity.Value);
-      World!.GetComponent<Walkable>(entity.Value).Teleporting = true;
-      HandleOccupants(MapData!.GetCellAt(position), entity.Value, player, 
-         World!.GetComponent<InputDirectionComponent>(entity.Value), gridPos);
+      if (!player.HasMeta("Entity") || player.GetEntity() is not { } entity) return;
+      Logger.Info($"Teleporting entity {entity}");
+      var gridPos = World!.GetComponent<GridPositionComponent>(entity);
+      World!.GetComponent<Walkable>(entity).Teleporting = true;
+      HandleOccupants(MapData!.GetCellAt(position), entity, player, 
+         World!.GetComponent<InputDirectionComponent>(entity), gridPos);
       World!.Send(new CharacterAudioTrigger(player, "sword"));
       
       FogSystem.CalculateFov(gridPos, MapData, World!.GetElement<FogMultiMeshes>());
@@ -63,7 +64,7 @@ public class PlayerMovementSystem : CharacterMovementSystem {
 
       foreach (var targetId in targetCell.Occupants) {
          if (GD.InstanceFromId(targetId) is GameObject {Enabled: true} targetNode
-             && (targetNode.GetMeta("Entity") as Marshallable<Entity>)?.Value is { } entity) {
+             && targetNode.GetEntity() is { } entity) {
             
             switch (targetNode) {
                case Character when World!.IsAlive(entity): {

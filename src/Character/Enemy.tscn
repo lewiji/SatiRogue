@@ -18,5 +18,5 @@ frame = 11
 [node name="HoverStats" parent="." index="3" instance=ExtResource( 6 )]
 visible = false
 
-[node name="VisibilityNotifier" parent="." index="4"]
+[node name="VisibleOnScreenNotifier3D" parent="." index="4"]
 aabb = AABB( -1, 0, -1, 2, 2, 2 )

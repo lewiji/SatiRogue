@@ -10,16 +10,16 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class TurnHandlerSystem : Reference, ISystem {
+public partial class TurnHandlerSystem : RefCounted, ISystem {
    
    readonly float _minTurnTime = 0.08f;
    public int TurnNumber { get; private set; }
    Turn? _turn;
    DebugUi? _debugUi;
    World? _world;
-   [Signal] public delegate void ExecutePlayerTurn();
-   [Signal] public delegate void ExecuteNpcTurn();
-   [Signal] public delegate void ExecuteTurnEnd();
+   [Signal] public delegate void ExecutePlayerTurnEventHandler();
+   [Signal] public delegate void ExecuteNpcTurnEventHandler();
+   [Signal] public delegate void ExecuteTurnEndEventHandler();
 
    void SetCurrentTurn(TurnType turnType) {
       if (_turn == null || (_turn.CurrentTurn == TurnType.Idle && turnType != TurnType.PlayerTurn) || _turn.CurrentTurn == turnType) {
@@ -55,13 +55,13 @@ public class TurnHandlerSystem : Reference, ISystem {
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecuteNpcTurn));
                _world!.GetElement<SceneTree>().CreateTimer(_minTurnTime)
-                  .Connect("timeout", this, nameof(OnEnemyTurnFinished));
+                  .Connect("timeout",new Callable(this,nameof(OnEnemyTurnFinished)));
                break;
             case TurnType.PlayerTurn:
                SetCurrentTurn(TurnType.Processing);
                EmitSignal(nameof(ExecutePlayerTurn));
                _world!.GetElement<SceneTree>().CreateTimer(_minTurnTime)
-                  .Connect("timeout", this, nameof(OnPlayerTurnFinished));
+                  .Connect("timeout",new Callable(this,nameof(OnPlayerTurnFinished)));
                break;
             case TurnType.Idle:
                TurnNumber += 1;

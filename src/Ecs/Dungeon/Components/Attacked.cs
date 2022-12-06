@@ -3,7 +3,7 @@ using SatiRogue.Ecs.Dungeon.Components.Actor;
 
 namespace SatiRogue.Ecs.Dungeon.Components;
 
-public class Attacked
+public partial class Attacked
 {
     public readonly Entity AttackingEntity;
     public Attacked(Entity attackingEntity)

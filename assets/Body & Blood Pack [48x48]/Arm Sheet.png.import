@@ -1,37 +1,36 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path.s3tc="res://.import/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.s3tc.stex"
-path.etc2="res://.import/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.etc2.stex"
+type="CompressedTexture2D"
+uid="uid://lr3pe8bkwfui"
+path.s3tc="res://.godot/imported/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.s3tc.ctex"
+path.etc2="res://.godot/imported/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.etc2.ctex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
+"imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Body & Blood Pack [48x48]/Arm Sheet.png"
-dest_files=[ "res://.import/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.s3tc.stex", "res://.import/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.etc2.stex" ]
+dest_files=["res://.godot/imported/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.s3tc.ctex", "res://.godot/imported/Arm Sheet.png-72678d418542ba76420eb2a2abe75615.etc2.ctex"]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=true
-flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=1
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

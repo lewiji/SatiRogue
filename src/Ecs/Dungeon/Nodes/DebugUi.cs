@@ -1,34 +1,47 @@
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Ecs.Dungeon.Components;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
 public partial class DebugUi : MarginContainer {
-   [Signal] public delegate void WarpToStairs();
-   [Signal] public delegate void GodModeChanged(bool enabled);
-   [Signal] public delegate void HealPlayer();
+   [Signal] public delegate void WarpToStairsEventHandler();
+   [Signal] public delegate void GodModeChangedEventHandler(bool enabled);
+   [Signal] public delegate void HealPlayerEventHandler();
    
-   [OnReadyGet("%BgContainer")] Control? _bgContainer;
-   [OnReadyGet("%ControlsContainer")] Control? _controlsContainer;
-   [OnReadyGet("%ToggleDebug")] Button? _toggleDebugButton;
-   [OnReadyGet("%PlayerPos")] Label? _playerPosLabel;
-   [OnReadyGet("%StairsPos")] Label? _stairsPosLabel;
-   [OnReadyGet("%Turn")] Label? _turnLabel;
-   [OnReadyGet("%WarpToStairsButton")] Button? _warpStairsButton;
-   [OnReadyGet("%ReplenishHealthButton")] private Button? _healButton;
-   [OnReadyGet("%GodModeCheckButton")] CheckButton? _godModeCheckButton;
+   Control? _bgContainer;
+   Control? _controlsContainer;
+   Button? _toggleDebugButton;
+   Label? _playerPosLabel;
+   Label? _stairsPosLabel;
+   Label? _turnLabel;
+   Button? _warpStairsButton;
+   Button? _healButton;
+   CheckButton? _godModeCheckButton;
    public bool Enabled { get; set; }
 
-   [OnReady] void SetupScene() {
+   public override void _Ready()
+   {
+	   _bgContainer = GetNode<Control>("%BgContainer");
+	   _controlsContainer = GetNode<Control>("%ControlsContainer");
+	   _toggleDebugButton = GetNode<Button>("%ToggleDebug");
+		 _playerPosLabel = GetNode<Label>("%PlayerPos");
+	   _stairsPosLabel = GetNode<Label>("%StairsPos");
+		 _turnLabel = GetNode<Label>("%Turn");
+	   _warpStairsButton = GetNode<Button>("%WarpToStairsButton");
+		 _healButton = GetNode<Button>("%ReplenishHealthButton");
+	   _godModeCheckButton = GetNode<CheckButton>("%GodModeCheckButton");
+	   SetupScene();
+   }
+
+   void SetupScene() {
       _bgContainer?.Hide();
       _controlsContainer?.Hide();
       if (!Enabled) return;
       
-      _toggleDebugButton?.Connect("pressed", this, nameof(OnTogglePanel));
-      _warpStairsButton?.Connect("pressed", this, nameof(OnWarpStairsPressed));
-      _healButton?.Connect("pressed", this, nameof(OnHealPressed));
-      _godModeCheckButton?.Connect("toggled", this, nameof(OnGodModeToggled));
+      _toggleDebugButton?.Connect("pressed",new Callable(this,nameof(OnTogglePanel)));
+      _warpStairsButton?.Connect("pressed",new Callable(this,nameof(OnWarpStairsPressed)));
+      _healButton?.Connect("pressed",new Callable(this,nameof(OnHealPressed)));
+      _godModeCheckButton?.Connect("toggled",new Callable(this,nameof(OnGodModeToggled)));
    }
 
    void OnWarpStairsPressed() {

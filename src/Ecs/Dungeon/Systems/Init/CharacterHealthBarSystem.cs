@@ -7,7 +7,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class CharacterHealthBarSystem : ISystem {
+public partial class CharacterHealthBarSystem : ISystem {
    
    static readonly PackedScene HealthBarScene = GD.Load<PackedScene>("res://scenes/Hud/StatBar3D.tscn");
 
@@ -15,7 +15,7 @@ public class CharacterHealthBarSystem : ISystem {
       var query = world.Query<Entity, Character, HealthComponent>();
 
       foreach (var (entity, character, health) in query.Build()) {
-         var healthBarNode = HealthBarScene.Instance<StatBar3D>();
+         var healthBarNode = HealthBarScene.Instantiate<StatBar3D>();
          character.AddChild(healthBarNode);
          //world.On(entity).Add(healthBarNode);
          GodotExtensions.AddNodeComponent(world, entity, healthBarNode);

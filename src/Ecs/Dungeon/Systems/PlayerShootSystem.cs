@@ -8,11 +8,12 @@ using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Items;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class PlayerShootSystem : ISystem {
+public partial class PlayerShootSystem : ISystem {
    
    readonly PackedScene _arrowScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Items/Arrow.tscn");
 
@@ -25,7 +26,7 @@ public class PlayerShootSystem : ISystem {
                direction = input.LastDirection;
             }
             Logger.Debug($"Firing {direction}");
-            var arrow = _arrowScene.Instance<Arrow>();
+            var arrow = _arrowScene.Instantiate<Arrow>();
             var entitiesNode = world.GetElement<Entities>();
             entitiesNode.AddChild(arrow);
             var arrowEntity = world.Spawn(arrow).Id();
@@ -36,7 +37,7 @@ public class PlayerShootSystem : ISystem {
             world.On(arrowEntity).Add(new InputDirectionComponent {Direction = direction}).Add(arrowGridPos);
 
             arrow.Direction = direction;
-            arrow.Translation = arrowGridPos.Position;
+            arrow.Position = arrowGridPos.Position;
 
             var mapData = world.GetElement<MapGenData>();
 
@@ -49,8 +50,8 @@ public class PlayerShootSystem : ISystem {
                   foreach (var cellOccupant in cell.Occupants) {
                      if (GD.InstanceFromId(cellOccupant) is not Enemy enemy || !enemy.Alive)
                         continue;
-                     var entity = enemy.GetMeta("Entity") as Marshallable<Entity>;
-                     world.GetComponent<HealthComponent>(entity?.Value!).Value -= 1;
+                     var entity = enemy.GetEntity();
+                     world.GetComponent<HealthComponent>(entity!).Value -= 1;
 
                      if (arrow.Destination == Vector3.Zero) {
                         arrow.Destination = cell.Position;

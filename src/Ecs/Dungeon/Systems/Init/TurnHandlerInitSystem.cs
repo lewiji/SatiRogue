@@ -5,7 +5,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class TurnHandlerInitSystem : ISystem {
+public partial class TurnHandlerInitSystem : ISystem {
    
 
    public void Run(World world) {

@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Triggers;
 
-public class PlayerHasMadeInputTrigger { }
+public partial class PlayerHasMadeInputTrigger { }

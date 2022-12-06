@@ -2,7 +2,7 @@ using Godot;
 
 namespace SatiRogue.Ecs.Dungeon.Nodes.Resources;
 
-public class ItemResource : Resource
+public partial class ItemResource : Resource
 {
     [Export] public string Name { get; set; } = "";
     [Export] public bool IsCellBlocker { get; set; }

@@ -7,11 +7,12 @@ using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 using SatiRogue.Ecs.Dungeon.Nodes.Hud;
 using SatiRogue.Ecs.Dungeon.Triggers;
 using SatiRogue.Ecs.MapGenerator.Components;
+using SatiRogue.Tools;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class CharacterDeathSystem : Reference, ISystem {
+public partial class CharacterDeathSystem : RefCounted, ISystem {
    
    World? _world;
 
@@ -24,11 +25,14 @@ public class CharacterDeathSystem : Reference, ISystem {
 
          if (character is Player player) {
             var timer = character.GetTree().CreateTimer(0.618f);
-            timer.Connect("timeout", this, nameof(HandlePlayerDeath));
+            timer.Connect("timeout",new Callable(this,nameof(HandlePlayerDeath)));
             player.AnimationPlayer.Play("on_death");
          } else {
-            var timer = character.GetTree().CreateTimer(character.Particles.Lifetime);
-            timer.Connect("timeout", this, nameof(FreeEntity), new Array {character});
+            var timer = character.GetTree().CreateTimer(character.GPUParticles3D.Lifetime);
+
+            timer.Timeout += () => {
+	            FreeEntity(character);
+            };
          }
       }
    }
@@ -36,14 +40,14 @@ public class CharacterDeathSystem : Reference, ISystem {
    void FreeEntity(Character character) {
       var mapData = _world!.GetElement<MapGenData>();
 
-      var entity = character.GetMeta("Entity") as Marshallable<Entity>;
+      var entity = character.GetEntity();
 
-      if (entity!.Value.IsNone)
+      if (entity!.IsNone)
          return;
-      var gridPos = _world!.GetComponent<GridPositionComponent>(entity.Value);
+      var gridPos = _world!.GetComponent<GridPositionComponent>(entity);
       var currentCell = mapData.GetCellAt(gridPos.Position);
       currentCell.Occupants.Remove(character.GetInstanceId());
-      _world!.DespawnAndFree(entity.Value);
+      _world!.DespawnAndFree(entity);
    }
 
    void HandlePlayerDeath() {

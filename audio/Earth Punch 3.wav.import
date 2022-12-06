@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Earth Punch 3.wav-fe9060724eeedf5722d0e1445a12e618.sample"
+type="AudioStreamWAV"
+uid="uid://dfvdll48nubja"
+path="res://.godot/imported/Earth Punch 3.wav-fe9060724eeedf5722d0e1445a12e618.sample"
 
 [deps]
 
 source_file="res://audio/Earth Punch 3.wav"
-dest_files=[ "res://.import/Earth Punch 3.wav-fe9060724eeedf5722d0e1445a12e618.sample" ]
+dest_files=["res://.godot/imported/Earth Punch 3.wav-fe9060724eeedf5722d0e1445a12e618.sample"]
 
 [params]
 

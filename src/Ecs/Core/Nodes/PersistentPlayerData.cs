@@ -6,7 +6,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 namespace SatiRogue.Ecs.Core.Nodes;
 
-public class PersistentPlayerData : Node {
+public partial class PersistentPlayerData : Node {
    public int Gold;
    public int Health = 10;
    public Stats Stats = new(Stats.DefaultPlayerClass);

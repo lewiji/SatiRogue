@@ -1,6 +1,6 @@
 class_name TextureLayeredMesh, "res://resources/texture-layered-mesh/icons/texture_layered_mesh.svg"
-extends Spatial
-tool
+extends Node3D
+@tool
 
 # Constants
 const DEBUG = false
@@ -35,7 +35,7 @@ enum  TextureCompression {
 	NONE = -1,
 	S3TC = Image.COMPRESS_S3TC,
 	PVRTC2 = Image.COMPRESS_PVRTC2,
-	PVRTC4 = Image.COMPRESS_PVRTC4,
+	PVRTC4 = Image.COMPRESS_PVRTC1_4,
 	ETC = Image.COMPRESS_ETC,
 	ETC2 = Image.COMPRESS_ETC2
 }
@@ -48,20 +48,20 @@ enum  TextureCompressionSource {
 }
 
 # Exported Variables
-export(bool) var reload setget set_reload
+@export var reload: bool : set = set_reload
 
-export(Mesh) var mesh setget set_mesh
-export(ShaderMaterial) var shader_material setget set_shader_material
-export(Array, Resource) var array_data setget set_array_data
+@export var mesh: Mesh : set = set_mesh
+@export var shader_material: ShaderMaterial : set = set_shader_material
+@export var array_data setget set_array_data # (Array, Resource)
 
-export(LayeredType) var layered_texture_type = LayeredType.TEXTURE_ARRAY setget set_layered_texture_type
-export(String) var shader_parameter = "texture_array" setget set_shader_parameter
+@export var layered_texture_type: LayeredType = LayeredType.TEXTURE_ARRAY : set = set_layered_texture_type
+@export var shader_parameter: String = "texture_array" : set = set_shader_parameter
 
-export(TextureFormat) var texture_format = TextureFormat.RGBA8 setget set_texture_format
-export(TextureCompression) var texture_compression = TextureCompression.NONE setget set_texture_compression
-export(TextureCompressionSource) var texture_compression_source = TextureCompressionSource.GENERIC setget set_texture_compression_source
-export(float) var texture_lossy_quality = 0.7 setget set_texture_lossy_quality
-export(int, FLAGS, "Mipmap", "Repeat", "Filter", "Anisotropic Filter", "Convert to Linear", "Mirrored Repeat", "Video Surface") var texture_flags = Texture.FLAG_MIPMAPS | Texture.FLAG_ANISOTROPIC_FILTER setget set_texture_flags
+@export var texture_format: TextureFormat = TextureFormat.RGBA8 : set = set_texture_format
+@export var texture_compression: TextureCompression = TextureCompression.NONE : set = set_texture_compression
+@export var texture_compression_source: TextureCompressionSource = TextureCompressionSource.GENERIC : set = set_texture_compression_source
+@export var texture_lossy_quality: float = 0.7 : set = set_texture_lossy_quality
+@export var texture_flags = Texture2D.FLAG_MIPMAPS | Texture2D.FLAG_ANISOTROPIC_FILTER setget set_texture_flags # (int, FLAGS, "Mipmap", "Repeat", "Filter", "Anisotropic Filter", "Convert to Linear", "Mirrored Repeat", "Video Surface")
 
 func _ready():
 	regenerate()
@@ -122,7 +122,7 @@ func regenerate():
 		return
 
 	var new_mesh = mesh.duplicate()
-	var mesh_instance = MeshInstance.new()
+	var mesh_instance = MeshInstance3D.new()
 	mesh_instance.set_mesh(new_mesh)
 	add_child(mesh_instance)
 
@@ -142,7 +142,7 @@ func regenerate():
 
 	# Create texture array
 	print_log("Regenerating array")
-	var texture_array = TextureArray.new()
+	var texture_array = Texture2DArray.new()
 
 	var images = []
 	var max_size = Vector2.ZERO
@@ -152,10 +152,10 @@ func regenerate():
 
 			if array_image is Image:
 				image = array_image
-			elif array_image is Texture:
+			elif array_image is Texture2D:
 				image = array_image.get_data()
-			elif array_image is SpatialMaterial:
-				var texture = array_image.get_texture(SpatialMaterial.TEXTURE_ALBEDO)
+			elif array_image is StandardMaterial3D:
+				var texture = array_image.get_texture(StandardMaterial3D.TEXTURE_ALBEDO)
 				if texture:
 					image = texture.get_data()
 
@@ -190,7 +190,7 @@ func regenerate():
 				texture_array.set_layer_data(image_copy, image_idx)
 				image_idx += 1
 
-		new_shader_material.set_shader_param(shader_parameter, texture_array)
+		new_shader_material.set_shader_parameter(shader_parameter, texture_array)
 
 		print_log("Created texture array with data: ", texture_array.data)
 

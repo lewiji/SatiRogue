@@ -6,7 +6,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Items;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class OpenContainersSystem : ISystem
+public partial class OpenContainersSystem : ISystem
 {
     public void Run(World world)
     {
@@ -19,7 +19,7 @@ public class OpenContainersSystem : ISystem
             world.On(chestEntity).Remove<OpeningContainer>();
             
             if (chest.AnimatedSprite3D != null) chest.AnimatedSprite3D.Animation = "opening";
-            if (chest.Particles != null) chest.Particles.Emitting = true;
+            if (chest.GPUParticles3D != null) chest.GPUParticles3D.Emitting = true;
             
             var goldAmount = 1; // TODO
             var playerStore = world.GetElement<PersistentPlayerData>();

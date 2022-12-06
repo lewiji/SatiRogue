@@ -1,9 +1,8 @@
 using Godot;
-using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class FloorCounter : Control {
-   [OnReadyGet("%FloorLabel")] Label _floorLabel = null!;
+   Label _floorLabel = null!;
 
    int _floorNumber = 0;
    public int FloorNumber {
@@ -14,7 +13,13 @@ public partial class FloorCounter : Control {
       }
    }
 
-   [OnReady] public void SetFloorNumberText() {
+   public override void _Ready()
+   {
+	   _floorLabel = GetNode<Label>("%FloorLabel");
+	   SetFloorNumberText();
+   }
+
+   public void SetFloorNumberText() {
       _floorLabel.Text = $"{_floorNumber}F";
    }
 }

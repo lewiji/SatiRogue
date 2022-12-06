@@ -2,7 +2,7 @@ using Godot;
 
 namespace SatiRogue.resources;
 
-public class SatiConfig : Resource {
+public partial class SatiConfig : Resource {
    [Export]
    public bool DisableManualShaderPrecompiler { get; set; } = false;
 

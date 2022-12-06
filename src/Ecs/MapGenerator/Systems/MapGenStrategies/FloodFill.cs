@@ -6,7 +6,7 @@ using RelEcs;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class FloodFill : ISystem {
+public partial class FloodFill : ISystem {
    
 
    public void Run(World world) {

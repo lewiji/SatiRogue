@@ -9,9 +9,9 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs;
 
-public class MapGenState : GameState {
+public partial class MapGenState : GameState {
    [Signal]
-   public delegate void FinishedGenerating();
+   public delegate void FinishedGeneratingEventHandler();
 
    ISystem[] _mapGenStrategySystems = { };
    

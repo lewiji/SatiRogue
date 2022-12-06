@@ -34,7 +34,7 @@ public struct MapGenRoomParams {
    public Rect2 FloorSpace { get; set; }
 }
 
-public class MapGenData {
+public partial class MapGenData {
    public readonly Stack<Vector3> CellsVisibilityChanged = new();
    public GeneratorParameters GeneratorParameters;
    public HashSet<Rect2> GeneratorSpaces;

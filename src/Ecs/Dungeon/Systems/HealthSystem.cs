@@ -11,7 +11,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class HealthSystem : ISystem {
+public partial class HealthSystem : ISystem {
    
    PersistentPlayerData? _playerData = null;
 

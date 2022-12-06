@@ -1,7 +1,7 @@
 using SatiRogue.Ecs.Dungeon.Nodes.Actors;
 namespace SatiRogue.Ecs.Dungeon.Triggers;
 
-public class CharacterAudioTrigger {
+public partial class CharacterAudioTrigger {
    public string Audio;
    public Character Character;
 

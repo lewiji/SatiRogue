@@ -4,7 +4,7 @@ using SatiRogue.Ecs.Dungeon.Components.Actor;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class ResetInputDirectionSystem : ISystem {
+public partial class ResetInputDirectionSystem : ISystem {
    
 
    public void Run(World world) {

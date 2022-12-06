@@ -5,7 +5,7 @@ using RelEcs;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.MapGenerator.Systems.MapGenStrategies;
 
-public class CreateCorridors : ISystem {
+public partial class CreateCorridors : ISystem {
    
 
    public void Run(World world) {

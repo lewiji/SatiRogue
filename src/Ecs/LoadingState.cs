@@ -7,9 +7,9 @@ using SatiRogue.Tools;
 
 namespace SatiRogue.Ecs;
 
-public class LoadingState : GameState {
+public partial class LoadingState : GameState {
    [Signal]
-   public delegate void FinishedLoading();
+   public delegate void FinishedLoadingEventHandler();
 
    PreloadResources? _preloadResources;
 
@@ -21,8 +21,8 @@ public class LoadingState : GameState {
          .Add(new CreateResourceQueue())
          .Add(_preloadResources = new PreloadResources())
          .Add(compileShaders = new CompileShaders());
-      _preloadResources.Connect(nameof(PreloadResources.AllResourcesLoaded), compileShaders, nameof(CompileShaders.OnAllResourcesLoaded));
-      compileShaders.Connect(nameof(CompileShaders.ShadersCompiled), this, nameof(OnShadersCompiled));
+      _preloadResources.Connect(nameof(PreloadResources.AllResourcesLoaded),new Callable(compileShaders,nameof(CompileShaders.OnAllResourcesLoaded)));
+      compileShaders.Connect(nameof(CompileShaders.ShadersCompiled),new Callable(this,nameof(OnShadersCompiled)));
    }
 
    void OnShadersCompiled() {

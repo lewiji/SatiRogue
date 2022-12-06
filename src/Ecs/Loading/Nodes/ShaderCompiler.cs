@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Godot;
-using Godot.Collections;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Resources;
 
@@ -13,21 +10,26 @@ public partial class ShaderCompiler : CanvasLayer {
    static readonly PackedScene SpatialWigglerScene = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/SpatialShaderWiggler.tscn");
    static readonly PackedScene ParticlesWiggler = GD.Load<PackedScene>("res://src/Ecs/Loading/Nodes/ParticlesWiggler.tscn");
 
-   [OnReadyGet("%SpatialRoot")] Spatial _spatialRoot = default!;
+   Node3D _spatialRoot = default!;
    
-   MultiMeshInstance? _multiMeshInstance;
-   Particles? _particles;
-   MeshInstance? _meshInstance;
+   MultiMeshInstance3D? _multiMeshInstance;
+   GPUParticles3D? _particles;
+   MeshInstance3D? _meshInstance;
 
-   Queue<SpatialMaterial> _spatialMaterials = new();
+   Queue<StandardMaterial3D> _spatialMaterials = new();
    Queue<ShaderMaterial> _shaderMaterials = new();
    Queue<Mesh> _meshes = new();
    Queue<Mesh> _multiMeshes = new();
    Queue<ParticlesResourceSet> _particlesMaterials = new();
-   
+
    const float TimeToWiggle = 0.5f;
 
-   [OnReady]
+   public override void _Ready()
+   {
+	   _spatialRoot = GetNode<Node3D>("%SpatialRoot");
+	   InstanceWigglers();
+   }
+
    void InstanceWigglers()
    {
       InstanceParticlesWiggler();
@@ -48,20 +50,20 @@ public partial class ShaderCompiler : CanvasLayer {
          return false;
 
       switch (material) {
-         case SpatialMaterial spatialMaterial:
+         case StandardMaterial3D spatialMaterial:
             _spatialMaterials.Enqueue(spatialMaterial);
             break;
          case ShaderMaterial shaderMaterial:
             _shaderMaterials.Enqueue(shaderMaterial);
             break;
-         case ParticlesMaterial particlesMaterial:
-            _particlesMaterials.Enqueue(new ParticlesResourceSet{ParticlesMaterial = particlesMaterial});
+         case ParticleProcessMaterial particlesMaterial:
+            _particlesMaterials.Enqueue(new ParticlesResourceSet{ParticleProcessMaterial = particlesMaterial});
             break;
       }
       return true;
    }
 
-   public override void _PhysicsProcess(float delta)
+   public override void _PhysicsProcess(double delta)
    {
       if (_multiMeshes.Count > 0 && _multiMeshInstance?.Multimesh == null)
       {
@@ -84,8 +86,7 @@ public partial class ShaderCompiler : CanvasLayer {
 
    void InstanceMultiMeshWiggler() {
       Logger.Info("Instancing multimesh wiggler");
-      var mmInst = new MultiMeshInstance();
-      mmInst.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
+      var mmInst = new MultiMeshInstance3D();
       _spatialRoot.AddChild(mmInst);
       _multiMeshInstance = mmInst;
    }
@@ -97,13 +98,13 @@ public partial class ShaderCompiler : CanvasLayer {
       var mMesh = new MultiMesh();
       _multiMeshInstance.Multimesh = mMesh;
       mMesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
-      mMesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit;
+      mMesh.UseCustomData = true;
       _multiMeshInstance.Multimesh.Mesh = mesh;
       _multiMeshInstance.Multimesh.InstanceCount = 5;
 
       for (var i = 0; i < 5; i++)
       {
-         _multiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform(Basis.Identity, new Vector3(i, i, i)));
+         _multiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform3D(Basis.Identity, new Vector3(i, i, i)));
          _multiMeshInstance.Multimesh.SetInstanceCustomData(i, Color.Color8((byte)i, 0, 0, 0));
       }
 
@@ -112,10 +113,10 @@ public partial class ShaderCompiler : CanvasLayer {
    }
 
    void InstanceSpatialWiggler() {
-      var spatialWiggler = SpatialWigglerScene.Instance<Spatial>();
-      spatialWiggler.Translation = new Vector3((float) GD.RandRange(-5, 5), (float) GD.RandRange(-5, 5), (float) GD.RandRange(0, 20));
+      var spatialWiggler = SpatialWigglerScene.Instantiate<Node3D>();
+      spatialWiggler.Position = new Vector3((float) GD.RandRange(-5, 5), (float) GD.RandRange(-5, 5), (float) GD.RandRange(0, 20));
       _spatialRoot.AddChild(spatialWiggler);
-      _meshInstance = spatialWiggler.GetNode<MeshInstance>("MeshInstance");
+      _meshInstance = spatialWiggler.GetNode<MeshInstance3D>("MeshInstance3D");
    }
 
    async void SetMesh(Mesh mesh)
@@ -133,7 +134,7 @@ public partial class ShaderCompiler : CanvasLayer {
    {
       if (_meshInstance != null)
       {
-         _meshInstance.Mesh = new CubeMesh();
+         _meshInstance.Mesh = new BoxMesh();
          _meshInstance.MaterialOverride = material;
          
          await ToSignal(GetTree().CreateTimer(TimeToWiggle), "timeout");
@@ -144,15 +145,15 @@ public partial class ShaderCompiler : CanvasLayer {
 
    async void InstanceParticlesWiggler()
    {
-      var particlesWiggler = ParticlesWiggler.Instance<Spatial>();
-      _particles = particlesWiggler.GetNode<Particles>("Particles");
+      var particlesWiggler = ParticlesWiggler.Instantiate<Node3D>();
+      _particles = particlesWiggler.GetNode<GPUParticles3D>("GPUParticles3D");
       _spatialRoot.AddChild(particlesWiggler);
    }
 
    async void SetParticles(ParticlesResourceSet particlesResources)
    {
       if (_particles == null) return;
-      _particles.ProcessMaterial = particlesResources.ParticlesMaterial;
+      _particles.ProcessMaterial = particlesResources.ParticleProcessMaterial;
       _particles.DrawPasses = Math.Min(4, particlesResources.DrawPassMeshes.Count);
       for (var i = 1; i < Math.Min(4, particlesResources.DrawPassMeshes.Count); i++)
       {

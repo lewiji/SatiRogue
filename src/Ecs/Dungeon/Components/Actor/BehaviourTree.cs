@@ -14,7 +14,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class BehaviourTree {
+public partial class BehaviourTree {
    public BehaviourTree() {
       TreeInstance = new BaseBt();
    }
@@ -41,7 +41,7 @@ public class BehaviourTree {
    }
 }
 
-public class BaseBt : Gig {
+public partial class BaseBt : Gig {
    int _lastSawPlayer = -1;
    int _rangeToPlayer = -1;
 

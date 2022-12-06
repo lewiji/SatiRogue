@@ -1,10 +1,10 @@
 [gd_resource type="Theme" load_steps=17 format=2]
 
-[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugFont.tres" type="FontFile" id=1]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/DebugPanelStylebox.tres" type="StyleBox" id=3]
-[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/GUI_set03_Options_v1_0/atlas_controlset_menugraphics.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture" id=6]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/UI.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/ui/GUI_set03_Options_v1_0/atlas_controlset_menugraphics.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/ui/HAS UI/UI_atlas.png" type="Texture2D" id=6]
 
 [sub_resource type="StyleBoxTexture" id=13]
 content_margin_left = 4.0

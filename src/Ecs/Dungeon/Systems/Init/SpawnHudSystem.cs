@@ -10,7 +10,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SpawnHudSystem : Reference, ISystem {
+public partial class SpawnHudSystem : RefCounted, ISystem {
    
    static readonly PackedScene HudScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/HUD.tscn");
    static readonly PackedScene HealthUiScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/Health.tscn");
@@ -29,49 +29,49 @@ public class SpawnHudSystem : Reference, ISystem {
       var playerStore = world.GetElement<PersistentPlayerData>();
 
       var playState = world.GetElement<DungeonState>();
-      var hud = HudScene.Instance<Hud>();
+      var hud = HudScene.Instantiate<Hud>();
       var uiParent = hud.GetNode("%HudItems");
       playState.AddChild(hud);
       world.AddOrReplaceElement(hud);
 
-      var healthUi = HealthUiScene.Instance<HealthUi>();
+      var healthUi = HealthUiScene.Instantiate<HealthUi>();
       uiParent.AddChild(healthUi);
       healthUi.Percent = playerStore.Health / (float) playerStore.Stats.Record.Health;
       world.AddOrReplaceElement(healthUi);
 
-      var floorCounterUi = FloorCounterScene.Instance<FloorCounter>();
+      var floorCounterUi = FloorCounterScene.Instantiate<FloorCounter>();
       uiParent.AddChild(floorCounterUi);
       world.AddOrReplaceElement(floorCounterUi);
 
-      if (OS.HasTouchscreenUiHint()) {
-         var touchControls = TouchControlsScene.Instance();
+      if (DisplayServer.ScreenIsTouchscreen()) {
+         var touchControls = TouchControlsScene.Instantiate();
          uiParent.AddChild(touchControls);
       }
 
-      var lootUi = LootUiScene.Instance<Loot>();
+      var lootUi = LootUiScene.Instantiate<Loot>();
       uiParent.AddChild(lootUi);
       lootUi.NumLoots = playerStore.Gold;
       world.AddOrReplaceElement(lootUi);
 
-      var messageLog = MessageLogScene.Instance<MessageLog>();
+      var messageLog = MessageLogScene.Instantiate<MessageLog>();
       uiParent.AddChild(messageLog);
       world.AddOrReplaceElement(messageLog);
 
-      var invUi = InvUiScene.Instance<Inventory>();
+      var invUi = InvUiScene.Instantiate<Inventory>();
       uiParent.AddChild(invUi);
       world.AddOrReplaceElement(invUi);
 
-      var stairsConfirm = StairsConfirmationScene.Instance<StairsConfirmation>();
+      var stairsConfirm = StairsConfirmationScene.Instantiate<StairsConfirmation>();
       uiParent.AddChild(stairsConfirm);
       world.AddOrReplaceElement(stairsConfirm);
-      stairsConfirm.Connect(nameof(StairsConfirmation.StairsConfirmed), this, nameof(OnStairsDown));
+      stairsConfirm.Connect(nameof(StairsConfirmation.StairsConfirmed),new Callable(this,nameof(OnStairsDown)));
 
       var fade = hud.GetNode<DeathScreen>("FadeCanvasLayer/Fade");
       world.AddOrReplaceElement(fade);
-      fade.Connect(nameof(DeathScreen.Continue), this, nameof(OnContinueFromDeath));
-      fade.Connect(nameof(DeathScreen.Exit), this, nameof(OnExitFromDeath));
+      fade.Connect(nameof(DeathScreen.Continue),new Callable(this,nameof(OnContinueFromDeath)));
+      fade.Connect(nameof(DeathScreen.Exit),new Callable(this,nameof(OnExitFromDeath)));
 
-      hud.GetNode<Button>("%OptionsButton").Connect("pressed", this, nameof(OnOptionsPressed));
+      hud.GetNode<Button>("%OptionsButton").Connect("pressed",new Callable(this,nameof(OnOptionsPressed)));
    }
 
    void OnOptionsPressed() {

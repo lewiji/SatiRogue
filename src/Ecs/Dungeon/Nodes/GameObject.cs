@@ -3,7 +3,7 @@ using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
-public abstract class GameObject : Spatial, ISpawnable {
+public abstract partial class GameObject : Node3D, ISpawnable {
    [Export] public bool BlocksCell = true;
    [Export] public bool Enabled = true;
 

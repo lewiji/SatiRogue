@@ -1,28 +1,28 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/grid/grid_marker_mesh.tres" type="QuadMesh" id=1]
-[ext_resource path="res://fonts/Targets.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/Targets.otf" type="FontFile" id=2]
 [ext_resource path="res://resources/grid/GridMarker.cs" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="FontFile" id=1]
 size = 27
 outline_size = 5
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="FontFile" id=2]
 outline_size = 4
 font_data = ExtResource( 2 )
 
-[node name="GridMarker" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+[node name="GridMarker" type="MeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
 mesh = ExtResource( 1 )
 script = ExtResource( 3 )
 
-[node name="DebugInfo" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -8.74228e-09 )
+[node name="DebugInfo" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -8.74228e-09 )
 
 [node name="LabelCoords" type="Label3D" parent="DebugInfo"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04458e-08, 0.238971 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04458e-08, 0.238971 )
 cast_shadow = 0
 pixel_size = 0.015
 offset = Vector2( 0, 50 )
@@ -34,7 +34,7 @@ text = "x, y"
 font = SubResource( 1 )
 
 [node name="LabelCellBlocked" type="Label3D" parent="DebugInfo"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.98023e-08, 0.538971 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.98023e-08, 0.538971 )
 cast_shadow = 0
 pixel_size = 0.025
 offset = Vector2( 0, 42 )

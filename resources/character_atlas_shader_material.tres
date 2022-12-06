@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://assets/elthen/elthen_tex_array.texarr" type="TextureArray" id=1]
+[ext_resource path="res://assets/elthen/elthen_tex_array.texarr" type="Texture2DArray" id=1]
 [ext_resource path="res://resources/character_atlas_shader.gdshader" type="Shader" id=2]
 
 [resource]

@@ -13,56 +13,56 @@
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Visual/Camera:fov")
+tracks/0/path = NodePath("Visual/Camera3D:fov")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 50, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 50, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Visual/Camera:v_offset")
+tracks/1/path = NodePath("Visual/Camera3D:v_offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"points": PackedFloat32Array( 0, -0.25, 0, 0.25, 0 ),
+"times": PackedFloat32Array( 0 )
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "on_death"
 length = 2.0
 tracks/0/type = "bezier"
-tracks/0/path = NodePath("Visual/Camera:fov")
+tracks/0/path = NodePath("Visual/Camera3D:fov")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 50, -0.25, 0, 0.1, 0, 50, -0.25, 0, 0.155487, -3.35793, 18, -0.14906, 0.689558, 0.15094, -0.751799, 16, -0.74906, 0.0325108, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.24, 1.3, 2 )
+"points": PackedFloat32Array( 50, -0.25, 0, 0.1, 0, 50, -0.25, 0, 0.155487, -3.35793, 18, -0.14906, 0.689558, 0.15094, -0.751799, 16, -0.74906, 0.0325108, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.24, 1.3, 2 )
 }
 tracks/1/type = "bezier"
-tracks/1/path = NodePath("Visual/Camera:v_offset")
+tracks/1/path = NodePath("Visual/Camera3D:v_offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.1, 0, 0, -0.25, 0, 0.5, 0.718502, 1, -0.23, -0.214796, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.24, 1.2 )
+"points": PackedFloat32Array( 0, -0.25, 0, 0.1, 0, 0, -0.25, 0, 0.5, 0.718502, 1, -0.23, -0.214796, 0.25, 0 ),
+"times": PackedFloat32Array( 0, 0.24, 1.2 )
 }
 
-[node name="Player" type="Spatial"]
+[node name="Player" type="Node3D"]
 physics_interpolation_mode = 2
 script = ExtResource( 6 )
 
 [node name="Visual" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.75, 0 )
+transform = Transform3D( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.75, 0 )
 portal_mode = 2
 material_override = ExtResource( 1 )
 use_in_baked_light = true
@@ -73,8 +73,8 @@ frames = ExtResource( 2 )
 animation = "idle"
 playing = true
 
-[node name="Camera" type="Camera" parent="Visual"]
-transform = Transform( 1, 0, 0, 0, 0.78801, 0.615661, 0, -0.615661, 0.78801, 0, 4.23, 8 )
+[node name="Camera3D" type="Camera3D" parent="Visual"]
+transform = Transform3D( 1, 0, 0, 0, 0.78801, 0.615661, 0, -0.615661, 0.78801, 0, 4.23, 8 )
 projection = 1
 current = true
 fov = 50.0
@@ -87,9 +87,9 @@ stream = ExtResource( 8 )
 unit_size = 5.0
 attenuation_filter_cutoff_hz = 7000.0
 
-[node name="Light" type="SpotLight" parent="Visual"]
+[node name="Light3D" type="SpotLight3D" parent="Visual"]
 physics_interpolation_mode = 1
-transform = Transform( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
+transform = Transform3D( 0.966016, -0.0180313, 0.257852, -0.159137, 0.744604, 0.648259, -0.203687, -0.667262, 0.71643, 3.27, 2.95501, 8.99618 )
 light_energy = 0.25
 shadow_enabled = true
 shadow_color = Color( 0.101961, 0.0392157, 0.219608, 1 )
@@ -99,14 +99,14 @@ spot_attenuation = 0.618
 spot_angle = 60.0
 spot_angle_attenuation = 0.787678
 
-[node name="RayCast" type="RayCast" parent="."]
+[node name="RayCast3D" type="RayCast3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 7 )
 debug_shape_custom_color = Color( 0, 1, 0.0862745, 1 )
 debug_shape_thickness = 3
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0 )
 intensity = 0.2
 extents = Vector3( 16, 5, 12 )
 origin_offset = Vector3( 0, 3.99, 3 )
@@ -124,9 +124,9 @@ playback_speed = 0.62
 anims/RESET = SubResource( 1 )
 anims/on_death = SubResource( 2 )
 
-[node name="Particles" type="Particles" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
+transform = Transform3D( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.635589, -0.314342 )
 generate_lightmap = false
 emitting = false
 amount = 10
@@ -143,5 +143,5 @@ draw_pass_1 = ExtResource( 4 )
 
 [node name="DiagonalLockIndicator" parent="." instance=ExtResource( 10 )]
 
-[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 max_distance = 32.0

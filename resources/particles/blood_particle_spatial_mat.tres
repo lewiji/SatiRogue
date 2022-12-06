@@ -1,6 +1,6 @@
-[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=2]
 
-[ext_resource path="res://assets/Body & Blood Pack [48x48]/combined_sheet.png" type="Texture" id=3]
+[ext_resource path="res://assets/Body & Blood Pack [48x48]/combined_sheet.png" type="Texture2D" id=3]
 
 [resource]
 params_diffuse_mode = 1

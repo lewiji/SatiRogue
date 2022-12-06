@@ -4,7 +4,7 @@ using SatiRogue.Tools;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Core;
 
-public class GameState : Control {
+public partial class GameState : Control {
    public readonly SatiSystemGroup InitSystems;
    public readonly SatiSystemGroup ProcessSystems;
    public readonly SatiSystemGroup PhysicsSystems;

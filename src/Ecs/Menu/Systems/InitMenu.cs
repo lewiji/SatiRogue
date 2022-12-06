@@ -10,7 +10,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class InitMenu : Reference, ISystem {
+public partial class InitMenu : RefCounted, ISystem {
    
    static readonly PackedScene MenuScene = GD.Load<PackedScene>("res://src/Ecs/Menu/Nodes/Menu.tscn");
    Nodes.Menu? _menu;
@@ -19,9 +19,9 @@ public class InitMenu : Reference, ISystem {
    {
       _world ??= world;
       var menuState = world.GetElement<MenuState>();
-      _menu = MenuScene.Instance<Nodes.Menu>();
-      _menu.Connect(nameof(Nodes.Menu.NewGameRequested), this, nameof(OnNewGameRequested));
-      _menu.Connect(nameof(Nodes.Menu.OptionsRequested), this, nameof(OnOptionsRequested));
+      _menu = MenuScene.Instantiate<Nodes.Menu>();
+      _menu.Connect(nameof(Nodes.Menu.NewGameRequested),new Callable(this,nameof(OnNewGameRequested)));
+      _menu.Connect(nameof(Nodes.Menu.OptionsRequested),new Callable(this,nameof(OnOptionsRequested)));
       menuState.AddChild(_menu);
       world.AddOrReplaceElement(_menu);
       world.AddOrReplaceElement(this);

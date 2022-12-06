@@ -1,35 +1,36 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.stex"
+type="CompressedTexture2D"
+uid="uid://yspp08gmx4hx"
+path.s3tc="res://.godot/imported/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.s3tc.ctex"
+path.etc2="res://.godot/imported/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.etc2.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc", "etc2"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/overworld/Overworld256x256_n.png"
-dest_files=[ "res://.import/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.stex" ]
+dest_files=["res://.godot/imported/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.s3tc.ctex", "res://.godot/imported/Overworld256x256_n.png-da9b93024813d19a4625d91480089df6.etc2.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.3
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=0
-flags/filter=false
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=true
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

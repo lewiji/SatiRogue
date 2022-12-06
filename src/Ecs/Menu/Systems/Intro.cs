@@ -1,17 +1,16 @@
 using Godot;
 using SatiRogue.Debug;
-using SatiRogue.Ecs.Core.Nodes;
 using SatiRogue.Ecs.Intro.Nodes;
 using RelEcs;
 using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Menu.Systems;
 
-public class Intro : Reference, ISystem {
+public partial class Intro : RefCounted, ISystem {
    
 
    [Signal]
-   public delegate void IntroFinished();
+   public delegate void IntroFinishedEventHandler();
 
    readonly PackedScene _introScene = GD.Load<PackedScene>("res://src/Ecs/Intro/Nodes/Intro.tscn");
    Control? _intro;
@@ -19,9 +18,9 @@ public class Intro : Reference, ISystem {
    public void Run(World world)
    {
       _world ??= world;
-      _intro = _introScene.Instance<IntroScene>();
-      _intro.Connect("ready", this, nameof(OnIntroReady));
-      _intro.Connect(nameof(IntroScene.DebugSkipToNewGame), this, nameof(OnSkipToNewGame));
+      _intro = _introScene.Instantiate<IntroScene>();
+      _intro.Connect("ready",new Callable(this,nameof(OnIntroReady)));
+      _intro.Connect(nameof(IntroScene.DebugSkipToNewGame),new Callable(this,nameof(OnSkipToNewGame)));
       world.GetElement<MenuState>().AddChild(_intro);
    }
 
@@ -29,7 +28,7 @@ public class Intro : Reference, ISystem {
       Logger.Info("Playing intro");
       var player = _intro?.GetNode<AnimationPlayer>("AnimationPlayer");
       player?.Play("intro");
-      player?.Connect("animation_finished", this, nameof(OnIntroFinished));
+      player?.Connect("animation_finished",new Callable(this,nameof(OnIntroFinished)));
    }
 
    void OnSkipToNewGame() {

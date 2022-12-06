@@ -10,11 +10,11 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class FogMultiMeshes {
-   public List<MultiMeshInstance> Instances = new();
+public partial class FogMultiMeshes {
+   public List<MultiMeshInstance3D> Instances = new();
 }
 
-public class InitFogSystem : ISystem {
+public partial class InitFogSystem : ISystem {
    
    readonly Mesh _fogMesh = GD.Load<Mesh>("res://scenes/ThreeDee/res/FogTileMesh.tres");
    readonly FogMultiMeshes _fogMultiMeshes = new();
@@ -49,7 +49,7 @@ public class InitFogSystem : ISystem {
          var chunkCells = cells.Where(c => ChunkPositionCondition(c, chunkCoords)).ToArray();
          Logger.Debug($"Chunking: Taking {chunkCells.Length} cells");
          Logger.Debug("---");
-         // Remove these cells from the enumeration
+         // RemoveAt these cells from the enumeration
          cells = cells.Except(chunkCells).ToArray();
 
          Logger.Debug($"{cells.Length} cells remaining in map data");
@@ -61,23 +61,22 @@ public class InitFogSystem : ISystem {
 
    void BuildChunk(Vector3[] chunkCoords, int chunkWidth) {
       // Create Fog MultiMesh
-      var fogMultiMeshInstance = new MultiMeshInstance {
+      var fogMultiMeshInstance = new MultiMeshInstance3D {
          Multimesh = new MultiMesh {
             Mesh = _fogMesh,
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
-            ColorFormat = MultiMesh.ColorFormatEnum.Color8bit,
+            UseColors = true,
             InstanceCount = chunkWidth * chunkWidth
          },
-         CastShadow = GeometryInstance.ShadowCastingSetting.Off,
-         PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
-         Translation = new Vector3(chunkCoords[0].x, 0.618f, chunkCoords[0].z)
+         CastShadow = GeometryInstance3D.ShadowCastingSetting.Off,
+         Position = new Vector3(chunkCoords[0].x, 0.618f, chunkCoords[0].z)
       };
       _mapGeometry?.AddChild(fogMultiMeshInstance);
       fogMultiMeshInstance.Owner = _mapGeometry;
 
       for (var i = 0; i < fogMultiMeshInstance.Multimesh.InstanceCount; i++) {
          var fogPosition = new Vector3(i % chunkWidth, 0.618f, Mathf.FloorToInt(i / (float) chunkWidth));
-         fogMultiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform(Basis.Identity, fogPosition));
+         fogMultiMeshInstance.Multimesh.SetInstanceTransform(i, new Transform3D(Basis.Identity, fogPosition));
       }
 
       _fogMultiMeshes.Instances.Add(fogMultiMeshInstance);

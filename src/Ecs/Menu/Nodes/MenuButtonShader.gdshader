@@ -6,5 +6,5 @@ uniform sampler2D normal_map: hint_normal;
 void fragment(){
     vec4 c = texture(TEXTURE, UV) * COLOR;
     COLOR = c;
-	NORMALMAP = texture(normal_map, UV).rgb;
+	NORMAL_MAP = texture(normal_map, UV).rgb;
 }

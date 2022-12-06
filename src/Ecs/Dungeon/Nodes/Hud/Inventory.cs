@@ -1,14 +1,13 @@
 using System.Linq;
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class Inventory : Control {
-   [Signal] public delegate void OpenChanged(bool isOpen);
+   [Signal] public delegate void OpenChangedEventHandler(bool isOpen);
    static readonly PackedScene ItemSlotScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Hud/Item.tscn");
-   [OnReadyGet("AnimationPlayer")] AnimationPlayer? _animationPlayer;
-   [OnReadyGet("CenterContainer/MarginContainer/ItemGrid/GridContainer")] GridContainer? _gridContainer;
+   AnimationPlayer? _animationPlayer;
+   GridContainer? _gridContainer;
    bool _isOpen;
    int _numItemSlots;
    [Export] public int NumItemSlots {
@@ -25,6 +24,12 @@ public partial class Inventory : Control {
          _isOpen = value;
          EmitSignal(nameof(OpenChanged), _isOpen);
       }
+   }
+
+   public override void _Ready()
+   {
+	   _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   _gridContainer = GetNode<GridContainer>("CenterContainer/MarginContainer/ItemGrid/GridContainer");
    }
 
    void InitialiseItemSlots() {
@@ -47,7 +52,7 @@ public partial class Inventory : Control {
       }
 
       for (var i = 0; i < NumItemSlots; i++) {
-         var itemSlot = ItemSlotScene.Instance<ItemSlot>();
+         var itemSlot = ItemSlotScene.Instantiate<ItemSlot>();
          _gridContainer.AddChild(itemSlot);
       }
    }

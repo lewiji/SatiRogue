@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Resources/lamp_material.tres" type="Material" id=1]
-[ext_resource path="res://assets/lamps/atlas_lights_animated.png" type="Texture" id=2]
+[ext_resource path="res://assets/lamps/atlas_lights_animated.png" type="Texture2D" id=2]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Lamp.cs" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=2]
@@ -52,12 +52,12 @@ animations = [ {
 "speed": 12.0
 } ]
 
-[node name="Lamp" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0 )
+[node name="Lamp" type="Node3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0 )
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.03, -0.3 )
+transform = Transform3D( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.03, -0.3 )
 material_override = ExtResource( 1 )
 pixel_size = 0.05
 transparent = false
@@ -65,8 +65,8 @@ double_sided = false
 frames = SubResource( 10 )
 playing = true
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.98946, -0.429396 )
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.98946, -0.429396 )
 visible = false
 light_color = Color( 1, 0.980392, 0.462745, 1 )
 shadow_enabled = true

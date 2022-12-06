@@ -3,7 +3,7 @@
 [ext_resource path="res://resources/particles/blood_particle_material.tres" type="Material" id=1]
 [ext_resource path="res://resources/particles/enemy_blood_mesh.tres" type="QuadMesh" id=2]
 
-[node name="Particles" type="Particles"]
+[node name="GPUParticles3D" type="GPUParticles3D"]
 emitting = false
 amount = 16
 one_shot = true

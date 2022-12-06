@@ -1,239 +1,261 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=77 format=3 uid="uid://dmueaya4o1ale"]
 
-[ext_resource path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__32.png" type="Texture" id=1]
-[ext_resource path="res://src/Ecs/Core/Nodes/Fade.cs" type="Script" id=2]
-[ext_resource path="res://src/Ecs/Core/Nodes/FadeShaderMaterial.tres" type="Material" id=3]
-[ext_resource path="res://assets/light/Lighting_Kit_White_1.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey_n.png" type="Texture" id=6]
-[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FontGodsendPro32.tres" type="DynamicFont" id=7]
+[ext_resource type="Texture2D" uid="uid://b00hfgedtdlq5" path="res://assets/JestansSciFiTextures/64x64/SCITX_BIG__32.png" id="1"]
+[ext_resource type="Script" path="res://src/Ecs/Core/Nodes/Fade.cs" id="2"]
+[ext_resource type="Material" path="res://src/Ecs/Core/Nodes/FadeShaderMaterial.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://wn8bb1r1rurv" path="res://assets/light/Lighting_Kit_White_1.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://c24k64wdfgx8b" path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://due8uuufluxfk" path="res://assets/ui/GUI_set04_HUD_v1_0/loading_spinner_grey_n.png" id="6"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 length = 0.001
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("MarginContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ false ]
+"values": [false]
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("MarginContainer/VBoxContainer:modulate:a")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 resource_name = "fade_from_black"
 length = 0.618
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.3, -0.164276, 0, -0.12, 0.605204, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.6 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("MarginContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("MarginContainer/VBoxContainer:modulate:a")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.136981, -0.222944, 0, -0.190543, 0.276796, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.6 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/3/type = "method"
-tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/Light2D/AnimationPlayer")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/PointLight2D/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.6 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "RESET", -1, 1.0, false ],
-"method": "play"
-} ]
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["RESET", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "fade_to_black"
 length = 0.4
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0682999, 0.768995, 1, -0.125234, -0.315934, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("MarginContainer:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ true ]
+"values": [true]
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("MarginContainer/VBoxContainer:modulate:a")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.495235, -0.000245243, 1, -0.144563, -0.260094, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.4 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/3/type = "method"
-tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/Light2D/AnimationPlayer")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/PointLight2D/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "fluctuate", -1, 1.0, false ],
-"method": "play"
-} ]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["fluctuate", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id="4"]
 resource_name = "quick_fade"
 length = 0.2
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("MarginContainer:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ true ]
+"values": [true]
 }
 tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("MarginContainer/TextureRect:modulate:a")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0357185, 0.186628, 1, -0.0369673, -0.66778, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.0726859 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = false
 tracks/2/path = NodePath("MarginContainer/VBoxContainer:modulate:a")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = false
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.02, 0, 0.02, 0, 0, -0.02, 0, 0.0351182, 0.719166, 1, -0.0512978, -0.815447, 0.02, 0 ),
-"times": PoolRealArray( 0, 0.0648818, 0.2 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/3/type = "method"
-tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/Light2D/AnimationPlayer")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/CenterContainer/LightPosition/PointLight2D/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "fluctuate", -1, 1.0, false ],
-"method": "play"
-} ]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["fluctuate", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vnfhd"]
+_data = {
+"RESET": SubResource("1"),
+"fade_from_black": SubResource("3"),
+"fade_to_black": SubResource("2"),
+"quick_fade": SubResource("4")
+}
+
+[sub_resource type="Animation" id="5"]
 length = 0.001
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector2( -32, 0 ) ]
+"values": [Vector2(-32, 0)]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id="6"]
 resource_name = "fluctuate"
 length = 5.0
-loop = true
 tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 2.5, -0.25, 0, 0.43, 1.95525, 8, -0.15, -2.05571, 1.62, -0.269476, 2.5, -0.42, -0.636053, 0.25, 0 ),
-"times": PoolRealArray( 0, 2, 5 )
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 
-[sub_resource type="Shader" id=42]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v4j23"]
+_data = {
+"RESET": SubResource("5"),
+"fluctuate": SubResource("6")
+}
+
+[sub_resource type="Shader" id="42"]
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
@@ -242,434 +264,357 @@ uniform sampler2D normal_map: hint_normal;
 void fragment(){
     vec4 c = texture(TEXTURE, UV) * COLOR;
     COLOR = c;
-	NORMALMAP = texture(normal_map, UV).rgb;
+	NORMAL_MAP = texture(normal_map, UV).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=41]
-shader = SubResource( 42 )
-shader_param/normal_map = ExtResource( 6 )
+[sub_resource type="ShaderMaterial" id="41"]
+shader = SubResource("42")
+shader_parameter/normal_map = ExtResource("6")
 
-[sub_resource type="AtlasTexture" id=43]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 1, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="43"]
+atlas = ExtResource("5")
+region = Rect2(1, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=44]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 25, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="44"]
+atlas = ExtResource("5")
+region = Rect2(25, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=45]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 49, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="45"]
+atlas = ExtResource("5")
+region = Rect2(49, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=46]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 73, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="46"]
+atlas = ExtResource("5")
+region = Rect2(73, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=47]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 97, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="47"]
+atlas = ExtResource("5")
+region = Rect2(97, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=48]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 121, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="48"]
+atlas = ExtResource("5")
+region = Rect2(121, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=49]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 145, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="49"]
+atlas = ExtResource("5")
+region = Rect2(145, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=50]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 169, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="50"]
+atlas = ExtResource("5")
+region = Rect2(169, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=51]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 193, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="51"]
+atlas = ExtResource("5")
+region = Rect2(193, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=52]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 217, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="52"]
+atlas = ExtResource("5")
+region = Rect2(217, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=53]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 241, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="53"]
+atlas = ExtResource("5")
+region = Rect2(241, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=54]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 265, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="54"]
+atlas = ExtResource("5")
+region = Rect2(265, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=55]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 289, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="55"]
+atlas = ExtResource("5")
+region = Rect2(289, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=56]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 313, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="56"]
+atlas = ExtResource("5")
+region = Rect2(313, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=57]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 337, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="57"]
+atlas = ExtResource("5")
+region = Rect2(337, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=58]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 361, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="58"]
+atlas = ExtResource("5")
+region = Rect2(361, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=59]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 385, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="59"]
+atlas = ExtResource("5")
+region = Rect2(385, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=60]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 409, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="60"]
+atlas = ExtResource("5")
+region = Rect2(409, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=61]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 433, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="61"]
+atlas = ExtResource("5")
+region = Rect2(433, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=62]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 457, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="62"]
+atlas = ExtResource("5")
+region = Rect2(457, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=63]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 481, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="63"]
+atlas = ExtResource("5")
+region = Rect2(481, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=64]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 505, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="64"]
+atlas = ExtResource("5")
+region = Rect2(505, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=65]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 529, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="65"]
+atlas = ExtResource("5")
+region = Rect2(529, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=66]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 553, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="66"]
+atlas = ExtResource("5")
+region = Rect2(553, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=67]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 577, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="67"]
+atlas = ExtResource("5")
+region = Rect2(577, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=68]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 601, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="68"]
+atlas = ExtResource("5")
+region = Rect2(601, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=69]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 649, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="69"]
+atlas = ExtResource("5")
+region = Rect2(649, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=70]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 673, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="70"]
+atlas = ExtResource("5")
+region = Rect2(673, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=71]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 721, 1, 18, 18 )
+[sub_resource type="AtlasTexture" id="71"]
+atlas = ExtResource("5")
+region = Rect2(721, 1, 18, 18)
 
-[sub_resource type="AtlasTexture" id=72]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 1, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="72"]
+atlas = ExtResource("5")
+region = Rect2(1, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=73]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 49, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="73"]
+atlas = ExtResource("5")
+region = Rect2(49, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=74]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 97, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="74"]
+atlas = ExtResource("5")
+region = Rect2(97, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=75]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 121, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="75"]
+atlas = ExtResource("5")
+region = Rect2(121, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=76]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 169, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="76"]
+atlas = ExtResource("5")
+region = Rect2(169, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=77]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 193, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="77"]
+atlas = ExtResource("5")
+region = Rect2(193, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=78]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 217, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="78"]
+atlas = ExtResource("5")
+region = Rect2(217, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=79]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 241, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="79"]
+atlas = ExtResource("5")
+region = Rect2(241, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=80]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 265, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="80"]
+atlas = ExtResource("5")
+region = Rect2(265, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=81]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 289, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="81"]
+atlas = ExtResource("5")
+region = Rect2(289, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=82]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 313, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="82"]
+atlas = ExtResource("5")
+region = Rect2(313, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=83]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 337, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="83"]
+atlas = ExtResource("5")
+region = Rect2(337, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=84]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 361, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="84"]
+atlas = ExtResource("5")
+region = Rect2(361, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=85]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 385, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="85"]
+atlas = ExtResource("5")
+region = Rect2(385, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=86]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 409, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="86"]
+atlas = ExtResource("5")
+region = Rect2(409, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=87]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 433, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="87"]
+atlas = ExtResource("5")
+region = Rect2(433, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=88]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 457, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="88"]
+atlas = ExtResource("5")
+region = Rect2(457, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=89]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 481, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="89"]
+atlas = ExtResource("5")
+region = Rect2(481, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=90]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 505, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="90"]
+atlas = ExtResource("5")
+region = Rect2(505, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=91]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 529, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="91"]
+atlas = ExtResource("5")
+region = Rect2(529, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=92]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 553, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="92"]
+atlas = ExtResource("5")
+region = Rect2(553, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=93]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 577, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="93"]
+atlas = ExtResource("5")
+region = Rect2(577, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=94]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 601, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="94"]
+atlas = ExtResource("5")
+region = Rect2(601, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=95]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 625, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="95"]
+atlas = ExtResource("5")
+region = Rect2(625, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=96]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 649, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="96"]
+atlas = ExtResource("5")
+region = Rect2(649, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=97]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 673, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="97"]
+atlas = ExtResource("5")
+region = Rect2(673, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=98]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 697, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="98"]
+atlas = ExtResource("5")
+region = Rect2(697, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=99]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 721, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="99"]
+atlas = ExtResource("5")
+region = Rect2(721, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=100]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 745, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="100"]
+atlas = ExtResource("5")
+region = Rect2(745, 21, 18, 18)
 
-[sub_resource type="AtlasTexture" id=101]
-flags = 25
-atlas = ExtResource( 5 )
-region = Rect2( 769, 21, 18, 18 )
+[sub_resource type="AtlasTexture" id="101"]
+atlas = ExtResource("5")
+region = Rect2(769, 21, 18, 18)
 
-[sub_resource type="SpriteFrames" id=40]
-animations = [ {
-"frames": [ SubResource( 43 ), SubResource( 43 ), SubResource( 44 ), SubResource( 44 ), SubResource( 45 ), SubResource( 45 ), SubResource( 46 ), SubResource( 46 ), SubResource( 47 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ), SubResource( 95 ), SubResource( 96 ), SubResource( 96 ), SubResource( 97 ), SubResource( 97 ), SubResource( 98 ), SubResource( 98 ), SubResource( 99 ), SubResource( 99 ), SubResource( 100 ), SubResource( 100 ), SubResource( 101 ), SubResource( 101 ) ],
+[sub_resource type="SpriteFrames" id="40"]
+animations = [{
+"frames": [SubResource("43"), SubResource("43"), SubResource("44"), SubResource("44"), SubResource("45"), SubResource("45"), SubResource("46"), SubResource("46"), SubResource("47"), SubResource("47"), SubResource("48"), SubResource("49"), SubResource("50"), SubResource("51"), SubResource("52"), SubResource("53"), SubResource("54"), SubResource("55"), SubResource("56"), SubResource("57"), SubResource("58"), SubResource("59"), SubResource("60"), SubResource("61"), SubResource("62"), SubResource("63"), SubResource("64"), SubResource("65"), SubResource("66"), SubResource("67"), SubResource("68"), SubResource("69"), SubResource("70"), SubResource("71"), SubResource("72"), SubResource("72"), SubResource("73"), SubResource("74"), SubResource("75"), SubResource("76"), SubResource("77"), SubResource("78"), SubResource("79"), SubResource("80"), SubResource("81"), SubResource("82"), SubResource("83"), SubResource("84"), SubResource("85"), SubResource("86"), SubResource("87"), SubResource("88"), SubResource("89"), SubResource("90"), SubResource("91"), SubResource("92"), SubResource("93"), SubResource("94"), SubResource("95"), SubResource("96"), SubResource("96"), SubResource("97"), SubResource("97"), SubResource("98"), SubResource("98"), SubResource("99"), SubResource("99"), SubResource("100"), SubResource("100"), SubResource("101"), SubResource("101")],
 "loop": true,
-"name": "default",
+"name": &"default",
 "speed": 24.0
-} ]
+}]
 
 [node name="FadeLayer" type="CanvasLayer"]
 layer = 128
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 1 )
-anims/fade_from_black = SubResource( 3 )
-anims/fade_to_black = SubResource( 2 )
-anims/quick_fade = SubResource( 4 )
+libraries = {
+"": SubResource("AnimationLibrary_vnfhd")
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 visible = false
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
-modulate = Color( 0.317647, 0.0705882, 0.427451, 0 )
-material = ExtResource( 3 )
-margin_right = 900.0
-margin_bottom = 900.0
-rect_min_size = Vector2( 720, 720 )
-mouse_filter = 0
+modulate = Color(0.317647, 0.0705882, 0.427451, 0)
+material = ExtResource("3")
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 1 )
-expand = true
+mouse_filter = 0
+texture = ExtResource("1")
 stretch_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
-margin_right = 900.0
-margin_bottom = 900.0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="LightPosition" type="Control" parent="MarginContainer/CenterContainer"]
-margin_left = 450.0
-margin_top = 450.0
-margin_right = 450.0
-margin_bottom = 450.0
+layout_mode = 3
+anchors_preset = 0
+offset_left = 576.0
+offset_top = 324.0
+offset_right = 576.0
+offset_bottom = 324.0
 
-[node name="Light2D" type="Light2D" parent="MarginContainer/CenterContainer/LightPosition"]
+[node name="PointLight2D" type="PointLight2D" parent="MarginContainer/CenterContainer/LightPosition"]
 unique_name_in_owner = true
-texture = ExtResource( 4 )
-offset = Vector2( -32, 0 )
-texture_scale = 4.0
-color = Color( 0.658824, 0.54902, 0.901961, 1 )
+color = Color(0.658824, 0.54902, 0.901961, 1)
 energy = 0.0
-range_height = 127.0
 range_layer_min = 128
 range_layer_max = 128
+texture = ExtResource("4")
+offset = Vector2(-32, 0)
+texture_scale = 4.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/CenterContainer/LightPosition/Light2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/CenterContainer/LightPosition/PointLight2D"]
 autoplay = "fluctuate"
-anims/RESET = SubResource( 5 )
-anims/fluctuate = SubResource( 6 )
+libraries = {
+"": SubResource("AnimationLibrary_v4j23")
+}
 
 [node name="Camera2D" type="Camera2D" parent="MarginContainer/CenterContainer/LightPosition"]
 current = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 900.0
-margin_bottom = 900.0
+modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_vertical = 3
 alignment = 2
 
 [node name="Control2" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_right = 900.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 0, 32 )
+layout_mode = 3
+anchors_preset = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 36.0
-margin_right = 900.0
-margin_bottom = 817.0
-rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer/CenterContainer"]
-margin_left = 386.0
-margin_top = 326.0
-margin_right = 514.0
-margin_bottom = 454.0
-rect_min_size = Vector2( 128, 128 )
+layout_mode = 3
+anchors_preset = 0
 
-[node name="LoadingProgress" type="AnimatedSprite" parent="MarginContainer/VBoxContainer/CenterContainer/Control"]
+[node name="LoadingProgress" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer/CenterContainer/Control"]
 unique_name_in_owner = true
-self_modulate = Color( 1, 1, 1, 0.498039 )
+self_modulate = Color(1, 1, 1, 0.498039)
 light_mask = 2
-material = SubResource( 41 )
-scale = Vector2( 6, 6 )
 z_index = 128
-frames = SubResource( 40 )
-frame = 26
+material = SubResource("41")
+scale = Vector2(6, 6)
+frames = SubResource("40")
 playing = true
 centered = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-margin_top = 821.0
-margin_right = 900.0
-margin_bottom = 864.0
 size_flags_horizontal = 3
-custom_colors/default_color = Color( 0.560784, 0.403922, 0.266667, 1 )
-custom_colors/font_color_shadow = Color( 0.207843, 0.184314, 0.329412, 1 )
-custom_constants/shadow_offset_x = 4
-custom_constants/shadow_offset_y = 4
-custom_fonts/normal_font = ExtResource( 7 )
 bbcode_enabled = true
-bbcode_text = "[center][wave]Endless becoming.[/wave][/center]"
 text = "Endless becoming."
 fit_content_height = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 868.0
-margin_right = 900.0
-margin_bottom = 900.0
-rect_min_size = Vector2( 0, 32 )
+layout_mode = 3
+anchors_preset = 0
 
 [node name="LightAnimationTimer" type="Timer" parent="."]
 unique_name_in_owner = true

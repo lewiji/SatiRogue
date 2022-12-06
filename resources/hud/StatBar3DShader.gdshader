@@ -1,11 +1,11 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.4.stable.mono's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_mix,depth_test_disable,cull_back,diffuse_lambert,specular_disabled,async_visible,shadows_disabled;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
+render_mode blend_mix,depth_test_disabled,cull_back,diffuse_lambert,specular_disabled,shadows_disabled;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color;
 uniform float alpha_scissor_threshold;
-uniform vec4 emission : hint_color;
+uniform vec4 emission : source_color;
 uniform float emission_energy;
 uniform float percent_full;
 
@@ -20,8 +20,8 @@ void vertex() {
 	orig_uv = UV;
 	UV=UV*atlas_uv.xy+atlas_uv_offset.xy;
 	is_progress_bar = INSTANCE_CUSTOM.b;
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
-	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(WORLD_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(WORLD_MATRIX[1].xyz), 0.0, 0.0),vec4(0.0, 0.0, length(WORLD_MATRIX[2].xyz), 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],INV_VIEW_MATRIX[3]);
+	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),vec4(0.0, 0.0, 0.0, 1.0));
 }
 
 void fragment() {

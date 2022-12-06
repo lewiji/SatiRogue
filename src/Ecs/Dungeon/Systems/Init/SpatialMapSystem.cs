@@ -14,7 +14,7 @@ using Array = System.Array;
 
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class SpatialMapSystem : ISystem {
+public partial class SpatialMapSystem : ISystem {
    
 
    static readonly Mesh CellMesh = GD.Load<Mesh>("res://resources/level_meshes/dungeon_voxel.mesh");
@@ -87,7 +87,7 @@ public class SpatialMapSystem : ISystem {
             continue;
          var cellCount = 0;
 
-         // Remove these cells from the enumeration
+         // RemoveAt these cells from the enumeration
          for (var y = chunkCoords[0].z; y < chunkCoords[1].z; y++) {
             for (var x = chunkCoords[0].x; x < chunkCoords[1].x; x++) {
                var id = IdCalculator.IdFromVec3(new Vector3(x, 0, y));
@@ -106,23 +106,20 @@ public class SpatialMapSystem : ISystem {
    }
 
    void BuildChunk(int chunkId, Vector3[] chunkCoords, Cell[] chunkCells, LevelTileIndexSet levelTiles) {
-      var chunkRoom = new Spatial {Name = $"Chunk{chunkId}"};
+      var chunkRoom = new Node3D {Name = $"Chunk{chunkId}"};
       _mapGeometry.AddChild(chunkRoom);
       chunkRoom.Owner = _mapGeometry;
-      chunkRoom.Translation = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
+      chunkRoom.Position = new Vector3(chunkCoords[0].x, 0, chunkCoords[0].z);
       
       
-      var mmInst = new MultiMeshInstance {
+      var mmInst = new MultiMeshInstance3D {
          Multimesh = new MultiMesh {
             Mesh = CellMesh,
             TransformFormat = MultiMesh.TransformFormatEnum.Transform3d,
-            CustomDataFormat = MultiMesh.CustomDataFormatEnum.Data8bit,
+            UseCustomData = true,
             InstanceCount = chunkCells.Count(c => c is { Type: CellType.Wall or CellType.Floor })
          },
-         CastShadow = GeometryInstance.ShadowCastingSetting.On,
-         PhysicsInterpolationMode = Node.PhysicsInterpolationModeEnum.Off,
-         UseInBakedLight = true,
-         GenerateLightmap = true,
+         CastShadow = GeometryInstance3D.ShadowCastingSetting.On,
       };
       chunkRoom.AddChild(mmInst);
       mmInst.Owner = _mapGeometry;
@@ -136,10 +133,10 @@ public class SpatialMapSystem : ISystem {
       }
    }
 
-   void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Spatial room, LevelTileIndexSet levelTiles) {
+   void SetTile(MultiMesh mMesh, int instanceId, Cell cell, Node3D room, LevelTileIndexSet levelTiles) {
       if (GetCellCustomDataForCellType(cell.Type, levelTiles) is not { } color) return;
-      mMesh.SetInstanceTransform(instanceId, new Transform(Basis.Identity, 
-         GetTranslationOffsetForCellType(cell.Type) + cell.Position - room.Translation));
+      mMesh.SetInstanceTransform(instanceId, new Transform3D(Basis.Identity, 
+         GetTranslationOffsetForCellType(cell.Type) + cell.Position - room.Position));
       mMesh.SetInstanceCustomData(instanceId, color);
    }
 

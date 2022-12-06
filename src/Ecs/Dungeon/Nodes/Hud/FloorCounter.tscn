@@ -1,23 +1,23 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/UI Assets pack_v.1_st/ribbon.png" type="Texture" id=1]
-[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FloorCounterFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/UI Assets pack_v.1_st/ribbon.png" type="Texture2D" id=1]
+[ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FloorCounterFont.tres" type="FontFile" id=2]
 [ext_resource path="res://src/Ecs/Dungeon/Nodes/Hud/FloorCounter.cs" type="Script" id=3]
 
 [node name="FloorCounter" type="Control"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -50.0
-margin_top = 12.0
-margin_right = 50.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 100, 36 )
+offset_left = -50.0
+offset_top = 12.0
+offset_right = 50.0
+offset_bottom = 48.0
+minimum_size = Vector2( 100, 36 )
 script = ExtResource( 3 )
 
 [node name="Bg" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 100, 32 )
+minimum_size = Vector2( 100, 32 )
 texture = ExtResource( 1 )
 region_rect = Rect2( 193, 15, 30, 18 )
 patch_margin_left = 12
@@ -28,25 +28,25 @@ patch_margin_bottom = 8
 [node name="MarginContainer" type="MarginContainer" parent="Bg"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 50, 32 )
-custom_constants/margin_right = 8
-custom_constants/margin_left = 8
+minimum_size = Vector2( 50, 32 )
+custom_constants/offset_right = 8
+custom_constants/offset_left = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bg/MarginContainer"]
-margin_left = 8.0
-margin_top = 1.0
-margin_right = 92.0
-margin_bottom = 35.0
-rect_min_size = Vector2( 50, 32 )
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 92.0
+offset_bottom = 35.0
+minimum_size = Vector2( 50, 32 )
 size_flags_vertical = 4
 alignment = 1
 
 [node name="FloorLabel" type="Label" parent="Bg/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 10.0
-margin_right = 74.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 64, 32 )
+offset_left = 10.0
+offset_right = 74.0
+offset_bottom = 34.0
+minimum_size = Vector2( 64, 32 )
 size_flags_vertical = 1
 custom_colors/font_color = Color( 0.996078, 0.796078, 0.45098, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0.521569, 0.196078, 1 )

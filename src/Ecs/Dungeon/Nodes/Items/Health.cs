@@ -1,5 +1,4 @@
 using Godot;
-using GodotOnReady.Attributes;
 using RelEcs;
 using SatiRogue.Ecs.Dungeon.Components;
 using World = RelEcs.World;
@@ -10,15 +9,10 @@ public partial class Health : Item {
    Entity? _entity;
    bool _taken;
    World? _world;
-
-   [OnReadyGet("Visual")]
+   
    public AnimatedSprite3D? AnimatedSprite3D;
-
-   [OnReadyGet("AnimationPlayer")]
    public AnimationPlayer? AnimationPlayer;
-
-   [OnReadyGet("Particles")]
-   public Particles? Particles;
+   public GPUParticles3D? GPUParticles3D;
 
    public bool Taken {
       get => _taken;
@@ -30,10 +24,17 @@ public partial class Health : Item {
 
          if (!_taken)
             return;
-         AnimationPlayer?.Connect("animation_finished", this, nameof(OnAnimationFinished));
+         AnimationPlayer?.Connect("animation_finished",new Callable(this,nameof(OnAnimationFinished)));
          AnimationPlayer?.Play("taken");
          BlocksCell = false;
       }
+   }
+
+   public override void _Ready()
+   {
+	   AnimatedSprite3D = GetNode<AnimatedSprite3D>("Visual");
+	   AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   GPUParticles3D = GetNode<GPUParticles3D>("GPUParticles3D");
    }
 
    void OnAnimationFinished(string _) {

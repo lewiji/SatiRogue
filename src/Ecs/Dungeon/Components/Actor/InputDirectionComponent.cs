@@ -1,7 +1,7 @@
 using Godot;
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class InputDirectionComponent {
+public partial class InputDirectionComponent {
    Vector2 _direction;
    public Vector2 Direction {
       get => _direction;

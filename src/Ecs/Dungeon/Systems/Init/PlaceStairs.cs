@@ -6,14 +6,14 @@ using SatiRogue.Ecs.MapGenerator.Components;
 using World = RelEcs.World;
 namespace SatiRogue.Ecs.Dungeon.Systems.Init;
 
-public class PlaceStairs : ISystem {
+public partial class PlaceStairs : ISystem {
    
    static readonly PackedScene StairsScene = GD.Load<PackedScene>("res://src/Ecs/Dungeon/Nodes/Stairs.tscn");
 
    public void Run(World world) {
       var mapGenData = world.GetElement<MapGenData>();
       var entitiesNode = world.GetElement<Entities>();
-      var stairsNode = StairsScene.Instance<Stairs>();
+      var stairsNode = StairsScene.Instantiate<Stairs>();
       entitiesNode.AddChild(stairsNode);
       world.Spawn(stairsNode);
    }

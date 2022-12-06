@@ -7,7 +7,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class AudioSystem : ISystem {
+public partial class AudioSystem : ISystem {
    
    Dictionary<string, AudioStreamPlayer3D>? _audioStreams;
 
@@ -18,7 +18,7 @@ public class AudioSystem : ISystem {
       };
 
       foreach (var audioTrigger in world.Receive<CharacterAudioTrigger>(this)) {
-         Play(audioTrigger.Audio, audioTrigger.Character.Translation);
+         Play(audioTrigger.Audio, audioTrigger.Character.Position);
       }
    }
 
@@ -27,14 +27,14 @@ public class AudioSystem : ISystem {
          return;
 
       if (audioStreamPlayer3D.Playing && audioStreamPlayer3D.HasMeta("Interruptable")
-                                      && audioStreamPlayer3D.GetMeta("Interruptable") is bool and false)
+                                      && audioStreamPlayer3D.GetMeta("Interruptable").Obj is bool and false)
          return;
 
-      audioStreamPlayer3D.Translation = translation.GetValueOrDefault();
+      audioStreamPlayer3D.Position = translation.GetValueOrDefault();
 
-      if (audioStreamPlayer3D.HasMeta("VaryPitch") && audioStreamPlayer3D.GetMeta("VaryPitch") is bool and true) {
+      if (audioStreamPlayer3D.HasMeta("VaryPitch") && audioStreamPlayer3D.GetMeta("VaryPitch").Obj is bool and true) {
          audioStreamPlayer3D.PitchScale = (float) GD.RandRange(0.9f, 1.1f);
-         audioStreamPlayer3D.UnitDb = (float) GD.RandRange(-0.8f, 0f);
+         audioStreamPlayer3D.VolumeDb = (float) GD.RandRange(-0.8f, 0f);
       }
 
       audioStreamPlayer3D.Play();

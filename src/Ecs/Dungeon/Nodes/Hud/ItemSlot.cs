@@ -1,24 +1,34 @@
 using System.Diagnostics.CodeAnalysis;
 using Godot;
-using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
 public partial class ItemSlot : CenterContainer {
-   [Signal] public delegate void OnPressed(int itemIndex);
+   [Signal] public delegate void OnPressedEventHandler(int itemIndex);
 
    AtlasTexture _normalFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Dungeon/Nodes/Hud/ItemFrameNormal.tres");
    AtlasTexture _focusFrameTex = GD.Load<AtlasTexture>("res://src/Ecs/Dungeon/Nodes/Hud/ItemFrameSelected.tres");
 
-   [OnReadyGet("%ClickTarget")] Control _clickTarget = null!;
-   [OnReadyGet("%Equipped")] Control _equippedIndicator = null!;
-   [OnReadyGet("%ItemTexture")] TextureRect _itemTextureRect = null!;
-   [OnReadyGet("%Frame")] TextureRect _frameTextureRect = null!;
-   [OnReadyGet("%LabelName")] Label _labelName = null!;
-   [OnReadyGet("%PopupMenu")] PopupMenu _popupMenu = null!;
+   Control _clickTarget = default!;
+   Control _equippedIndicator = default!;
+   TextureRect _itemTextureRect = default!;
+   TextureRect _frameTextureRect = default!;
+   Label _labelName = default!;
+   PopupMenu _popupMenu = default!;
 
    public bool IsEmpty {
       get => _itemTexture == null;
+   }
+
+   public override void _Ready()
+   {
+	    _clickTarget = GetNode<Control>("%ClickTarget");
+	    _equippedIndicator = GetNode<Control>("%Equipped");
+	    _itemTextureRect = GetNode<TextureRect>("%ItemTexture");
+	    _frameTextureRect = GetNode<TextureRect>("%Frame");
+	    _labelName = GetNode<Label>("%LabelName");
+	    _popupMenu = GetNode<PopupMenu>("%PopupMenu");
+	    SetInitial();
    }
 
    bool _isSelected;
@@ -36,8 +46,8 @@ public partial class ItemSlot : CenterContainer {
       }
    }
 
-   Texture? _itemTexture;
-   [Export] public Texture? ItemTexture {
+   Texture2D? _itemTexture;
+   [Export] public Texture2D? ItemTexture {
       get => _itemTexture;
       set {
          _itemTexture = value;
@@ -67,12 +77,12 @@ public partial class ItemSlot : CenterContainer {
    [Export] public string Description { get; set; } = "";
    [Export] public int Quantity { get; set; }
 
-   [OnReady] void SetInitial() {
+   void SetInitial() {
       _itemTextureRect.Texture = _itemTexture;
       _labelName.Text = _itemName;
-      _clickTarget.Connect("gui_input", this, nameof(OnGuiInput));
-      _popupMenu.Connect("about_to_show", this, nameof(OnSelected));
-      _popupMenu.Connect("popup_hide", this, nameof(OnDeselected));
+      _clickTarget.Connect("gui_input",new Callable(this,nameof(OnGuiInput)));
+      _popupMenu.Connect("about_to_show",new Callable(this,nameof(OnSelected)));
+      _popupMenu.Connect("popup_hide",new Callable(this,nameof(OnDeselected)));
       SetEmptyModulation();
    }
 
@@ -94,7 +104,7 @@ public partial class ItemSlot : CenterContainer {
 
          EmitSignal(nameof(OnPressed), GetIndex());
 
-         _popupMenu.Popup_(new Rect2(inputEventMouseButton.GlobalPosition, new Vector2(55, 74)));
+         _popupMenu.Popup(new Rect2i((Vector2i)inputEventMouseButton.GlobalPosition, new Vector2i(55, 74)));
       }
 
       @event.Dispose();

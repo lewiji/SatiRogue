@@ -1,18 +1,25 @@
 using Godot;
-using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Dungeon.Nodes.Hud;
 
 public partial class DeathScreen : Control {
-   [Signal] public delegate void Continue();
-   [Signal] public delegate void Exit();
+   [Signal] public delegate void ContinueEventHandler();
+   [Signal] public delegate void ExitEventHandler();
 
-   [OnReadyGet("AnimationPlayer")] AnimationPlayer _animationPlayer = null!;
-   [OnReadyGet("%Continue")] Button _continueButton = null!;
-   [OnReadyGet("%Exit")] Button _exitButton = null!;
+   AnimationPlayer _animationPlayer = null!;
+   Button _continueButton = null!;
+   Button _exitButton = null!;
 
-   [OnReady] void ConnectButtons() {
-      _continueButton.Connect("pressed", this, nameof(OnContinuePressed));
-      _exitButton.Connect("pressed", this, nameof(OnExitPressed));
+   public override void _Ready()
+   {
+	   _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	   _continueButton = GetNode<Button>("%Continue");
+	   _exitButton = GetNode<Button>("%Exit");
+	   ConnectButtons();
+   }
+
+   void ConnectButtons() {
+      _continueButton.Connect("pressed",new Callable(this,nameof(OnContinuePressed)));
+      _exitButton.Connect("pressed",new Callable(this,nameof(OnExitPressed)));
    }
 
    void OnContinuePressed() {

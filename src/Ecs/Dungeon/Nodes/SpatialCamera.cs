@@ -1,10 +1,9 @@
 using Godot;
-using GodotOnReady.Attributes;
 namespace SatiRogue.Ecs.Dungeon.Nodes;
 
-public partial class SpatialCamera : Camera {
+public partial class SpatialCamera : Camera3D {
    static SpatialCamera? _instance;
-   OpenSimplexNoise _noise = new();
+   FastNoiseLite _noise = new();
    int _noiseY;
 
    [Export]
@@ -26,18 +25,22 @@ public partial class SpatialCamera : Camera {
    [Export]
    float SmoothSpeed { get; set; } = 10f;
 
-   [OnReadyGet("../../")]
-   Spatial Target { get; set; } = null!;
+   Node3D Target { get; set; } = null!;
 
-   [OnReady]
-   void DisablePhysicsInterpolation() {
-      PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
-      _offset = GlobalTranslation - Target.GlobalTranslation;
-      SetAsToplevel(true);
-      Translation = Target.GlobalTranslation + _offset;
+   public override void _Ready()
+   {
+	   Target = GetNode<Node3D>("../../");
+	   SetInitialOffset();
+	   TeleportInitially();
+	   InitNoise();
    }
 
-   [OnReady]
+   void SetInitialOffset() {
+      _offset = GlobalPosition - Target.GlobalPosition;
+      TopLevel = true;
+      Position = Target.GlobalPosition + _offset;
+   }
+
    async void TeleportInitially() {
       if (Smoothed) {
          Smoothed = false;
@@ -46,11 +49,12 @@ public partial class SpatialCamera : Camera {
       }
    }
 
-   [OnReady]
-   void InitNoise() {
+   void InitNoise()
+   {
+	   _noise.NoiseType = FastNoiseLite.NoiseTypeEnum.Simplex;
       _noise.Seed = (int) GD.Randi();
-      _noise.Period = 4;
-      _noise.Octaves = 2;
+      _noise.Frequency = 4f;
+      _noise.FractalOctaves = 2;
    }
 
    public static void Shake(float intensity = 1f) {
@@ -69,27 +73,27 @@ public partial class SpatialCamera : Camera {
       _currentShakeIntensity = Mathf.Min(_currentShakeIntensity + intensity, 1.0f);
    }
 
-   public override void _PhysicsProcess(float delta) {
+   public override void _PhysicsProcess(double delta) {
       if (_currentShakeIntensity > 0f) {
-         _currentShakeIntensity = Mathf.Max(_currentShakeIntensity - ShakeDecay * delta, 0);
+         _currentShakeIntensity = Mathf.Max(_currentShakeIntensity - ShakeDecay * (float)delta, 0);
          ProcessShake();
       }
 
 
       if (!Smoothed) {
-         Translation = Target.GlobalTranslation + _offset;
+         Position = Target.GlobalPosition + _offset;
          return;
       }
       
-      var targetTranslation = Target.GetGlobalTransformInterpolated().origin + _offset;
+      var targetTranslation = Target.GlobalTransform.origin + _offset;
 
-      var distanceSquared = Translation.DistanceSquaredTo(targetTranslation);
+      var distanceSquared = Position.DistanceSquaredTo(targetTranslation);
 
       if (distanceSquared < 0.0005f) {
-         Translation = Target.GlobalTranslation + _offset;
+         Position = Target.GlobalPosition + _offset;
          return;
       }
-      Translation = Translation.LinearInterpolate(targetTranslation, delta * SmoothSpeed);
+      Position = Position.Lerp(targetTranslation, (float)delta * SmoothSpeed);
    }
 
    void ProcessShake() {

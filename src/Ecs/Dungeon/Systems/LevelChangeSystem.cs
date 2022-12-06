@@ -11,7 +11,7 @@ using World = RelEcs.World;
 
 namespace SatiRogue.Ecs.Dungeon.Systems;
 
-public class LevelChangeSystem : Reference, ISystem {
+public partial class LevelChangeSystem : RefCounted, ISystem {
    
    bool _firstRun = true;
    World? _world;

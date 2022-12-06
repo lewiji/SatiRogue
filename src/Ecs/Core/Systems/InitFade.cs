@@ -10,7 +10,7 @@ public partial class InitFade : ISystem {
    static readonly PackedScene FadeScene = GD.Load<PackedScene>("res://src/Ecs/Core/Nodes/Fade.tscn");
 
    public void Run(World world) {
-      var fade = FadeScene.Instance<Fade>();
+      var fade = FadeScene.Instantiate<Fade>();
       world.GetElement<CoreState>().AddChild(fade);
       world.AddOrReplaceElement(fade);
    }

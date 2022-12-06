@@ -1,6 +1,4 @@
-using System;
 using Godot;
-using GodotOnReady.Attributes;
 using SatiRogue.Debug;
 using SatiRogue.Ecs;
 using SatiRogue.Ecs.Core;
@@ -23,14 +21,21 @@ public partial class Main : Node {
 	  }
    }
 
-   [OnReady]
+   public override void _Ready()
+   {
+	   CreateGameStateController();
+	   LoadSatiConfig();
+	   AddWorldEnvironmentElement();
+	   AddCoreState();
+	   AddMenuState();
+   }
+
    void CreateGameStateController() {
 	  _gsc = new GameStateController();
 	  AddChild(_gsc);
 	  _gsc.World.AddOrReplaceElement(this);
    }
 
-   [OnReady]
    void LoadSatiConfig() {
 	  var config = GD.Load<Resource>("res://sati_config.tres");
 
@@ -39,7 +44,6 @@ public partial class Main : Node {
 	  }
    }
 
-   [OnReady]
    void AddWorldEnvironmentElement() {
 	  var worldEnvironment = GetNode<WorldEnvironment>("WorldEnvironment");
 	  _gsc.World.AddOrReplaceElement(worldEnvironment);
@@ -50,7 +54,6 @@ public partial class Main : Node {
 	  worldEnvironment.Environment = environment;
    }
 
-   [OnReady]
    void AddCoreState() {
 	  var coreState = new CoreState(_gsc);
 	  _gsc.PushState(coreState);
@@ -62,7 +65,6 @@ public partial class Main : Node {
 	  return loading;
    }
 
-   [OnReady]
    void AddMenuState() {
 	  var menuState = new MenuState(_gsc);
 	  _gsc.PushState(menuState);
@@ -71,41 +73,5 @@ public partial class Main : Node {
    public void AddSessionState() {
 	  var sessionState = new SessionState(_gsc);
 	  _gsc.PushState(sessionState);
-   }
-
-   void CreateMonitorTimer() {
-	  if (LogLevel > Logger.LogLevel.Debug)
-		 return;
-
-	  var timer = new Timer {WaitTime = 1f, Autostart = true};
-	  timer.Connect("timeout", this, nameof(CheckMonitors));
-	  AddChild(timer);
-
-	  Logger.Warn("ObjectCount Monitor logging is switched on.");
-   }
-
-   void CheckMonitors() {
-	  _lastObjects = _totalObjects;
-	  _totalObjects = Performance.GetMonitor(Performance.Monitor.ObjectCount);
-
-	  var delta = _totalObjects - _lastObjects;
-
-	  Logger.Debug($"{_totalObjects}, {delta}");
-   }
-
-   void CreateManualGcTimer() {
-	  if (LogLevel > Logger.LogLevel.Debug)
-		 return;
-
-	  var timer = new Timer {WaitTime = 3f, Autostart = true};
-	  timer.Connect("timeout", this, nameof(ClearGc));
-	  AddChild(timer);
-
-	  Logger.Warn("Manual GC is switched on.");
-   }
-
-   void ClearGc() {
-	  GC.Collect();
-	  GC.WaitForPendingFinalizers();
    }
 }

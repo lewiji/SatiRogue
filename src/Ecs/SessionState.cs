@@ -8,7 +8,7 @@ using SatiRogue.Ecs.Session;
 using SatiRogue.Tools;
 namespace SatiRogue.Ecs;
 
-public class SessionState : GameState {
+public partial class SessionState : GameState {
    public override void Init(GameStateController gameStateController) {
       CreateSystems(gameStateController);
       InitMapGen(gameStateController);

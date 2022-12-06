@@ -3,3 +3,4 @@
 /.mono/
 .directory
 mono_crash*
+/.godot/

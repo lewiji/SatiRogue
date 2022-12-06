@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Barefoot Dirt footsteps 1.wav-e847ab30720bf8b6b28a5bcbd39e7c7e.sample"
+type="AudioStreamWAV"
+uid="uid://d4bevdoosda0y"
+path="res://.godot/imported/Barefoot Dirt footsteps 1.wav-e847ab30720bf8b6b28a5bcbd39e7c7e.sample"
 
 [deps]
 
 source_file="res://audio/Barefoot Dirt footsteps 1.wav"
-dest_files=[ "res://.import/Barefoot Dirt footsteps 1.wav-e847ab30720bf8b6b28a5bcbd39e7c7e.sample" ]
+dest_files=["res://.godot/imported/Barefoot Dirt footsteps 1.wav-e847ab30720bf8b6b28a5bcbd39e7c7e.sample"]
 
 [params]
 

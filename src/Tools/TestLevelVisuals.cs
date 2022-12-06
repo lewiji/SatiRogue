@@ -4,7 +4,7 @@ using SatiRogue.Ecs.Dungeon.Nodes.Resources;
 namespace SatiRogue.Debug; 
 
 [Tool]
-public class TestLevelVisuals : Spatial
+public partial class TestLevelVisuals : Node3D
 {
     private Resource? _levelSet;
     [Export] private Resource? LevelSet {

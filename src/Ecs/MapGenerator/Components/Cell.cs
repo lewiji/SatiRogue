@@ -28,7 +28,7 @@ public enum CellVisibility {
    CurrentlyVisible
 }
 
-public class Cell : Reference {
+public partial class Cell : RefCounted {
 
    long _id;
 

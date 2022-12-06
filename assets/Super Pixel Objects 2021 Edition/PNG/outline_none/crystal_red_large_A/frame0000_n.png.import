@@ -1,37 +1,36 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path.s3tc="res://.import/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.s3tc.stex"
-path.etc2="res://.import/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.etc2.stex"
+type="CompressedTexture2D"
+uid="uid://cpsclifrsn4fr"
+path.s3tc="res://.godot/imported/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.s3tc.ctex"
+path.etc2="res://.godot/imported/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.etc2.ctex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
+"imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/crystal_red_large_A/frame0000_n.png"
-dest_files=[ "res://.import/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.s3tc.stex", "res://.import/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.etc2.stex" ]
+dest_files=["res://.godot/imported/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.s3tc.ctex", "res://.godot/imported/frame0000_n.png-a44c321940eceac2197ed5750cd81d65.etc2.ctex"]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.1
-compress/hdr_mode=1
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=1
-flags/repeat=0
-flags/filter=false
-flags/mipmaps=true
-flags/anisotropic=true
-flags/srgb=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

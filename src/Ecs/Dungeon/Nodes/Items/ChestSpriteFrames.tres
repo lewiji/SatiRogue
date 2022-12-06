@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" load_steps=20 format=2]
 
-[ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/chest_large_F/chest_large_F.png" type="Texture" id=1]
+[ext_resource path="res://assets/Super Pixel Objects 2021 Edition/PNG/outline_none/chest_large_F/chest_large_F.png" type="Texture2D" id=1]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 25

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Popping bloody Sac 2.wav-088dee07de617544c85b5afd6281daac.sample"
+type="AudioStreamWAV"
+uid="uid://b55081wky2eps"
+path="res://.godot/imported/Popping bloody Sac 2.wav-088dee07de617544c85b5afd6281daac.sample"
 
 [deps]
 
 source_file="res://audio/Popping bloody Sac 2.wav"
-dest_files=[ "res://.import/Popping bloody Sac 2.wav-088dee07de617544c85b5afd6281daac.sample" ]
+dest_files=["res://.godot/imported/Popping bloody Sac 2.wav-088dee07de617544c85b5afd6281daac.sample"]
 
 [params]
 

@@ -10,5 +10,5 @@ void fragment(){
     newuv.y -= TIME * time_scale_y;
     vec4 c = texture(TEXTURE, newuv);
     COLOR = c;
-	NORMALMAP = texture(normal_map, newuv).rgb;
+	NORMAL_MAP = texture(normal_map, newuv).rgb;
 }

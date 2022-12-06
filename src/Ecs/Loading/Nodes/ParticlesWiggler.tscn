@@ -1,9 +1,9 @@
 [gd_scene format=2]
 
-[node name="ParticlesWiggler" type="Spatial"]
+[node name="ParticlesWiggler" type="Node3D"]
 physics_interpolation_mode = 1
 
-[node name="Particles" type="Particles" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 physics_interpolation_mode = 1
 generate_lightmap = false
 emitting = false

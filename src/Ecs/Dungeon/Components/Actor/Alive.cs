@@ -1,3 +1,3 @@
 namespace SatiRogue.Ecs.Dungeon.Components.Actor;
 
-public class Alive { }
+public partial class Alive { }
