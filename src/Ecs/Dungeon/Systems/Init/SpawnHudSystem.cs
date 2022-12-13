@@ -43,7 +43,7 @@ public partial class SpawnHudSystem : RefCounted, ISystem {
       uiParent.AddChild(floorCounterUi);
       world.AddOrReplaceElement(floorCounterUi);
 
-      if (DisplayServer.ScreenIsTouchscreen()) {
+      if (DisplayServer.IsTouchscreenAvailable()) {
          var touchControls = TouchControlsScene.Instantiate();
          uiParent.AddChild(touchControls);
       }

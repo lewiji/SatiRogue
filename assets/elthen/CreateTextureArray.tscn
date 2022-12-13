@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ptdq3bwxdhti"]
 
-[ext_resource type="Script" path="res://assets/elthen/CreateTextureArray.cs" id="1"]
+[ext_resource type="Script" path="res://assets/elthen/CreateTextureArray.gd" id="1_yoe1b"]
 
 [node name="Node" type="Node"]
-script = ExtResource("1")
+script = ExtResource("1_yoe1b")
